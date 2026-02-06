@@ -58,36 +58,36 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="-17" translatesAutoresizingMaskIntoConstraints="NO" id="gBI-pM-cZ3">
-                        <rect key="frame" x="239" y="56" width="76" height="38"/>
+                        <rect key="frame" x="229" y="54" width="86" height="40"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image 1" translatesAutoresizingMaskIntoConstraints="NO" id="Mg1-Xy-yVX">
-                                <rect key="frame" x="0.0" y="0.0" width="36.666666666666664" height="38"/>
+                                <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <real key="value" value="16.5"/>
+                                        <integer key="value" value="20"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image 1" translatesAutoresizingMaskIntoConstraints="NO" id="fJq-Sn-TEC">
-                                <rect key="frame" x="19.666666666666682" y="0.0" width="36.666666666666657" height="38"/>
+                                <rect key="frame" x="23" y="0.0" width="40" height="40"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <real key="value" value="16.5"/>
+                                        <integer key="value" value="20"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Image 1" translatesAutoresizingMaskIntoConstraints="NO" id="roI-Vj-iXl">
-                                <rect key="frame" x="39.333333333333314" y="0.0" width="36.666666666666657" height="38"/>
+                                <rect key="frame" x="46" y="0.0" width="40" height="40"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <real key="value" value="16.5"/>
+                                        <integer key="value" value="20"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" constant="38" id="Bzn-kD-18j"/>
-                            <constraint firstAttribute="width" constant="76" id="Edm-Rr-Ahm"/>
+                            <constraint firstAttribute="height" constant="40" id="Bzn-kD-18j"/>
+                            <constraint firstAttribute="width" constant="86" id="Edm-Rr-Ahm"/>
                         </constraints>
                     </stackView>
                 </subviews>

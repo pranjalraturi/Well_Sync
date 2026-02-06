@@ -15,34 +15,6 @@ class GraphCollectionViewCell: UICollectionViewCell {
         // Initialization code
         barchart()
     }
-//    func barchart(){
-//        // step 1
-//        let days = ["Sun","Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-//        let values = [28, 50, 60, 30, 42, 91, 52]
-//        
-//        // step 2
-//        var dataEntry: [BarChartDataEntry] = []
-//        //step 3
-//        for i in 0..<days.count {
-//            let value = BarChartDataEntry(x: Double(i), y: Double(values[i]))
-//            dataEntry.append(value)
-//        }
-//        // step 4
-//        let dataSet = BarChartDataSet(entries: dataEntry, label: "Barchart Unit Test Data")
-//        // step 5
-//        let data = BarChartData(dataSet: dataSet)
-//        
-//        // step 6
-//        barChart.data = data
-//        data.barWidth = 0.5
-//        dataSet.colors = [.red, .blue, .yellow, .green, .orange, .purple, .systemCyan]
-//        barChart.xAxis.enabled = false
-//        barChart.rightAxis.enabled = false
-//        barChart.leftAxis.enabled = false
-//        barChart.legend.enabled = false
-//        barChart.leftAxis.enabled = false
-//        barChart.animate(yAxisDuration: 1.0)
-//    }
     func barchart() {
 
         let values = [5, 3, 1, 2, 3, 4, 5]
@@ -55,7 +27,7 @@ class GraphCollectionViewCell: UICollectionViewCell {
 
         let dataSet = BarChartDataSet(entries: entries)
 
-        dataSet.colors = [.systemOrange]      // single color
+        dataSet.colors = [.systemOrange,.systemGray4,.systemGray4,.systemGray4,.systemGray4,.systemGray4,.systemOrange]
         dataSet.drawValuesEnabled = false   // hide value labels
         dataSet.highlightEnabled = false
 

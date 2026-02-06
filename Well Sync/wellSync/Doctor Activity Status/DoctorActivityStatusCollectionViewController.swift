@@ -27,16 +27,25 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
+        if section == 0{
+            return 1
+        }
         return activities.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.section == 0{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityStateCell", for: indexPath) as! activitystatusringCollectionViewCell
+            cell.configure(progress: 3.0/7.0)
+            return cell
+        }
+        
         if activities[indexPath.row] == "Art" || activities[indexPath.row] == "Journal" {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "uploadCell", for: indexPath) as! UploadCollectionViewCell
             return cell
@@ -45,30 +54,58 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
         return cell
     }
     
-    
     func generateLayout() -> UICollectionViewLayout {
-        //createthe itemSize
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1.0))
-        
-        //certe the item
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        //create teh siz eof the group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                               heightDimension: .absolute(120))
-        
-        //create the group
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
-        group.interItemSpacing = .flexible(10)
-        
-        //create the section
-        let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
-        section.interGroupSpacing = 10
-        
-        let layout = UICollectionViewCompositionalLayout(section: section)
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
+            if sectionIndex == 0 {
+                return self.generateLayoutForS1()
+            } else {
+                return self.generateLayoutForS2()
+            }
+        }
         return layout
-        
+    }
+
+    
+    func generateLayoutForS1() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(1.0)
+            )
+
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(160)
+            )
+
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = .init(top: 16, leading: 16, bottom: 8, trailing: 16)
+
+            return section
+    }
+    
+    func generateLayoutForS2() -> NSCollectionLayoutSection {
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(1.0)
+            )
+
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(120)
+            )
+
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = .init(top: 8, leading: 16, bottom: 16, trailing: 16)
+            section.interGroupSpacing = 10
+
+            return section
     }
 }
