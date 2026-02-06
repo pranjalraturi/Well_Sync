@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="BarChartCollectionViewCell" customModule="wellSync" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="477" height="235"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="477" height="235"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jvu-mA-Qmn" customClass="BarChartView" customModule="DGCharts">
+                        <rect key="frame" x="12" y="46.333333333333329" width="453" height="180.66666666666669"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="16"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mood Chart" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tez-jB-QbV">
+                        <rect key="frame" x="12.000000000000007" y="11.999999999999998" width="113.66666666666669" height="26.333333333333329"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Jvu-mA-Qmn" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="L9Q-6O-nk8"/>
+                <constraint firstItem="Jvu-mA-Qmn" firstAttribute="top" secondItem="tez-jB-QbV" secondAttribute="bottom" constant="8" id="aTl-39-d0w"/>
+                <constraint firstItem="tez-jB-QbV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="bAC-4C-iSE"/>
+                <constraint firstItem="tez-jB-QbV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="12" id="ptE-il-2if"/>
+                <constraint firstAttribute="bottom" secondItem="Jvu-mA-Qmn" secondAttribute="bottom" constant="8" id="qcB-ud-ZqA"/>
+                <constraint firstAttribute="trailing" secondItem="Jvu-mA-Qmn" secondAttribute="trailing" constant="12" id="rsX-jK-iCc"/>
+            </constraints>
+            <size key="customSize" width="477" height="235"/>
+            <connections>
+                <outlet property="barChart" destination="Jvu-mA-Qmn" id="Fn0-G7-qKR"/>
+            </connections>
+            <point key="canvasLocation" x="88" y="145"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
