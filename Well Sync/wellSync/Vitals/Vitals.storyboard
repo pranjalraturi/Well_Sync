@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Vitals-->
+        <scene sceneID="NKc-Tm-byF">
+            <objects>
+                <collectionViewController storyboardIdentifier="vitals" useStoryboardIdentifierAsRestorationIdentifier="YES" id="tpw-qc-xW0" customClass="VitalsCollectionViewController" customModule="wellSync" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Joc-Dm-2jE">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="fa3-XP-EUT">
+                            <size key="itemSize" width="393" height="59"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="segment" id="WCh-ng-PIm">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="ddC-po-SqK">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="iXC-SE-5J9">
+                                            <rect key="frame" x="8" y="14.666666666666664" width="377" height="32"/>
+                                            <segments>
+                                                <segment title="Weekly"/>
+                                                <segment title="Monthly"/>
+                                            </segments>
+                                        </segmentedControl>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="iXC-SE-5J9" secondAttribute="trailing" constant="8" id="Iwh-Cf-Yyg"/>
+                                        <constraint firstItem="iXC-SE-5J9" firstAttribute="centerX" secondItem="ddC-po-SqK" secondAttribute="centerX" id="lH6-Uu-qpi"/>
+                                        <constraint firstItem="iXC-SE-5J9" firstAttribute="centerY" secondItem="ddC-po-SqK" secondAttribute="centerY" id="qyl-4F-5fN"/>
+                                        <constraint firstItem="iXC-SE-5J9" firstAttribute="leading" secondItem="ddC-po-SqK" secondAttribute="leading" constant="8" id="tej-2Q-PaU"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="393" height="60"/>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="filter" id="uAl-cU-NJK">
+                                <rect key="frame" x="0.0" y="70" width="393" height="52"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="x0G-pE-5TU">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="52"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DJh-8F-TWn">
+                                            <rect key="frame" x="12" y="18.666666666666668" width="33.666666666666664" height="15.000000000000004"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="OGx-8o-cGN"/>
+                                            </constraints>
+                                            <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" image="chevron.left" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small"/>
+                                            </buttonConfiguration>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9 Feb - 15 Feb 2026" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="gph-Tc-yfy">
+                                            <rect key="frame" x="119" y="15.999999999999998" width="155" height="20.333333333333329"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oqb-7X-Guu">
+                                            <rect key="frame" x="347.33333333333331" y="18.666666666666668" width="33.666666666666686" height="15.000000000000004"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="DlG-da-pgP"/>
+                                            </constraints>
+                                            <color key="tintColor" systemColor="secondaryLabelColor"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" image="chevron.right" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small"/>
+                                            </buttonConfiguration>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="Oqb-7X-Guu" secondAttribute="trailing" constant="12" id="8Xr-dl-xQE"/>
+                                        <constraint firstItem="DJh-8F-TWn" firstAttribute="leading" secondItem="x0G-pE-5TU" secondAttribute="leading" constant="12" id="A6e-WJ-6jz"/>
+                                        <constraint firstItem="gph-Tc-yfy" firstAttribute="centerY" secondItem="Oqb-7X-Guu" secondAttribute="centerY" id="P63-fv-OFD"/>
+                                        <constraint firstItem="gph-Tc-yfy" firstAttribute="centerY" secondItem="x0G-pE-5TU" secondAttribute="centerY" id="Pqw-Mq-QDI"/>
+                                        <constraint firstItem="gph-Tc-yfy" firstAttribute="centerY" secondItem="DJh-8F-TWn" secondAttribute="centerY" id="QoN-hc-ul4"/>
+                                        <constraint firstItem="gph-Tc-yfy" firstAttribute="centerX" secondItem="x0G-pE-5TU" secondAttribute="centerX" id="gRw-NW-ja4"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="393" height="52"/>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="tpw-qc-xW0" id="7tY-Em-DVk"/>
+                            <outlet property="delegate" destination="tpw-qc-xW0" id="oDq-h0-awY"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Vitals" id="p65-SG-PK0"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gbS-6M-UPd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1532.06106870229" y="-163.38028169014086"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bvR-gh-exT">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xe0-wO-JHe" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="feY-hb-v0E">
+                        <rect key="frame" x="0.0" y="118" width="393" height="106"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="tpw-qc-xW0" kind="relationship" relationship="rootViewController" id="RpB-t9-jHv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gkT-U8-cQX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="605.3435114503817" y="-163.38028169014086"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="chevron.left" catalog="system" width="97" height="128"/>
+        <image name="chevron.right" catalog="system" width="97" height="128"/>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiarySystemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

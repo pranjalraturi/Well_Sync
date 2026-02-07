@@ -43,7 +43,7 @@ class ActivityStatusRingView: UIView {
         trackLayer.fillColor = UIColor.clear.cgColor
 
         progressLayer.path = path.cgPath
-        progressLayer.strokeColor = UIColor.systemCyan.cgColor
+        progressLayer.strokeColor = UIColor.systemOrange.cgColor
         progressLayer.lineWidth = 12
         progressLayer.fillColor = UIColor.clear.cgColor
         progressLayer.lineCap = .round
@@ -54,7 +54,7 @@ class ActivityStatusRingView: UIView {
     }
 
     func setProgress(_ value: CGFloat, animated: Bool = true, duration: CFTimeInterval = 0.8) {
-        let clamped = min(max(value, 0), 0)
+        let clamped = min(max(value, 0), 1)
 
         if animated {
             animateProgress(to: clamped, duration: duration)
@@ -65,7 +65,7 @@ class ActivityStatusRingView: UIView {
     
     private func animateProgress(to value: CGFloat, duration: CFTimeInterval) {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.fromValue = 1
+        animation.fromValue = 0
         animation.toValue = value
         animation.duration = duration
         animation.timingFunction = CAMediaTimingFunction(name: .linear)
@@ -80,9 +80,10 @@ class ActivityStatusRingView: UIView {
     }
 }
 
+
 class DoctorActivityStatusCollectionViewController: UICollectionViewController {
 
-    var activities = ["Art","Journal","Breathing","Walking"]
+    var activities = ["Art","Breathing Exercise","Journal","Walking"]
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -119,9 +120,15 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
         
         if activities[indexPath.row] == "Art" || activities[indexPath.row] == "Journal" {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "uploadCell", for: indexPath) as! UploadCollectionViewCell
+            if let label = cell.viewWithTag(2) as? UILabel {
+                label.text = activities[indexPath.row]
+            }
             return cell
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "graphCell", for: indexPath) as! GraphCollectionViewCell
+        if let label = cell.viewWithTag(2) as? UILabel {
+            label.text = activities[indexPath.row]
+        }
         return cell
     }
     
