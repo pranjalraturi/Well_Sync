@@ -9,6 +9,77 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
+class ActivityStatusRingView: UIView {
+
+    private let trackLayer = CAShapeLayer()
+    private let progressLayer = CAShapeLayer()
+    private var didSetup = false
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        if !didSetup {
+            setupLayers()
+            didSetup = true
+        }
+    }
+
+    
+    private func setupLayers() {
+        let center = CGPoint(x: bounds.midX, y: bounds.midY)
+        let radius = min(bounds.width, bounds.height) / 2 - 8
+
+        let path = UIBezierPath(
+            arcCenter: center,
+            radius: radius,
+            startAngle: -.pi / 2,
+            endAngle: 1.5 * .pi,
+            clockwise: true
+        )
+
+        trackLayer.path = path.cgPath
+        trackLayer.strokeColor = UIColor.systemGray4.cgColor
+        trackLayer.lineWidth = 12
+        trackLayer.fillColor = UIColor.clear.cgColor
+
+        progressLayer.path = path.cgPath
+        progressLayer.strokeColor = UIColor.systemCyan.cgColor
+        progressLayer.lineWidth = 12
+        progressLayer.fillColor = UIColor.clear.cgColor
+        progressLayer.lineCap = .round
+        progressLayer.strokeEnd = 0
+
+        layer.addSublayer(trackLayer)
+        layer.addSublayer(progressLayer)
+    }
+
+    func setProgress(_ value: CGFloat, animated: Bool = true, duration: CFTimeInterval = 0.8) {
+        let clamped = min(max(value, 0), 0)
+
+        if animated {
+            animateProgress(to: clamped, duration: duration)
+        } else {
+            progressLayer.strokeEnd = clamped
+        }
+    }
+    
+    private func animateProgress(to value: CGFloat, duration: CFTimeInterval) {
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.fromValue = 1
+        animation.toValue = value
+        animation.duration = duration
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+
+        progressLayer.strokeEnd = value
+        progressLayer.add(animation, forKey: "progress")
+    }
+    
+    func reset() {
+        progressLayer.removeAllAnimations()
+        progressLayer.strokeEnd = 0
+    }
+}
+
 class DoctorActivityStatusCollectionViewController: UICollectionViewController {
 
     var activities = ["Art","Journal","Breathing","Walking"]
