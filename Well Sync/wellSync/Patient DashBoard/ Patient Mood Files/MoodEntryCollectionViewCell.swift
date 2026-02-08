@@ -18,6 +18,11 @@ class MoodEntryCollectionViewCell: UICollectionViewCell {
             view.layer.cornerRadius = 8
             view.isUserInteractionEnabled = true
         }
+        for (index, view) in moodView.enumerated() {
+            view.layer.cornerRadius = 8
+            view.isUserInteractionEnabled = true
+            view.tag = index   
+        }
     }
     
     func configureTap(target: Any, action: Selector) {

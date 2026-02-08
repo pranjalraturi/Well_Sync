@@ -29,57 +29,64 @@ class AddActivityTableViewController: UITableViewController {
     }
     func setupActivityMenu() {
 
-            let activityList = ["Journaling", "Art", "Exercise", "Breathing", "Custom"]
-            let frequencyList = ["Once a day","Twice a day","Once a week", "Twice a week","Alternate days"]
-            let timingList = ["Morning","Afternoon", "Evening"]
-            let typeList = ["Upload","Graph"]
+        let activityList = ["Journaling", "Art", "Exercise", "Breathing"]
+        let frequencyList = ["Once a day","Twice a day","Once a week", "Twice a week","Alternate days"]
+        let timingList = ["Morning","Afternoon", "Evening"]
+        let typeList = ["Upload","Timer"]
 
+        let activityActions = activityList.map { option in
+            UIAction(title: option) { [weak self] _ in
+                guard let self = self else { return }
 
-            // 🔥 Activity menu (important part)
-            let activityActions = activityList.map { option in
-                UIAction(title: option) { [weak self] _ in
-                    guard let self = self else { return }
-
-                    self.activityListButton.setTitle(option, for: .normal)
-
-                    // ⭐ show/hide extra rows
-                    self.toggleCustomRows(show: option == "Custom")
-                }
+                self.activityListButton.setTitle(option, for: .normal)
+                self.toggleCustomRows(show: false)
             }
+        }
+        let custom = UIAction(title: "Custom") { [weak self] _ in
+            guard let self = self else { return }
 
-            activityListButton.menu = UIMenu(children: activityActions)
-            activityListButton.showsMenuAsPrimaryAction = true
+            self.activityListButton.setTitle("Custom", for: .normal)
+            self.toggleCustomRows(show: true)
+        }
+        let customGroup = UIMenu(options: .displayInline, children: [
+            custom
+        ])
+        
+        let mainGroup = UIMenu(options: .displayInline, children: activityActions)
+            
+        activityListButton.menu = UIMenu(children: [mainGroup, customGroup])
+        activityListButton.showsMenuAsPrimaryAction = true
 
 
             // Frequency
-            let frequencyActions = frequencyList.map { option in
-                UIAction(title: option) { [weak self] _ in
-                    self?.frequencyButton.setTitle(option, for: .normal)
-                }
+        let frequencyActions = frequencyList.map { option in
+            UIAction(title: option) { [weak self] _ in
+                self?.frequencyButton.setTitle(option, for: .normal)
             }
+        }
 
 
-            frequencyButton.menu = UIMenu(children: frequencyActions)
-            frequencyButton.showsMenuAsPrimaryAction = true
+        frequencyButton.menu = UIMenu(children: frequencyActions)
+        frequencyButton.showsMenuAsPrimaryAction = true
 
 
             // Timing
-            let timingActions = timingList.map { option in
-                UIAction(title: option) { [weak self] _ in
-                    self?.activityTimingButton.setTitle(option, for: .normal)
-                }
+        let timingActions = timingList.map { option in
+            UIAction(title: option) { [weak self] _ in
+                self?.activityTimingButton.setTitle(option, for: .normal)
             }
+        }
 
 
-            activityTimingButton.menu = UIMenu(children: timingActions)
-            activityTimingButton.showsMenuAsPrimaryAction = true
+        activityTimingButton.menu = UIMenu(children: timingActions)
+        activityTimingButton.showsMenuAsPrimaryAction = true
         
             // Type
-            let typeActions = typeList.map { option in
-                UIAction(title: option) { [weak self] _ in
-                    self?.typeButton.setTitle(option, for: .normal)
-                }
+        let typeActions = typeList.map { option in
+            UIAction(title: option) { [weak self] _ in
+                self?.typeButton.setTitle(option, for: .normal)
             }
+        }
 
 
         typeButton.menu = UIMenu(children: typeActions)
@@ -87,9 +94,6 @@ class AddActivityTableViewController: UITableViewController {
         
         
         }
-
-
-        // MARK: - Dynamic Row Logic
 
         func toggleCustomRows(show: Bool) {
 
@@ -104,7 +108,7 @@ class AddActivityTableViewController: UITableViewController {
 
             tableView.beginUpdates()
 
-            if show {
+            if isCustomSelected {
                 tableView.insertRows(at: indexPaths, with: .fade)
             } else {
                 tableView.deleteRows(at: indexPaths, with: .fade)
@@ -112,14 +116,9 @@ class AddActivityTableViewController: UITableViewController {
 
             tableView.endUpdates()
         }
-
-
-        // MARK: - TableView DataSource
-
         override func tableView(_ tableView: UITableView,
                                 numberOfRowsInSection section: Int) -> Int {
 
-            // Section 0 = Activity section
             if section == 0 {
                 return isCustomSelected ? 3 : 1
             }
@@ -131,7 +130,6 @@ class AddActivityTableViewController: UITableViewController {
         override func tableView(_ tableView: UITableView,
                                 cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-            // Section 0 dynamic rows
             if indexPath.section == 0 {
 
                 switch indexPath.row {
