@@ -87,7 +87,7 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="y7d-T7-7pO"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="qe1-1D-GTs" firstAttribute="leading" secondItem="ple-6I-Jb2" secondAttribute="trailing" constant="16" id="06W-Ti-JLu"/>
                 <constraint firstItem="IV3-bA-7mM" firstAttribute="leading" secondItem="q1q-kt-PzC" secondAttribute="trailing" constant="14" id="3zv-pf-8DD"/>
@@ -131,6 +131,9 @@
         </systemColor>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

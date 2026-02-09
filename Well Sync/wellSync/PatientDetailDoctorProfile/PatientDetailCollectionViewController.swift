@@ -151,4 +151,19 @@ extension PatientDetailCollectionViewController{
         return section
     }
 
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 1:
+            performSegue(withIdentifier: "Summarised", sender: nil)
+        case 2:
+            performSegue(withIdentifier: "mood", sender: nil)
+        case 3:
+            performSegue(withIdentifier: "activity", sender: nil)
+        case 4:
+            performSegue(withIdentifier: "vitals", sender: nil)
+        default:
+            break
+        }
+    }
+    
 }

@@ -59,6 +59,7 @@
                                             </subviews>
                                         </stackView>
                                     </subviews>
+                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstItem="FD1-NG-hAP" firstAttribute="centerY" secondItem="WB1-7u-fV6" secondAttribute="centerY" id="77n-AO-a9c"/>
                                         <constraint firstItem="FD1-NG-hAP" firstAttribute="leading" secondItem="WB1-7u-fV6" secondAttribute="leading" constant="12" id="JT3-Tp-8N8"/>
@@ -68,6 +69,7 @@
                                         <constraint firstItem="5L8-1Z-oRa" firstAttribute="leading" secondItem="FD1-NG-hAP" secondAttribute="trailing" constant="16" id="l5C-hl-gyg"/>
                                     </constraints>
                                 </collectionViewCellContentView>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <size key="customSize" width="393" height="80"/>
                                 <connections>
                                     <outlet property="describe" destination="EZk-DM-lDc" id="sWR-mi-06B"/>
@@ -76,10 +78,10 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="V6R-w5-ZyI">
-                                <rect key="frame" x="132.66666666666666" y="90" width="128" height="128"/>
+                                <rect key="frame" x="132.66666666666666" y="90" width="127.99999999999997" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Jjh-Ps-Hms">
-                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionViewCellContentView>
                             </collectionViewCell>
@@ -94,11 +96,35 @@
                     </navigationItem>
                     <connections>
                         <outlet property="PatientProfileCollectionView" destination="siV-89-yV3" id="KvI-eh-kfa"/>
+                        <segue destination="VJ9-8e-P4N" kind="show" identifier="vitals" id="bVR-In-oHk"/>
+                        <segue destination="JSj-iD-Lz2" kind="show" identifier="Summarised" id="I3h-cq-jPq"/>
+                        <segue destination="uxF-by-EUx" kind="show" identifier="activity" id="6PK-sM-yWR"/>
+                        <segue destination="ziR-wi-u1l" kind="show" identifier="mood" id="W1b-9A-Mqt"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aDk-bx-aTS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2921" y="1513"/>
+            <point key="canvasLocation" x="2749" y="1554"/>
+        </scene>
+        <!--Summarised-->
+        <scene sceneID="21x-ou-W7K">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Summarised Report" referencedIdentifier="Summarised" id="JSj-iD-Lz2" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="KSa-9J-hFq"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VCs-Mc-DpS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3674" y="1432"/>
+        </scene>
+        <!--vitals-->
+        <scene sceneID="zJc-t4-INV">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Vitals" referencedIdentifier="vitals" id="VJ9-8e-P4N" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="hGp-54-1F0"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sHH-3R-yGu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3706" y="1598"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HTt-HL-xQr">
@@ -116,20 +142,43 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TTD-QA-5Fr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2022" y="1513"/>
+            <point key="canvasLocation" x="1970" y="1554"/>
+        </scene>
+        <!--activity-->
+        <scene sceneID="YJI-cR-Smq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Doctor_Activity" referencedIdentifier="activity" id="uxF-by-EUx" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="8bO-A3-IYT"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PaF-Pr-huF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3696" y="1513"/>
+        </scene>
+        <!--mood-->
+        <scene sceneID="8uG-lE-QKh">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Doctor_MoodAnalysis" referencedIdentifier="mood" id="ziR-wi-u1l" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="vc0-KT-PWr"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qZu-33-dHg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3705" y="1659"/>
         </scene>
     </scenes>
     <resources>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="waveform.path.ecg" catalog="system" width="128" height="125"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemGroupedBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -59,7 +59,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="gFk-rj-hFw" secondAttribute="trailing" constant="8" id="0qL-h2-kdy"/>
                                                 <constraint firstItem="gFk-rj-hFw" firstAttribute="top" secondItem="QOB-ZA-P4L" secondAttribute="top" constant="16" id="CYF-sl-FDt"/>
@@ -89,6 +89,7 @@
                                         <constraint firstItem="QOB-ZA-P4L" firstAttribute="leading" secondItem="1Ip-ah-KCQ" secondAttribute="leading" constant="16" id="cON-YY-Sw3"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <connections>
                                     <outlet property="cardView" destination="QOB-ZA-P4L" id="JUR-AM-lLQ"/>
                                     <outlet property="iconImage" destination="2mW-8B-WeD" id="rQ6-qR-nLR"/>
@@ -139,6 +140,9 @@
     </scenes>
     <resources>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

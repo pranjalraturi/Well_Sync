@@ -11,6 +11,8 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+//    private var selectedPatient: Patient?
+    
         private let viewModel = HomeViewModel()
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -40,7 +42,15 @@ class HomeViewController: UIViewController {
             )
 
         }
-    }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "PatientDetail" {
+//            if let destination = segue.destination as? PatientDetailViewController {
+//                destination.patient = selectedPatient
+//            }
+//        }
+//    }
+}
 
 
 
@@ -262,6 +272,13 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
 
         }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Only proceed for patient sections (exclude top stats section 0)
+        guard indexPath.section != 0 else { return }
+        let patient = viewModel.patient(at: indexPath.row)
+//        selectedPatient = patient
+        performSegue(withIdentifier: "PatientDetail", sender: self)
+    }
 }
-
 

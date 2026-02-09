@@ -58,7 +58,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="lightTextColor"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="mAx-QV-VAX" firstAttribute="leading" secondItem="nm8-wu-bf5" secondAttribute="trailing" constant="4" id="0Wk-PK-RQb"/>
                                                 <constraint firstItem="nm8-wu-bf5" firstAttribute="leading" secondItem="czB-qh-43h" secondAttribute="trailing" constant="4" id="6zo-TC-4Yy"/>
@@ -131,7 +131,7 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </view>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="lightTextColor"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="iqR-tb-UZS" firstAttribute="top" secondItem="1V4-Qd-adp" secondAttribute="top" constant="12" id="BqA-dX-NPf"/>
                                                 <constraint firstItem="iqR-tb-UZS" firstAttribute="centerX" secondItem="1V4-Qd-adp" secondAttribute="centerX" id="kiH-Ff-mns"/>
@@ -179,7 +179,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="lightTextColor"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="sJO-6i-6Ae" firstAttribute="top" secondItem="OhH-CD-W09" secondAttribute="top" constant="12" id="Kw8-Es-W5Z"/>
                                                 <constraint firstItem="sJO-6i-6Ae" firstAttribute="centerX" secondItem="OhH-CD-W09" secondAttribute="centerX" id="QWh-0q-H66"/>
@@ -273,7 +273,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="lightTextColor"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="fPG-qM-TfU" firstAttribute="leading" secondItem="Zf8-K0-JdS" secondAttribute="leading" constant="16" id="2CO-Xh-a1a"/>
                                                 <constraint firstItem="hfC-kk-yOZ" firstAttribute="top" secondItem="Zf8-K0-JdS" secondAttribute="top" constant="12" id="GO2-tO-C7x"/>
@@ -349,7 +349,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="lightTextColor"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="ESW-HA-58r" firstAttribute="top" secondItem="jPP-2X-fGx" secondAttribute="bottom" constant="4" id="3pi-77-7Js"/>
                                                 <constraint firstItem="ESW-HA-58r" firstAttribute="leading" secondItem="iEg-QQ-Mle" secondAttribute="leading" constant="16" id="74B-p5-h00"/>
@@ -388,11 +388,13 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                     <constraints>
                                         <constraint firstItem="28d-gf-mvu" firstAttribute="leading" secondItem="sdr-aT-YSc" secondAttribute="leading" constant="12" id="QYX-BK-fzB"/>
                                         <constraint firstItem="28d-gf-mvu" firstAttribute="top" secondItem="sdr-aT-YSc" secondAttribute="top" constant="8" id="tCY-7G-d2N"/>
                                     </constraints>
                                 </collectionViewCellContentView>
+                                <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                 <size key="customSize" width="387" height="43"/>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BasicCell" id="PVL-oN-h95">
@@ -424,7 +426,7 @@
                                                     <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </imageView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="lightTextColor"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="ctP-nA-zft" firstAttribute="leading" secondItem="w6w-QK-nPq" secondAttribute="leading" constant="16" id="M21-MG-SoH"/>
                                                 <constraint firstAttribute="trailing" secondItem="aKO-h3-cAR" secondAttribute="trailing" constant="8" id="NhZ-8S-lqq"/>
@@ -28743,11 +28745,17 @@ mgANIaIADSGlAA0hqgANIbIAAAAAAAAEAQAAAAAAAABaAAAAAAAAAAAAAAAAAA0htQ
         <systemColor name="lightTextColor">
             <color white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGrayColor">
             <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiarySystemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="tertiarySystemGroupedBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

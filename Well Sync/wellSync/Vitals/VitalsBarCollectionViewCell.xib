@@ -31,7 +31,7 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="prevRangeTapped:" destination="6JC-Ah-DjT" eventType="touchUpInside" id="Vx7-FQ-0FZ"/>
+                                    <action selector="prevRangeTapped:" destination="6JC-Ah-DjT" eventType="touchUpInside" id="7e5-gv-8df"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9 Feb - 15 Feb 2026" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="b20-Ly-UZJ">
@@ -51,7 +51,7 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="nextRangeTapped:" destination="6JC-Ah-DjT" eventType="touchUpInside" id="DMZ-UX-vQR"/>
+                                    <action selector="nextRangeTapped:" destination="6JC-Ah-DjT" eventType="touchUpInside" id="JgH-oz-FiL"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -125,8 +125,6 @@
                 <outlet property="barChartView" destination="NHa-iI-Fcm" id="PZW-Qd-knh"/>
                 <outlet property="chartRangeLabel" destination="b20-Ly-UZJ" id="zl6-kH-S28"/>
                 <outlet property="iconImageView" destination="2Re-PX-1VC" id="4iZ-09-dFk"/>
-                <outlet property="nextUnitbutton" destination="lZL-i2-E75" id="osM-EY-y9A"/>
-                <outlet property="previousUnitButton" destination="0wu-Dg-EUu" id="1Fj-qi-raA"/>
             </connections>
             <point key="canvasLocation" x="-515" y="171"/>
         </collectionViewCell>
