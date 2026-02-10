@@ -100,6 +100,7 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="lRb-5R-JrT" secondAttribute="bottom" constant="14" id="3ac-qS-cpg"/>
                 <constraint firstAttribute="trailing" secondItem="lRb-5R-JrT" secondAttribute="trailing" constant="16" id="GFk-Jh-hCI"/>
@@ -128,6 +129,9 @@
         <image name="profile" width="736" height="1472"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

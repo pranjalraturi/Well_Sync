@@ -36,7 +36,7 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="Jvu-mA-Qmn" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="L9Q-6O-nk8"/>
                 <constraint firstItem="Jvu-mA-Qmn" firstAttribute="top" secondItem="tez-jB-QbV" secondAttribute="bottom" constant="8" id="aTl-39-d0w"/>
@@ -53,6 +53,9 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

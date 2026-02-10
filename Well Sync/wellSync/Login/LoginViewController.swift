@@ -11,6 +11,8 @@ class LoginViewController: UIViewController {
 
     let gradient = CAGradientLayer()
     
+    @IBOutlet weak var userName: UITextField!
+    @IBOutlet weak var passWord: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -58,5 +60,17 @@ class LoginViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @IBAction func loginButton(_ sender: UIButton) {
+        if userName.text == "admin" && passWord.text == "admin"
+        {
+            performSegue(withIdentifier: "doctorScreen", sender: nil)
+        }
+        else if userName.text == "admin1" && passWord.text == "admin1"
+        {
+            performSegue(withIdentifier: "PatientScreen", sender: nil)
+        }
+    }
+    
 
 }

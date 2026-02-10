@@ -17,12 +17,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lh5-ja-Bvp">
-                                <rect key="frame" x="8" y="256" width="377" height="596"/>
+                                <rect key="frame" x="8" y="150" width="377" height="702"/>
                                 <subviews>
                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dmT-bo-HBL">
-                                        <rect key="frame" x="0.0" y="0.0" width="377" height="596"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="377" height="702"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="WRR-BU-7zh">
-                                            <rect key="frame" x="0.0" y="0.0" width="377" height="596"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="377" height="702"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="yXN-gF-Dxf">
@@ -30,7 +30,6 @@
                                                     <subviews>
                                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T8z-0D-uBY">
                                                             <rect key="frame" x="0.0" y="0.0" width="329" height="48"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="48" id="cqU-ox-5Fb"/>
                                                             </constraints>
@@ -71,6 +70,9 @@
                                                                     <rect key="frame" x="241.33333333333329" y="0.0" width="87.666666666666657" height="48"/>
                                                                     <state key="normal" title="Button"/>
                                                                     <buttonConfiguration key="configuration" style="tinted" title="LogIn"/>
+                                                                    <connections>
+                                                                        <action selector="loginButton:" destination="xfG-Od-1w6" eventType="touchUpInside" id="hAa-lF-mIL"/>
+                                                                    </connections>
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
@@ -120,7 +122,7 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ZHR-5h-IMA"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottomMargin" secondItem="lh5-ja-Bvp" secondAttribute="bottom" constant="-68" id="BBh-Ue-2P4"/>
                             <constraint firstItem="lh5-ja-Bvp" firstAttribute="leading" secondItem="ZHR-5h-IMA" secondAttribute="leading" constant="8" id="Euj-eh-CXW"/>
@@ -131,19 +133,32 @@
                     <navigationItem key="navigationItem" title="Sign In" id="Urb-7A-Czh"/>
                     <connections>
                         <outlet property="glassView" destination="lh5-ja-Bvp" id="aEv-WZ-8Cs"/>
+                        <outlet property="passWord" destination="hAV-QF-Jl0" id="DBR-Ur-dna"/>
+                        <outlet property="userName" destination="T8z-0D-uBY" id="mQ7-Zf-fgE"/>
+                        <segue destination="gPl-jy-1Sz" kind="show" identifier="doctorScreen" id="Gld-lb-B7H"/>
+                        <segue destination="hzT-Xb-lwj" kind="show" identifier="PatientScreen" id="7NE-ee-cBr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mz6-ex-vxa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2199" y="-270"/>
         </scene>
+        <!--doctor-->
+        <scene sceneID="IQl-rP-lNh">
+            <objects>
+                <viewControllerPlaceholder storyboardName="DoctorFrontPage" referencedIdentifier="doctor" id="gPl-jy-1Sz" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="y00-jc-dIl"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TxS-cS-BOo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2937" y="-370"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="Sar-kw-9t2">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dsQ-qR-b9h" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="dsQ-qR-b9h" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="bhh-JB-NnL">
-                        <rect key="frame" x="0.0" y="118" width="393" height="106"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -155,9 +170,19 @@
             </objects>
             <point key="canvasLocation" x="1273" y="-270"/>
         </scene>
+        <!--Patient-->
+        <scene sceneID="ep5-54-DYx">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Patient_Dashboard" referencedIdentifier="Patient" id="hzT-Xb-lwj" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="e4M-gW-LZ8"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aHS-Jo-3jL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2936" y="-180"/>
+        </scene>
     </scenes>
     <resources>
-        <systemColor name="systemBackgroundColor">
+        <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>

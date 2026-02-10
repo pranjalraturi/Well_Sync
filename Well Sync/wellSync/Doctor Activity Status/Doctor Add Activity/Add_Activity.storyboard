@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AL5-mx-sBa">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
@@ -11,7 +11,7 @@
         <!--Add Activity-->
         <scene sceneID="abF-BC-fwT">
             <objects>
-                <tableViewController id="lIa-Kp-0J4" customClass="AddActivityTableViewController" customModule="wellSync" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController useStoryboardIdentifierAsRestorationIdentifier="YES" id="lIa-Kp-0J4" customClass="AddActivityTableViewController" customModule="wellSync" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="singleLineEtched" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="Y97-1r-0Pd">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -215,7 +215,7 @@
                             <tableViewSection id="9QN-iv-IbU">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="WNc-i7-S8y">
-                                        <rect key="frame" x="20" y="396.00000000000006" width="353" height="51"/>
+                                        <rect key="frame" x="20" y="396" width="353" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WNc-i7-S8y" id="pYm-wI-bMU">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="51"/>
@@ -244,7 +244,7 @@
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="UtW-Pa-kl6">
-                                        <rect key="frame" x="20" y="447.00000000000006" width="353" height="51"/>
+                                        <rect key="frame" x="20" y="447" width="353" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UtW-Pa-kl6" id="f6C-TZ-wbZ">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="51"/>
@@ -321,7 +321,12 @@
                             <outlet property="delegate" destination="lIa-Kp-0J4" id="H0V-Vg-xDA"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Add Activity" id="PfB-Jx-1PW"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Add Activity" id="PfB-Jx-1PW">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="MeO-uX-ORO"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="eFB-e3-7Bw"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="activityCell" destination="SfG-rN-eex" id="PRc-Ia-NoE"/>
                         <outlet property="activityListButton" destination="M4C-I9-G1X" id="kd0-FR-GbN"/>
@@ -340,7 +345,7 @@
         <!--Navigation Controller-->
         <scene sceneID="XKW-WQ-Z7e">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AL5-mx-sBa" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Custom" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="AL5-mx-sBa" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="cui-1E-AF8">
                         <rect key="frame" x="0.0" y="118" width="393" height="54"/>

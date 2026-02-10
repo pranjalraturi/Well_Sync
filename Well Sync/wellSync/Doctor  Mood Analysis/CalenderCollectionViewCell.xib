@@ -293,7 +293,7 @@
                                 </constraints>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Jto-ag-aCi" firstAttribute="leading" secondItem="V8n-zQ-Lcy" secondAttribute="leading" constant="20" id="0SL-Qd-aWq"/>
                             <constraint firstAttribute="trailing" secondItem="WNb-RW-uVz" secondAttribute="trailing" constant="12" id="8tl-Uf-r8n"/>
@@ -326,6 +326,9 @@
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
