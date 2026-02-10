@@ -259,7 +259,7 @@
                                         <rect key="frame" x="20" y="726" width="353" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ghl-Jj-0fr" id="Vvb-IU-Qyg">
-                                            <rect key="frame" x="0.0" y="0.0" width="322.66666666666669" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="334.66666666666669" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Log Out" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6IW-WU-Dhd">
@@ -277,7 +277,7 @@
                                         <rect key="frame" x="20" y="777" width="353" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7Kk-qi-bFS" id="5rW-xZ-0bB">
-                                            <rect key="frame" x="0.0" y="0.0" width="322.66666666666669" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="334.66666666666669" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Delete Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOv-wR-FGe">
@@ -324,7 +324,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jy9-BQ-Y9I" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2043" y="419"/>
+            <point key="canvasLocation" x="2043" y="617"/>
         </scene>
         <!--Today-->
         <scene sceneID="EsL-hD-VJb">
@@ -335,7 +335,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="GU5-VT-qaU">
-                                <rect key="frame" x="0.0" y="172" width="393" height="563"/>
+                                <rect key="frame" x="0.0" y="118" width="393" height="666"/>
                                 <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5I9-ee-Mif">
                                     <size key="itemSize" width="128" height="128"/>
@@ -367,21 +367,16 @@
                     <navigationItem key="navigationItem" title="Today" style="editor" id="W6s-Qr-ikP">
                         <rightBarButtonItems>
                             <barButtonItem title="Item" image="ellipsis" catalog="system" id="EAG-Ek-Fl5"/>
-                            <barButtonItem title="Item" image="person.fill.badge.plus" catalog="system" id="5uh-q3-bFV">
-                                <connections>
-                                    <segue destination="m9h-qV-ep5" kind="show" id="67F-6A-Op7"/>
-                                </connections>
-                            </barButtonItem>
+                            <barButtonItem title="Item" image="person.fill.badge.plus" catalog="system" id="5uh-q3-bFV"/>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="GU5-VT-qaU" id="lNo-5N-ZZk"/>
-                        <segue destination="Ktp-cf-v9k" kind="show" identifier="PatientDetail" id="Rf9-iW-Sz4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l7f-Kd-Msy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1327" y="854"/>
+            <point key="canvasLocation" x="4686" y="966"/>
         </scene>
         <!--PatientDetail-->
         <scene sceneID="dFR-Ve-YfW">
@@ -392,6 +387,53 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m61-AJ-uzJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2085" y="860"/>
+        </scene>
+        <!--Today-->
+        <scene sceneID="aBH-An-kUQ">
+            <objects>
+                <collectionViewController id="Opd-4y-g9J" customClass="HomeCollectionViewController" customModule="wellSync" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="RTR-Pr-Foy">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="LCy-Tx-8aF">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Cob-oF-eoW">
+                                <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="esw-TH-W69">
+                                    <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="Opd-4y-g9J" id="9Xv-wT-V6w"/>
+                            <outlet property="delegate" destination="Opd-4y-g9J" id="u5l-AD-cPg"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Today" id="GPd-M5-Jbe">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="ellipsis" catalog="system" id="X7o-e5-G7o"/>
+                            <barButtonItem title="Item" image="person.fill.badge.plus" catalog="system" id="zeb-yx-KgB">
+                                <connections>
+                                    <segue destination="m9h-qV-ep5" kind="show" id="E5I-K8-r2K"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="Ktp-cf-v9k" kind="show" identifier="PatientDetail" id="zb7-bm-X89"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wx2-iR-aaf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1327" y="860"/>
         </scene>
         <!--Home-->
         <scene sceneID="bU4-MZ-k4Y">
@@ -792,7 +834,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="9R2-eb-Kcm" kind="relationship" relationship="rootViewController" id="awq-2O-twX"/>
+                        <segue destination="Opd-4y-g9J" kind="relationship" relationship="rootViewController" id="LuA-mq-zFI"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ewp-eb-yT0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

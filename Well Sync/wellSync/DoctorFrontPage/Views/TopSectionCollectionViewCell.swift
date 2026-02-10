@@ -15,6 +15,7 @@ class TopSectionCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+//        contentView.backgroundColor = .secondarySystemBackground
         
     }
     func configure(title: String, subtitle: String) {
