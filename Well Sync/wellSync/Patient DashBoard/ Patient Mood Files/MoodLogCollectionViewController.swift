@@ -17,11 +17,11 @@ class MoodLogCollectionViewController:
     }
 
     let moodFeelings: [MoodLevel: [String]] = [
-        .verySad: ["Angry", "Anxious", "Afraid", "Disgusted", "Sad"],
-        .sad: ["Annoyed", "Frustrated", "Irritated", "Lonely", "Worried", "Drained", "Disappointed", "Stressed"],
-        .neutral: ["Calm", "Balanced", "Okay", "Indifferent", "Content"],
-        .happy: ["Happy", "Grateful", "Relieved", "Proud", "Satisfied", "Hopeful", "Inspired"],
-        .veryHappy: ["Joyful", "Excited", "Thrilled", "Delighted", "Amazed", "Peaceful", "Loved"]
+        .verySad: ["Angry", "Anxious", "scared", "Jealous","Overwhelmed", "Embarrassed", "Frustrated", "Anoyed", "Stressed",  "Worried", "Guilty", "Hopeless", "Iritated", "Lonely", "Discouraged","Disappointed", "Drained", "Sad"],
+        .sad: ["Angry", "Anxious", "scared", "Jealous","Overwhelmed", "Embarrassed", "Frustrated", "Anoyed", "Stressed",  "Worried", "Guilty", "Hopeless", "Iritated", "Lonely", "Discouraged","Disappointed", "Drained", "Sad"],
+        .neutral: ["Calm", "Balanced", "Peaceful", "Indifferent", "Content"],
+        .happy: ["Amazed", "Excited", "Surprised", "Happy", "Joyful", "Brave", "Proud", "Confident", "Hopeful", "Amused", "Satisfied", "Relieved", "Grateful", "Content",  "Inspired"],
+        .veryHappy: ["Amazed", "Excited", "Surprised", "Happy", "Joyful", "Brave", "Proud", "Confident", "Hopeful", "Amused", "Satisfied", "Relieved", "Grateful", "Content",  "Inspired"]
     ]
     
     
@@ -36,8 +36,6 @@ class MoodLogCollectionViewController:
             layout.minimumInteritemSpacing = 8
             layout.minimumLineSpacing = 8
         }
-        
-
     }
 
     @IBAction func closeButton(_ sender: Any) {
@@ -132,7 +130,7 @@ class MoodLogCollectionViewController:
             return CGSize(width: collectionView.frame.width, height: 180)
         }
         if indexPath.section == 1{
-            return CGSize(width: collectionView.frame.width, height: 192)
+            return CGSize(width: collectionView.frame.width, height: 208)
         }
         return CGSize(width: collectionView.frame.width, height: 220)
 

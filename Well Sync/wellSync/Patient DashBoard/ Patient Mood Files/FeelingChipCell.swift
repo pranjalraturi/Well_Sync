@@ -28,7 +28,7 @@ class FeelingChipCell: UICollectionViewCell {
         contentView.clipsToBounds = true
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        titleLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
         
@@ -37,8 +37,8 @@ class FeelingChipCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 14),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -14)
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10)
         ])
         
         titleLabel.setContentHuggingPriority(.required, for: .horizontal)

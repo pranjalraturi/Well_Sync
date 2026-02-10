@@ -24,7 +24,7 @@ class SummarisedReportTableViewController: UITableViewController {
         tableView.sectionHeaderTopPadding = 8
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 250
-        
+        tableView.dataSource = self
 
     }
 

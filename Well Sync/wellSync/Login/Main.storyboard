@@ -17,16 +17,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lh5-ja-Bvp">
-                                <rect key="frame" x="8" y="150" width="377" height="702"/>
+                                <rect key="frame" x="8" y="242" width="377" height="610"/>
                                 <subviews>
                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dmT-bo-HBL">
-                                        <rect key="frame" x="0.0" y="0.0" width="377" height="702"/>
+                                        <rect key="frame" x="0.0" y="1" width="377" height="609"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="WRR-BU-7zh">
-                                            <rect key="frame" x="0.0" y="0.0" width="377" height="702"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="377" height="609"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="yXN-gF-Dxf">
-                                                    <rect key="frame" x="24" y="40" width="329" height="176"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="yXN-gF-Dxf">
+                                                    <rect key="frame" x="24" y="39.999999999999986" width="329" height="244.66666666666663"/>
                                                     <subviews>
                                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="T8z-0D-uBY">
                                                             <rect key="frame" x="0.0" y="0.0" width="329" height="48"/>
@@ -51,7 +51,7 @@
                                                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hAV-QF-Jl0">
                                                             <rect key="frame" x="0.0" y="64" width="329" height="48"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <textInputTraits key="textInputTraits"/>
+                                                            <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                                                     <integer key="value" value="16"/>
@@ -59,26 +59,28 @@
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </textField>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="wwT-sP-oSc">
-                                                            <rect key="frame" x="0.0" y="128" width="329" height="48"/>
-                                                            <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSu-W2-AKP">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="225.33333333333334" height="48"/>
-                                                                    <buttonConfiguration key="configuration" style="plain" title="Register as a Doctor"/>
-                                                                </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GBc-hq-XTV">
-                                                                    <rect key="frame" x="241.33333333333329" y="0.0" width="87.666666666666657" height="48"/>
-                                                                    <state key="normal" title="Button"/>
-                                                                    <buttonConfiguration key="configuration" style="tinted" title="LogIn"/>
-                                                                    <connections>
-                                                                        <action selector="loginButton:" destination="xfG-Od-1w6" eventType="touchUpInside" id="hAa-lF-mIL"/>
-                                                                    </connections>
-                                                                </button>
-                                                            </subviews>
+                                                        <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="trailing" contentVerticalAlignment="fill" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icf-IQ-8gM">
+                                                            <rect key="frame" x="0.0" y="128" width="329" height="16"/>
                                                             <constraints>
-                                                                <constraint firstItem="tSu-W2-AKP" firstAttribute="height" secondItem="GBc-hq-XTV" secondAttribute="height" id="YPS-L3-IQL"/>
+                                                                <constraint firstAttribute="height" constant="16" id="fT7-fH-06x"/>
                                                             </constraints>
-                                                        </stackView>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain" title="Forget Password?">
+                                                                <fontDescription key="titleFontDescription" style="UICTFontTextStyleCaption1"/>
+                                                            </buttonConfiguration>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GBc-hq-XTV">
+                                                            <rect key="frame" x="0.0" y="160" width="329" height="34.333333333333343"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="tinted" title="LogIn"/>
+                                                            <connections>
+                                                                <action selector="loginButton:" destination="xfG-Od-1w6" eventType="touchUpInside" id="hAa-lF-mIL"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tSu-W2-AKP">
+                                                            <rect key="frame" x="0.0" y="210.33333333333331" width="329" height="34.333333333333343"/>
+                                                            <buttonConfiguration key="configuration" style="plain" title="Register as a Doctor"/>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
@@ -108,10 +110,10 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="dmT-bo-HBL" firstAttribute="top" secondItem="lh5-ja-Bvp" secondAttribute="top" id="HZ2-Ur-54W"/>
                                     <constraint firstItem="dmT-bo-HBL" firstAttribute="leading" secondItem="lh5-ja-Bvp" secondAttribute="leading" id="OTh-Nr-Qhd"/>
                                     <constraint firstAttribute="bottom" secondItem="dmT-bo-HBL" secondAttribute="bottom" id="ShN-tV-FNF"/>
                                     <constraint firstAttribute="trailing" secondItem="dmT-bo-HBL" secondAttribute="trailing" id="WXW-yQ-Ufn"/>
+                                    <constraint firstItem="dmT-bo-HBL" firstAttribute="top" secondItem="lh5-ja-Bvp" secondAttribute="top" constant="1" id="Yfa-ee-GB9"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -120,13 +122,21 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign In" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vLw-4L-PQX">
+                                <rect key="frame" x="8" y="174" width="131.33333333333334" height="48"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ZHR-5h-IMA"/>
                         <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="bottomMargin" secondItem="lh5-ja-Bvp" secondAttribute="bottom" constant="-68" id="BBh-Ue-2P4"/>
                             <constraint firstItem="lh5-ja-Bvp" firstAttribute="leading" secondItem="ZHR-5h-IMA" secondAttribute="leading" constant="8" id="Euj-eh-CXW"/>
-                            <constraint firstItem="lh5-ja-Bvp" firstAttribute="top" secondItem="ZHR-5h-IMA" secondAttribute="top" constant="32" id="F4t-Wt-BJ5"/>
+                            <constraint firstItem="lh5-ja-Bvp" firstAttribute="top" secondItem="vLw-4L-PQX" secondAttribute="bottom" constant="20" id="RVm-5u-wXK"/>
+                            <constraint firstItem="vLw-4L-PQX" firstAttribute="top" secondItem="ZHR-5h-IMA" secondAttribute="top" constant="56" id="Xl4-CI-mG8"/>
+                            <constraint firstItem="vLw-4L-PQX" firstAttribute="leading" secondItem="ZHR-5h-IMA" secondAttribute="leading" constant="8" id="l62-MM-voC"/>
                             <constraint firstItem="ZHR-5h-IMA" firstAttribute="trailing" secondItem="lh5-ja-Bvp" secondAttribute="trailing" constant="8" id="zv1-z4-aE4"/>
                         </constraints>
                     </view>
@@ -141,7 +151,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mz6-ex-vxa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2199" y="-270"/>
+            <point key="canvasLocation" x="2211" y="-270"/>
         </scene>
         <!--doctor-->
         <scene sceneID="IQl-rP-lNh">
@@ -163,12 +173,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="xfG-Od-1w6" kind="relationship" relationship="rootViewController" id="AHS-0F-27k"/>
+                        <segue destination="xfG-Od-1w6" kind="relationship" relationship="rootViewController" id="nVv-ML-0a8"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DVR-ac-jzM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1273" y="-270"/>
+            <point key="canvasLocation" x="1544" y="-270"/>
         </scene>
         <!--Patient-->
         <scene sceneID="ep5-54-DYx">

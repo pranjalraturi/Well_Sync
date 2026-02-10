@@ -36,11 +36,10 @@ class FeelingCollectionViewCell: UICollectionViewCell, UICollectionViewDataSourc
         
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
 //            layout.estimatedItemSize = CGSize(width: 80, height: 36)
-            layout.minimumInteritemSpacing = 10
-            layout.minimumLineSpacing = 10
+            layout.minimumInteritemSpacing = 5
+            layout.minimumLineSpacing = 5
 //            layout.sectionInset = UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0)
             layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-
         }
         
 //        collectionView.backgroundColor = .clear
