@@ -91,7 +91,7 @@ extension PatientDetailCollectionViewController{
             
             let section = NSCollectionLayoutSection(group: group)
             
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 16, trailing: 16)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0)
         return section
     }
     
@@ -129,10 +129,10 @@ extension PatientDetailCollectionViewController{
         let section = NSCollectionLayoutSection(group: group)
 
         section.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 24,
+            top: 4,
+            leading: 28,
             bottom: 4,
-            trailing: 32
+            trailing: 28
         )
 
         let backgroundItem = NSCollectionLayoutDecorationItem.background(
@@ -140,10 +140,10 @@ extension PatientDetailCollectionViewController{
         )
 
         backgroundItem.contentInsets = NSDirectionalEdgeInsets(
-            top: 0,
-            leading: 24,
-            bottom: 0,
-            trailing: 24
+            top: -8,
+            leading: 16,
+            bottom: -8,
+            trailing: 16
         )
 
         
