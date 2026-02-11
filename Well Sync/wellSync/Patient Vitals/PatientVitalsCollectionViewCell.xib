@@ -74,8 +74,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Average" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8u2-HM-rSa">
-                        <rect key="frame" x="45" y="114.33333333333333" width="46" height="14.333333333333329"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BPM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8u2-HM-rSa">
+                        <rect key="frame" x="45" y="114.33333333333333" width="26" height="14.333333333333329"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                         <color key="textColor" systemColor="secondaryLabelColor"/>
                         <nil key="highlightedColor"/>
@@ -124,6 +124,7 @@
             <connections>
                 <outlet property="dateRangeLabel" destination="oOY-18-BuO" id="v3B-uy-Akc"/>
                 <outlet property="lineChart" destination="vnT-3Y-vbd" id="PA3-tq-xGD"/>
+                <outlet property="valueLabel" destination="oQa-oB-4A8" id="AUE-DN-raY"/>
             </connections>
             <point key="canvasLocation" x="203.81679389312976" y="252.81690140845072"/>
         </collectionViewCell>

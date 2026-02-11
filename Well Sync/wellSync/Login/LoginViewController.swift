@@ -62,11 +62,13 @@ class LoginViewController: UIViewController {
     */
     
     @IBAction func loginButton(_ sender: UIButton) {
-        if userName.text == "admin" && passWord.text == "admin"
+//        if userName.text == "admin" && passWord.text == "admin"
+        if userName.text == "admin"
         {
             performSegue(withIdentifier: "doctorScreen", sender: nil)
         }
-        else if userName.text == "admin1" && passWord.text == "admin1"
+//        else if userName.text == "admin1" && passWord.text == "admin1"
+        else if userName.text == "admin1"
         {
             performSegue(withIdentifier: "PatientScreen", sender: nil)
         }

@@ -61,6 +61,7 @@
                                     </subviews>
                                     <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                     <constraints>
+                                        <constraint firstAttribute="width" secondItem="hmS-27-mhV" secondAttribute="width" multiplier="9" id="6Hp-ve-nME"/>
                                         <constraint firstItem="FD1-NG-hAP" firstAttribute="centerY" secondItem="WB1-7u-fV6" secondAttribute="centerY" id="77n-AO-a9c"/>
                                         <constraint firstItem="FD1-NG-hAP" firstAttribute="leading" secondItem="WB1-7u-fV6" secondAttribute="leading" constant="12" id="JT3-Tp-8N8"/>
                                         <constraint firstItem="GFH-Cu-gmW" firstAttribute="centerY" secondItem="WB1-7u-fV6" secondAttribute="centerY" id="Ku7-fn-575"/>
@@ -78,10 +79,10 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="V6R-w5-ZyI">
-                                <rect key="frame" x="132.66666666666666" y="90" width="127.99999999999997" height="128"/>
+                                <rect key="frame" x="132.66666666666666" y="90" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Jjh-Ps-Hms">
-                                    <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionViewCellContentView>
                             </collectionViewCell>
@@ -114,7 +115,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VCs-Mc-DpS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3674" y="1432"/>
+            <point key="canvasLocation" x="3585" y="1440"/>
         </scene>
         <!--vitals-->
         <scene sceneID="zJc-t4-INV">
@@ -124,7 +125,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sHH-3R-yGu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3706" y="1598"/>
+            <point key="canvasLocation" x="3616" y="1606"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="HTt-HL-xQr">
@@ -152,7 +153,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PaF-Pr-huF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3696" y="1513"/>
+            <point key="canvasLocation" x="3606" y="1521"/>
         </scene>
         <!--mood-->
         <scene sceneID="8uG-lE-QKh">
@@ -162,7 +163,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qZu-33-dHg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3705" y="1659"/>
+            <point key="canvasLocation" x="3617" y="1667"/>
         </scene>
     </scenes>
     <resources>
