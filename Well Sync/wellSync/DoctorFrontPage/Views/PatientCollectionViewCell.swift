@@ -26,7 +26,7 @@ class PatientCollectionViewCell: UICollectionViewCell {
     }
 
     private func setupTag(_ label: UILabel) {
-        label.layer.cornerRadius = 12
+        label.layer.cornerRadius = 11
         label.layer.masksToBounds = true
         label.textAlignment = .center
     }

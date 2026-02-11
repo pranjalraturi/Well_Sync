@@ -23,7 +23,7 @@
                                     <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="141" id="hqO-kE-7z6">
                                         <rect key="frame" x="20" y="18" width="353" height="141"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hqO-kE-7z6" id="R0n-HY-eHK">
+                                        <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hqO-kE-7z6" id="R0n-HY-eHK">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="141"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -428,6 +428,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="ellipsisButtonTapped" destination="X7o-e5-G7o" id="klm-0h-xXh"/>
                         <segue destination="Ktp-cf-v9k" kind="show" identifier="PatientDetail" id="zb7-bm-X89"/>
                     </connections>
                 </collectionViewController>

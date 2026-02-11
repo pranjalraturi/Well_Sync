@@ -3,16 +3,22 @@ import UIKit
 class HomeCollectionViewController: UICollectionViewController {
 
     private let viewModel = HomeViewModel()
-
+   
+    @IBOutlet weak var ellipsisButtonTapped: UIBarButtonItem!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupCollectionView()
         viewModel.loadPatients()
+        setupMenu()
 
         collectionView.setCollectionViewLayout(createLayout(), animated: false)
     }
-
+//    @IBAction func ellipsisButtonTapped(_ sender: Any) {
+//        showMenu()
+//    }
+    
     private func setupCollectionView() {
 
         collectionView.register(
@@ -31,7 +37,57 @@ class HomeCollectionViewController: UICollectionViewController {
             withReuseIdentifier: "header"
         )
     }
+    func setupMenu() {
+
+      
+        let allPatients = UIAction(title: "All Patients",image: UIImage(systemName: "person")) { _ in
+            self.openAllPatients()
+        }
+
+        let appointments = UIAction(title: "Appointments",
+                                    image: UIImage(systemName: "calendar")) { _ in
+            self.openAppointments()
+        }
+
+        let reminder = UIAction(title: "Reminder",
+                                image: UIImage(systemName: "bell")) { _ in
+            self.openReminder()
+        }
+
+        let settings = UIAction(title: "Settings",
+                                image: UIImage(systemName: "gearshape")) { _ in
+            self.openSettings()
+        }
+
+        let menu = UIMenu(title: "", children: [
+            allPatients,
+            appointments,
+            reminder,
+            settings
+        ])
+
+        ellipsisButtonTapped.menu = menu
+       // ellipsisButtonTapped.showsMenuAsPrimaryAction = true
+    }
+    func openAllPatients() {
+        print("All Patients")
+    }
+
+    func openAppointments() {
+        print("Appointments")
+    }
+
+    func openReminder() {
+        print("Reminder")
+    }
+
+    func openSettings() {
+        print("Settings")
+    }
+
+
 }
+
 
 extension HomeCollectionViewController {
 
@@ -242,3 +298,4 @@ extension HomeCollectionViewController {
         performSegue(withIdentifier: "PatientDetail", sender: self)
     }
 }
+
