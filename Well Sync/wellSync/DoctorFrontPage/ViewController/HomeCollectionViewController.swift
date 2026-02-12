@@ -95,16 +95,7 @@ extension HomeCollectionViewController {
         return 4
     }
 
-//    override func collectionView(_ collectionView: UICollectionView,
-//                                 numberOfItemsInSection section: Int) -> Int {
-//
-//        if section == 0 {
-//            return 2   // top cards
-//        } else {
-//            return viewModel.numberOfPatients()
-//        }
-//        
-//    }
+    
     override func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
 
@@ -180,10 +171,10 @@ extension HomeCollectionViewController {
 
     func applyShadow(cell: UICollectionViewCell) {
         cell.contentView.layer.masksToBounds = true
-        cell.layer.cornerRadius = 16
+        cell.layer.cornerRadius = 20
         cell.layer.shadowColor = UIColor.black.cgColor
-        cell.layer.shadowOpacity = 0.15
-        cell.layer.shadowOffset = CGSize(width: 0, height: 6)
+//        cell.layer.shadowOpacity = 0.15
+        //cell.layer.shadowOffset = CGSize(width: 0, height: 6)
         cell.layer.shadowRadius = 10
         cell.layer.masksToBounds = false
     }
