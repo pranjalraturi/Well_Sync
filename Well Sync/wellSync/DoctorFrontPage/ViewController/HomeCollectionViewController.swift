@@ -95,16 +95,7 @@ extension HomeCollectionViewController {
         return 4
     }
 
-//    override func collectionView(_ collectionView: UICollectionView,
-//                                 numberOfItemsInSection section: Int) -> Int {
-//
-//        if section == 0 {
-//            return 2   // top cards
-//        } else {
-//            return viewModel.numberOfPatients()
-//        }
-//        
-//    }
+    
     override func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
 
