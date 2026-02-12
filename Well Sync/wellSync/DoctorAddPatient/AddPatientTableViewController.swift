@@ -100,6 +100,17 @@ class AddPatientTableViewController: UITableViewController, UIImagePickerControl
            addPhotoButton.menu = menu
            addPhotoButton.showsMenuAsPrimaryAction = true
        }
+    @IBAction func addPhotoTapped(_ sender: Any) {
+        let alert = UIAlertController(title: "Add Photo", message: "choose an Option", preferredStyle: .actionSheet)
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            alert.addAction(UIAlertAction(title: "Camera", style: .default) {_ in self.openImagePicker(sourceType: .camera)})
+        }
+        
+        alert.addAction(UIAlertAction(title: "Photo Library", style: .default) {_ in
+            self.openImagePicker(sourceType: .photoLibrary)})
+        present(alert, animated: true)
+    }
     
     func openImagePicker(sourceType: UIImagePickerController.SourceType) {
            let picker = UIImagePickerController()

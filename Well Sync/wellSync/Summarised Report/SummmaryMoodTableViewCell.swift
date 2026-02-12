@@ -17,7 +17,10 @@ class SummmaryMoodTableViewCell: UITableViewCell{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "sMoodCell", for: indexPath)
         return cell
     }
-    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 16, left: 16, bottom: 8, right: 16))
+    }
     var items: [String] = []
 
     @IBOutlet var lineChart:LineChartView!
@@ -25,6 +28,7 @@ class SummmaryMoodTableViewCell: UITableViewCell{
         super.awakeFromNib()
         // Initialization code
         showLineChart()
+        
     }
     func showLineChart(){
         // Generate random mood logs for 7 days where each day can have multiple entries (1-5)

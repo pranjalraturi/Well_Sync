@@ -12,6 +12,9 @@ class PatientVitalsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var lineChart: LineChartView!
     @IBOutlet weak var dateRangeLabel: UILabel!
     weak var rangeDelegate: VitalsRangeNavigating?
+    
+    @IBOutlet weak var valueLabel: UILabel!
+    private var healthKit = AccessHealthKit()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -25,6 +28,7 @@ class PatientVitalsCollectionViewCell: UICollectionViewCell {
         for (index, rate) in points.enumerated() {
             entries.append(ChartDataEntry(x: Double(index), y: rate))
         }
+        healthKit.fetchHeartRate(valueLabel)
         let dataSet = LineChartDataSet(entries: entries, label: "")
         dataSet.mode = LineChartDataSet.Mode.horizontalBezier
         dataSet.drawCirclesEnabled = true

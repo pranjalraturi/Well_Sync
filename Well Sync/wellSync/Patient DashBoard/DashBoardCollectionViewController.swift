@@ -75,9 +75,29 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     
     // cell names....
     let items = ["Streak", "Activity Ring", "Mood Count", "Next Session", "Mood Log", "Logs", "Journaling", "Art"]
+    let  images = [
+        UIImage(systemName: "book"),
+        UIImage(systemName: "paintpalette")
+    ]
+    
+    
+    private func makeDashboardMenu() -> UIMenu {
+        let profile = UIAction(title: "Profile", image: UIImage(systemName: "person")) { _ in
+            self.performSegue(withIdentifier: "PatientProfile", sender: nil)
+        }
+        let appointments = UIAction(title: "Appointments", image: UIImage(systemName: "calendar")) { _ in
+            // TODO: Show Appointments
+        }
+        let settings = UIAction(title: "Settings", image: UIImage(systemName: "gear")) { _ in
+            self.performSegue(withIdentifier: "PateintSetting", sender: nil)
+        }
+        let menu = UIMenu(title: "", children: [profile, appointments, settings])
+        return menu
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.largeTitleDisplayMode = .always
         
         if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
             layout.scrollDirection = .vertical
@@ -86,6 +106,10 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         }
         
         collectionView.alwaysBounceVertical = true
+
+        let menu = makeDashboardMenu()
+        let more = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), menu: menu)
+        navigationItem.rightBarButtonItem = more
     }
     
     // MARK: - Data Source
@@ -134,9 +158,11 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         else if indexPath.row == 2{
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "moodCount", for: indexPath)
         }
+        
         else if indexPath.row == 3{
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: "nextSession", for: indexPath)
         }
+        
         else if indexPath.row == 4 {
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "moodLog",
@@ -164,7 +190,10 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         if let label = cell.viewWithTag(1) as? UILabel {
             label.text = items[indexPath.row]
         }
-        
+        if let image = cell.viewWithTag(2) as? UIImageView {
+            image.image = images[indexPath.row-6]
+            
+        }
         // Adding shadow to the cell
         cell.layer.cornerRadius = 16
         cell.layer.masksToBounds = true
@@ -248,5 +277,6 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         super.viewWillAppear(animated)
         resetMoodViews()
     }
-
+    
 }
+

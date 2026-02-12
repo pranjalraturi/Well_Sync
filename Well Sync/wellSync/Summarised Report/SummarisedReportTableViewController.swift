@@ -72,7 +72,7 @@ class SummarisedReportTableViewController: UITableViewController {
         headerView.backgroundColor = .clear
         
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 24, weight: .medium)
         label.textColor = .label
         
         label.text = sections[section]
