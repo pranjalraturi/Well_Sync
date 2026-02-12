@@ -29,6 +29,10 @@ class PatientCollectionViewCell: UICollectionViewCell {
         label.layer.cornerRadius = 11
         label.layer.masksToBounds = true
         label.textAlignment = .center
+        contentView.layer.cornerRadius = 20
+        contentView.layer.borderWidth = 1.5
+        contentView.layer.borderColor = UIColor.systemRed.cgColor
+        contentView.layer.masksToBounds = true
     }
 //    override func layoutSubviews() {
 //        super.layoutSubviews()

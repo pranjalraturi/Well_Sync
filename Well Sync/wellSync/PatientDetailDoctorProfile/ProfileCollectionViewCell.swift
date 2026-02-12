@@ -25,7 +25,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         nameLabel.text = "Vidit Agarwal"
         AgeLabel.text = "Age: "
         AgeNumberLabel.text = "26"
-        disorderLabel.text = "Depression"
+        disorderLabel.text = "Borderline Personality Disorder"
     }
 
 }

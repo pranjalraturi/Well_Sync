@@ -171,10 +171,10 @@ extension HomeCollectionViewController {
 
     func applyShadow(cell: UICollectionViewCell) {
         cell.contentView.layer.masksToBounds = true
-        cell.layer.cornerRadius = 16
+        cell.layer.cornerRadius = 20
         cell.layer.shadowColor = UIColor.black.cgColor
-        cell.layer.shadowOpacity = 0.15
-        cell.layer.shadowOffset = CGSize(width: 0, height: 6)
+//        cell.layer.shadowOpacity = 0.15
+        //cell.layer.shadowOffset = CGSize(width: 0, height: 6)
         cell.layer.shadowRadius = 10
         cell.layer.masksToBounds = false
     }
