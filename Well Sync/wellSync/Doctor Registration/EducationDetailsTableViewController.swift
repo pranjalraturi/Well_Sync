@@ -20,16 +20,24 @@ class EducationDetailsTableViewController: UITableViewController, UIImagePickerC
     @IBOutlet weak var identityDocumentLabel: UILabel!
     @IBOutlet weak var identityAttachment: UIButton!
     var selectedFileName: String?
+    enum AttachmentType {
+        case education
+        case registration
+        case identity
+    }
+
+    var currentAttachmentType: AttachmentType?
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupMenu()
-        
+
         educationCertificateLabel.text = "Add Certificate"
         educationCertificateLabel.textColor = .secondaryLabel
         registrationDocumentLabel.text = "Add Registration proof"
         registrationDocumentLabel.textColor = .secondaryLabel
         identityDocumentLabel.text = "Add ID Document"
         identityDocumentLabel.textColor = .secondaryLabel
+        setupMenu()
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -107,23 +115,38 @@ class EducationDetailsTableViewController: UITableViewController, UIImagePickerC
     
     func setupMenu() {
            
-           let camera = UIAction(title: "Camera",
-                                 image: UIImage(systemName: "camera")) { _ in
-               self.openImagePicker(sourceType: .camera)
-           }
-           
-           let photoLibrary = UIAction(title: "Photo Library",
-                                       image: UIImage(systemName: "photo")) { _ in
-               self.openImagePicker(sourceType: .photoLibrary)
-           }
-        let attachFile = UIAction(title: "Attach File", image: UIImage(systemName: "doc")){ _ in self.openDocumentPicker()}
-           
-           let menu = UIMenu(title: "", children: [camera, photoLibrary, attachFile])
-           
-        educationAttachment.menu = menu
+        educationAttachment.menu = createMenu(for: .education)
+        registrationAttachment.menu = createMenu(for: .registration)
+        identityAttachment.menu = createMenu(for: .identity)
         educationAttachment.showsMenuAsPrimaryAction = true
-        
+        registrationAttachment.showsMenuAsPrimaryAction = true
+        identityAttachment.showsMenuAsPrimaryAction = true
+
        }
+    
+    func createMenu(for type: AttachmentType) -> UIMenu {
+        
+        let camera = UIAction(title: "Camera",
+                              image: UIImage(systemName: "camera")) { _ in
+            self.currentAttachmentType = type
+            self.openImagePicker(sourceType: .camera)
+        }
+        let photoLibrary = UIAction(title: "Photo Library",
+                                    image: UIImage(systemName: "photo")) { _ in
+            self.currentAttachmentType = type
+            self.openImagePicker(sourceType: .photoLibrary)
+        }
+        
+        let attachFile = UIAction(title: "Attach File",
+                                  image: UIImage(systemName: "doc")) { _ in
+            self.currentAttachmentType = type
+            self.openDocumentPicker()
+        }
+        
+        return UIMenu(title: "", children: [camera, photoLibrary, attachFile])
+    }
+
+
     func openImagePicker(sourceType: UIImagePickerController.SourceType) {
            let picker = UIImagePickerController()
            picker.delegate = self
@@ -135,15 +158,32 @@ class EducationDetailsTableViewController: UITableViewController, UIImagePickerC
     func imagePickerController(_ picker: UIImagePickerController,
                                    didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
+        var selectedImage: UIImage?
             if let editedImage = info[.editedImage] as? UIImage {
-                educationImageView.image = editedImage
+                selectedImage = editedImage
             } else if let originalImage = info[.originalImage] as? UIImage {
-                educationImageView.image = originalImage
+               selectedImage = originalImage
             }
-                selectedFileName = "Document Added"
-                educationCertificateLabel.text = selectedFileName
-                educationCertificateLabel.textColor = .blue
-
+        guard let image = selectedImage else {return}
+        switch currentAttachmentType {
+            case .education:
+                educationImageView.image = image
+                educationCertificateLabel.text = "Document Added"
+                educationCertificateLabel.textColor = .label
+                
+            case .registration:
+                registrationImageView.image = image
+                registrationDocumentLabel.text = "Document Added"
+                registrationDocumentLabel.textColor = .label
+                
+            case .identity:
+                identityImageView.image = image
+                identityDocumentLabel.text = "Document Added"
+                identityDocumentLabel.textColor = .label
+                
+            default:
+                break
+            }
             dismiss(animated: true)
         }
     
@@ -166,13 +206,24 @@ class EducationDetailsTableViewController: UITableViewController, UIImagePickerC
            
            guard let url = urls.first else { return }
            
-           selectedFileName = url.lastPathComponent
-           educationCertificateLabel.text = selectedFileName
-           educationCertificateLabel.textColor = .label
-           
-//           print("Selected file: \(url)")
+           let fileName = url.lastPathComponent
+           switch currentAttachmentType {
+               case .education:
+                   educationCertificateLabel.text = fileName
+                   educationCertificateLabel.textColor = .label
+                   
+               case .registration:
+                   registrationDocumentLabel.text = fileName
+                   registrationDocumentLabel.textColor = .label
+                   
+               case .identity:
+                   identityDocumentLabel.text = fileName
+                   identityDocumentLabel.textColor = .label
+                   
+               default:
+                   break
+               }
            controller.dismiss(animated: true)
        }
 
 }
-
