@@ -19,6 +19,9 @@ class EducationDetailsTableViewController: UITableViewController, UIImagePickerC
     @IBOutlet weak var identityImageView: UIImageView!
     @IBOutlet weak var identityDocumentLabel: UILabel!
     @IBOutlet weak var identityAttachment: UIButton!
+    @IBOutlet weak var qualificationTextField: UITextField!
+    @IBOutlet weak var registrationTextField: UITextField!
+    @IBOutlet weak var identityTextField: UITextField!
     var selectedFileName: String?
     enum AttachmentType {
         case education
@@ -39,13 +42,16 @@ class EducationDetailsTableViewController: UITableViewController, UIImagePickerC
         setupMenu()
         
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
+//    var doctor: Doctor!
+    var username: String!
+    var email: String!
+    var password: String!
+    var name: String!
+    var dob: String!
+    var address: String!
+    var experience: Int!
+    var docImage: UIImage?
     // MARK: - Table view data source
 
 //    override func numberOfSections(in tableView: UITableView) -> Int {
@@ -225,5 +231,47 @@ class EducationDetailsTableViewController: UITableViewController, UIImagePickerC
                }
            controller.dismiss(animated: true)
        }
-
+@IBAction func saveButtonTapped(_ sender: Any) {
+//    doctor.qualification = qualificationTextField.text
+//    doctor.registrationNumber = registrationTextField.text
+//    doctor.identityNumber = identityTextField.text
+//    doctor.educationImage = educationImageView.image
+//    doctor.identityImage = identityImageView.image
+//    doctor.registrationImage = registrationImageView.image
+    
+    let qualification = qualificationTextField.text
+    let registrationNumber = registrationTextField.text
+    let identityNumber = identityTextField.text
+    let educationImage = educationImageView.image
+    let identityImage = identityImageView.image
+    let registrationImage = registrationImageView.image
+    
+    let doctor = Doctor(docID: UUID(), username: username, email: email, password: password, name: name, dob: dob, address: address, experience: experience, Patients: [], contact:"", doctorImage: docImage, qualification: qualification, registrationNumber: registrationNumber, identityNumber: identityNumber, educationImage: educationImage, registrationImage: registrationImage, identityImage: identityImage)
+    print("Doctor object created")
+    print(doctor)
+    UserDoctors.append(doctor)
+    print("the array of user doctors")
+    print(UserDoctors)
+    }
 }
+//struct Doctor{
+//    var docID: UUID = UUID()
+//    var username: String?
+//    var email: String?
+//    var password: String?
+//
+//    var name: String?
+//    var dob: String?
+//    var address: String?
+//    var experience: Int?
+//    var Patients: [Patient] = []
+//    var contact: String = ""
+//    var doctorImage: UIImage?
+//    
+//    var qualification: String?
+//    var registrationNumber: String?
+//    var identityNumber: String?
+//    var educationImage : UIImage?
+//    var registrationImage: UIImage?
+//    var identityImage: UIImage?
+//}

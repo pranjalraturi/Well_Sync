@@ -64,11 +64,25 @@
                             <outlet property="delegate" destination="7hX-YL-uMx" id="gLu-q0-vrE"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Vitals" id="Qa4-Z8-oXD"/>
+                    <navigationItem key="navigationItem" title="Vitals" id="Qa4-Z8-oXD">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="npi-5C-wat">
+                            <connections>
+                                <segue destination="xdp-AV-fq3" kind="presentation" id="Yhy-ds-DeD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XZe-j3-dm7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4466.4122137404574" y="-56.338028169014088"/>
+        </scene>
+        <!--log-->
+        <scene sceneID="3Tx-OA-o6Y">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier=" log" storyboardName=" Vitallog" referencedIdentifier="log" id="xdp-AV-fq3" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3gV-Jf-ePv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5110" y="-68"/>
         </scene>
         <!--Vitals-->
         <scene sceneID="YDI-FQ-Dl2">

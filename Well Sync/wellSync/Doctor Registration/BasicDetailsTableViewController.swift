@@ -11,6 +11,13 @@ class BasicDetailsTableViewController: UITableViewController, UIImagePickerContr
     
     @IBOutlet weak var DoctorImageView: UIImageView!
     @IBOutlet weak var addPhotoButton: UIButton!
+    
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var dobTextField: UITextField!
+    @IBOutlet weak var addressTextField: UITextField!
+    @IBOutlet weak var experienceTextField: UITextField!
+    
+//    var doctor: Doctor!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +29,9 @@ class BasicDetailsTableViewController: UITableViewController, UIImagePickerContr
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    var username: String!
+    var email: String!
+    var password: String!
 
     // MARK: - Table view data source
 
@@ -99,14 +109,11 @@ class BasicDetailsTableViewController: UITableViewController, UIImagePickerContr
                                  image: UIImage(systemName: "camera")) { _ in
                self.openImagePicker(sourceType: .camera)
            }
-           
            let photoLibrary = UIAction(title: "Photo Library",
                                        image: UIImage(systemName: "photo")) { _ in
                self.openImagePicker(sourceType: .photoLibrary)
            }
-           
            let menu = UIMenu(title: "", children: [camera, photoLibrary])
-           
            addPhotoButton.menu = menu
            addPhotoButton.showsMenuAsPrimaryAction = true
        }
@@ -135,5 +142,41 @@ class BasicDetailsTableViewController: UITableViewController, UIImagePickerContr
             dismiss(animated: true)
         }
     
-
+@IBAction func nextButtonTapped(_ sender: Any) {
+        guard let name = nameTextField.text, !name.isEmpty,
+              let dob = dobTextField.text, !dob.isEmpty,
+              let address = addressTextField.text, !address.isEmpty,
+              let experience = experienceTextField.text, !experience.isEmpty else{
+            showAlert(message: "Please fill all fields")
+            return
+        }
+//        doctor.name = name
+//        doctor.dob = dob
+//        doctor.address = address
+//        doctor.experience = Int(experience)
+//        doctor.doctorImage = DoctorImageView.image!
+//    performSegue(withIdentifier: "basic_to_education", sender: self)
+    }
+    
+    func showAlert(message: String){
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "basic_to_education"{
+            if let destinationVC = segue.destination as? EducationDetailsTableViewController{
+//                destinationVC.doctor = doctor
+                destinationVC.username = username
+                destinationVC.email = email
+                destinationVC.password = password
+                destinationVC.name = nameTextField.text
+                destinationVC.dob = dobTextField.text
+                destinationVC.docImage = DoctorImageView.image
+                destinationVC.address = addressTextField.text
+                destinationVC.experience = Int(experienceTextField.text!)
+                
+            }
+        }
+    }
 }

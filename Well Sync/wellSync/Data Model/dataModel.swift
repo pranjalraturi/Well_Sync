@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 //struct PsychologistDashboardStats: Codable {
 //    var activePatientsCount: Int
@@ -31,26 +32,34 @@ import Foundation
 //    //var statusIndicator: PatientStatus
 //    var sessionStatus: SessionStatus
 //}
+
+var UserDoctors: [Doctor] = []
 struct Doctor{
-    var docID: UUID
-    var name: String
-    var address: String
-    var Patients: [Patient]
-    var email: String
-    var password: String
-    var experience: Int
-    var contact: String
-    var RegistrationNumber: String
-    var IdentityNumber: String
-    var image: String?
-    var dob: Date
+    var docID: UUID = UUID()
+    var username: String?
+    var email: String?
+    var password: String?
+
+    var name: String?
+    var dob: String?
+    var address: String?
+    var experience: Int?
+    var Patients: [Patient] = []
+    var contact: String = ""
+    var doctorImage: UIImage?
+    
+    var qualification: String?
+    var registrationNumber: String?
+    var identityNumber: String?
+    var educationImage : UIImage?
+    var registrationImage: UIImage?
+    var identityImage: UIImage?
 }
 
 struct Patient{
     var patientID: UUID
     var docID: UUID
     var name: String
-    var Address: String
     var email: String
     var password: String
     var contact: String

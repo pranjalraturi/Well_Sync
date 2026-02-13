@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7nO-k4-b0y">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
@@ -15,7 +15,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="singleLineEtched" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="vsP-tO-yqf">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <color key="tintColor" systemColor="secondaryLabelColor"/>
                         <sections>
                             <tableViewSection id="t33-9v-Ngv">
@@ -34,7 +34,7 @@
                                                         <segment title="Sleep"/>
                                                     </segments>
                                                     <connections>
-                                                        <action selector="segmentChanged:" destination="9XL-DF-b6C" eventType="valueChanged" id="tuK-nC-y7H"/>
+                                                        <action selector="segmentChanged:" destination="9XL-DF-b6C" eventType="valueChanged" id="aUi-mc-Qa6"/>
                                                     </connections>
                                                 </segmentedControl>
                                             </subviews>
@@ -94,9 +94,20 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="zIq-we-gBk">
+                                                    <rect key="frame" x="238" y="4" width="107" height="42"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="107" id="Ode-x6-Iem"/>
+                                                        <constraint firstAttribute="height" constant="42" id="Tim-RX-isO"/>
+                                                    </constraints>
+                                                </datePicker>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="zIq-we-gBk" secondAttribute="trailing" constant="8" id="IVo-Xq-POl"/>
                                                 <constraint firstItem="sw6-l5-SMs" firstAttribute="centerY" secondItem="bqh-u8-xcu" secondAttribute="centerY" id="SDt-6R-Ah0"/>
+                                                <constraint firstAttribute="bottom" secondItem="zIq-we-gBk" secondAttribute="bottom" constant="4" id="klM-SU-ruN"/>
+                                                <constraint firstItem="zIq-we-gBk" firstAttribute="centerY" secondItem="sw6-l5-SMs" secondAttribute="centerY" id="lBo-Ss-MJO"/>
+                                                <constraint firstItem="zIq-we-gBk" firstAttribute="top" secondItem="bqh-u8-xcu" secondAttribute="top" constant="4" id="tJ2-xD-UU9"/>
                                                 <constraint firstItem="sw6-l5-SMs" firstAttribute="leading" secondItem="bqh-u8-xcu" secondAttribute="leading" constant="16" id="ujf-Nj-mkj"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -143,9 +154,20 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="wBZ-zN-TiV">
+                                                    <rect key="frame" x="238" y="4" width="107" height="42"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="42" id="NbM-Ex-4oY"/>
+                                                        <constraint firstAttribute="width" constant="107" id="Sxo-6r-5jN"/>
+                                                    </constraints>
+                                                </datePicker>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="wBZ-zN-TiV" secondAttribute="trailing" constant="8" id="6ro-u0-vns"/>
+                                                <constraint firstAttribute="bottom" secondItem="wBZ-zN-TiV" secondAttribute="bottom" constant="4" id="7a5-SW-o9P"/>
+                                                <constraint firstItem="wBZ-zN-TiV" firstAttribute="centerY" secondItem="OPO-f1-SJI" secondAttribute="centerY" id="eeN-GO-EZl"/>
                                                 <constraint firstItem="OPO-f1-SJI" firstAttribute="leading" secondItem="0Y8-go-BKl" secondAttribute="leading" constant="16" id="rC5-eE-r7W"/>
+                                                <constraint firstItem="wBZ-zN-TiV" firstAttribute="top" secondItem="0Y8-go-BKl" secondAttribute="top" constant="4" id="rfJ-q1-8o5"/>
                                                 <constraint firstItem="OPO-f1-SJI" firstAttribute="centerY" secondItem="0Y8-go-BKl" secondAttribute="centerY" id="wp4-Om-MYb"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -193,6 +215,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="S19-yb-js8" firstAttribute="leading" secondItem="kL9-iZ-gh2" secondAttribute="leading" constant="16" id="HN6-Ih-GIc"/>
                                                 <constraint firstItem="S19-yb-js8" firstAttribute="centerY" secondItem="kL9-iZ-gh2" secondAttribute="centerY" id="qC7-M4-sTO"/>
@@ -200,14 +223,14 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="yNZ-ad-iuV">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="4O9-Js-X5I">
                                         <rect key="frame" x="20" y="504.33333206176758" width="353" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yNZ-ad-iuV" id="doQ-2Z-U19">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4O9-Js-X5I" id="X8i-dV-ySi">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="d9w-bN-Y8W">
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e6x-a3-Fae">
                                                     <rect key="frame" x="16" y="8" width="321" height="34"/>
                                                     <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -216,10 +239,10 @@
                                             </subviews>
                                             <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="d9w-bN-Y8W" secondAttribute="trailing" constant="16" id="EkF-vT-yrI"/>
-                                                <constraint firstItem="d9w-bN-Y8W" firstAttribute="top" secondItem="doQ-2Z-U19" secondAttribute="top" constant="8" id="Vbd-L5-8W6"/>
-                                                <constraint firstAttribute="bottom" secondItem="d9w-bN-Y8W" secondAttribute="bottom" constant="8" id="oN8-oS-eWT"/>
-                                                <constraint firstItem="d9w-bN-Y8W" firstAttribute="leading" secondItem="doQ-2Z-U19" secondAttribute="leading" constant="16" id="scd-bD-Z59"/>
+                                                <constraint firstAttribute="trailing" secondItem="e6x-a3-Fae" secondAttribute="trailing" constant="16" id="6zy-Ep-Oqf"/>
+                                                <constraint firstItem="e6x-a3-Fae" firstAttribute="leading" secondItem="X8i-dV-ySi" secondAttribute="leading" constant="16" id="GUD-rQ-o2c"/>
+                                                <constraint firstAttribute="bottom" secondItem="e6x-a3-Fae" secondAttribute="bottom" constant="8" id="M1e-qr-cmC"/>
+                                                <constraint firstItem="e6x-a3-Fae" firstAttribute="top" secondItem="X8i-dV-ySi" secondAttribute="top" constant="8" id="YPz-1I-dqu"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
@@ -235,23 +258,33 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Add Activity" id="26a-nJ-Npv">
                         <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="Lcl-MU-1LT"/>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="pP2-do-IG4"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="pP2-do-IG4">
+                            <connections>
+                                <action selector="savedata:" destination="9XL-DF-b6C" id="PLz-HL-TDc"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="heartLabel1" destination="hDl-Aq-9F9" id="UQT-uf-5vD"/>
-                        <outlet property="heartText1" destination="y1H-HC-A4w" id="PAN-4v-OIS"/>
-                        <outlet property="segmentedControl" destination="0x6-5L-XBu" id="O16-KZ-2ur"/>
+                        <outlet property="Label1" destination="sw6-l5-SMs" id="ahf-1l-WoX"/>
+                        <outlet property="datePicker" destination="TE5-E6-IB6" id="EA2-P1-Uaa"/>
+                        <outlet property="endSleep" destination="wBZ-zN-TiV" id="e2N-xG-693"/>
+                        <outlet property="heartText1" destination="eNN-qI-PDe" id="eYe-p5-zaP"/>
+                        <outlet property="label2" destination="OPO-f1-SJI" id="Sf3-WG-OcX"/>
+                        <outlet property="label3" destination="S19-yb-js8" id="6vu-Th-qCo"/>
+                        <outlet property="segmentedControl" destination="0x6-5L-XBu" id="dod-uE-I4C"/>
+                        <outlet property="startSleep" destination="zIq-we-gBk" id="uQO-CK-LWS"/>
+                        <outlet property="textField2" destination="e6x-a3-Fae" id="Y4Y-VH-rSe"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ui2-Ap-jPQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3140" y="432"/>
+            <point key="canvasLocation" x="3139.6946564885493" y="431.69014084507046"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3qn-hn-28s">
             <objects>
-                <navigationController storyboardIdentifier="Custom" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7nO-k4-b0y" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="log" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7nO-k4-b0y" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="j35-hb-Brp">
                         <rect key="frame" x="0.0" y="118" width="393" height="54"/>
@@ -275,7 +308,7 @@
         <systemColor name="secondarySystemBackgroundColor">
             <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
-        <systemColor name="tertiarySystemBackgroundColor">
+        <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
