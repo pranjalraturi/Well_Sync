@@ -20,12 +20,12 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
     
-    func configureCell(){
-        profileImageView.image = UIImage(named: "profile")
-        nameLabel.text = "Vidit Agarwal"
+    func configureCell(with patient: PatientModel ){
+        profileImageView.image = UIImage(named: patient.imageName)
+        nameLabel.text = patient.name
         AgeLabel.text = "Age: "
-        AgeNumberLabel.text = "26"
-        disorderLabel.text = "Borderline Personality Disorder"
+        AgeNumberLabel.text = String(patient.age)
+        disorderLabel.text = patient.condition
     }
 
 }

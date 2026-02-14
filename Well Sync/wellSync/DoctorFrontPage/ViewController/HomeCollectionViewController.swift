@@ -6,6 +6,9 @@ class HomeCollectionViewController: UICollectionViewController {
    
     @IBOutlet weak var ellipsisButtonTapped: UIBarButtonItem!
     
+    // adding selected patient
+    var selectedPatient: PatientModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -274,10 +277,16 @@ extension HomeCollectionViewController {
         guard indexPath.section != 0 else { return }
 
         let patient = viewModel.patient(at: indexPath.row, section: indexPath.section)
-        print(patient.name)
-
-
+        //print(patient.name)
+        selectedPatient = patient
         performSegue(withIdentifier: "PatientDetail", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PatientDetail" {
+            let destinationVC = segue.destination as! PatientDetailCollectionViewController
+            destinationVC.patient = selectedPatient
+        }
     }
 }
 

@@ -14,10 +14,10 @@ struct PatientModel {
     let sessionCount: Int
     let lastSessionDate: String
     let sessionTime: String
-    let progress: Float
     let imageName: String
     let sessionStatus: SessionStatus
     let mood: Mood
+    let age: Int
 }
 
 enum Mood: String {

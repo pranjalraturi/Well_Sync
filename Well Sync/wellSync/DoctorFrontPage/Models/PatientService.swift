@@ -22,10 +22,10 @@ class PatientService {
                                  sessionCount: 7,
                                  lastSessionDate: "Last Session : 11 Nov 25",
                                  sessionTime: "10:30 AM",
-                                 progress: 0.8,
                                  imageName: "profile",
                                  sessionStatus: .upcoming,
-                         mood: .happy),
+                         mood: .happy,
+                         age: 28),
 
                     PatientModel(id: UUID(),
                                  name: "Kavya Bansal",
@@ -33,10 +33,10 @@ class PatientService {
                                  sessionCount: 5,
                                  lastSessionDate: "Last Session : 9 Nov 25",
                                  sessionTime: "12:30 PM",
-                                 progress: 0.6,
                                  imageName: "profile",
                                  sessionStatus: .missed,
-                                 mood: .sad),
+                                 mood: .sad,
+                                 age: 28),
 
                     PatientModel(id: UUID(),
                                  name: "Rishika Mittal",
@@ -44,10 +44,10 @@ class PatientService {
                                  sessionCount: 6,
                                  lastSessionDate: "Last Session : 13 Nov 25",
                                  sessionTime: "09:30 AM",
-                                 progress: 0.7,
                                  imageName: "profile",
                                  sessionStatus: .done,
-                                 mood: .neutral),
+                                 mood: .neutral,
+                                 age: 28),
 
                     // Upcoming
                     PatientModel(id: UUID(),
@@ -56,10 +56,10 @@ class PatientService {
                                  sessionCount: 3,
                                  lastSessionDate: "Last Session : 15 Nov 25",
                                  sessionTime: "11:00 AM",
-                                 progress: 0.5,
                                  imageName: "profile",
                                  sessionStatus: .upcoming,
-                                 mood: .angry),
+                                 mood: .angry,
+                                 age: 28),
 
                     PatientModel(id: UUID(),
                                  name: "Sanya Kapoor",
@@ -67,10 +67,11 @@ class PatientService {
                                  sessionCount: 8,
                                  lastSessionDate: "Last Session : 18 Nov 25",
                                  sessionTime: "02:00 PM",
-                                 progress: 0.75,
+
                                  imageName: "profile",
                                  sessionStatus: .upcoming,
-                                 mood: .happy),
+                                 mood: .happy,
+                                 age: 27),
 
                     PatientModel(id: UUID(),
                                  name: "Rohan Verma",
@@ -78,10 +79,10 @@ class PatientService {
                                  sessionCount: 2,
                                  lastSessionDate: "Last Session : 20 Nov 25",
                                  sessionTime: "04:30 PM",
-                                 progress: 0.3,
                                  imageName: "profile",
                                  sessionStatus: .upcoming,
-                                 mood: .sad),
+                                 mood: .sad,
+                                 age: 27),
 
                     // Missed
                     PatientModel(id: UUID(),
@@ -90,10 +91,10 @@ class PatientService {
                                  sessionCount: 4,
                                  lastSessionDate: "Last Session : 5 Nov 25",
                                  sessionTime: "01:00 PM",
-                                 progress: 0.4,
                                  imageName: "profile",
                                  sessionStatus: .missed,
-                                 mood: .happy),
+                                 mood: .happy,
+                                 age: 27),
 
                     PatientModel(id: UUID(),
                                  name: "Kabir Singh",
@@ -101,10 +102,10 @@ class PatientService {
                                  sessionCount: 6,
                                  lastSessionDate: "Last Session : 3 Nov 25",
                                  sessionTime: "05:30 PM",
-                                 progress: 0.5,
-                                 imageName: "profile",
+                                 imageName: "photo",
                                  sessionStatus: .missed,
-                                 mood: .happy),
+                                 mood: .happy,
+                                 age: 27),
 
                     // Done
                     PatientModel(id: UUID(),
@@ -113,10 +114,11 @@ class PatientService {
                                  sessionCount: 10,
                                  lastSessionDate: "Last Session : 1 Nov 25",
                                  sessionTime: "10:00 AM",
-                                 progress: 0.95,
+
                                  imageName: "profile",
                                  sessionStatus: .done,
-                                 mood: .happy),
+                                 mood: .happy,
+                                 age: 27),
 
                     PatientModel(id: UUID(),
                                  name: "Aditya Rao",
@@ -124,10 +126,10 @@ class PatientService {
                                  sessionCount: 9,
                                  lastSessionDate: "Last Session : 28 Oct 25",
                                  sessionTime: "08:30 AM",
-                                 progress: 0.9,
                                  imageName: "profile",
                                  sessionStatus: .done,
-                                 mood: .happy)
+                                 mood: .happy,
+                                 age: 27)
         ]
     }
 }

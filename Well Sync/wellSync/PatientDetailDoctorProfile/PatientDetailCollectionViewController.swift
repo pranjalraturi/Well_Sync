@@ -10,9 +10,12 @@ import UIKit
 class PatientDetailCollectionViewController: UICollectionViewController {
 
     @IBOutlet weak var PatientProfileCollectionView: UICollectionView!
+    
+  var patient: PatientModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+//        print(patient.name)
         registerCells()
         let Layout = generateLayout()
         PatientProfileCollectionView.setCollectionViewLayout(Layout, animated: true)
@@ -20,6 +23,7 @@ class PatientDetailCollectionViewController: UICollectionViewController {
         PatientProfileCollectionView.delegate = self
         PatientProfileCollectionView.dataSource = self
     }
+    
     
     func registerCells(){
         PatientProfileCollectionView.register(UINib(nibName: "ProfileCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ProfileCollectionViewCell")
@@ -34,7 +38,7 @@ class PatientDetailCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0{
             let profilecell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCollectionViewCell", for: indexPath) as! ProfileCollectionViewCell
-            profilecell.configureCell()
+            profilecell.configureCell(with: patient)
             return profilecell
         }
         
