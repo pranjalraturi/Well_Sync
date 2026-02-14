@@ -68,13 +68,13 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Happy" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nhL-YM-eOb">
-                                            <rect key="frame" x="12" y="65.333333333333329" width="64.333333333333329" height="25.333333333333329"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="21"/>
+                                            <rect key="frame" x="12.000000000000004" y="65.333333333333329" width="62.333333333333343" height="26.333333333333329"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yys-9Q-5qH" customClass="LineChartView" customModule="DGCharts">
-                                            <rect key="frame" x="12" y="98.666666666666671" width="369" height="230.33333333333331"/>
+                                            <rect key="frame" x="12" y="99.666666666666671" width="369" height="229.33333333333331"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         </view>
                                     </subviews>
@@ -150,7 +150,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Patient expressed concern regarding work life balance. Sleep has improved since starting the breathing exercise." lineBreakMode="wordWrap" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hx0-q1-3WD">
                                                     <rect key="frame" x="16" y="16" width="329" height="81"/>
                                                     <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -210,7 +210,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qz8-Ij-zdT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3288" y="374"/>
+            <point key="canvasLocation" x="3271" y="325"/>
         </scene>
     </scenes>
     <resources>

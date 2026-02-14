@@ -18,7 +18,7 @@ class MoodAnalysisCollectionViewController: UICollectionViewController {
 
         // Register cell classes
         self.collectionView.register(UINib(nibName: "CalenderCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "calender")
-        self.collectionView.register(UINib(nibName: "BarChartCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "bar_cell")
+        self.collectionView.register(UINib(nibName: "MoodChartCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "bar_cell")
         self.collectionView.register(UINib(nibName: "MoodCountCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "count_cell")
         self.collectionView.register(UINib(nibName: "insightsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "insights_cell")
         collectionView.collectionViewLayout = generateLayout()
@@ -50,7 +50,7 @@ class MoodAnalysisCollectionViewController: UICollectionViewController {
             return cell
 
         case 3:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bar_cell", for: indexPath) as! BarChartCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bar_cell", for: indexPath) as! MoodChartCollectionViewCell
             style(cell)
             return cell
 

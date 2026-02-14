@@ -15,7 +15,6 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passWord: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-
         gradient.frame = view.bounds
         gradient.colors = [
             UIColor.systemCyan.withAlphaComponent(0.6).cgColor,
@@ -60,6 +59,9 @@ class LoginViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.navigationController?.isNavigationBarHidden = true
+    }
     
     @IBAction func loginButton(_ sender: UIButton) {
 //        if userName.text == "admin" && passWord.text == "admin"
@@ -73,6 +75,4 @@ class LoginViewController: UIViewController {
             performSegue(withIdentifier: "PatientScreen", sender: nil)
         }
     }
-    
-
 }

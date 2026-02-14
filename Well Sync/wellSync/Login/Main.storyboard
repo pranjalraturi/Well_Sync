@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Sign In-->
+        <!--Login View Controller-->
         <scene sceneID="5J9-CZ-AXX">
             <objects>
-                <viewController id="xfG-Od-1w6" customClass="LoginViewController" customModule="wellSync" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="login" useStoryboardIdentifierAsRestorationIdentifier="YES" id="xfG-Od-1w6" customClass="LoginViewController" customModule="wellSync" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="foH-fb-MXO">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -143,7 +143,7 @@
                             <constraint firstItem="ZHR-5h-IMA" firstAttribute="trailing" secondItem="lh5-ja-Bvp" secondAttribute="trailing" constant="8" id="zv1-z4-aE4"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Sign In" id="Urb-7A-Czh"/>
+                    <navigationItem key="navigationItem" id="Urb-7A-Czh"/>
                     <connections>
                         <outlet property="glassView" destination="lh5-ja-Bvp" id="aEv-WZ-8Cs"/>
                         <outlet property="passWord" destination="hAV-QF-Jl0" id="DBR-Ur-dna"/>
@@ -184,12 +184,12 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oFm-14-XTE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3545" y="135"/>
+            <point key="canvasLocation" x="3136" y="135"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="T1I-ET-laN">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="teZ-Zp-ZUI" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="teZ-Zp-ZUI" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="zP1-v7-mEA">
                         <rect key="frame" x="0.0" y="118" width="393" height="54"/>

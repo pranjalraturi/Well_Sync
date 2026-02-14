@@ -86,10 +86,6 @@ class HomeCollectionViewController: UICollectionViewController {
     }
 
 
-}
-
-
-extension HomeCollectionViewController {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 4
@@ -135,7 +131,7 @@ extension HomeCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        // TOP SECTION
+// for top section
         if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "TopCell",
@@ -152,13 +148,12 @@ extension HomeCollectionViewController {
             return cell
         }
 
-        // PATIENT CELLS (section 1,2,3)
+// for patient cells upcomig done missed
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "PatientCell",
             for: indexPath
         ) as! PatientCollectionViewCell
 
-//        let patient = viewModel.patient(at: indexPath.row)
         let patient = viewModel.patient(at: indexPath.row, section: indexPath.section)
 
         cell.configureCell(with: patient)
@@ -178,8 +173,6 @@ extension HomeCollectionViewController {
         cell.layer.shadowRadius = 10
         cell.layer.masksToBounds = false
     }
-}
-extension HomeCollectionViewController {
 
     func headerItem() -> NSCollectionLayoutBoundarySupplementaryItem {
 
@@ -273,15 +266,13 @@ extension HomeCollectionViewController {
 
         return section
     }
-}
-extension HomeCollectionViewController {
 
+    
     override func collectionView(_ collectionView: UICollectionView,
                                  didSelectItemAt indexPath: IndexPath) {
 
         guard indexPath.section != 0 else { return }
 
-//        let patient = viewModel.patient(at: indexPath.row)
         let patient = viewModel.patient(at: indexPath.row, section: indexPath.section)
         print(patient.name)
 

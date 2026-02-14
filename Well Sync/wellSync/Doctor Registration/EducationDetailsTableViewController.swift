@@ -252,26 +252,11 @@ class EducationDetailsTableViewController: UITableViewController, UIImagePickerC
     UserDoctors.append(doctor)
     print("the array of user doctors")
     print(UserDoctors)
+    performSegue(withIdentifier: "successFull", sender: nil)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "successFull" {
+            self.navigationController?.isNavigationBarHidden = true
+        }
     }
 }
-//struct Doctor{
-//    var docID: UUID = UUID()
-//    var username: String?
-//    var email: String?
-//    var password: String?
-//
-//    var name: String?
-//    var dob: String?
-//    var address: String?
-//    var experience: Int?
-//    var Patients: [Patient] = []
-//    var contact: String = ""
-//    var doctorImage: UIImage?
-//    
-//    var qualification: String?
-//    var registrationNumber: String?
-//    var identityNumber: String?
-//    var educationImage : UIImage?
-//    var registrationImage: UIImage?
-//    var identityImage: UIImage?
-//}

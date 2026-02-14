@@ -351,7 +351,7 @@
                             <tableViewSection headerTitle="Identity proof" id="xAf-D2-60X">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="61" id="170-Uh-k7T">
-                                        <rect key="frame" x="20" y="411.333330154419" width="353" height="61"/>
+                                        <rect key="frame" x="20" y="411.33333015441895" width="353" height="61"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="170-Uh-k7T" id="gpl-dw-YRU">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="61"/>
@@ -381,7 +381,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="61" id="XNT-zU-c1j">
-                                        <rect key="frame" x="20" y="472.333330154419" width="353" height="60.999999999999943"/>
+                                        <rect key="frame" x="20" y="472.33333015441895" width="353" height="61"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="XNT-zU-c1j" id="S7E-ak-vzT">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="61"/>
@@ -422,7 +422,7 @@
                             <tableViewSection id="mx5-03-T2u">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="UQ4-5h-cLz">
-                                        <rect key="frame" x="20" y="569.33333015441906" width="353" height="51"/>
+                                        <rect key="frame" x="20" y="569.33333015441895" width="353" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="UQ4-5h-cLz" id="bTw-Bw-Yx5">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="51"/>
@@ -463,11 +463,22 @@
                         <outlet property="registrationDocumentLabel" destination="6SF-m9-Inh" id="bIv-Hx-syv"/>
                         <outlet property="registrationImageView" destination="1yd-Iz-i2Z" id="TOo-s1-nrY"/>
                         <outlet property="registrationTextField" destination="gPP-tL-TYq" id="0s0-ac-T9Z"/>
+                        <segue destination="BZf-In-fS1" kind="show" identifier="successFull" id="zfP-Fr-yfK"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kAx-Ze-30U" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6633" y="1054"/>
+        </scene>
+        <!--doctor-->
+        <scene sceneID="Vdz-J1-DNF">
+            <objects>
+                <viewControllerPlaceholder storyboardName="DoctorFrontPage" referencedIdentifier="doctor" id="BZf-In-fS1" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="nJy-ja-0T4"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xIQ-jy-DLK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7248" y="1232"/>
         </scene>
         <!--Register-->
         <scene sceneID="5jn-lt-Dux">
@@ -637,16 +648,16 @@
         <image name="paperclip" catalog="system" width="121" height="128"/>
         <image name="profile" width="736" height="1472"/>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

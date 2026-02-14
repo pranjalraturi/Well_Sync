@@ -24,7 +24,8 @@ class PatientService {
                                  sessionTime: "10:30 AM",
                                  progress: 0.8,
                                  imageName: "profile",
-                                 status: .normal),
+                                 sessionStatus: .upcoming,
+                         mood: .happy),
 
                     PatientModel(id: UUID(),
                                  name: "Kavya Bansal",
@@ -34,7 +35,8 @@ class PatientService {
                                  sessionTime: "12:30 PM",
                                  progress: 0.6,
                                  imageName: "profile",
-                                 status: .critical),
+                                 sessionStatus: .missed,
+                                 mood: .sad),
 
                     PatientModel(id: UUID(),
                                  name: "Rishika Mittal",
@@ -44,7 +46,8 @@ class PatientService {
                                  sessionTime: "09:30 AM",
                                  progress: 0.7,
                                  imageName: "profile",
-                                 status: .warning),
+                                 sessionStatus: .done,
+                                 mood: .neutral),
 
                     // Upcoming
                     PatientModel(id: UUID(),
@@ -55,7 +58,8 @@ class PatientService {
                                  sessionTime: "11:00 AM",
                                  progress: 0.5,
                                  imageName: "profile",
-                                 status: .normal),
+                                 sessionStatus: .upcoming,
+                                 mood: .angry),
 
                     PatientModel(id: UUID(),
                                  name: "Sanya Kapoor",
@@ -65,7 +69,8 @@ class PatientService {
                                  sessionTime: "02:00 PM",
                                  progress: 0.75,
                                  imageName: "profile",
-                                 status: .normal),
+                                 sessionStatus: .upcoming,
+                                 mood: .happy),
 
                     PatientModel(id: UUID(),
                                  name: "Rohan Verma",
@@ -75,7 +80,8 @@ class PatientService {
                                  sessionTime: "04:30 PM",
                                  progress: 0.3,
                                  imageName: "profile",
-                                 status: .normal),
+                                 sessionStatus: .upcoming,
+                                 mood: .sad),
 
                     // Missed
                     PatientModel(id: UUID(),
@@ -86,7 +92,8 @@ class PatientService {
                                  sessionTime: "01:00 PM",
                                  progress: 0.4,
                                  imageName: "profile",
-                                 status: .critical),
+                                 sessionStatus: .missed,
+                                 mood: .happy),
 
                     PatientModel(id: UUID(),
                                  name: "Kabir Singh",
@@ -96,7 +103,8 @@ class PatientService {
                                  sessionTime: "05:30 PM",
                                  progress: 0.5,
                                  imageName: "profile",
-                                 status: .critical),
+                                 sessionStatus: .missed,
+                                 mood: .happy),
 
                     // Done
                     PatientModel(id: UUID(),
@@ -107,7 +115,8 @@ class PatientService {
                                  sessionTime: "10:00 AM",
                                  progress: 0.95,
                                  imageName: "profile",
-                                 status: .warning),
+                                 sessionStatus: .done,
+                                 mood: .happy),
 
                     PatientModel(id: UUID(),
                                  name: "Aditya Rao",
@@ -117,7 +126,8 @@ class PatientService {
                                  sessionTime: "08:30 AM",
                                  progress: 0.9,
                                  imageName: "profile",
-                                 status: .warning)
+                                 sessionStatus: .done,
+                                 mood: .happy)
         ]
     }
 }

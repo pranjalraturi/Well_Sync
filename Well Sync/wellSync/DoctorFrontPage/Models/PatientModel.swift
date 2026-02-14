@@ -16,12 +16,10 @@ struct PatientModel {
     let sessionTime: String
     let progress: Float
     let imageName: String
-    let status: PatientStatus
+    let sessionStatus: SessionStatus
+    let mood: Mood
 }
 
-enum PatientStatus {
-    case normal
-    case warning
-    case critical
-    case completed
+enum Mood: String {
+    case happy, sad, angry, anxious, neutral
 }

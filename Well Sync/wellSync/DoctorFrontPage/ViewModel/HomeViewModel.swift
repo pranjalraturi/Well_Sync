@@ -23,11 +23,9 @@ class HomeViewModel {
     }
 
     private func categorizePatients() {
-
-        // demo logic (you can change later)
-        upcoming = allPatients.filter { $0.status == .normal }
-        missed   = allPatients.filter { $0.status == .critical }
-        done     = allPatients.filter { $0.status == .warning }
+        upcoming = allPatients.filter { $0.sessionStatus == .upcoming }
+        missed   = allPatients.filter { $0.sessionStatus == .missed }
+        done     = allPatients.filter { $0.sessionStatus == .done }
     }
 
     func numberOfPatients(in section: Int) -> Int {
