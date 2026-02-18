@@ -11,8 +11,13 @@ struct SessionNote{
     let sessoinId: UUID
     let patientId: UUID
     let date: Date
-//    let type: String
     let notes: String?
-    let image:String?
-    let voice:String?
+    let image:[String]?
+    let voice:[String]?
+}
+
+enum SessionStatus {
+    case upcoming
+    case missed
+    case completed
 }

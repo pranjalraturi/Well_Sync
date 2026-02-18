@@ -72,19 +72,3 @@ struct Patient{
     var image: String?
     var adddress: String
 }
-
-struct CaseHistory{
-    var caseID: UUID
-    var patientID: UUID
-    var ActivityStatus: [ActivityLog]
-    var notes: [String]
-    var summarisedReport: [String]
-    
-}
-
-enum SessionStatus {
-    case upcoming
-    case missed
-    case completed
-}
-
