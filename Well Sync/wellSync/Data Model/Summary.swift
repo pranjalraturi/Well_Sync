@@ -8,5 +8,8 @@
 import Foundation
 
 struct Summary{
-    
+    let patientNote:String?
+    let sessionContext:String?
+    let journal:String?
+    let activityCompletion:String?
 }

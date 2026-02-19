@@ -45,7 +45,7 @@ class PatientService {
                                  lastSessionDate: "Last Session : 13 Nov 25",
                                  sessionTime: "09:30 AM",
                                  imageName: "profile",
-                                 sessionStatus: .done,
+                                 sessionStatus: .completed,
                                  mood: .neutral,
                                  age: 28),
 
@@ -116,7 +116,7 @@ class PatientService {
                                  sessionTime: "10:00 AM",
 
                                  imageName: "profile",
-                                 sessionStatus: .done,
+                                 sessionStatus: .completed,
                                  mood: .happy,
                                  age: 27),
 
@@ -127,7 +127,7 @@ class PatientService {
                                  lastSessionDate: "Last Session : 28 Oct 25",
                                  sessionTime: "08:30 AM",
                                  imageName: "profile",
-                                 sessionStatus: .done,
+                                 sessionStatus: .completed,
                                  mood: .happy,
                                  age: 27)
         ]

@@ -10,10 +10,10 @@ import UIKit
 class SummarisedReportTableViewController: UITableViewController {
 
     let sections = ["Mood","Activity","Patient notes","Session Notes", "Journal Summary"]
-    let activities = [
-        Activity(title: "Journaling", dateText: "Today, 09:00 AM", subtitle: "Personal reflection", iconName: "book", completed: 0.8),
-        Activity(title: "Meditation", dateText: "Today, 07:30 AM", subtitle: "Mindful session", iconName: "wind", completed: 1.0),
-        Activity(title: "Exercise", dateText: "Yesterday, 06:00 PM", subtitle: "Workout routine", iconName: "figure.walk", completed: 0.45)
+    let activities :[Activity] = [
+//        Activity(title: "Journaling", dateText: "Today, 09:00 AM", subtitle: "Personal reflection", iconName: "book", completed: 0.8),
+//        Activity(title: "Meditation", dateText: "Today, 07:30 AM", subtitle: "Mindful session", iconName: "wind", completed: 1.0),
+//        Activity(title: "Exercise", dateText: "Yesterday, 06:00 PM", subtitle: "Workout routine", iconName: "figure.walk", completed: 0.45)
     ]
 
     override func viewDidLoad() {

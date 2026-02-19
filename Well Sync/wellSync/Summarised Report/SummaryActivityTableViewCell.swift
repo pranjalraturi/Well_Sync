@@ -30,11 +30,11 @@ class SummaryActivityTableViewCell: UITableViewCell {
             let container = UIView()
             
             let titleLabel = UILabel()
-            titleLabel.text = activity.title
+//            titleLabel.text = activity.title
             titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
             
             let percentLabel = UILabel()
-            percentLabel.text = "\(Int(activity.completed * 100))%"
+//            percentLabel.text = "\(Int(activity.completed * 100))%"
 //            percentLabel.textColor = .red
             percentLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
 
@@ -47,7 +47,7 @@ class SummaryActivityTableViewCell: UITableViewCell {
 //            progress.clipsToBounds = true
             
             let progress = UIProgressView(progressViewStyle: .default)
-            progress.progress = activity.completed
+//            progress.progress = activity.completed
             progress.progressTintColor = .systemTeal
             progress.trackTintColor = UIColor.systemGray5
             

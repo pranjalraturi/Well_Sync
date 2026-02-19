@@ -23,6 +23,7 @@ struct Activities{
     let endDate: Date
     let completed: Float
 }
+
 struct ActivityLog {
     let logID: UUID
     let activityID: UUID
