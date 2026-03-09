@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 
 //struct PsychologistDashboardStats: Codable {
 //    var activePatientsCount: Int
@@ -33,165 +32,140 @@ import UIKit
 //    var sessionStatus: SessionStatus
 //}
 
-var UserDoctors: [Doctor] = []
-struct Doctor{
-    var doctorID: UUID = UUID()
-    var username: String?
-    var email: String?
-    var password: String?
+var UserDoctors: [Doctor] = [] // education table view controller
 
-    var name: String?
-    var dob: String?
-    var address: String?
-    var experience: Int?
+
+struct Doctor: Codable {
+    // Persisted/decoded properties
+    var docID: UUID? // generate if missing during decode
+    let username: String?
+    let email: String?
+    let password: String?
+
+    let name: String?
+    let dob: String?
+    let address: String?
+    let experience: Int?
+
+    // Avoid UIKit types in Codable models; store base64 strings or URLs/paths instead
+    let doctorImage: String?
+
+    let qualification: String?
+    let registrationNumber: String?
+    let identityNumber: String?
+    let educationImageData: String?
+    let registrationImageData: String?
+    let identityImageData: String?
+
+    // Non-persisted/derived properties (ignored by Codable)
     var Patients: [Patient] = []
     var contact: String = ""
-    var doctorImage: UIImage?
-    
-    var qualification: String?
-    var registrationNumber: String?
-    var identityNumber: String?
-    var educationImage : UIImage?
-    var registrationImage: UIImage?
-    var identityImage: UIImage?
+
+    enum CodingKeys: String, CodingKey {
+        case docID
+        case username, email, password
+        case name, dob, address, experience
+        case doctorImage
+        case qualification, registrationNumber, identityNumber
+        case educationImageData, registrationImageData, identityImageData
+        // Exclude Patients and contact from coding
+    }
+
+    init(docID: UUID? = nil,
+         username: String?,
+         email: String?,
+         password: String?,
+         name: String?,
+         dob: String?,
+         address: String?,
+         experience: Int?,
+         doctorImage: String?,
+         qualification: String?,
+         registrationNumber: String?,
+         identityNumber: String?,
+         educationImageData: String?,
+         registrationImageData: String?,
+         identityImageData: String?,
+         Patients: [Patient] = [],
+         contact: String = "") {
+        self.docID = docID
+        self.username = username
+        self.email = email
+        self.password = password
+        self.name = name
+        self.dob = dob
+        self.address = address
+        self.experience = experience
+        self.doctorImage = doctorImage
+        self.qualification = qualification
+        self.registrationNumber = registrationNumber
+        self.identityNumber = identityNumber
+        self.educationImageData = educationImageData
+        self.registrationImageData = registrationImageData
+        self.identityImageData = identityImageData
+        self.Patients = Patients
+        self.contact = contact
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.docID = try container.decodeIfPresent(UUID.self, forKey: .docID)
+        self.username = try container.decodeIfPresent(String.self, forKey: .username)
+        self.email = try container.decodeIfPresent(String.self, forKey: .email)
+        self.password = try container.decodeIfPresent(String.self, forKey: .password)
+        self.name = try container.decodeIfPresent(String.self, forKey: .name)
+        self.dob = try container.decodeIfPresent(String.self, forKey: .dob)
+        self.address = try container.decodeIfPresent(String.self, forKey: .address)
+        self.experience = try container.decodeIfPresent(Int.self, forKey: .experience)
+        self.doctorImage = try container.decodeIfPresent(String.self, forKey: .doctorImage)
+        self.qualification = try container.decodeIfPresent(String.self, forKey: .qualification)
+        self.registrationNumber = try container.decodeIfPresent(String.self, forKey: .registrationNumber)
+        self.identityNumber = try container.decodeIfPresent(String.self, forKey: .identityNumber)
+        self.educationImageData = try container.decodeIfPresent(String.self, forKey: .educationImageData)
+        self.registrationImageData = try container.decodeIfPresent(String.self, forKey: .registrationImageData)
+        self.identityImageData = try container.decodeIfPresent(String.self, forKey: .identityImageData)
+        // Defaults for non-coded properties
+        self.Patients = []
+        self.contact = ""
+        // Ensure we always have an ID
+        if self.docID == nil { self.docID = UUID() }
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encodeIfPresent(docID, forKey: .docID)
+        try container.encodeIfPresent(username, forKey: .username)
+        try container.encodeIfPresent(email, forKey: .email)
+        try container.encodeIfPresent(password, forKey: .password)
+        try container.encodeIfPresent(name, forKey: .name)
+        try container.encodeIfPresent(dob, forKey: .dob)
+        try container.encodeIfPresent(address, forKey: .address)
+        try container.encodeIfPresent(experience, forKey: .experience)
+        try container.encodeIfPresent(doctorImage, forKey: .doctorImage)
+        try container.encodeIfPresent(qualification, forKey: .qualification)
+        try container.encodeIfPresent(registrationNumber, forKey: .registrationNumber)
+        try container.encodeIfPresent(identityNumber, forKey: .identityNumber)
+        try container.encodeIfPresent(educationImageData, forKey: .educationImageData)
+        try container.encodeIfPresent(registrationImageData, forKey: .registrationImageData)
+        try container.encodeIfPresent(identityImageData, forKey: .identityImageData)
+    }
 }
 
-struct Patient{
+struct Patient: Codable {
     var patientID: UUID
-    var doctorID: UUID
+    var docID: UUID
+
     var name: String
     var email: String
     var password: String
+
     var contact: String
     var dob: Date
-    var nextSessionDAte: Date
-    var image: String?
-    var adddress: String
-}
+    var nextSessionDate: Date
+    var imageURL: String?
+    var address: String
 
-struct CaseHistory{
-    var caseID: UUID
-    var patientID: UUID
-    var ActivityStatus: [ActivityLog]
-    var notes: [String]
-    var summarisedReport: [String]
-    
-}
-struct MoodLog{
-    var patientID: UUID
-    var logId: UUID
-    var mood: MoodLevel
-    var date: Date
-    var time: String
-    var selectedFeeling: [Feeling]?
-    var moodNote: String?
-}
-
-enum MoodLevel :Int{
-    case verySad = 1
-    case sad
-    case neutral
-    case happy
-    case veryHappy
-    var description: String {
-        switch self {
-        case .verySad: return "Very Sad"
-        case .sad: return "Sad"
-        case .neutral: return "Neutral"
-        case .happy: return "Happy"
-        case .veryHappy: return "Very Happy"
-        }
+    enum CodingKeys: String, CodingKey {
+        case patientID, docID, name, email, password, contact, dob, nextSessionDate, imageURL, address
     }
 }
-struct Feeling{
-    //var feelingId: UUID
-    var moodLevel: MoodLevel
-    var name: String
-}
-//let allFeeling: [Feeling] = [
-//    Feeling(feelingId: UUID(), moodLevel: .verySad, name: "Angry"),
-//    Feeling(feelingId: UUID(), moodLevel: .verySad, name: "Anxious"),
-//    Feeling(feelingId: UUID(), moodLevel: .verySad, name: "Scared"),
-//    Feeling(feelingId: UUID(), moodLevel: .verySad, name: "Disappointed"),
-//    Feeling(feelingId: UUID(), moodLevel: .verySad, name: "Overwhelmed"),
-//    Feeling(feelingId: UUID(), moodLevel: .verySad, name: "Embarrassed"),
-//    Feeling(feelingId: UUID(), moodLevel: .verySad, name: "Frustrated"),
-//    Feeling(feelingId: UUID(), moodLevel: .verySad, name: "Hopeless"),
-//    Feeling(feelingId: UUID(), moodLevel: .verySad, name: "Lonely"),
-//    Feeling(feelingId: UUID(), moodLevel: .sad, name: "Jealous"),
-//    Feeling(feelingId: UUID(), moodLevel: .sad, name: "Stressed"),
-//    Feeling(feelingId: UUID(), moodLevel: .sad, name: "Discouraged"),
-//    Feeling(feelingId: UUID(), moodLevel: .sad, name: "Drained"),
-//    Feeling(feelingId: UUID(), moodLevel: .sad, name: "Sad"),
-//    Feeling(feelingId: UUID(), moodLevel: .sad, name: "Guilty"),
-//    Feeling(feelingId: UUID(), moodLevel: .sad, name: "Worried"),
-//    Feeling(feelingId: UUID(), moodLevel: .sad, name: "Hopeless"),
-//    Feeling(feelingId: UUID(), moodLevel: .sad, name: "Irritated"),
-//    Feeling(feelingId: UUID(), moodLevel: .sad, name: "Annoyed"),
-//    Feeling(feelingId: UUID(), moodLevel: .neutral, name: "Calm"),
-//    Feeling(feelingId: UUID(), moodLevel: .neutral, name: "Balanced"),
-//    Feeling(feelingId: UUID(), moodLevel: .neutral, name: "Peaceful"),
-//    Feeling(feelingId: UUID(), moodLevel: .neutral, name: "Content"),
-//    Feeling(feelingId: UUID(), moodLevel: .neutral, name: "Indifferent"),
-//    Feeling(feelingId: UUID(), moodLevel: .happy, name: "Happy"),
-//    Feeling(feelingId: UUID(), moodLevel: .happy, name: "Hopeful"),
-//    Feeling(feelingId: UUID(), moodLevel: .veryHappy, name: "Amazed"),
-//    Feeling(feelingId: UUID(), moodLevel: .veryHappy, name: "Excited"),
-//]
-let allFeeling: [Feeling] = [
-    Feeling(moodLevel: .verySad, name: "Angry"),
-    Feeling(moodLevel: .verySad, name: "Anxious"),
-    Feeling(moodLevel: .verySad, name: "Scared"),
-    Feeling(moodLevel: .verySad, name: "Disappointed"),
-    Feeling(moodLevel: .verySad, name: "Overwhelmed"),
-    Feeling(moodLevel: .verySad, name: "Embarrassed"),
-    Feeling(moodLevel: .verySad, name: "Frustrated"),
-    Feeling(moodLevel: .verySad, name: "Hopeless"),
-    Feeling(moodLevel: .verySad, name: "Lonely"),
-    Feeling(moodLevel: .sad, name: "Jealous"),
-    Feeling(moodLevel: .sad, name: "Stressed"),
-    Feeling(moodLevel: .sad, name: "Discouraged"),
-    Feeling(moodLevel: .sad, name: "Drained"),
-    Feeling(moodLevel: .sad, name: "Sad"),
-    Feeling(moodLevel: .sad, name: "Guilty"),
-    Feeling(moodLevel: .sad, name: "Worried"),
-    Feeling(moodLevel: .sad, name: "Hopeless"),
-    Feeling(moodLevel: .sad, name: "Irritated"),
-    Feeling(moodLevel: .sad, name: "Annoyed"),
-    Feeling(moodLevel: .neutral, name: "Calm"),
-    Feeling(moodLevel: .neutral, name: "Balanced"),
-    Feeling(moodLevel: .neutral, name: "Peaceful"),
-    Feeling(moodLevel: .neutral, name: "Content"),
-    Feeling(moodLevel: .neutral, name: "Indifferent"),
-    Feeling(moodLevel: .happy, name: "Happy"),
-    Feeling(moodLevel: .happy, name: "Hopeful"),
-    Feeling(moodLevel: .veryHappy, name: "Amazed"),
-    Feeling(moodLevel: .veryHappy, name: "Excited"),
-]
-
-struct IndivudActivity{
-    var activityID: UUID
-    var name: String
-    var frequency: Int
-    var type: String  // not definate till now
-    var startDate: Date
-    var endDate: Date
-    var doctorNote: String?
-}
-struct ActivityLog {
-    var logID: UUID
-    var activityID: UUID
-    var time: String
-    var date: Date
-    var image: String?
-    var voice: String?
-    var duration: String?
-}
-
-enum SessionStatus {
-    case upcoming
-    case done
-    case missed
-    case completed
-}
-

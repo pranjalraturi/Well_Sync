@@ -107,9 +107,9 @@ class AddPatientTableViewController: UITableViewController, UIImagePickerControl
             password: generatedPass,
             contact: contactText,
             dob: dobDate,
-            nextSessionDAte: Date(),
-            image: nil,
-            adddress: addressText
+            nextSessionDate: Date(),
+            imageURL: nil,
+            address: addressText
         )
 //        AllPatients.append(patient!)
 

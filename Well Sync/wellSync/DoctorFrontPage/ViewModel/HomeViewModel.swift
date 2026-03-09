@@ -25,7 +25,7 @@ class HomeViewModel {
     private func categorizePatients() {
         upcoming = allPatients.filter { $0.sessionStatus == .upcoming }
         missed   = allPatients.filter { $0.sessionStatus == .missed }
-        done     = allPatients.filter { $0.sessionStatus == .done }
+        done     = allPatients.filter { $0.sessionStatus == .completed }
     }
 
     func numberOfPatients(in section: Int) -> Int {
