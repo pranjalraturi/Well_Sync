@@ -9,10 +9,16 @@ import UIKit
 
 class CaseHistoryViewController: UIViewController {
     @IBOutlet weak var CaseHistoryCollectionView: UICollectionView!
-
+    
+    var caseHistory: CaseHistory!
+    var timeline: [Timeline] = []
+    var reports: [Report] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        caseHistory = historyMockData()
+        timeline = caseHistory.timeline ?? []
+        reports = caseHistory.report ?? []
        registerCells()
         let layout = generateLayout()
         CaseHistoryCollectionView.setCollectionViewLayout(layout, animated: true)
@@ -24,15 +30,16 @@ class CaseHistoryViewController: UIViewController {
         CaseHistoryCollectionView.register(UINib(nibName: "TimelineCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TimelineCell")
         CaseHistoryCollectionView.register(UINib(nibName: "HeaderView", bundle: nil), forSupplementaryViewOfKind: "header", withReuseIdentifier: "Heading")
     }
+  
 
 }
 
 extension CaseHistoryViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0{
-            return 3
+            return reports.count
         }else if section == 1{
-            return 4
+            return timeline.count
         }
         return 0
     }
@@ -42,21 +49,24 @@ extension CaseHistoryViewController: UICollectionViewDataSource{
             guard let reportCell = cell as? ReportCollectionViewCell else {
                 return cell
             }
-            reportCell.configureCell()
+            let report = reports[indexPath.item]
+            reportCell.configureCell(report: report)
             return cell
         }else if indexPath.section == 1{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TimelineCell", for: indexPath)
             guard let TimelineCell = cell as? TimelineCollectionViewCell else {
                 return cell
             }
-            TimelineCell.configureCell()
+            let timeline = timeline[indexPath.item]
+            TimelineCell.configureCell(timeline: timeline)
             return cell
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TimelineCell", for: indexPath)
         guard let TimelineCell = cell as? TimelineCollectionViewCell else {
             return cell
         }
-        TimelineCell.configureCell()
+        let timeline = timeline[indexPath.item]
+        TimelineCell.configureCell(timeline: timeline)
         return cell
     }
     

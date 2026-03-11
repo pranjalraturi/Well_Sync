@@ -25,9 +25,11 @@ class ReportCollectionViewCell: UICollectionViewCell {
         containerView.layer.masksToBounds = true
         containerView.backgroundColor = UIColor.secondarySystemBackground
     }
-    func configureCell(){
+    func configureCell(report: Report){
         imageView.image = UIImage(systemName: "folder.fill")
-        titleLabel.text = "Report"
-        dateLabel.text = "09-03-2026"
+        titleLabel.text = report.title
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yyyy"
+        dateLabel.text = formatter.string(from: report.date)
     }
 }

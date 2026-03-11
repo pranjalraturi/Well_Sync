@@ -20,20 +20,20 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ABv-gb-g55">
                         <rect key="frame" x="0.0" y="0.0" width="275" height="78"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qrL-mL-8JC">
-                                <rect key="frame" x="16" y="16" width="33" height="18"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qrL-mL-8JC">
+                                <rect key="frame" x="16.000000000000004" y="16" width="32.333333333333343" height="38"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JjB-a5-qfs">
-                                <rect key="frame" x="90" y="16" width="35" height="24"/>
+                                <rect key="frame" x="104" y="16" width="35" height="24"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Description" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7dG-BA-X6G">
-                                <rect key="frame" x="90" y="48" width="173" height="18"/>
+                                <rect key="frame" x="104" y="48" width="171" height="18"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
@@ -41,13 +41,14 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="7dG-BA-X6G" secondAttribute="trailing" constant="12" id="30Y-Qb-ENa" userLabel="Description Label.trailing = trailing + 12"/>
-                            <constraint firstItem="JjB-a5-qfs" firstAttribute="leading" secondItem="ABv-gb-g55" secondAttribute="leading" constant="90" id="KKh-VL-csy"/>
+                            <constraint firstAttribute="trailing" secondItem="7dG-BA-X6G" secondAttribute="trailing" id="30Y-Qb-ENa" userLabel="Description Label.trailing = trailing + 4"/>
+                            <constraint firstAttribute="bottom" secondItem="qrL-mL-8JC" secondAttribute="bottom" constant="24" id="Irk-Ue-qaV" userLabel="Date Label.bottom  = bottom+44"/>
+                            <constraint firstItem="JjB-a5-qfs" firstAttribute="leading" secondItem="ABv-gb-g55" secondAttribute="leading" constant="104" id="KKh-VL-csy"/>
                             <constraint firstItem="qrL-mL-8JC" firstAttribute="top" secondItem="ABv-gb-g55" secondAttribute="top" constant="16" id="NZF-5b-JbF"/>
                             <constraint firstItem="7dG-BA-X6G" firstAttribute="top" secondItem="JjB-a5-qfs" secondAttribute="bottom" constant="8" id="QjW-yi-UQT"/>
                             <constraint firstItem="JjB-a5-qfs" firstAttribute="top" secondItem="ABv-gb-g55" secondAttribute="top" constant="16" id="TuN-je-SUK"/>
                             <constraint firstItem="qrL-mL-8JC" firstAttribute="leading" secondItem="ABv-gb-g55" secondAttribute="leading" constant="16" id="aE8-md-kWQ"/>
-                            <constraint firstItem="7dG-BA-X6G" firstAttribute="leading" secondItem="ABv-gb-g55" secondAttribute="leading" constant="90" id="vcG-cV-WMd"/>
+                            <constraint firstItem="7dG-BA-X6G" firstAttribute="leading" secondItem="ABv-gb-g55" secondAttribute="leading" constant="104" id="vcG-cV-WMd"/>
                             <constraint firstAttribute="bottom" secondItem="7dG-BA-X6G" secondAttribute="bottom" constant="12" id="yBA-NL-avZ"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
