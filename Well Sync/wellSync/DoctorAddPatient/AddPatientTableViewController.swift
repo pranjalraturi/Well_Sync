@@ -101,7 +101,7 @@ class AddPatientTableViewController: UITableViewController, UIImagePickerControl
         patient = Patient(
             patientID: UUID(),
 //            docID: doctor.docID, //this would be passsed from screen to screen
-            docID: UUID(),
+            doctorID: UUID(),
             name: name,
             email: emailText,
             password: generatedPass,
