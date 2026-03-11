@@ -3,7 +3,6 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -173,26 +172,25 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="C87-dk-2dk">
-                                        <rect key="frame" x="20" y="367" width="353" height="51.333332061767578"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="C87-dk-2dk">
+                                        <rect key="frame" x="20" y="367" width="353" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="C87-dk-2dk" id="Mey-X5-vi1">
-                                            <rect key="frame" x="0.0" y="0.0" width="353" height="51.333332061767578"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B42-E7-mWL">
-                                                    <rect key="frame" x="0.0" y="8" width="353" height="35.333333333333336"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing" title="Select from list " imagePadding="186">
-                                                        <imageReference key="image" image="chevron.up.chevron.down" catalog="system" symbolScale="medium"/>
-                                                    </buttonConfiguration>
-                                                </button>
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2Ia-6G-bfJ">
+                                                    <rect key="frame" x="16" y="8" width="321" height="34"/>
+                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="B42-E7-mWL" firstAttribute="leading" secondItem="Mey-X5-vi1" secondAttribute="leading" id="Kf3-cp-wr2"/>
-                                                <constraint firstAttribute="bottom" secondItem="B42-E7-mWL" secondAttribute="bottom" constant="8" id="PX6-Xe-d5s"/>
-                                                <constraint firstAttribute="trailing" secondItem="B42-E7-mWL" secondAttribute="trailing" id="dxB-bQ-yzU"/>
-                                                <constraint firstItem="B42-E7-mWL" firstAttribute="top" secondItem="Mey-X5-vi1" secondAttribute="top" constant="8" id="tRX-4U-aSp"/>
+                                                <constraint firstAttribute="bottom" secondItem="2Ia-6G-bfJ" secondAttribute="bottom" constant="8" id="2kC-P6-jMC"/>
+                                                <constraint firstItem="2Ia-6G-bfJ" firstAttribute="top" secondItem="Mey-X5-vi1" secondAttribute="top" constant="8" id="Gb4-Wg-f3m"/>
+                                                <constraint firstAttribute="trailing" secondItem="2Ia-6G-bfJ" secondAttribute="trailing" constant="16" id="N8d-wC-77O"/>
+                                                <constraint firstItem="2Ia-6G-bfJ" firstAttribute="leading" secondItem="Mey-X5-vi1" secondAttribute="leading" constant="16" id="gqj-tl-JB3"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
@@ -202,7 +200,7 @@
                             <tableViewSection id="n0H-97-rHH">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="c4i-MO-AkH">
-                                        <rect key="frame" x="20" y="454.33333206176758" width="353" height="50"/>
+                                        <rect key="frame" x="20" y="453" width="353" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="c4i-MO-AkH" id="kL9-iZ-gh2">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
@@ -224,7 +222,7 @@
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="4O9-Js-X5I">
-                                        <rect key="frame" x="20" y="504.33333206176758" width="353" height="50"/>
+                                        <rect key="frame" x="20" y="503" width="353" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4O9-Js-X5I" id="X8i-dV-ySi">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
@@ -266,10 +264,10 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="Label1" destination="sw6-l5-SMs" id="ahf-1l-WoX"/>
                         <outlet property="datePicker" destination="TE5-E6-IB6" id="EA2-P1-Uaa"/>
                         <outlet property="endSleep" destination="wBZ-zN-TiV" id="e2N-xG-693"/>
                         <outlet property="heartText1" destination="eNN-qI-PDe" id="eYe-p5-zaP"/>
+                        <outlet property="label1" destination="sw6-l5-SMs" id="ahf-1l-WoX"/>
                         <outlet property="label2" destination="OPO-f1-SJI" id="Sf3-WG-OcX"/>
                         <outlet property="label3" destination="S19-yb-js8" id="6vu-Th-qCo"/>
                         <outlet property="segmentedControl" destination="0x6-5L-XBu" id="dod-uE-I4C"/>
@@ -301,12 +299,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="chevron.up.chevron.down" catalog="system" width="109" height="128"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -15,6 +15,12 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var passWord: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+//        if let id = UUID(uuidString: "6bf94a4d-cc66-4d87-a90d-be2500434e3d") {
+//            Task {
+//                await db.fetchDoctors()
+//                await db.fetchPatients(for: id)
+//            }
+//        }
         gradient.frame = view.bounds
         gradient.colors = [
             UIColor.systemCyan.withAlphaComponent(0.6).cgColor,
@@ -29,7 +35,7 @@ class LoginViewController: UIViewController {
         view.layer.insertSublayer(gradient, at: 0)
     }
     @IBOutlet weak var glassView: UIView!   // your card view
-
+    let db = AccessSupabase()
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 

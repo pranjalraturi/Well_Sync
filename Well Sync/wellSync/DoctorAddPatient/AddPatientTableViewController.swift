@@ -109,7 +109,7 @@ class AddPatientTableViewController: UITableViewController, UIImagePickerControl
             dob: dobDate,
             nextSessionDate: Date(),
             imageURL: nil,
-            address: addressText
+            address: addressText, condition: ""
         )
 //        AllPatients.append(patient!)
 

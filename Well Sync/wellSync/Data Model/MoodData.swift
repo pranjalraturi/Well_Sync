@@ -7,31 +7,30 @@
 
 import Foundation
 
-struct moodLogFeelings{
+struct moodLogFeelings: Codable{
     let id:UUID
     let logId:UUID
     let feelingId:UUID
 }
 
-struct MoodLog{
-    var patientId: UUID
-    var logId: UUID
-    var mood: MoodLevel
-    var date: Date
-    var time: String
-    var selectedFeeling: [Feeling]?
+struct MoodLog: Codable{
+    var logId: UUID?
+    var patientId: UUID?
+    var mood: Int
+    var date: Date?
     var moodNote: String?
+    var selectedFeeling: [Feeling]?
 }
 
-struct Feeling{
+struct Feeling: Codable{
     var feelingId: UUID
     var moodLevel: MoodLevel
     var name: String
 }
 
-enum MoodLevel :Int{
+enum MoodLevel :Int, Codable{
     case verySad = 1
-    case sad
+    case sad    
     case neutral
     case happy
     case veryHappy

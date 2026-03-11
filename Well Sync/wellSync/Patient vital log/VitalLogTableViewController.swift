@@ -20,28 +20,28 @@ class VitalLogTableViewController: UITableViewController {
     @IBOutlet weak var heartText1: UITextField!
     @IBOutlet weak var textField2: UITextField!
     //    @IBOutlet weak var section1: UITableViewSection!
-    @IBOutlet weak var Label1: UILabel!
+    @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var label2: UILabel!
     @IBOutlet weak var label3: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
     @IBOutlet weak var startSleep: UIDatePicker!
     @IBOutlet weak var endSleep: UIDatePicker!
     
-    let textfield2 = IndexPath(row: 1, section: 3)
-    let textfield1 = IndexPath(row: 1, section: 2)
+//    let textfield2 = IndexPath(row: 1, section: 3)
+//    let textfield1 = IndexPath(row: 1, section: 2)
     
-    var istextfieldVisible1: Bool = false
-    var istextfieldVisible2: Bool = false
+    var isTextFieldVisible1: Bool = false
+    var isTextFieldVisible2: Bool = false
     
     // Track which segment is selected
     var selectedLogType: LogType = .heartRate
 
     func setTextFieldVisibility(isVisible1: Bool, isVisible2: Bool) {
-        let oldVisible1 = istextfieldVisible1
-        let oldVisible2 = istextfieldVisible2
+        let oldVisible1 = isTextFieldVisible1
+        let oldVisible2 = isTextFieldVisible2
         
-        istextfieldVisible1 = isVisible1
-        istextfieldVisible2 = isVisible2
+        isTextFieldVisible1 = isVisible1
+        isTextFieldVisible2 = isVisible2
         
         var inserts: [IndexPath] = []
         var deletes: [IndexPath] = []
@@ -83,12 +83,12 @@ class VitalLogTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // For section 2 (textfield1)
         if section == 2 {
-            return istextfieldVisible1 ? 2 : 1  // Hide the row if not visible
+            return isTextFieldVisible1 ? 2 : 1  // Hide the row if not visible
         }
         
         // For section 4 (textfield2)
         if section == 3 {
-            return istextfieldVisible2 ? 2 : 1  // Hide the row if not visible
+            return isTextFieldVisible2 ? 2 : 1  // Hide the row if not visible
         }
         
         // Default row count for other sections
@@ -100,7 +100,7 @@ class VitalLogTableViewController: UITableViewController {
             startSleep.isHidden = true
             endSleep.isHidden = true
             
-            Label1.text = "Enter your heart rate"
+            label1.text = "Enter your heart rate"
             label2.text = "What were you doing at that time?"
             label3.text = "Device used for measurement"
             
@@ -110,7 +110,7 @@ class VitalLogTableViewController: UITableViewController {
             startSleep.isHidden = false
             endSleep.isHidden = false
             
-            Label1.text = "Start Time"
+            label1.text = "Start Time"
             label2.text = "End Time"
             label3.text = "I felt that the quality of sleep was?"
             

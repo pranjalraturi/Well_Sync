@@ -1,26 +1,90 @@
 import UIKit
 
 class HomeCollectionViewController: UICollectionViewController {
-
-    private let viewModel = HomeViewModel()
+    var patient: [Patient] = []
+    var viewModel: AccessSupabase?
    
     @IBOutlet weak var ellipsisButtonTapped: UIBarButtonItem!
     
     // adding selected patient
-    var selectedPatient: PatientModel?
+    var selectedPatient: Patient?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        viewModel = AccessSupabase()
         setupCollectionView()
-        viewModel.loadPatients()
-        setupMenu()
+        Task {
+            await loadPatients()
+        }
+        self.collectionView.collectionViewLayout = createLayout()
+    }
+    
+    @MainActor
+    private func loadPatients() async {
+        guard let id = UUID(uuidString: "6bf94a4d-cc66-4d87-a90d-be2500434e3d") else { return }
 
+        let fetched = await viewModel?.fetchPatients(for: id)
+        print("fetched:", fetched ?? [])
+        patient = fetched ?? []
+
+        categorizePatients()
+        collectionView.reloadData()
         collectionView.setCollectionViewLayout(createLayout(), animated: false)
     }
-//    @IBAction func ellipsisButtonTapped(_ sender: Any) {
-//        showMenu()
-//    }
+
+    var upcoming: [Patient] = []
+    var missed: [Patient] = []
+    var done: [Patient] = []
+
+    // Categorize function
+    private func categorizePatients() {
+        print("/",patient)
+        upcoming.removeAll()
+        missed.removeAll()
+        done.removeAll()
+
+        let now = Date()
+        let calendar = Calendar.current
+
+        for p in patient ?? [] {
+            // 1) If sessionStatus == true, it's done
+            if p.sessionStatus == true {
+                done.append(p)
+                continue
+            }
+
+            // 2) Not done -> decide by comparing nextSessionDate with now
+            // Use minute granularity so small seconds don't flip results unnecessarily
+            let comparison = calendar.compare(p.nextSessionDate, to: now, toGranularity: .minute)
+            if comparison == .orderedAscending {
+                // nextSessionDate < now => missed
+                missed.append(p)
+            } else {
+                // nextSessionDate == or > now => upcoming
+                upcoming.append(p)
+            }
+        }
+    }
+
+    func numberOfPatients(in section: Int) -> Int {
+        switch section {
+        case 1: return upcoming.count
+        case 2: return missed.count
+        case 3: return done.count
+        default: return 0
+        }
+    }
+    
+    func patientSection(at index: Int, section: Int) -> Patient {
+        switch section {
+        case 1: return upcoming[index]
+        case 2: return missed[index]
+        case 3: return done[index]
+        default: return upcoming[index]
+        }
+    }
     
     private func setupCollectionView() {
 
@@ -101,7 +165,7 @@ class HomeCollectionViewController: UICollectionViewController {
         if section == 0 {
             return 2
         } else {
-            return viewModel.numberOfPatients(in: section)
+            return numberOfPatients(in: section)
         }
     }
 
@@ -157,7 +221,7 @@ extension HomeCollectionViewController {
             for: indexPath
         ) as! PatientCollectionViewCell
 
-        let patient = viewModel.patient(at: indexPath.row, section: indexPath.section)
+        let patient = patientSection(at: indexPath.row, section: indexPath.section)
 
         cell.configureCell(with: patient)
 
@@ -276,7 +340,7 @@ extension HomeCollectionViewController {
 
         guard indexPath.section != 0 else { return }
 
-        let patient = viewModel.patient(at: indexPath.row, section: indexPath.section)
+        let patient = patientSection(at: indexPath.row, section: indexPath.section)
         //print(patient.name)
         selectedPatient = patient
         performSegue(withIdentifier: "PatientDetail", sender: self)

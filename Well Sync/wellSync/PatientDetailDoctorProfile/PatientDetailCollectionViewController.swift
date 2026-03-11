@@ -11,7 +11,7 @@ class PatientDetailCollectionViewController: UICollectionViewController {
 
     @IBOutlet weak var PatientProfileCollectionView: UICollectionView!
     
-  var patient: PatientModel!
+  var patient: Patient!
 
     override func viewDidLoad() {
         super.viewDidLoad()

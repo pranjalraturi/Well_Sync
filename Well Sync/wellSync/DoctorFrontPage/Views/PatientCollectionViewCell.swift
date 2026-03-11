@@ -37,23 +37,31 @@ class PatientCollectionViewCell: UICollectionViewCell {
     }
 
 
-    func configureCell(with: PatientModel){
+    func configureCell(with: Patient){
         switch with.mood{
-        case .happy:
+        case 4:
             color = .systemGreen
-        case .angry:
+        case 3:
             color = .systemOrange
-        case .sad:
+        case 2:
             color = .systemRed
         default:
             color = .systemYellow
         }
-        profileImage.image = UIImage(named: with.imageName)
+        profileImage.image = UIImage(named: with.imageURL ?? "")
         nameLabel.text = with.name
         conditionLabel.text = with.condition
-        sessionLabel.text = "\(with.sessionCount)  Sessions"
-        time.text = with.sessionTime
-        lastDate.text = with.lastSessionDate
+        sessionLabel.text = "7  Sessions"
+        time.text = with.nextSessionDate.formatted(date: .omitted, time: .shortened)
+        
+        let date = with.previousSessionDate
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateStyle = .medium
+
+        let dateString = formatter.string(from: date!)
+        lastDate.text = dateString
+//        lastDate.text = "\(with.previousSessionDate?.formatted(date: .numeric, time: .omitted))"
         contentView.layer.borderColor = color.cgColor
     }
 }
