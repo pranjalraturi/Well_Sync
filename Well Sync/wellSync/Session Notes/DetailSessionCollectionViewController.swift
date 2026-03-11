@@ -1,24 +1,25 @@
 //
-//  SessionNoteCollectionViewController.swift
+//  DetailSessionCollectionViewController.swift
 //  wellSync
 //
-//  Created by Vidit Agarwal on 10/03/26.
+//  Created by Vidit Agarwal on 11/03/26.
 //
 
 import UIKit
-import Foundation
+import AVFoundation
+
 private let reuseIdentifier = "Cell"
 
-class SessionNoteCollectionViewController: UICollectionViewController {
+class DetailSessionCollectionViewController: UICollectionViewController {
+    
+    var audioPlayer: AVAudioPlayer?
 
-    var sessions:[SessionNote]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        sessions = [SessionNote(sessionId: UUID(), patientId: UUID(), date: Date(), notes: "HElloeee how are you brdr", images: nil, voice: nil, title: "dhd"),SessionNote(sessionId: UUID(), patientId: UUID(), date: Date(), notes: "HElloeee how are you brdr", images: nil, voice: nil, title: "dhd"),SessionNote(sessionId: UUID(), patientId: UUID(), date: Date(), notes: "HElloeee how are you brdr", images: nil, voice: nil, title: "dhd"),SessionNote(sessionId: UUID(), patientId: UUID(), date: Date(), notes: "HElloeee how are you brdr", images: nil, voice: nil, title: "dhd"),SessionNote(sessionId: UUID(), patientId: UUID(), date: Date(), notes: "HElloeee how are you brdr", images: nil, voice: nil, title: "dhd")]
-        self.collectionView.collectionViewLayout = generateLayout()
+        self.collectionView?.collectionViewLayout = generateLayout()
+        setupAudioPlayer()
     }
 
-    // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -28,13 +29,14 @@ class SessionNoteCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return sessions?.count ?? 0
+        return 1
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "sessionCell", for: indexPath) as! SessionNoteCollectionViewCell
-        cell.configur(with: sessions?[indexPath.row], indexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recording", for: indexPath)
+    
         // Configure the cell
+    
         return cell
     }
     func generateLayout() -> UICollectionViewLayout {
@@ -60,7 +62,21 @@ class SessionNoteCollectionViewController: UICollectionViewController {
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
     }
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "detailSession", sender: nil)
+    
+    func setupAudioPlayer() {
+        guard let soundURL = Bundle.main.url(forResource: "test", withExtension: "mp3") else {
+            print("Audio file not found")
+            return
+        }
+
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            audioPlayer?.prepareToPlay() // Preload the audio into the buffer
+        } catch {
+            print("Error initializing audio player: \(error.localizedDescription)")
+        }
+    }
+    @IBAction func play(_ sender: Any) {
+        audioPlayer?.play()
     }
 }

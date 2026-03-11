@@ -14,10 +14,12 @@
 		2DA16C7C2F4083F700CAB105 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 2DA16C7B2F4083F700CAB105 /* Storage */; };
 		2DA16C7E2F4083F700CAB105 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 2DA16C7D2F4083F700CAB105 /* Supabase */; };
 		2DC5A9722F3343D1000F801A /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 2DC5A9712F3343D1000F801A /* DGCharts */; };
+		2DE8A8432F619693004F4934 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE8A8422F619693004F4934 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2DB79A442F28DD1000E9EF11 /* wellSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wellSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DE8A8422F619693004F4934 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -46,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DE8A8432F619693004F4934 /* AVFoundation.framework in Frameworks */,
 				2DA16C7E2F4083F700CAB105 /* Supabase in Frameworks */,
 				2DA16C7C2F4083F700CAB105 /* Storage in Frameworks */,
 				2DA16C782F4083F700CAB105 /* PostgREST in Frameworks */,
@@ -63,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				2DB79A462F28DD1000E9EF11 /* wellSync */,
+				2DE8A8412F619693004F4934 /* Frameworks */,
 				2DB79A452F28DD1000E9EF11 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -73,6 +77,14 @@
 				2DB79A442F28DD1000E9EF11 /* wellSync.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		2DE8A8412F619693004F4934 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2DE8A8422F619693004F4934 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

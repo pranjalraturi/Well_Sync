@@ -9,6 +9,13 @@ import Supabase
 import UIKit
 
 class AccessSupabase{
+    let decoder = JSONDecoder()
+
+    let formatter = DateFormatter()
+    required init (){
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        decoder.dateDecodingStrategy = .formatted(formatter)
+    }
     func fetchDoctors() async {
         Task {
             do {
@@ -31,6 +38,35 @@ class AccessSupabase{
 
 
     func fetchPatients(for doctorId: UUID) async -> [Patient] {
+//        do {
+//                let response = try await SupabaseManager.shared.client
+//                    .database
+//                    .from("patients")
+//                    .select()
+//                    .eq("doc_id", value: doctorId.uuidString)
+//                    .execute()
+//
+//                var patients = try decoder.decode([Patient].self, from: response.data)
+//
+//                await withTaskGroup(of: (Int, Int?, Date?).self) { group in
+//                    for (idx, p) in patients.enumerated() {
+//                        group.addTask {
+//                            let mood = await self.fetchMood(for: p.patientID)
+//                            let prev = await self.fetchSession(for: p.patientID)
+//                            return (idx, mood, prev)
+//                        }
+//                    }
+//
+//                    for await (idx, mood, prev) in group {
+//                        patients[idx].mood = mood
+//                        patients[idx].previousSessionDate = prev
+//                    }
+//                }
+//                print("---------------->",patients)
+//                return patients
+
+            
+        
         do {
             let response = try await SupabaseManager.shared.client
                 .database
@@ -39,16 +75,17 @@ class AccessSupabase{
                 .eq("doc_id", value: doctorId.uuidString)
                 .execute()
 
-            print(String(data: response.data, encoding: .utf8)!)
+//            print(String(data: response.data, encoding: .utf8)!)
 
             var patients = try JSONDecoder().decode([Patient].self, from: response.data)
+//            let patients = try decoder.decode([Patient].self, from: response.data)
             for var i in patients{
 
                     i.mood = await fetchMood(for: i.patientID)
                     i.previousSessionDate = await fetchSession(for: i.patientID)
-                    print("//\(i.mood) \t \(i.previousSessionDate)\n")
+//                print("//\(String(describing: i.mood)) \t \(String(describing: i.previousSessionDate))\n")
             }
-            print(patients)
+//            print("------------>",patients)
             return patients
 
         } catch {
@@ -62,15 +99,15 @@ class AccessSupabase{
             let response = try await SupabaseManager.shared.client
                 .database
                 .from("mood_logs")
-                .select()
+                .select("mood")
                 .eq("patient_id", value: patientId.uuidString)
                 .execute()
 
-            print(String(data: response.data, encoding: .utf8)!)
+//            print(String(data: response.data, encoding: .utf8)!)
 
-            print("\n\n\n\n\n\n")
+//            print("\n\n\n\n\n\n")
             let mood = try JSONDecoder().decode([MoodLog].self, from: response.data)
-            print("\n\(mood)\n")
+//            print("\n\(mood)\n")
             return mood[0].mood
 
         } catch {
@@ -88,12 +125,6 @@ class AccessSupabase{
                 .eq("patient_id", value: patientId.uuidString)
                 .execute()
             
-            let decoder = JSONDecoder()
-
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-
-            decoder.dateDecodingStrategy = .formatted(formatter)
 
             let session = try decoder.decode([SessionNote].self, from: response.data)
 
@@ -168,21 +199,4 @@ class AccessSupabase{
 //        return nil
 //    }
     
-    private static func parseDate(_ string: String) -> Date? {
-        // ISO 8601 (e.g., 2025-11-23T10:15:30Z)
-        let iso = ISO8601DateFormatter()
-        if let d = iso.date(from: string) { return d }
-
-        // yyyy-MM-dd
-        let df1 = DateFormatter()
-        df1.locale = Locale(identifier: "en_US_POSIX")
-        df1.dateFormat = "yyyy-MM-dd"
-        if let d = df1.date(from: string) { return d }
-
-        // yyyy-MM-dd HH:mm:ss
-        let df2 = DateFormatter()
-        df2.locale = Locale(identifier: "en_US_POSIX")
-        df2.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        return df2.date(from: string)
-    }
 }

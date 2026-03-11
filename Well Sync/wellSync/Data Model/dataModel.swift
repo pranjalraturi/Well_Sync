@@ -212,9 +212,13 @@ extension Patient {
 
         // Decode next_session (ISO8601)
         let sessionString = try container.decode(String.self, forKey: .nextSessionDate)
-        let sessionFormatter = ISO8601DateFormatter()
-        nextSessionDate = sessionFormatter.date(from: sessionString) ?? Date()
 
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+
+        nextSessionDate = formatter.date(from: sessionString) ?? Date()
         // Not coming from API
         mood = 3
         previousSessionDate = Date()

@@ -14,6 +14,7 @@ class SessionNoteCollectionViewCell: UICollectionViewCell {
     @IBOutlet var sessionTitleLabel: UILabel!
     func configur(with session: SessionNote?,indexPath: IndexPath){
         layer.cornerRadius = 25
+        sessionNumberLabel.layer.cornerRadius = 10
 //        layer.masksToBounds = false
         sessionNumberLabel.text = "Session \(indexPath.row + 1)"
         sessionDateLabel.text = session?.date.formatted(date: .numeric, time: .omitted) ?? ""
