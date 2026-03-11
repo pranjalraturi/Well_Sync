@@ -21,7 +21,12 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(with patient: Patient){
-        profileImageView.image = UIImage(named: patient.imageURL ?? "")
+        if let urlString = patient.imageURL,
+           let url = URL(string: urlString),
+           let data = try? Data(contentsOf: url) {
+            
+            profileImageView.image = UIImage(data: data)
+        }
         nameLabel.text = patient.name
         AgeLabel.text = "Age: "
         let age = Calendar.current.dateComponents([.year], from: patient.dob, to: Date())

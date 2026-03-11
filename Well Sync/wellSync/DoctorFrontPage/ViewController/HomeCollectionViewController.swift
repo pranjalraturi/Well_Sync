@@ -11,6 +11,7 @@ class HomeCollectionViewController: UICollectionViewController {
     
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         viewModel = AccessSupabase()
@@ -26,7 +27,7 @@ class HomeCollectionViewController: UICollectionViewController {
         guard let id = UUID(uuidString: "6bf94a4d-cc66-4d87-a90d-be2500434e3d") else { return }
 
         let fetched = await viewModel?.fetchPatients(for: id)
-        print("fetched:", fetched ?? [])
+//        print("fetched:", fetched ?? [])
         patient = fetched ?? []
 
         categorizePatients()

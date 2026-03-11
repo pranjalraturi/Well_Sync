@@ -37,7 +37,7 @@ class PatientCollectionViewCell: UICollectionViewCell {
     }
 
 
-    func configureCell(with: Patient){
+    func configureCell(with: Patient) {
         switch with.mood{
         case 4:
             color = .systemGreen
@@ -58,15 +58,31 @@ class PatientCollectionViewCell: UICollectionViewCell {
         
         nameLabel.text = with.name
         conditionLabel.text = with.condition
-        sessionLabel.text = "7  Sessions"
-        time.text = with.nextSessionDate.formatted(date: .omitted, time: .shortened)
+        sessionLabel.text = "7 Sessions"
+        let sessionDate = with.nextSessionDate
+        print(sessionDate)
         
-        let date = with.previousSessionDate
-        let formatter = DateFormatter()
+        let timeFormatter = DateFormatter()
+        timeFormatter.locale = Locale(identifier: "en_US_POSIX")
+        timeFormatter.timeZone = TimeZone(secondsFromGMT: 0)   // keeps time as 10:00:00
+        timeFormatter.dateFormat = "HH:mm:ss"
+
+        time.text = timeFormatter.string(from: sessionDate)
+        
+
+//        formatter.dateFormat = "HH:mm:ss"
+        
+        
+        print("---->>>>",sessionDate.formatted(date: .omitted, time: .standard))
+        print("---->>>>",time.text)
+        
+        var formatter = DateFormatter()
+        guard let date = with.previousSessionDate else { return}
+        formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         formatter.dateStyle = .medium
 
-        let dateString = formatter.string(from: date!)
+        let dateString = formatter.string(from: date)
         lastDate.text = dateString
 //        lastDate.text = "\(with.previousSessionDate?.formatted(date: .numeric, time: .omitted))"
         contentView.layer.borderColor = color.cgColor
