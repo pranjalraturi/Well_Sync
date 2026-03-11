@@ -56,6 +56,23 @@ class PatientCollectionViewCell: UICollectionViewCell {
             profileImage.image = UIImage(data: data)
         }
         
+//        profileImage.image = nil
+//        profileImage.image = UIImage(named: "user")
+//        if let urlString = with.imageURL, let url = URL(string: urlString) {
+//            // Capture the URL string to validate in the completion handler to avoid wrong images on reused cells
+//            let expectedURL = url.absoluteString
+//            URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+//                guard let self = self else { return }
+//                guard error == nil, let data = data, let image = UIImage(data: data) else { return }
+//                DispatchQueue.main.async {
+//                    // Only set the image if the cell is still configured for the same URL
+//                    if with.imageURL == expectedURL {
+//                        self.profileImage.image = image
+//                    }
+//                }
+//            }.resume()
+//        }
+        
         nameLabel.text = with.name
         conditionLabel.text = with.condition
         sessionLabel.text = "7 Sessions"
@@ -65,7 +82,7 @@ class PatientCollectionViewCell: UICollectionViewCell {
         let timeFormatter = DateFormatter()
         timeFormatter.locale = Locale(identifier: "en_US_POSIX")
         timeFormatter.timeZone = TimeZone(secondsFromGMT: 0)   // keeps time as 10:00:00
-        timeFormatter.dateFormat = "HH:mm:ss"
+        timeFormatter.dateFormat = "HH:mm"
 
         time.text = timeFormatter.string(from: sessionDate)
         
@@ -88,3 +105,4 @@ class PatientCollectionViewCell: UICollectionViewCell {
         contentView.layer.borderColor = color.cgColor
     }
 }
+

@@ -78,10 +78,10 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="dZK-rA-xh2">
-                                <rect key="frame" x="132.66666666666666" y="90" width="128" height="128"/>
+                                <rect key="frame" x="132.66666666666666" y="90" width="127.99999999999997" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="aaN-ZC-2uB">
-                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionViewCellContentView>
                             </collectionViewCell>
@@ -100,6 +100,7 @@
                         <segue destination="8lG-Zk-JZv" kind="show" identifier="Summarised" id="xy2-Kp-axs"/>
                         <segue destination="m2C-vu-s9U" kind="show" identifier="activity" id="ouO-jZ-GCq"/>
                         <segue destination="3LQ-hf-pyg" kind="show" identifier="mood" id="A5U-yi-3xG"/>
+                        <segue destination="TIj-9T-WrR" kind="show" identifier="sessionNotes" id="7fz-jQ-a10"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eGB-rC-TCV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -164,18 +165,28 @@
             </objects>
             <point key="canvasLocation" x="3705" y="1659"/>
         </scene>
+        <!--sessionNoteScreen-->
+        <scene sceneID="DTY-S9-viQ">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="sessionNoteScreen" storyboardName="SessionNotes" referencedIdentifier="sessionNoteScreen" id="TIj-9T-WrR" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Qvg-p1-27L"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gZX-Zl-hSZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3673" y="1382"/>
+        </scene>
     </scenes>
     <resources>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="waveform.path.ecg" catalog="system" width="128" height="125"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
