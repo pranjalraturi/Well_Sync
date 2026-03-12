@@ -131,11 +131,24 @@ class HomeCollectionViewController: UICollectionViewController {
        // ellipsisButtonTapped.showsMenuAsPrimaryAction = true
     }
     func openAllPatients() {
-        print("All Patients")
+
+        let storyboard = UIStoryboard(name: "AllPatient", bundle: nil)
+
+        let vc = storyboard.instantiateViewController(
+            withIdentifier: "AllPatientViewController"
+        )
+
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     func openAppointments() {
-        print("Appointments")
+
+        let storyboard = UIStoryboard(name: "Appointments", bundle: nil)
+
+        let vc = storyboard.instantiateViewController(
+            withIdentifier: "AppointmentsCollectionViewController"
+        )
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     func openReminder() {
