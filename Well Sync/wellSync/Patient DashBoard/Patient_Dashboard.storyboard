@@ -491,11 +491,12 @@
                         <segue destination="2Mf-bO-OD1" kind="relationship" relationship="viewControllers" id="3mG-7p-4Fm"/>
                         <segue destination="nDc-VY-Ayc" kind="relationship" relationship="viewControllers" id="72c-9U-KQl"/>
                         <segue destination="FaA-SA-GCk" kind="relationship" relationship="viewControllers" id="XLl-38-Omx"/>
+                        <segue destination="CRb-h1-b5I" kind="relationship" relationship="viewControllers" id="myp-wr-gaL"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xCe-s6-tep" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="844" y="525"/>
+            <point key="canvasLocation" x="811" y="495"/>
         </scene>
         <!--Home-->
         <scene sceneID="GoE-Bu-I4i">
@@ -524,7 +525,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kh4-u2-02b" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="843" y="965"/>
+            <point key="canvasLocation" x="461" y="951"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="69W-BX-LwI">
@@ -815,7 +816,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6dh-qh-qP6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1058" y="934"/>
+            <point key="canvasLocation" x="809" y="965"/>
         </scene>
         <!--PateintSetting-->
         <scene sceneID="VYr-ri-uMp">
@@ -826,6 +827,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fUK-xV-QKV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2871" y="965"/>
+        </scene>
+        <!--PateintNotes-->
+        <scene sceneID="X0n-8F-nwc">
+            <objects>
+                <viewControllerPlaceholder storyboardName="PatientNotes" referencedIdentifier="PateintNotes" id="CRb-h1-b5I" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Vitals" image="waveform.path.ecg" catalog="system" id="Koe-gt-F5S"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p2m-eC-u7d" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1266" y="934"/>
         </scene>
     </scenes>
     <resources>

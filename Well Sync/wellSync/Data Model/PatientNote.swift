@@ -10,6 +10,5 @@ import Foundation
 struct PatientNote{
     let patientId:UUID
     let date:Date
-    let time:String
     let note:String
 }
