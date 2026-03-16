@@ -23,8 +23,6 @@ class PatientDetailCollectionViewController: UICollectionViewController {
         PatientProfileCollectionView.delegate = self
         PatientProfileCollectionView.dataSource = self
     }
-    
-    
     func registerCells(){
         PatientProfileCollectionView.register(UINib(nibName: "ProfileCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ProfileCollectionViewCell")
     }
@@ -39,6 +37,7 @@ class PatientDetailCollectionViewController: UICollectionViewController {
         if indexPath.section == 0{
             let profilecell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCollectionViewCell", for: indexPath) as! ProfileCollectionViewCell
             profilecell.configureCell(with: patient)
+            profilecell.delegate = self
             return profilecell
         }
         
@@ -178,5 +177,119 @@ extension PatientDetailCollectionViewController{
             
         }
     }
+    @IBAction func doneButtonTapped(_ sender: UIBarButtonItem){
+        let alert = UIAlertController(title: "Session Note", message: "Have you Added the session Note?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+                self.showSecondAlert(option: 1)
+            }))
+            alert.addAction(UIAlertAction(title: "Later", style: .default, handler: { _ in
+                self.showSecondAlert(option: 0)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .destructive))
+            present(alert, animated: true)
+        }
+    func showSecondAlert(option: Int) {
+        let alert = UIAlertController(title: "Next Session Date", message: "Have you schedule the next session?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
+            self.showThirdAlert(option: 1)
+        }))
+        alert.addAction(UIAlertAction(title: "Later", style: .default, handler: { _ in
+            self.showThirdAlert(option: 0)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive))
+        present(alert, animated: true)
+    }
+    func showThirdAlert(option: Int) {
+        let alert = UIAlertController(title: "Session Completed", message: "You have marked this session as Done", preferredStyle: .alert)
+        let done = UIAlertAction(title: "OK", style: .default){_ in
+            if let index = globalPatient.firstIndex(where: { $0.patientID == self.patient.patientID }) {
+                globalPatient[index].sessionStatus = true
+            }
+        }
+        done.setValue(UIColor.systemGreen, forKey: "titleTextColor")
+        alert.addAction(done)
+        present(alert, animated: true)
+    }
     
+    
+    func showScheduleAlert(sourceView: UIView) {
+
+        let alert = UIAlertController(title: "",
+                                      message: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+                                      preferredStyle: .actionSheet)
+
+        let calendarView = UICalendarView()
+           calendarView.translatesAutoresizingMaskIntoConstraints = false
+           calendarView.calendar = .current
+           calendarView.locale = .current
+           calendarView.fontDesign = .rounded
+           let selection = UICalendarSelectionSingleDate(delegate: self)
+           calendarView.selectionBehavior = selection
+           alert.view.addSubview(calendarView)
+        
+        let divider = UIView()
+           divider.backgroundColor = UIColor.separator
+           divider.translatesAutoresizingMaskIntoConstraints = false
+           alert.view.addSubview(divider)
+        
+        let timeLabel = UILabel()
+            timeLabel.text = "Time"
+            timeLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+            timeLabel.translatesAutoresizingMaskIntoConstraints = false
+            alert.view.addSubview(timeLabel)
+        
+        let timePicker = UIDatePicker()
+           timePicker.datePickerMode = .time
+           timePicker.preferredDatePickerStyle = .wheels
+           timePicker.translatesAutoresizingMaskIntoConstraints = false
+           alert.view.addSubview(timePicker)
+        
+        NSLayoutConstraint.activate([
+            calendarView.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 0),
+               calendarView.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 8),
+               calendarView.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -8),
+            calendarView.heightAnchor.constraint(equalToConstant: 280),
+            
+            divider.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 6),
+                   divider.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 16),
+                   divider.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -16),
+                   divider.heightAnchor.constraint(equalToConstant: 0.5),
+
+               timeLabel.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 16),
+               timeLabel.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 20),
+
+               timePicker.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 0),
+               timePicker.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 8),
+               timePicker.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -8),
+               timePicker.heightAnchor.constraint(equalToConstant: 100),
+            ])
+        let schedule = UIAlertAction(title: "Schedule", style: .default){_ in
+            print("Time Selected:", timePicker.date)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(schedule)
+        alert.addAction(cancel)
+        
+        if let popover = alert.popoverPresentationController {
+            popover.sourceView = sourceView
+            popover.sourceRect = sourceView.bounds
+        }
+        present(alert, animated: true)
+    }
+}
+extension PatientDetailCollectionViewController: ProfileCellDelegate {
+    func calendarButtonTapped(from view: UIView){
+        showScheduleAlert(sourceView: view)
+    }
+}
+extension PatientDetailCollectionViewController: UICalendarSelectionSingleDateDelegate {
+
+    func dateSelection(_ selection: UICalendarSelectionSingleDate,
+                       didSelectDate dateComponents: DateComponents?) {
+
+        guard let components = dateComponents,
+              let date = Calendar.current.date(from: components) else { return }
+
+        print("Selected date:", date)
+    }
 }

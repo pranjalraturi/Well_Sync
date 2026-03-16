@@ -78,10 +78,10 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="dZK-rA-xh2">
-                                <rect key="frame" x="132.66666666666666" y="90" width="127.99999999999997" height="128"/>
+                                <rect key="frame" x="132.66666666666666" y="90" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="aaN-ZC-2uB">
-                                    <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionViewCellContentView>
                             </collectionViewCell>
@@ -92,7 +92,11 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Patient" id="0qR-Pa-io4">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="3w3-if-kb0"/>
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="3w3-if-kb0">
+                            <connections>
+                                <action selector="doneButtonTapped:" destination="Y2u-nG-kW5" id="tRD-3K-8Gi"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="PatientProfileCollectionView" destination="DaN-wM-5C6" id="DV5-BO-Eyx"/>
