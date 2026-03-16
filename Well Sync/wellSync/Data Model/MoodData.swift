@@ -28,9 +28,9 @@ struct Feeling: Codable{
     var name: String
 }
 
-enum MoodLevel :Int, Codable{
-    case verySad = 1
-    case sad    
+enum MoodLevel: Int, Codable {
+    case verySad 
+    case sad
     case neutral
     case happy
     case veryHappy

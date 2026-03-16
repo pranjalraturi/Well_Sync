@@ -6,15 +6,21 @@
 //
 
 import UIKit
-
+protocol ProfileCellDelegate: AnyObject {
+    func calendarButtonTapped(from view: UIView)
+}
 class ProfileCollectionViewCell: UICollectionViewCell {
+   
+    weak var delegate: ProfileCellDelegate?
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var AgeLabel: UILabel!
     @IBOutlet weak var AgeNumberLabel: UILabel!
     @IBOutlet weak var disorderLabel: UILabel!
-
+    
+    
+  
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -33,5 +39,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         AgeNumberLabel.text = "\(age.year ?? 0)"
         disorderLabel.text = patient.condition
     }
-
+    @IBAction func calenderButtonPressed(_ sender: UIButton) {
+        delegate?.calendarButtonTapped(from: sender as UIView)
+    }
 }

@@ -56,15 +56,13 @@ class MoodChartCollectionViewCell: UICollectionViewCell, ChartViewDelegate{
     func setData() {
 
         // mood logs across a week (multiple per day)
-        let weekMoodLogs: [[Double]] = [
-            [3,4,2],        // Mon
-            [4,3],          // Tue
-            [2,3,4,5],      // Wed
-            [4],            // Thu
-            [3,4,5],        // Fri
-            [2,3],          // Sat
-            [4,5,3]         // Sun
-        ]
+        var weekMoodLogs: [[Double]] {
+            var temp : [Double] = []
+            for i in moodLogs{
+                temp.append(Double(i.mood))
+            }
+            return [temp]
+        }
 
         var entries: [ChartDataEntry] = []
         var labels: [String] = []
@@ -148,19 +146,23 @@ class WeekFormatter: AxisValueFormatter {
     }
 }
 class TimeFormatter: AxisValueFormatter {
-
-    let times = [
-        "6AM","7AM","8AM","9AM",
-        "10AM","11AM","12PM",
-        "1PM","2PM","3PM","4PM"
-    ]
+    
+    var timers: [String]{
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        var time: [String] = []
+        for i in moodLogs{
+            time.append(formatter.string(from: i.date ?? Date()))
+        }
+        return time
+    }
 
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
 
         let index = Int(value)
 
-        if index >= 0 && index < times.count {
-            return times[index]
+        if index >= 0 && index < timers.count {
+            return timers[index]
         }
 
         return ""
@@ -194,10 +196,15 @@ class MoodBubbleMarker: MarkerView {
     override func refreshContent(entry: ChartDataEntry, highlight: Highlight) {
 
         // Example time labels
-        let times = [
-            "6AM","7AM","8AM","9AM","10AM","11AM",
-            "12PM","1PM","2PM","3PM","4PM","5PM"
-        ]
+        var times:[String] {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            var time1: [String] = []
+            for i in moodLogs{
+                time1.append(formatter.string(from: i.date ?? Date()))
+            }
+            return time1
+        }
 
         let index = Int(entry.x)
         let time = index < times.count ? times[index] : ""

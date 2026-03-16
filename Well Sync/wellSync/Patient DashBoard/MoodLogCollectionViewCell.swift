@@ -8,19 +8,15 @@
 import UIKit
 
 class MoodLogCollectionViewCell: UICollectionViewCell {
-    @IBOutlet var moodView: [UIView]!
+    @IBOutlet var moodViews: [UIImageView]!
 
     override func awakeFromNib() {
             super.awakeFromNib()
-
-            for view in moodView {
-                view.layer.cornerRadius = 8
-                view.isUserInteractionEnabled = true
-            }
         }
 
         func configureTap(target: Any, action: Selector) {
-            for view in moodView {
+            for view in moodViews {
+                view.isUserInteractionEnabled = true
                 let tap = UITapGestureRecognizer(target: target, action: action)
                 view.addGestureRecognizer(tap)
             }
@@ -28,8 +24,8 @@ class MoodLogCollectionViewCell: UICollectionViewCell {
 
         override func prepareForReuse() {
             super.prepareForReuse()
-            for view in moodView {
-                view.transform = .identity
+            for view in moodViews {
+                view.transform = CGAffineTransform.identity
             }
         }
 }

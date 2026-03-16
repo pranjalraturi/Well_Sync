@@ -24,14 +24,14 @@ class FeelingChipCell: UICollectionViewCell {
     private func setupUI() {
         
         contentView.backgroundColor = .systemGray5
-        contentView.layer.cornerRadius = 18
+        contentView.layer.cornerRadius = 12
         contentView.clipsToBounds = true
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont.systemFont(ofSize: 11, weight: .regular)
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
-        
+        titleLabel.textColor = .label
         contentView.addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
@@ -49,8 +49,15 @@ class FeelingChipCell: UICollectionViewCell {
         titleLabel.text = title
     }
     
-//    override func prepareForReuse() {
-//        super.prepareForReuse()
-//        titleLabel.text = nil
-//    }
+    func setSelected(_ selected: Bool) {
+        UIView.animate(withDuration: 0.2) {
+            self.contentView.backgroundColor = selected ? .systemGray2 : .systemGray5
+        }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        contentView.backgroundColor = .systemGray5
+        titleLabel.textColor = .label
+    }
 }

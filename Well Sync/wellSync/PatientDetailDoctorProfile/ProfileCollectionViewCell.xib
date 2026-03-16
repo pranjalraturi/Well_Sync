@@ -92,6 +92,9 @@
                                         </constraints>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="tinted" image="calendar.badge.plus" catalog="system" title=""/>
+                                        <connections>
+                                            <action selector="calenderButtonPressed:" destination="gTV-IL-0wX" eventType="touchUpInside" id="wGM-f8-kl6"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -132,7 +135,7 @@
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="profile" width="736" height="1472"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

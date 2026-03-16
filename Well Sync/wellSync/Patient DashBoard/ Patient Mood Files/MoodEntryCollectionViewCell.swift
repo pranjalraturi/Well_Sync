@@ -9,36 +9,20 @@ import UIKit
 
 class MoodEntryCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet var moodView: [UIView]!
+    @IBOutlet var moodView: [UIImageView]!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        for view in moodView {
-//            view.layer.cornerRadius = 8
-            view.isUserInteractionEnabled = true
-            view.layer.cornerRadius = 16
-//            view.layer.masksToBounds = true
-//            view.layer.shadowColor = UIColor.black.cgColor
-//            view.layer.shadowOpacity = 0.5
-//            view.layer.shadowOffset = CGSize(width: 0, height: 4)
-//            view.layer.shadowRadius = 8
-//            view.layer.masksToBounds = false
-        }
-        for (index, view) in moodView.enumerated() {
-            view.layer.cornerRadius = 8
-            view.isUserInteractionEnabled = true
-            view.tag = index   
-        }
     }
     
     func configureTap(target: Any, action: Selector) {
         for view in moodView {
+            view.isUserInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: target, action: action)
             view.addGestureRecognizer(tap)
         }
     }
-    
+
     func configure(selectedIndex: Int) {
         for (index, view) in moodView.enumerated() {
 
