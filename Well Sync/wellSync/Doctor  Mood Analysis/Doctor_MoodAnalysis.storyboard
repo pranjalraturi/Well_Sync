@@ -36,6 +36,9 @@
                                                 <segment title="Weekly"/>
                                                 <segment title="Monthly"/>
                                             </segments>
+                                            <connections>
+                                                <action selector="sectionChanged:" destination="bBN-qT-MP1" eventType="valueChanged" id="Pfa-Ee-Kkf"/>
+                                            </connections>
                                         </segmentedControl>
                                     </subviews>
                                     <constraints>
@@ -65,7 +68,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6mY-JJ-1Tc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2269.4656488549617" y="-294.36619718309862"/>
+            <point key="canvasLocation" x="2518" y="-387"/>
         </scene>
     </scenes>
     <resources>

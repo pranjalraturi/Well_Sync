@@ -27,11 +27,19 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(with patient: Patient){
-        if let urlString = patient.imageURL,
-           let url = URL(string: urlString),
-           let data = try? Data(contentsOf: url) {
-            
-            profileImageView.image = UIImage(data: data)
+//        if let urlString = patient.imageURL,
+//           let url = URL(string: urlString),
+//           let data = try? Data(contentsOf: url) {
+//            
+//            profileImageView.image = UIImage(data: data)
+//        }
+        if let urlStr = patient.imageURL, let url=URL(string: urlStr) {
+            URLSession.shared.dataTask(with: url) { (data, _, _) in
+                guard let data = data, let image = UIImage(data: data) else { return }
+                DispatchQueue.main.async {
+                    self.profileImageView.image = image
+                }
+            }.resume()
         }
         nameLabel.text = patient.name
         AgeLabel.text = "Age: "

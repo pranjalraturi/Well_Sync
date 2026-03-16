@@ -7,7 +7,61 @@
 
 import Foundation
 
-var moodLogs: [MoodLog] = []
+var moodLogs: [MoodLog] = [
+    
+    // Today
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: 0, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: 0, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    
+    
+    // Yesterday
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    
+    
+    // 2 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 5,
+            date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    
+    
+    // 3 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 1,
+            date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    
+    
+    // 4 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    
+    
+    // 5 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: -5, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    
+    
+    // 6 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -6, to: Date())!,
+            moodNote: nil, selectedFeeling: [])
+]
 let docID = UUID(uuidString: "6bf94a4d-cc66-4d87-a90d-be2500434e3d")!
 var currentDoctor: Doctor?
 var globalDoctor: [Doctor] = [
@@ -103,7 +157,7 @@ var globalPatient: [Patient] = [
         name: "Aarav Sharma", email: "aarav.sharma@email.com", password: "Pass@1234",
         contact: "+91-9876543210",
         dob: makeDate(1990, 3, 15),
-        nextSessionDate: makeDate(2026, 3, 16, hour: 10, minute: 0),
+        nextSessionDate: makeDate(2026, 3, 17, hour: 10, minute: 0),
         imageURL: "https://picsum.photos/200.jpg", address: "12, MG Road, Bengaluru, Karnataka",
         condition: "Generalized Anxiety Disorder", sessionStatus: true, mood: 6,
         previousSessionDate: makeDate(2025, 3, 15, hour: 10, minute: 0)
@@ -113,7 +167,7 @@ var globalPatient: [Patient] = [
         name: "Priya Mehta", email: "priya.mehta@email.com", password: "Pass@1234",
         contact: "+91-9823456789",
         dob: makeDate(1995, 7, 22),
-        nextSessionDate: makeDate(2026, 3, 16, hour: 11, minute: 30),
+        nextSessionDate: makeDate(2026, 3, 17, hour: 11, minute: 30),
         imageURL: "https://picsum.photos/200.jpg", address: "45, Linking Road, Mumbai, Maharashtra",
         condition: "Major Depressive Disorder", sessionStatus: false, mood: 3,
         previousSessionDate: makeDate(2025, 3, 20, hour: 11, minute: 30)
@@ -123,7 +177,7 @@ var globalPatient: [Patient] = [
         name: "Rohan Verma", email: "rohan.verma@email.com", password: "Pass@1234",
         contact: "+91-9845671234",
         dob: makeDate(1988, 11, 5),
-        nextSessionDate: makeDate(2026, 3, 16, hour: 9, minute: 0),
+        nextSessionDate: makeDate(2026, 3, 17, hour: 9, minute: 0),
         imageURL: "https://picsum.photos/200.jpg", address: "7, Sector 18, Noida, Uttar Pradesh",
         condition: "PTSD", sessionStatus: true, mood: 5,
         previousSessionDate: makeDate(2025, 3, 22, hour: 9, minute: 0)
@@ -133,7 +187,7 @@ var globalPatient: [Patient] = [
         name: "Sneha Iyer", email: "sneha.iyer@email.com", password: "Pass@1234",
         contact: "+91-9901234567",
         dob: makeDate(1993, 1, 30),
-        nextSessionDate: makeDate(2026, 3, 16, hour: 14, minute: 15),
+        nextSessionDate: makeDate(2026, 3, 17, hour: 14, minute: 15),
         imageURL: "https://picsum.photos/200.jpg", address: "23, Anna Nagar, Chennai, Tamil Nadu",
         condition: "Bipolar Disorder", sessionStatus: nil, mood: 7,
         previousSessionDate: makeDate(2025, 3, 24, hour: 14, minute: 15)
@@ -143,7 +197,7 @@ var globalPatient: [Patient] = [
         name: "Kabir Nair", email: "kabir.nair@email.com", password: "Pass@1234",
         contact: "+91-9812345678",
         dob: makeDate(1985, 6, 18),
-        nextSessionDate: makeDate(2026, 3, 16, hour: 16, minute: 0),
+        nextSessionDate: makeDate(2026, 3, 17, hour: 16, minute: 0),
         imageURL: "https://picsum.photos/200.jpg", address: "8, Indiranagar, Bengaluru, Karnataka",
         condition: "OCD", sessionStatus: true, mood: 4,
         previousSessionDate: makeDate(2025, 3, 25, hour: 16, minute: 0)
