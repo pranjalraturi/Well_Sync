@@ -7,8 +7,6 @@
 
 import UIKit
 import Foundation
-private let reuseIdentifier = "Cell"
-
 class SessionNoteCollectionViewController: UICollectionViewController {
 
     var sessions:[SessionNote]?
@@ -61,6 +59,13 @@ class SessionNoteCollectionViewController: UICollectionViewController {
         return layout
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "detailSession", sender: nil)
+        performSegue(withIdentifier: "detailSession", sender: indexPath)
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // If we passed an IndexPath as the sender, use it to configure the destination
+        if let indexPath = sender as? IndexPath {
+            let vc = segue.destination
+            vc.title = "Session \(indexPath.row + 1)"
+        }
     }
 }

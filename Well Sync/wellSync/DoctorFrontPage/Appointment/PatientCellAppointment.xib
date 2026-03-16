@@ -11,14 +11,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CollectionView"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PatientCellAppointment" id="0gZ-dl-0AK" userLabel="PatientCell" customClass="PatientCellAppointment" customModule="wellSync" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="391" height="216"/>
+            <rect key="frame" x="0.0" y="0.0" width="391" height="229"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="391" height="216"/>
+                <rect key="frame" x="0.0" y="0.0" width="391" height="229"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ple-6I-Jb2">
-                        <rect key="frame" x="12" y="68" width="80" height="80"/>
+                        <rect key="frame" x="12" y="74.666666666666671" width="80" height="80.000000000000014"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="Lee-JY-cw4"/>
                             <constraint firstAttribute="height" constant="80" id="kyX-wv-PzW"/>
@@ -30,27 +30,27 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obD-dc-tVW">
-                        <rect key="frame" x="108" y="72.333333333333329" width="42" height="21"/>
+                        <rect key="frame" x="108" y="79" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiY-zA-hL5" customClass="PaddingLabel" customModule="wellSync" customModuleProvider="target">
-                        <rect key="frame" x="108" y="101.33333333333333" width="28.666666666666657" height="13.333333333333329"/>
+                        <rect key="frame" x="108" y="108" width="28.666666666666657" height="13.333333333333329"/>
                         <color key="backgroundColor" systemColor="systemGrayColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QhN-yW-Qjz" customClass="PaddingLabel" customModule="wellSync" customModuleProvider="target">
-                        <rect key="frame" x="144.66666666666666" y="101.33333333333333" width="28.666666666666657" height="13.333333333333329"/>
+                        <rect key="frame" x="144.66666666666666" y="108" width="28.666666666666657" height="13.333333333333329"/>
                         <color key="backgroundColor" systemColor="systemGrayColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qe1-1D-GTs">
-                        <rect key="frame" x="111" y="122.66666666666669" width="26.666666666666657" height="12"/>
+                        <rect key="frame" x="111" y="129.33333333333334" width="26.666666666666657" height="12"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" systemColor="systemGrayColor"/>
                         <nil key="highlightedColor"/>
@@ -61,20 +61,20 @@
                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v2W-hG-iM2">
-                        <rect key="frame" x="0.0" y="158" width="391" height="1"/>
+                        <rect key="frame" x="0.0" y="164.66666666666666" width="391" height="1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="ILS-fv-pjR"/>
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qy4-5B-vJs">
-                        <rect key="frame" x="0.0" y="169" width="195.66666666666666" height="47"/>
+                        <rect key="frame" x="0.0" y="175.66666666666666" width="195.66666666666666" height="53.333333333333343"/>
                         <color key="tintColor" systemColor="systemOrangeColor"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" title="Button"/>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oSL-Uv-P7A">
-                        <rect key="frame" x="195.66666666666663" y="169" width="195.33333333333337" height="47"/>
+                        <rect key="frame" x="195.66666666666663" y="175.66666666666666" width="195.33333333333337" height="53.333333333333343"/>
                         <color key="tintColor" systemColor="systemRedColor"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" title="Button"/>
@@ -109,7 +109,7 @@
                 <constraint firstItem="Qy4-5B-vJs" firstAttribute="leading" secondItem="0gZ-dl-0AK" secondAttribute="leading" id="xT3-UX-PkY"/>
                 <constraint firstItem="v2W-hG-iM2" firstAttribute="top" secondItem="ple-6I-Jb2" secondAttribute="bottom" constant="10" id="yXw-b8-WWc"/>
             </constraints>
-            <size key="customSize" width="391" height="330"/>
+            <size key="customSize" width="391" height="343"/>
             <userDefinedRuntimeAttributes>
                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                     <integer key="value" value="16"/>
@@ -124,7 +124,7 @@
                 <outlet property="rescheduleButton" destination="Qy4-5B-vJs" id="3rd-JV-djF"/>
                 <outlet property="sessionLabel" destination="QhN-yW-Qjz" id="gVj-3b-jS2"/>
             </connections>
-            <point key="canvasLocation" x="-1438.9312977099237" y="-519.0140845070423"/>
+            <point key="canvasLocation" x="-1438.9312977099237" y="-523.59154929577471"/>
         </collectionViewCell>
     </objects>
     <resources>

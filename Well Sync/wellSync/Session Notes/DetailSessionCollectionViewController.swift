@@ -8,16 +8,11 @@
 import UIKit
 import AVFoundation
 
-private let reuseIdentifier = "Cell"
-
 class DetailSessionCollectionViewController: UICollectionViewController {
     
-    var audioPlayer: AVAudioPlayer?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView?.collectionViewLayout = generateLayout()
-        setupAudioPlayer()
     }
 
 
@@ -42,7 +37,7 @@ class DetailSessionCollectionViewController: UICollectionViewController {
     func generateLayout() -> UICollectionViewLayout {
         //createthe itemSize
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .fractionalHeight(1.0))
+                                              heightDimension: .absolute(150))
         
         //certe the item
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -63,20 +58,5 @@ class DetailSessionCollectionViewController: UICollectionViewController {
         return layout
     }
     
-    func setupAudioPlayer() {
-        guard let soundURL = Bundle.main.url(forResource: "test", withExtension: "mp3") else {
-            print("Audio file not found")
-            return
-        }
-
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-            audioPlayer?.prepareToPlay() // Preload the audio into the buffer
-        } catch {
-            print("Error initializing audio player: \(error.localizedDescription)")
-        }
-    }
-    @IBAction func play(_ sender: Any) {
-        audioPlayer?.play()
-    }
 }
+

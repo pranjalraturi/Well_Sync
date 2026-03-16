@@ -52,6 +52,8 @@ class MoodAnalysisCollectionViewController: UICollectionViewController {
         case 3:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bar_cell", for: indexPath) as! MoodChartCollectionViewCell
             style(cell)
+            let sampleLogs = generateRealisticMoodLogs(days: 7)
+                cell.configure(with: sampleLogs)
             return cell
 
         case 4:
@@ -62,6 +64,40 @@ class MoodAnalysisCollectionViewController: UICollectionViewController {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "segment", for: indexPath)
             return cell
         }
+    }
+    
+    func generateRealisticMoodLogs(days: Int) -> [MoodLog] {
+        
+        var logs: [MoodLog] = []
+        let calendar = Calendar.current
+        let now = Date()
+        
+        for dayOffset in 0..<days {
+            guard let day = calendar.date(byAdding: .day, value: -dayOffset, to: now) else { continue }
+            
+            var baseMood = Int.random(in: 2...4)
+            
+            for entry in 0..<7 {
+                
+                let variation = Int.random(in: -1...1)
+                let mood = max(1, min(5, baseMood + variation))
+                
+                let date = calendar.date(byAdding: .hour, value: entry * 3, to: day)
+                
+                logs.append(
+                    MoodLog(
+                        logId: UUID(),
+                        patientId: UUID(),
+                        mood: mood,
+                        date: date,
+                        moodNote: nil,
+                        selectedFeeling: nil
+                    )
+                )
+            }
+        }
+        
+        return logs
     }
 
     func style(_ cell: UICollectionViewCell) {
