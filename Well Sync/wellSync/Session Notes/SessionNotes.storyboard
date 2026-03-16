@@ -249,21 +249,47 @@
                                     <outlet property="totalTime" destination="83l-gf-CkV" id="28r-lK-Kbt"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="BYJ-cN-u4G">
-                                <rect key="frame" x="0.0" y="201" width="393" height="216"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="images" id="UmG-jK-Lk7">
+                                <rect key="frame" x="0.0" y="201" width="393" height="338"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="RyN-Dw-oq0">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="338"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="bro-2P-IAL">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="338"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="20"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="bro-2P-IAL" secondAttribute="trailing" id="PcF-do-TLx"/>
+                                        <constraint firstItem="bro-2P-IAL" firstAttribute="top" secondItem="RyN-Dw-oq0" secondAttribute="top" id="lHD-D2-w7B"/>
+                                        <constraint firstItem="bro-2P-IAL" firstAttribute="leading" secondItem="RyN-Dw-oq0" secondAttribute="leading" id="sMR-jQ-xBZ"/>
+                                        <constraint firstAttribute="bottom" secondItem="bro-2P-IAL" secondAttribute="bottom" id="zJm-mg-iL4"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                <size key="customSize" width="393" height="338"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="textNote" id="BYJ-cN-u4G">
+                                <rect key="frame" x="0.0" y="549" width="393" height="216"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jBx-3y-97I">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="216"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="heading" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBH-Zq-EV8">
-                                            <rect key="frame" x="16" y="16" width="361" height="24"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="43H-KG-fgf">
-                                            <rect key="frame" x="16" y="48" width="361" height="152"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="43H-KG-fgf">
+                                            <rect key="frame" x="16" y="16" width="361" height="184"/>
+                                            <mutableString key="text">The client reported feeling increased stress related to workload and upcoming deadlines at work. They stated they have been experiencing difficulty sleeping and occasional irritability over the past week. The client mentioned feeling overwhelmed by expectations from both their employer and family. They expressed concern about maintaining productivity while managing personal responsibilities.The client reported feeling increased stress related to workload and upcoming deadlines at work. They stated they have been experiencing difficulty sleeping and occasional irritability over the past week. The client mentioned feeling overwhelmed by expectations from both their employer and family. They expressed concern about maintaining productivity while managing personal responsibilities.The client reported feeling increased stress related to workload and upcoming deadlines at work. They stated they have been experiencing difficulty sleeping and occasional irritability over the past week. The client mentioned feeling overwhelmed by expectations from both their employer and family. They expressed concern about maintaining productivity while managing personal responsibilities.</mutableString>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -273,13 +299,16 @@
                                         <constraint firstAttribute="trailing" secondItem="43H-KG-fgf" secondAttribute="trailing" constant="16" id="OMa-SM-2oW"/>
                                         <constraint firstAttribute="bottom" secondItem="43H-KG-fgf" secondAttribute="bottom" constant="16" id="VFy-St-3Bh"/>
                                         <constraint firstItem="43H-KG-fgf" firstAttribute="leading" secondItem="jBx-3y-97I" secondAttribute="leading" constant="16" id="Z3C-oG-y4C"/>
-                                        <constraint firstItem="43H-KG-fgf" firstAttribute="top" secondItem="GBH-Zq-EV8" secondAttribute="bottom" constant="8" id="cos-zJ-Ejq"/>
-                                        <constraint firstAttribute="trailing" secondItem="GBH-Zq-EV8" secondAttribute="trailing" constant="16" id="fom-w0-OEZ"/>
-                                        <constraint firstItem="GBH-Zq-EV8" firstAttribute="leading" secondItem="jBx-3y-97I" secondAttribute="leading" constant="16" id="g85-ug-09K"/>
-                                        <constraint firstItem="GBH-Zq-EV8" firstAttribute="top" secondItem="jBx-3y-97I" secondAttribute="top" constant="16" id="wSs-3X-yvn"/>
+                                        <constraint firstItem="43H-KG-fgf" firstAttribute="top" secondItem="jBx-3y-97I" secondAttribute="top" constant="16" id="r2h-GG-5Qc"/>
                                     </constraints>
                                 </collectionViewCellContentView>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <size key="customSize" width="393" height="216"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -291,7 +320,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KtK-yz-gV5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4310.6870229007636" y="579.57746478873241"/>
+            <point key="canvasLocation" x="3872.5190839694656" y="603.52112676056345"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tHT-af-NVu">
@@ -316,6 +345,7 @@
         <image name="gobackward.10" catalog="system" width="119" height="128"/>
         <image name="goforward.10" catalog="system" width="119" height="128"/>
         <image name="play.fill" catalog="system" width="120" height="128"/>
+        <image name="profile" width="736" height="1472"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

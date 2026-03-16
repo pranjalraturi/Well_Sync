@@ -17,7 +17,7 @@ class TodayTableViewCell: UITableViewCell {
     func configure(with activity: Activity) {
         titleLabel.text = activity.name
 //        dateLabel.text = activity.
-        subtitleLabel.text = activity.doctorNote
+//        subtitleLabel.text = activity.doctorNote
         iconImageView.image = UIImage(systemName: activity.iconName)
     }
 }

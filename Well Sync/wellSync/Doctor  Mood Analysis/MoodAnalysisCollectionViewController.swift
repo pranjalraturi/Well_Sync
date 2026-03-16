@@ -53,7 +53,7 @@ class MoodAnalysisCollectionViewController: UICollectionViewController {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "bar_cell", for: indexPath) as! MoodChartCollectionViewCell
             style(cell)
             let sampleLogs = generateRealisticMoodLogs(days: 7)
-                cell.configure(with: sampleLogs)
+//                cell.configure(with: sampleLogs)
             return cell
 
         case 4:

@@ -170,6 +170,8 @@ extension PatientDetailCollectionViewController{
                 performSegue(withIdentifier: "activity", sender: nil)
             case 4:
                 performSegue(withIdentifier: "vitals", sender: nil)
+            case 5:
+                performSegue(withIdentifier: "case", sender: nil)
             default:
                 break
             }

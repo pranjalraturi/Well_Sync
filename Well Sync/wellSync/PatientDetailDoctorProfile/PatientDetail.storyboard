@@ -78,10 +78,10 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="dZK-rA-xh2">
-                                <rect key="frame" x="132.66666666666666" y="90" width="127.99999999999997" height="128"/>
+                                <rect key="frame" x="132.66666666666666" y="90" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="aaN-ZC-2uB">
-                                    <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionViewCellContentView>
                             </collectionViewCell>
@@ -101,6 +101,7 @@
                         <segue destination="m2C-vu-s9U" kind="show" identifier="activity" id="ouO-jZ-GCq"/>
                         <segue destination="3LQ-hf-pyg" kind="show" identifier="mood" id="A5U-yi-3xG"/>
                         <segue destination="TIj-9T-WrR" kind="show" identifier="sessionNotes" id="7fz-jQ-a10"/>
+                        <segue destination="qeh-mm-v8B" kind="show" identifier="case" id="auK-3n-HBP"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eGB-rC-TCV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -174,6 +175,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gZX-Zl-hSZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3673" y="1382"/>
+        </scene>
+        <!--caseHistory-->
+        <scene sceneID="vyD-b7-c6N">
+            <objects>
+                <viewControllerPlaceholder storyboardName="CaseHistory" referencedIdentifier="caseHistory" id="qeh-mm-v8B" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="YM9-5F-ntp"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gNP-jZ-fZc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3705" y="1704"/>
         </scene>
     </scenes>
     <resources>
