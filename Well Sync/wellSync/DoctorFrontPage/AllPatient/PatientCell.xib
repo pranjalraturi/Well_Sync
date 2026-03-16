@@ -36,14 +36,14 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiY-zA-hL5" customClass="PaddingLabel" customModule="wellSync" customModuleProvider="target">
-                        <rect key="frame" x="108" y="72" width="28.666666666666657" height="14.333333333333329"/>
+                        <rect key="frame" x="108" y="72" width="160" height="14.333333333333329"/>
                         <color key="backgroundColor" systemColor="systemGrayColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QhN-yW-Qjz" customClass="PaddingLabel" customModule="wellSync" customModuleProvider="target">
-                        <rect key="frame" x="144.66666666666666" y="72" width="28.666666666666657" height="14.333333333333329"/>
+                        <rect key="frame" x="276" y="72" width="94" height="14.333333333333329"/>
                         <color key="backgroundColor" systemColor="systemGrayColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -72,11 +72,13 @@
                 <constraint firstItem="obD-dc-tVW" firstAttribute="leading" secondItem="ple-6I-Jb2" secondAttribute="trailing" constant="16" id="OqN-b3-qyp"/>
                 <constraint firstItem="ple-6I-Jb2" firstAttribute="leading" secondItem="0gZ-dl-0AK" secondAttribute="leading" constant="12" id="WFa-Ax-Kcm"/>
                 <constraint firstItem="qe1-1D-GTs" firstAttribute="top" secondItem="aiY-zA-hL5" secondAttribute="bottom" constant="8" id="amt-hn-qgy"/>
+                <constraint firstItem="QhN-yW-Qjz" firstAttribute="trailing" secondItem="IV3-bA-7mM" secondAttribute="trailing" constant="-30" id="i1R-2J-cDv"/>
                 <constraint firstItem="aiY-zA-hL5" firstAttribute="centerY" secondItem="0gZ-dl-0AK" secondAttribute="centerY" id="kZB-mO-I00"/>
                 <constraint firstItem="QhN-yW-Qjz" firstAttribute="leading" secondItem="aiY-zA-hL5" secondAttribute="trailing" constant="8" id="obD-aW-RSL"/>
                 <constraint firstItem="aiY-zA-hL5" firstAttribute="top" secondItem="obD-dc-tVW" secondAttribute="bottom" constant="8" id="pjb-03-8DT"/>
                 <constraint firstItem="QhN-yW-Qjz" firstAttribute="centerY" secondItem="0gZ-dl-0AK" secondAttribute="centerY" id="qcx-yn-hug"/>
                 <constraint firstAttribute="trailing" secondItem="IV3-bA-7mM" secondAttribute="trailing" constant="16" id="riC-jH-No6"/>
+                <constraint firstItem="aiY-zA-hL5" firstAttribute="width" secondItem="QhN-yW-Qjz" secondAttribute="width" multiplier="1.7" id="uWg-OR-q3F"/>
             </constraints>
             <size key="customSize" width="416" height="272"/>
             <userDefinedRuntimeAttributes>
