@@ -21,9 +21,8 @@ class HomeCollectionViewController: UICollectionViewController {
         }
         self.collectionView.collectionViewLayout = createLayout()
         setupMenu()
-        print("->->->->",moodLogs)
-        print("ended")
     }
+    // calling the screen again
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         patient = globalPatient
@@ -113,18 +112,18 @@ class HomeCollectionViewController: UICollectionViewController {
     func setupMenu() {
 
       
-        let allPatients = UIAction(title: "All Patients",image: UIImage(systemName: "person")) { _ in
+        let profile = UIAction(title: "Profile",image: UIImage(systemName: "person")) { _ in
+            self.openProfile()
+        }
+
+        let allPatients = UIAction(title: "All Patients",
+                                    image: UIImage(systemName: "person")) { _ in
             self.openAllPatients()
         }
 
         let appointments = UIAction(title: "Appointments",
-                                    image: UIImage(systemName: "calendar")) { _ in
+                                image: UIImage(systemName: "calendar")) { _ in
             self.openAppointments()
-        }
-
-        let reminder = UIAction(title: "Reminder",
-                                image: UIImage(systemName: "bell")) { _ in
-            self.openReminder()
         }
 
         let settings = UIAction(title: "Settings",
@@ -133,9 +132,9 @@ class HomeCollectionViewController: UICollectionViewController {
         }
 
         let menu = UIMenu(title: "", children: [
+            profile,
             allPatients,
             appointments,
-            reminder,
             settings
         ])
 
@@ -163,12 +162,22 @@ class HomeCollectionViewController: UICollectionViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
 
-    func openReminder() {
-        print("Reminder")
+    func openProfile() {
+        let storyboard = UIStoryboard(name: "Doctor_Profile", bundle: nil)
+
+        let vc = storyboard.instantiateViewController(
+            withIdentifier: "doctorProfile"
+        )
+        navigationController?.pushViewController(vc, animated: true)
     }
 
     func openSettings() {
-        print("Settings")
+        let storyboard = UIStoryboard(name: "DoctorSetting", bundle: nil)
+
+        let vc = storyboard.instantiateViewController(
+            withIdentifier: "docSetting"
+        )
+        navigationController?.pushViewController(vc, animated: true)
     }
 
 
