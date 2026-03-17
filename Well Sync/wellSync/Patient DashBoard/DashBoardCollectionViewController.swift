@@ -78,6 +78,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         UIImage(systemName: "book"),
         UIImage(systemName: "paintpalette")
     ]
+    @IBOutlet var moodCount: UILabel!
     
     
     private func makeDashboardMenu() -> UIMenu {
@@ -234,7 +235,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         if segue.identifier == "moodLog",
            let nav = segue.destination as? UINavigationController,
            let vc = nav.viewControllers.first as? MoodLogCollectionViewController,
-           let data = sender as? Int { 
+           let data = sender as? Int {
 
             vc.selectedMood = data
 

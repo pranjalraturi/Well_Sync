@@ -6,8 +6,210 @@
 //
 
 import Foundation
+var monthlyMoodLogs: [MoodLog] = [
 
-var moodLogs: [MoodLog] = [
+    // Today (Day 0)
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: 0, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: 0, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 1 day ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -1, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 2 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 5,
+            date: Calendar.current.date(byAdding: .day, value: -2, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 3 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 1,
+            date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -3, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 4 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -4, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 5 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: -5, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 6 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -6, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 7 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 5,
+            date: Calendar.current.date(byAdding: .day, value: -7, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: -7, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 8 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -8, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 9 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 1,
+            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -9, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 10 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: -10, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 11 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 5,
+            date: Calendar.current.date(byAdding: .day, value: -11, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: -11, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 12 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -12, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 13 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -13, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 1,
+            date: Calendar.current.date(byAdding: .day, value: -13, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 14 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: -14, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 15 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 5,
+            date: Calendar.current.date(byAdding: .day, value: -15, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -15, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 16 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -16, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 17 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 1,
+            date: Calendar.current.date(byAdding: .day, value: -17, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -17, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: -17, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 18 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 5,
+            date: Calendar.current.date(byAdding: .day, value: -18, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 19 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -19, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -19, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 20 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: -20, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 21 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 1,
+            date: Calendar.current.date(byAdding: .day, value: -21, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -21, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 22 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 5,
+            date: Calendar.current.date(byAdding: .day, value: -22, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: -22, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 23 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -23, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 24 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -24, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 1,
+            date: Calendar.current.date(byAdding: .day, value: -24, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 25 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: -25, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 26 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 5,
+            date: Calendar.current.date(byAdding: .day, value: -26, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -26, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 27 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 2,
+            date: Calendar.current.date(byAdding: .day, value: -27, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 28 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
+            date: Calendar.current.date(byAdding: .day, value: -28, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 5,
+            date: Calendar.current.date(byAdding: .day, value: -28, to: Date())!,
+            moodNote: nil, selectedFeeling: []),
+
+    // 29 days ago
+    MoodLog(logId: UUID(), patientId: UUID(), mood: 3,
+            date: Calendar.current.date(byAdding: .day, value: -29, to: Date())!,
+            moodNote: nil, selectedFeeling: [])
+]
+var weeklyMoodLog: [MoodLog] = [
     
     // Today
     MoodLog(logId: UUID(), patientId: UUID(), mood: 4,
