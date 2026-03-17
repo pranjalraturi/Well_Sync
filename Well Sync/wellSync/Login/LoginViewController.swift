@@ -66,21 +66,29 @@ class LoginViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        self.navigationController?.isNavigationBarHidden = true
-    }
+    
     
     @IBAction func loginButton(_ sender: UIButton) {
 //        if userName.text == "admin" && passWord.text == "admin"
-        getCurrentDoctor(userName.text!)
-        if userName.text == "admin"
-        {
-            performSegue(withIdentifier: "doctorScreen", sender: nil)
+        if userName.text == "admin" {
+            
+            let storyboard = UIStoryboard(name: "DoctorFrontPage", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "doctor")
+            
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                sceneDelegate.window?.rootViewController = vc
+                sceneDelegate.window?.makeKeyAndVisible()
+            }
         }
-//        else if userName.text == "admin1" && passWord.text == "admin1"
-        else if userName.text == "admin1"
-        {
-            performSegue(withIdentifier: "PatientScreen", sender: nil)
+        else if userName.text == "admin1" {
+            
+            let storyboard = UIStoryboard(name: "Patient_Dashboard", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Patient")
+            
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                sceneDelegate.window?.rootViewController = vc
+                sceneDelegate.window?.makeKeyAndVisible()
+            }
         }
     }
 }

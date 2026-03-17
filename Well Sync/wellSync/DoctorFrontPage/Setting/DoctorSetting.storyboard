@@ -10,8 +10,8 @@
         <!--Settings-->
         <scene sceneID="Fmz-Qx-oGQ">
             <objects>
-                <tableViewController storyboardIdentifier="PateintSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5Vz-v0-hFu" customClass="DoctorSettingTableViewController" customModule="YourMind" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="Mr3-Q7-abj">
+                <tableViewController storyboardIdentifier="docSetting" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5Vz-v0-hFu" customClass="DoctorSettingTableViewController" customModule="wellSync" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="Mr3-Q7-abj">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
@@ -219,7 +219,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                         <connections>
-                                            <segue destination="ilq-DI-Ja1" kind="show" id="Yd9-VM-Qxd"/>
+                                            <segue destination="ilq-DI-Ja1" kind="show" identifier="login" id="Yd9-VM-Qxd"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -230,9 +230,7 @@
                             <outlet property="delegate" destination="5Vz-v0-hFu" id="1Nl-Lc-kO0"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="A9e-d6-Og9">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="chevron.left" catalog="system" id="9zl-ab-o2R"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Settings" id="A9e-d6-Og9"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xUb-DR-sm9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -269,12 +267,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="chevron.left" catalog="system" width="97" height="128"/>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.2196078431372549" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
