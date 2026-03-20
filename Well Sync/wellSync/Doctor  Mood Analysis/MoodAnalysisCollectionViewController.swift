@@ -15,6 +15,7 @@ class MoodAnalysisCollectionViewController: UICollectionViewController {
     let cards = ["Segment","Calender","Mood Count","Mood Chart","Insights"]
     private var selectedSegmentIndex: Int = 0
     private var calendarCellHeight: CGFloat = 250
+    private var moodLogs: [MoodLog] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -37,16 +37,16 @@ class PatientCollectionViewCell: UICollectionViewCell {
     
     
         func configureCell(with: Patient) {
-            switch with.mood{
-            case 4:
-                color = .systemGreen
-            case 3:
-                color = .systemOrange
-            case 2:
-                color = .systemRed
-            default:
-                color = .systemYellow
-            }
+//            switch with.mood{
+//            case 4:
+//                color = .systemGreen
+//            case 3:
+//                color = .systemOrange
+//            case 2:
+//                color = .systemRed
+//            default:
+//                color = .systemYellow
+//            }
             profileImage.image = UIImage(systemName: "person.circle")
 
             if let urlString = with.imageURL, let url = URL(string: urlString) {
@@ -69,7 +69,7 @@ class PatientCollectionViewCell: UICollectionViewCell {
 //            timeFormatter.timeZone = TimeZone(secondsFromGMT: 0)   // keeps time as 10:00:00
             timeFormatter.dateFormat = "HH:mm"
     
-            time.text = timeFormatter.string(from: sessionDate)
+            time.text = timeFormatter.string(from: sessionDate!)
     
     
 //            formatter.dateFormat = "HH:mm:ss"

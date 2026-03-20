@@ -353,208 +353,208 @@ var globalDoctor: [Doctor] = [
         identityImageData: nil
     )
 ]
-var globalPatient: [Patient] = [
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, docID: docID,
-        name: "Aarav Sharma", email: "aarav.sharma@email.com", password: "Pass@1234",
-        contact: "+91-9876543210",
-        dob: makeDate(1990, 3, 15),
-        nextSessionDate: makeDate(2026, 3, 18, hour: 10, minute: 0),
-        imageURL: "https://picsum.photos/200.jpg", address: "12, MG Road, Bengaluru, Karnataka",
-        condition: "Generalized Anxiety Disorder", sessionStatus: true, mood: 6,
-        previousSessionDate: makeDate(2025, 3, 15, hour: 10, minute: 0)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, docID: docID,
-        name: "Priya Mehta", email: "priya.mehta@email.com", password: "Pass@1234",
-        contact: "+91-9823456789",
-        dob: makeDate(1995, 7, 22),
-        nextSessionDate: makeDate(2026, 3, 18, hour: 20, minute: 30),
-        imageURL: "https://picsum.photos/200.jpg", address: "45, Linking Road, Mumbai, Maharashtra",
-        condition: "Major Depressive Disorder", sessionStatus: false, mood: 3,
-        previousSessionDate: makeDate(2025, 3, 20, hour: 11, minute: 30)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, docID: docID,
-        name: "Rohan Verma", email: "rohan.verma@email.com", password: "Pass@1234",
-        contact: "+91-9845671234",
-        dob: makeDate(1988, 11, 5),
-        nextSessionDate: makeDate(2026, 3, 18, hour: 9, minute: 0),
-        imageURL: "https://picsum.photos/200.jpg", address: "7, Sector 18, Noida, Uttar Pradesh",
-        condition: "PTSD", sessionStatus: true, mood: 5,
-        previousSessionDate: makeDate(2025, 3, 22, hour: 9, minute: 0)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000004")!, docID: docID,
-        name: "Sneha Iyer", email: "sneha.iyer@email.com", password: "Pass@1234",
-        contact: "+91-9901234567",
-        dob: makeDate(1993, 1, 30),
-        nextSessionDate: makeDate(2026, 3, 18, hour: 18, minute: 15),
-        imageURL: "https://picsum.photos/200.jpg", address: "23, Anna Nagar, Chennai, Tamil Nadu",
-        condition: "Bipolar Disorder", sessionStatus: nil, mood: 7,
-        previousSessionDate: makeDate(2025, 3, 24, hour: 14, minute: 15)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000005")!, docID: docID,
-        name: "Kabir Nair", email: "kabir.nair@email.com", password: "Pass@1234",
-        contact: "+91-9812345678",
-        dob: makeDate(1985, 6, 18),
-        nextSessionDate: makeDate(2026, 3, 18, hour: 16, minute: 0),
-        imageURL: "https://picsum.photos/200.jpg", address: "8, Indiranagar, Bengaluru, Karnataka",
-        condition: "OCD", sessionStatus: true, mood: 4,
-        previousSessionDate: makeDate(2025, 3, 25, hour: 16, minute: 0)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000006")!, docID: docID,
-        name: "Ananya Gupta", email: "ananya.gupta@email.com", password: "Pass@1234",
-        contact: "+91-9867345612",
-        dob: makeDate(1997, 9, 12),
-        nextSessionDate: makeDate(2026, 3, 18, hour: 10, minute: 30),
-        imageURL: "https://picsum.photos/200.jpg", address: "56, Civil Lines, Delhi",
-        condition: "Social Anxiety Disorder", sessionStatus: false, mood: 5,
-        previousSessionDate: makeDate(2025, 3, 27, hour: 10, minute: 30)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000007")!, docID: docID,
-        name: "Vikram Singh", email: "vikram.singh@email.com", password: "Pass@1234",
-        contact: "+91-9754321098",
-        dob: makeDate(1982, 4, 25),
-        nextSessionDate: makeDate(2026, 3, 18, hour: 8, minute: 0),
-        imageURL: "https://picsum.photos/200.jpg", address: "34, Banjara Hills, Hyderabad, Telangana",
-        condition: "Schizophrenia", sessionStatus: false, mood: 2,
-        previousSessionDate: makeDate(2025, 3, 28, hour: 13, minute: 0)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000008")!, docID: docID,
-        name: "Meera Pillai", email: "meera.pillai@email.com", password: "Pass@1234",
-        contact: "+91-9934567821",
-        dob: makeDate(1991, 12, 8),
-        nextSessionDate: makeDate(2026, 3, 18, hour: 9, minute: 45),
-        imageURL: "https://picsum.photos/200.jpg", address: "19, Thrissur Road, Kochi, Kerala",
-        condition: "Panic Disorder", sessionStatus: nil, mood: 6,
-        previousSessionDate: makeDate(2025, 3, 29, hour: 15, minute: 45)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000009")!, docID: docID,
-        name: "Arjun Desai", email: "arjun.desai@email.com", password: "Pass@1234",
-        contact: "+91-9878901234",
-        dob: makeDate(1994, 2, 14),
-        nextSessionDate: makeDate(2026, 3, 18   , hour: 11, minute: 0),
-        imageURL: "https://picsum.photos/200.jpg", address: "88, CG Road, Ahmedabad, Gujarat",
-        condition: "ADHD", sessionStatus: true, mood: 8,
-        previousSessionDate: makeDate(2025, 3, 31, hour: 11, minute: 0)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000010")!, docID: docID,
-        name: "Divya Reddy", email: "divya.reddy@email.com", password: "Pass@1234",
-        contact: "+91-9745678903",
-        dob: makeDate(1996, 8, 27),
-        nextSessionDate: makeDate(2026, 4, 16, hour: 9, minute: 30),
-        imageURL: "https://picsum.photos/200.jpg", address: "67, Jubilee Hills, Hyderabad, Telangana",
-        condition: "Eating Disorder", sessionStatus: false, mood: 4,
-        previousSessionDate: makeDate(2025, 4, 1, hour: 9, minute: 30)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000011")!, docID: docID,
-        name: "Nikhil Joshi", email: "nikhil.joshi@email.com", password: "Pass@1234",
-        contact: "+91-9823109876",
-        dob: makeDate(1989, 5, 3),
-        nextSessionDate: makeDate(2026, 4, 16, hour: 12, minute: 0),
-        imageURL: "https://picsum.photos/200.jpg", address: "14, Shivajinagar, Pune, Maharashtra",
-        condition: "Insomnia Disorder", sessionStatus: true, mood: 5,
-        previousSessionDate: makeDate(2025, 4, 2, hour: 12, minute: 0)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000012")!, docID: docID,
-        name: "Pooja Kapoor", email: "pooja.kapoor@email.com", password: "Pass@1234",
-        contact: "+91-9867098765",
-        dob: makeDate(1992, 10, 16),
-        nextSessionDate: makeDate(2026, 4, 16, hour: 14, minute: 30),
-        imageURL: "https://picsum.photos/200.jpg", address: "3, Rajouri Garden, New Delhi",
-        condition: "Borderline Personality Disorder", sessionStatus: nil, mood: 3,
-        previousSessionDate: makeDate(2026, 4, 3, hour: 14, minute: 30)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000013")!, docID: docID,
-        name: "Rahul Banerjee", email: "rahul.banerjee@email.com", password: "Pass@1234",
-        contact: "+91-9812098765",
-        dob: makeDate(1987, 3, 4),
-        nextSessionDate: makeDate(2026, 4, 16, hour: 10, minute: 15),
-        imageURL: "https://picsum.photos/200.jpg", address: "22, Salt Lake, Kolkata, West Bengal",
-        condition: "Substance Use Disorder", sessionStatus: true, mood: 4,
-        previousSessionDate: makeDate(2025, 4, 4, hour: 10, minute: 15)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000014")!, docID: docID,
-        name: "Ishita Malhotra", email: "ishita.malhotra@email.com", password: "Pass@1234",
-        contact: "+91-9798765432",
-        dob: makeDate(1998, 6, 2),
-        nextSessionDate: makeDate(2026, 4, 16, hour: 11, minute: 30),
-        imageURL: "https://picsum.photos/200.jpg", address: "9, Vasant Vihar, New Delhi",
-        condition: "Dysthymia", sessionStatus: false, mood: 5,
-        previousSessionDate: makeDate(2025, 4, 5, hour: 11, minute: 30)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000015")!, docID: docID,
-        name: "Siddharth Rao", email: "siddharth.rao@email.com", password: "Pass@1234",
-        contact: "+91-9765432109",
-        dob: makeDate(1990, 9, 17),
-        nextSessionDate: makeDate(2026, 4, 16, hour: 13, minute: 30),
-        imageURL: "https://picsum.photos/200.jpg", address: "5, Koramangala, Bengaluru, Karnataka",
-        condition: "Adjustment Disorder", sessionStatus: true, mood: 6,
-        previousSessionDate: makeDate(2025, 4, 7, hour: 13, minute: 30)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000016")!, docID: docID,
-        name: "Kavya Menon", email: "kavya.menon@email.com", password: "Pass@1234",
-        contact: "+91-9745123456",
-        dob: makeDate(1993, 4, 11),
-        nextSessionDate: makeDate(2025, 4, 22, hour: 15, minute: 0),
-        imageURL: "https://picsum.photos/200.jpg", address: "11, Marathahalli, Bengaluru, Karnataka",
-        condition: "Agoraphobia", sessionStatus: nil, mood: 4,
-        previousSessionDate: makeDate(2025, 4, 8, hour: 15, minute: 0)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000017")!, docID: docID,
-        name: "Aditya Kulkarni", email: "aditya.kulkarni@email.com", password: "Pass@1234",
-        contact: "+91-9856234567",
-        dob: makeDate(1986, 7, 29),
-        nextSessionDate: makeDate(2025, 4, 23, hour: 9, minute: 45),
-        imageURL: "https://picsum.photos/200.jpg", address: "78, Deccan Gymkhana, Pune, Maharashtra",
-        condition: "Narcissistic Personality Disorder", sessionStatus: true, mood: 3,
-        previousSessionDate: makeDate(2025, 4, 9, hour: 9, minute: 45)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000018")!, docID: docID,
-        name: "Riya Saxena", email: "riya.saxena@email.com", password: "Pass@1234",
-        contact: "+91-9934123456",
-        dob: makeDate(1999, 2, 5),
-        nextSessionDate: makeDate(2025, 4, 24, hour: 16, minute: 30),
-        imageURL: "https://picsum.photos/200.jpg", address: "33, Hazratganj, Lucknow, Uttar Pradesh",
-        condition: "Separation Anxiety Disorder", sessionStatus: false, mood: 7,
-        previousSessionDate: makeDate(2025, 4, 10, hour: 16, minute: 30)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000019")!, docID: docID,
-        name: "Manish Tiwari", email: "manish.tiwari@email.com", password: "Pass@1234",
-        contact: "+91-9823456701",
-        dob: makeDate(1984, 12, 22),
-        nextSessionDate: makeDate(2025, 4, 25, hour: 8, minute: 30),
-        imageURL: "https://picsum.photos/200.jpg", address: "6, Alkapuri, Vadodara, Gujarat",
-        condition: "Intermittent Explosive Disorder", sessionStatus: true, mood: 2,
-        previousSessionDate: makeDate(2025, 4, 11, hour: 8, minute: 30)
-    ),
-    Patient(
-        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000020")!, docID: docID,
-        name: "Simran Kaur", email: "simran.kaur@email.com", password: "Pass@1234",
-        contact: "+91-9878123456",
-        dob: makeDate(1995, 5, 14),
-        nextSessionDate: makeDate(2025, 4, 26, hour: 12, minute: 15),
-        imageURL: "https://picsum.photos/200.jpg", address: "21, Sector 17, Chandigarh",
-        condition: "Specific Phobia",  sessionStatus: nil, mood: 8,
-        previousSessionDate: makeDate(2025, 4, 12, hour: 12, minute: 15)
-    )
-]
+var globalPatient: [Patient] = []
+//[
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000001")!, docID: docID,
+//        name: "Aarav Sharma", email: "aarav.sharma@email.com", password: "Pass@1234",
+//        contact: "+91-9876543210",
+//        dob: makeDate(1990, 3, 15),
+//        nextSessionDate: makeDate(2026, 3, 20, hour: 10, minute: 0),
+//        imageURL: "https://picsum.photos/200.jpg", address: "12, MG Road, Bengaluru, Karnataka",
+//        condition: "Generalized Anxiety Disorder", sessionStatus: true,
+//        previousSessionDate: makeDate(2025, 3, 15, hour: 10, minute: 0)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000002")!, docID: docID,
+//        name: "Priya Mehta", email: "priya.mehta@email.com", password: "Pass@1234",
+//        contact: "+91-9823456789",
+//        dob: makeDate(1995, 7, 22),
+//        nextSessionDate: makeDate(2026, 3, 20, hour: 20, minute: 30),
+//        imageURL: "https://picsum.photos/200.jpg", address: "45, Linking Road, Mumbai, Maharashtra",
+//        condition: "Major Depressive Disorder", sessionStatus: false,
+//        previousSessionDate: makeDate(2025, 3, 20, hour: 11, minute: 30)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000003")!, docID: docID,
+//        name: "Rohan Verma", email: "rohan.verma@email.com", password: "Pass@1234",
+//        contact: "+91-9845671234",
+//        dob: makeDate(1988, 11, 5),
+//        nextSessionDate: makeDate(2026, 3, 20, hour: 9, minute: 0),
+//        imageURL: "https://picsum.photos/200.jpg", address: "7, Sector 18, Noida, Uttar Pradesh",
+//        condition: "PTSD", sessionStatus: true,
+//        previousSessionDate: makeDate(2025, 3, 22, hour: 9, minute: 0)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000004")!, docID: docID,
+//        name: "Sneha Iyer", email: "sneha.iyer@email.com", password: "Pass@1234",
+//        contact: "+91-9901234567",
+//        dob: makeDate(1993, 1, 30),
+//        nextSessionDate: makeDate(2026, 3, 20, hour: 18, minute: 15),
+//        imageURL: "https://picsum.photos/200.jpg", address: "23, Anna Nagar, Chennai, Tamil Nadu",
+//        condition: "Bipolar Disorder", sessionStatus: nil,
+//        previousSessionDate: makeDate(2025, 3, 24, hour: 14, minute: 15)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000005")!, docID: docID,
+//        name: "Kabir Nair", email: "kabir.nair@email.com", password: "Pass@1234",
+//        contact: "+91-9812345678",
+//        dob: makeDate(1985, 6, 18),
+//        nextSessionDate: makeDate(2026, 3, 20, hour: 16, minute: 0),
+//        imageURL: "https://picsum.photos/200.jpg", address: "8, Indiranagar, Bengaluru, Karnataka",
+//        condition: "OCD", sessionStatus: true,
+//        previousSessionDate: makeDate(2025, 3, 25, hour: 16, minute: 0)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000006")!, docID: docID,
+//        name: "Ananya Gupta", email: "ananya.gupta@email.com", password: "Pass@1234",
+//        contact: "+91-9867345612",
+//        dob: makeDate(1997, 9, 12),
+//        nextSessionDate: makeDate(2026, 3, 20, hour: 10, minute: 30),
+//        imageURL: "https://picsum.photos/200.jpg", address: "56, Civil Lines, Delhi",
+//        condition: "Social Anxiety Disorder", sessionStatus: false,
+//        previousSessionDate: makeDate(2025, 3, 27, hour: 10, minute: 30)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000007")!, docID: docID,
+//        name: "Vikram Singh", email: "vikram.singh@email.com", password: "Pass@1234",
+//        contact: "+91-9754321098",
+//        dob: makeDate(1982, 4, 25),
+//        nextSessionDate: makeDate(2026, 3, 20, hour: 8, minute: 0),
+//        imageURL: "https://picsum.photos/200.jpg", address: "34, Banjara Hills, Hyderabad, Telangana",
+//        condition: "Schizophrenia", sessionStatus: false,
+//        previousSessionDate: makeDate(2025, 3, 28, hour: 13, minute: 0)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000008")!, docID: docID,
+//        name: "Meera Pillai", email: "meera.pillai@email.com", password: "Pass@1234",
+//        contact: "+91-9934567821",
+//        dob: makeDate(1991, 12, 8),
+//        nextSessionDate: makeDate(2026, 3, 20, hour: 9, minute: 45),
+//        imageURL: "https://picsum.photos/200.jpg", address: "19, Thrissur Road, Kochi, Kerala",
+//        condition: "Panic Disorder", sessionStatus: nil,
+//        previousSessionDate: makeDate(2025, 3, 29, hour: 15, minute: 45)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000009")!, docID: docID,
+//        name: "Arjun Desai", email: "arjun.desai@email.com", password: "Pass@1234",
+//        contact: "+91-9878901234",
+//        dob: makeDate(1994, 2, 14),
+//        nextSessionDate: makeDate(2026, 3, 20, hour: 11, minute: 0),
+//        imageURL: "https://picsum.photos/200.jpg", address: "88, CG Road, Ahmedabad, Gujarat",
+//        condition: "ADHD", sessionStatus: true,
+//        previousSessionDate: makeDate(2025, 3, 31, hour: 11, minute: 0)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000010")!, docID: docID,
+//        name: "Divya Reddy", email: "divya.reddy@email.com", password: "Pass@1234",
+//        contact: "+91-9745678903",
+//        dob: makeDate(1996, 8, 27),
+//        nextSessionDate: makeDate(2026, 3, 20, hour: 9, minute: 30),
+//        imageURL: "https://picsum.photos/200.jpg", address: "67, Jubilee Hills, Hyderabad, Telangana",
+//        condition: "Eating Disorder", sessionStatus: false,
+//        previousSessionDate: makeDate(2025, 4, 1, hour: 9, minute: 30)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000011")!, docID: docID,
+//        name: "Nikhil Joshi", email: "nikhil.joshi@email.com", password: "Pass@1234",
+//        contact: "+91-9823109876",
+//        dob: makeDate(1989, 5, 3),
+//        nextSessionDate: makeDate(2026, 4, 16, hour: 12, minute: 0),
+//        imageURL: "https://picsum.photos/200.jpg", address: "14, Shivajinagar, Pune, Maharashtra",
+//        condition: "Insomnia Disorder", sessionStatus: true,
+//        previousSessionDate: makeDate(2025, 4, 2, hour: 12, minute: 0)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000012")!, docID: docID,
+//        name: "Pooja Kapoor", email: "pooja.kapoor@email.com", password: "Pass@1234",
+//        contact: "+91-9867098765",
+//        dob: makeDate(1992, 10, 16),
+//        address: "3, Rajouri Garden, New Delhi", condition: "Borderline Personality Disorder", nextSessionDate: makeDate(2026, 4, 16, hour: 14, minute: 30),
+//        imageURL: "https://picsum.photos/200.jpg", sessionStatus: nil,
+//        previousSessionDate: makeDate(2026, 4, 3, hour: 14, minute: 30)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000013")!, docID: docID,
+//        name: "Rahul Banerjee", email: "rahul.banerjee@email.com", password: "Pass@1234",
+//        contact: "+91-9812098765",
+//        dob: makeDate(1987, 3, 4),
+//        nextSessionDate: makeDate(2026, 4, 16, hour: 10, minute: 15),
+//        imageURL: "https://picsum.photos/200.jpg", address: "22, Salt Lake, Kolkata, West Bengal",
+//        condition: "Substance Use Disorder", sessionStatus: true,
+//        previousSessionDate: makeDate(2025, 4, 4, hour: 10, minute: 15)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000014")!, docID: docID,
+//        name: "Ishita Malhotra", email: "ishita.malhotra@email.com", password: "Pass@1234",
+//        contact: "+91-9798765432",
+//        dob: makeDate(1998, 6, 2),
+//        nextSessionDate: makeDate(2026, 4, 16, hour: 11, minute: 30),
+//        imageURL: "https://picsum.photos/200.jpg", address: "9, Vasant Vihar, New Delhi",
+//        condition: "Dysthymia", sessionStatus: false,
+//        previousSessionDate: makeDate(2025, 4, 5, hour: 11, minute: 30)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000015")!, docID: docID,
+//        name: "Siddharth Rao", email: "siddharth.rao@email.com", password: "Pass@1234",
+//        contact: "+91-9765432109",
+//        dob: makeDate(1990, 9, 17),
+//        nextSessionDate: makeDate(2026, 4, 16, hour: 13, minute: 30),
+//        imageURL: "https://picsum.photos/200.jpg", address: "5, Koramangala, Bengaluru, Karnataka",
+//        condition: "Adjustment Disorder", sessionStatus: true,
+//        previousSessionDate: makeDate(2025, 4, 7, hour: 13, minute: 30)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000016")!, docID: docID,
+//        name: "Kavya Menon", email: "kavya.menon@email.com", password: "Pass@1234",
+//        contact: "+91-9745123456",
+//        dob: makeDate(1993, 4, 11),
+//        nextSessionDate: makeDate(2025, 4, 22, hour: 15, minute: 0),
+//        imageURL: "https://picsum.photos/200.jpg", address: "11, Marathahalli, Bengaluru, Karnataka",
+//        condition: "Agoraphobia", sessionStatus: nil,
+//        previousSessionDate: makeDate(2025, 4, 8, hour: 15, minute: 0)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000017")!, docID: docID,
+//        name: "Aditya Kulkarni", email: "aditya.kulkarni@email.com", password: "Pass@1234",
+//        contact: "+91-9856234567",
+//        dob: makeDate(1986, 7, 29),
+//        nextSessionDate: makeDate(2025, 4, 23, hour: 9, minute: 45),
+//        imageURL: "https://picsum.photos/200.jpg", address: "78, Deccan Gymkhana, Pune, Maharashtra",
+//        condition: "Narcissistic Personality Disorder", sessionStatus: true,
+//        previousSessionDate: makeDate(2025, 4, 9, hour: 9, minute: 45)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000018")!, docID: docID,
+//        name: "Riya Saxena", email: "riya.saxena@email.com", password: "Pass@1234",
+//        contact: "+91-9934123456",
+//        dob: makeDate(1999, 2, 5),
+//        nextSessionDate: makeDate(2025, 4, 24, hour: 16, minute: 30),
+//        imageURL: "https://picsum.photos/200.jpg", address: "33, Hazratganj, Lucknow, Uttar Pradesh",
+//        condition: "Separation Anxiety Disorder", sessionStatus: false,
+//        previousSessionDate: makeDate(2025, 4, 10, hour: 16, minute: 30)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000019")!, docID: docID,
+//        name: "Manish Tiwari", email: "manish.tiwari@email.com", password: "Pass@1234",
+//        contact: "+91-9823456701",
+//        dob: makeDate(1984, 12, 22),
+//        nextSessionDate: makeDate(2025, 4, 25, hour: 8, minute: 30),
+//        imageURL: "https://picsum.photos/200.jpg", address: "6, Alkapuri, Vadodara, Gujarat",
+//        condition: "Intermittent Explosive Disorder", sessionStatus: true,
+//        previousSessionDate: makeDate(2025, 4, 11, hour: 8, minute: 30)
+//    ),
+//    Patient(
+//        patientID: UUID(uuidString: "00000000-0000-0000-0000-000000000020")!, docID: docID,
+//        name: "Simran Kaur", email: "simran.kaur@email.com", password: "Pass@1234",
+//        contact: "+91-9878123456",
+//        dob: makeDate(1995, 5, 14),
+//        nextSessionDate: makeDate(2025, 4, 26, hour: 12, minute: 15),
+//        imageURL: "https://picsum.photos/200.jpg", address: "21, Sector 17, Chandigarh",
+//        condition: "Specific Phobia",  sessionStatus: nil,
+//        previousSessionDate: makeDate(2025, 4, 12, hour: 12, minute: 15)
+//    )
+//]
 var globalSession: [SessionNote] = [
 
     // ══════════════════════════════════════════
@@ -1535,8 +1535,6 @@ var activityCatalog: [Activity] = [
     ),
 ]
 
-// MARK: - Assigned Activities (doctor → patient assignments)
-
 var assignedActivities: [AssignedActivity] = [
 
     // ── Patient P1: Lower back rehab ───────────────────────────
@@ -1694,8 +1692,6 @@ var assignedActivities: [AssignedActivity] = [
         status: .cancelled
     ),
 ]
-
-// MARK: - Activity Logs (patient completion records)
 
 var activityLogs: [ActivityLog] = [
 
@@ -2212,7 +2208,6 @@ struct TodayActivityItem {
     }
 }
 
-// MARK: - Build Today Items
 func buildTodayItems(for patientID: UUID) -> [TodayActivityItem] {
 //    let today = Date()
 
@@ -2245,7 +2240,6 @@ struct LogSummaryItem {
     let totalLogs: Int
 }
 
-// MARK: - Build Log Summaries
 func buildLogSummaries(for patientID: UUID) -> [LogSummaryItem] {
 
     // Step 1: Get all inactive assigned activities for this patient

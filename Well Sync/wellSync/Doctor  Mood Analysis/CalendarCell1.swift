@@ -67,8 +67,7 @@ class CalendarCell1: UICollectionViewCell,
         formatter.dateFormat = "yyyy-MM-dd"
 
         for log in moodLogs {
-            guard let date = log.date else { continue }
-            let key = formatter.string(from: date)
+            let key = formatter.string(from: log.date)
             grouped[key, default: []].append(log.mood)
         }
 

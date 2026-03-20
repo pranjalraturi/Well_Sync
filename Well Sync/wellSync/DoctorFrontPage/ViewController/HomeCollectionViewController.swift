@@ -13,7 +13,7 @@ class HomeCollectionViewController: UICollectionViewController {
         
         super.viewDidLoad()
 
-        viewModel = AccessSupabase()
+        viewModel = AccessSupabase.shared
         setupCollectionView()
         Task {
             await loadPatients()
@@ -23,16 +23,21 @@ class HomeCollectionViewController: UICollectionViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        patient = globalPatient
-        categorizePatients()
-        collectionView.reloadData()
+        Task{
+            await loadPatients()
+        }
     }
     @MainActor
     func loadPatients() async {
-//        guard let id = UUID(uuidString: "6bf94a4d-cc66-4d87-a90d-be2500434e3d") else { return }
+        guard let id = UUID(uuidString: "6bf94a4d-cc66-4d87-a90d-be2500434e3d") else { return }
 
-        patient = globalPatient
-
+        do{
+            patient = try await viewModel?.fetchPatients(for: id) ?? []
+        }
+        catch{
+            print(error)
+            return
+        }
         categorizePatients()
         collectionView.reloadData()
         collectionView.setCollectionViewLayout(createLayout(), animated: false)
@@ -53,15 +58,15 @@ class HomeCollectionViewController: UICollectionViewController {
         
 
         for p in patient ?? [] {
-            guard calendar.isDateInToday(p.nextSessionDate) else { continue }
+            guard calendar.isDateInToday(p.nextSessionDate!) else { continue }
 
             if p.sessionStatus == true {
                 done.append(p)
             }
-            else if calendar.isDate(p.nextSessionDate, inSameDayAs: now) && p.nextSessionDate > now {
+            else if calendar.isDate(p.nextSessionDate ?? Date(), inSameDayAs: now) && p.nextSessionDate ?? Date() > now {
                 upcoming.append(p)
             }
-            else if p.nextSessionDate < now {
+            else if p.nextSessionDate! < now {
                 missed.append(p)
             }
         }

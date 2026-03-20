@@ -8,6 +8,7 @@ class MoodLogCollectionViewController:
     var onCheck: (()->Void)?
     var selectedMood: Int? = 2
     var selectedFeelings: [String] = []
+    var feelingsFromDB: [Feeling] = []
     
     var patientId: UUID?          
     
@@ -22,6 +23,15 @@ class MoodLogCollectionViewController:
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Task {
+            do {
+                feelingsFromDB = try await AccessSupabase.shared.fetchFeelings()
+                print("Feelings loaded:", feelingsFromDB.count)
+            } catch {
+                print("Error:", error)
+            }
+        }
         
         collectionView.collectionViewLayout = generateLayout()
     }
@@ -182,13 +192,12 @@ class MoodLogCollectionViewController:
         saveLog(rawMood: rawMood, moodLevel: moodLevel)
     }
     private func saveLog(rawMood: Int, moodLevel: MoodLevel) {
+        
 
-        let feelingObjects: [Feeling] = selectedFeelings.map { feelingName in
-            Feeling(
-                feelingId: UUID(),
-                moodLevel: moodLevel,
-                name: feelingName
-            )
+        let feelingObjects: [Feeling] = selectedFeelings.compactMap { feelingName in
+            feelingsFromDB.first(where: {
+                $0.name.lowercased() == feelingName.lowercased()
+            })
         }
         
         let cell = collectionView.cellForItem(
@@ -203,7 +212,15 @@ class MoodLogCollectionViewController:
             moodNote: cell.note.text ?? "",
             selectedFeeling: feelingObjects
         )
-        weeklyMoodLog.append(newLog)
+        print("----------------->",newLog)
+        Task{
+            do{
+                try await AccessSupabase.shared.saveMoodLog(newLog)
+            }
+            catch{
+                print(error)
+            }
+        }
 
         dismiss(animated: true) {
             self.onCheck?()

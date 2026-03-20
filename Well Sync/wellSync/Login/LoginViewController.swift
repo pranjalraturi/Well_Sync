@@ -28,9 +28,18 @@ class LoginViewController: UIViewController {
         gradient.endPoint = CGPoint(x: 1, y: 1)
 
         view.layer.insertSublayer(gradient, at: 0)
+        Task{
+            do{
+//                try await AccessSupabase.shared.saveDoctor()
+                print("-----------------\n",try await AccessSupabase.shared.fetchMoodLogs(patientID: UUID(uuidString: "d207cf78-d29e-4bf1-91d2-66a5c26fd895")!))
+            }
+            catch{
+                print("Error", error)
+            }
+        }
     }
     @IBOutlet weak var glassView: UIView!
-    let db = AccessSupabase()
+    let db = AccessSupabase.shared
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 //        glassView.clipsToBounds = true
