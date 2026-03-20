@@ -100,16 +100,27 @@ class AddPatientTableViewController: UITableViewController, UIImagePickerControl
         patient = Patient(
             patientID: UUID(),
 //            docID: doctor.docID, //this would be passsed from screen to screen
-            docID: UUID(),
+            docID: UUID(uuidString: "6bf94a4d-cc66-4d87-a90d-be2500434e3d")!,
             name: name,
             email: emailText,
             password: generatedPass,
             contact: contactText,
             dob: dobDate,
-            nextSessionDate: Date(),
+            address: addressText,
+            condition: nil,
+            sessionStatus: false,
+            nextSessionDate: Calendar.current.date(byAdding: .day, value: 6, to: Date())!,
             imageURL: nil,
-            address: addressText, condition: ""
+            previousSessionDate: Calendar.current.date(byAdding: .day, value: -6, to: Date())!,
         )
+        Task{
+            do{
+                try await AccessSupabase.shared.saveDoctor()
+            }
+            catch{
+                print("Error", error)
+            }
+        }
 //        AllPatients.append(patient!)
 
     }

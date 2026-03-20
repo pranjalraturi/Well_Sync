@@ -5,40 +5,11 @@
 //  Created by Vidit Agarwal on 17/02/26.
 //
 import Foundation
-//
-//struct Activity{
-//    let activityID: UUID
-//    let doctorID: UUID
-//    let name: String
-//    let type: String  // not definate till now
-//    let doctorNote: String?
-//    let iconName: String
-//}
-//
-//struct Activities{
-//    let activityID: UUID
-//    let patientID: UUID
-//    let frequency: Int
-//    let startDate: Date
-//    let endDate: Date
-//    let completed: Float
-//}
-//
-//struct ActivityLog {
-//    let logID: UUID
-//    let activityID: UUID
-//    let pateintID:UUID
-//    let time: String
-//    let date: Date
-//    let uploadPath: String?
-//    let duration:Int?
-//}
 
-// MARK: - Enums
 
 enum ActivityType: String, Codable {
-    case timer   // patient runs a countdown timer and submits duration
-    case upload  // patient uploads a photo or video as proof
+    case timer
+    case upload
 }
 
 enum AssignmentStatus: String, Codable {
@@ -47,9 +18,6 @@ enum AssignmentStatus: String, Codable {
     case cancelled
 }
 
-// MARK: - Activity
-// The master definition of an activity (like a library/catalog entry).
-// Created and owned by a doctor. Reusable across multiple patients.
 
 struct Activity: Codable {
     let activityID: UUID
@@ -57,44 +25,65 @@ struct Activity: Codable {
     let name: String
     let type: ActivityType
     let iconName: String
-    let description: String       // what the activity is
-}
+    let description: String
+    enum CodingKeys: String, CodingKey {
+        case activityID = "activity_id"
+        case doctorID = "doctor_id"
+        case name, type
+        case iconName = "icon_name"
+        case description
+    }
 
-// MARK: - AssignedActivity
-// When a doctor assigns an Activity to a specific patient.
-// This is what drives both the patient dashboard and the doctor view.
+}
 
 struct AssignedActivity: Codable {
     let assignedID: UUID
-    let activityID: UUID          // references Activity
+    let activityID: UUID
     let patientID: UUID
     let doctorID: UUID
-    let frequency: Int            // times per day the patient must do it
+    let frequency: Int
     let startDate: Date
     let endDate: Date
     let doctorNote: String?
-    let status: AssignmentStatus  // active / completed / cancelled
+    let status: AssignmentStatus
 
-    // Computed — does this assignment apply today?
     var isActiveToday: Bool {
         let today = Calendar.current.startOfDay(for: Date())
         let start = Calendar.current.startOfDay(for: startDate)
         let end   = Calendar.current.startOfDay(for: endDate)
         return today >= start && today <= end && status == .active
     }
-}
+    
+    enum CodingKeys: String, CodingKey {
+        case assignedID = "assigned_id"
+        case activityID = "activity_id"
+        case patientID = "patient_id"
+        case doctorID = "doctor_id"
+        case frequency
+        case startDate = "start_date"
+        case endDate = "end_date"
+        case doctorNote = "doctor_note"
+        case status
+    }
 
-// MARK: - ActivityLog
-// One entry every time a patient completes a single session of an assigned activity.
-// This is the source of truth for completion tracking.
+}
 
 struct ActivityLog: Codable {
     let logID: UUID
-    let assignedID: UUID          // references AssignedActivity
-    let activityID: UUID          // references Activity (for quick lookup)
+    let assignedID: UUID
+    let activityID: UUID
     let patientID: UUID
-    let date: Date                // the calendar day this log belongs to
-    let time: String              // e.g. "08:30 AM" — display string
-    let duration: Int?            // in seconds — filled when type == .timer
-    let uploadPath: String?       // file path / URL — filled when type == .upload
+    let date: Date
+    let time: String
+    let duration: Int?
+    let uploadPath: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case logID = "log_id"
+        case assignedID = "assigned_id"
+        case activityID = "activity_id"
+        case patientID = "patient_id"
+        case date, time, duration
+        case uploadPath = "upload_path"
+    }
 }

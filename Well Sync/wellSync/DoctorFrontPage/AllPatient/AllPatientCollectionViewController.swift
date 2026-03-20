@@ -17,7 +17,7 @@ class AllPatientCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewModel = AccessSupabase()
+        viewModel = AccessSupabase.shared
 
         setupCollectionView()
 

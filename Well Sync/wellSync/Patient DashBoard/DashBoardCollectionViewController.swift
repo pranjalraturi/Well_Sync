@@ -259,7 +259,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
 
             vc.selectedMood = data
 
-            vc.patientId = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+            vc.patientId = UUID(uuidString: "d207cf78-d29e-4bf1-91d2-66a5c26fd895")!
 
             vc.onDismiss = { [weak self] in
                 self?.resetMoodViews()

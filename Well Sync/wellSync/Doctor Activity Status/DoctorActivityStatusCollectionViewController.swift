@@ -265,10 +265,10 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
            let addVC = nav.topViewController as? AddActivityTableViewController {
 
             addVC.patient = self.patient
-            addVC.onSave = { [weak self] newAssignment in
-                self?.activities = buildTodayItems(for: self!.patient!.patientID)
-                self?.collectionView.reloadData()
-            }
+//            addVC.onSave = { [weak self] newAssignment in
+//                self?.activities = buildTodayItems(for: self!.patient!.patientID)
+//                self?.collectionView.reloadData()
+//            }
         }
     }
     

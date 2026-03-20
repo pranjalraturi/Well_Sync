@@ -339,6 +339,7 @@
                         <outlet property="activityCell" destination="SfG-rN-eex" id="PRc-Ia-NoE"/>
                         <outlet property="activityListButton" destination="M4C-I9-G1X" id="kd0-FR-GbN"/>
                         <outlet property="activityTimingButton" destination="lm0-P8-z4e" id="HiV-WZ-SiK"/>
+                        <outlet property="customNameTextField" destination="Lpp-0q-sxH" id="Pha-NL-3bt"/>
                         <outlet property="doctorNote" destination="JbZ-GA-DD1" id="xu4-00-VH3"/>
                         <outlet property="endDatePicker" destination="d08-oa-LkH" id="Ziw-uP-NpX"/>
                         <outlet property="frequencyButton" destination="OfV-rW-aD0" id="f38-xB-7sc"/>
@@ -377,13 +378,13 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.55294117647058827" blue="0.15686274509803921" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

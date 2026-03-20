@@ -1,14 +1,14 @@
 //
 //  SupabaseManager.swift
-//  connectDataBase
+//  wellSync
 //
-//  Created by Vidit Agarwal on 05/02/26.
+//  Created by Rishika Mittal on 20/03/26.
 //
-//
+
 import Foundation
 import Supabase
 
-class SupabaseManager {
+final class SupabaseManager {
     static let shared = SupabaseManager()
 
     let client: SupabaseClient
