@@ -123,6 +123,7 @@
             <connections>
                 <outlet property="AgeLabel" destination="dVY-3n-ccy" id="lh2-Uc-aKW"/>
                 <outlet property="AgeNumberLabel" destination="Msn-Ch-Pej" id="YMM-iD-qgg"/>
+                <outlet property="calendarButton" destination="EBg-kT-ya7" id="2yD-wV-QFo"/>
                 <outlet property="disorderLabel" destination="ZfQ-fW-1hb" id="FHa-cB-AsX"/>
                 <outlet property="nameLabel" destination="teu-6c-lnP" id="qOs-PV-k2v"/>
                 <outlet property="profileImageView" destination="Nzi-vr-8dU" id="kZh-cd-r9H"/>
@@ -135,7 +136,7 @@
         <image name="phone.fill" catalog="system" width="128" height="114"/>
         <image name="profile" width="736" height="1472"/>
         <systemColor name="secondaryLabelColor">
-            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

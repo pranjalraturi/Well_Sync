@@ -18,6 +18,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var AgeLabel: UILabel!
     @IBOutlet weak var AgeNumberLabel: UILabel!
     @IBOutlet weak var disorderLabel: UILabel!
+    @IBOutlet weak var calendarButton: UIButton!
     
     
   
@@ -27,12 +28,6 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCell(with patient: Patient){
-//        if let urlString = patient.imageURL,
-//           let url = URL(string: urlString),
-//           let data = try? Data(contentsOf: url) {
-//            
-//            profileImageView.image = UIImage(data: data)
-//        }
         if let urlStr = patient.imageURL, let url=URL(string: urlStr) {
             URLSession.shared.dataTask(with: url) { (data, _, _) in
                 guard let data = data, let image = UIImage(data: data) else { return }
@@ -46,6 +41,15 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         let age = Calendar.current.dateComponents([.year], from: patient.dob, to: Date())
         AgeNumberLabel.text = "\(age.year ?? 0)"
         disorderLabel.text = patient.condition
+        var nextDate = patient.nextSessionDate
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMM dd"
+            let dateString = formatter.string(from: nextDate)
+            calendarButton.setTitle("   \(dateString)", for: .normal)
+            calendarButton.tintColor = .systemGray
+//        }else{
+//            calendarButton.setTitle("", for: .normal)
+//        }
     }
     @IBAction func calenderButtonPressed(_ sender: UIButton) {
         delegate?.calendarButtonTapped(from: sender as UIView)
