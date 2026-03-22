@@ -15,25 +15,7 @@ final class AccessSupabase {
 
     // MARK: - DOCTORS
 
-    func saveDoctor() async throws {
-        
-        let doctor = Doctor(
-            docID: nil,
-            username: "drvidit",
-            email: "doctor@example.com",
-            password: "123456",
-            name: "Dr. Vidit",
-            dob: Date(),
-            address: "Delhi",
-            experience: 5,
-            doctorImage: nil,
-            qualification: "MBBS",
-            registrationNumber: "REG123",
-            identityNumber: "ID123",
-            educationImageData: nil,
-            registrationImageData: nil,
-            identityImageData: nil
-        )
+    func saveDoctor(doctor: Doctor) async throws {
         let saved: Doctor = try await supabase
             .from("doctors")
             .insert(doctor)
@@ -44,7 +26,6 @@ final class AccessSupabase {
     }
 
     func fetchDoctor(by docID: UUID) async throws -> Doctor {
-        
         let doctor: Doctor = try await supabase
             .from("doctors")
             .select()
@@ -93,19 +74,7 @@ final class AccessSupabase {
 
     // MARK: - PATIENTS
 
-    func savePatient() async throws {
-        let patients = Patient(
-            patientID: UUID(),
-            docID: UUID(uuidString: "6bf94a4d-cc66-4d87-a90d-be2500434e3d")!,
-            name: "Patient One",
-            email: "p1@example.com",
-            password: "pass123",
-            contact: "9999999999",
-            dob: Date(),
-            address: "Noida", condition: "Anxiety", sessionStatus: false, nextSessionDate: Date(),
-            imageURL: nil,
-            previousSessionDate: nil
-        )
+    func savePatient(_ patients:Patient) async throws {
         let saved: Patient = try await supabase
             .from("patients")
             .insert(patients)
@@ -324,4 +293,214 @@ final class AccessSupabase {
 //            .value
 //        return updated
 //    }
+    
+    
+    
+    func saveCaseHistory(_ patientId: UUID) async throws -> CaseHistory {
+            let payload = CaseHistory(
+                caseId: UUID(),
+                patientId: patientId,
+                timeline: nil,
+                report: nil
+            )
+
+            let saved: CaseHistory = try await supabase
+                .from("case_histories")
+                .insert(payload)
+                .select("*")
+                .single()
+                .execute()
+                .value
+
+            return saved
+        }
+
+        func saveTimeline(_ timeline: Timeline) async throws -> Timeline {
+            let saved: Timeline = try await supabase
+                .from("timelines")
+                .insert(timeline)
+                .select("*")
+                .single()
+                .execute()
+                .value
+            return saved
+        }
+
+        func saveReport(_ report: Report) async throws -> Report {
+            let saved: Report = try await supabase
+                .from("reports")
+                .insert(report)
+                .select("*")
+                .single()
+                .execute()
+                .value
+            return saved
+        }
+
+        func saveCompleteCaseHistory(
+            patientId: UUID,
+            timelines: [Timeline],
+            reports: [Report]
+        ) async throws {
+            let caseHistory = try await saveCaseHistory(patientId)
+            let caseID = caseHistory.caseId
+
+            if !timelines.isEmpty {
+                let items = timelines.map {
+                    Timeline(
+                        timelineId: UUID(),
+                        caseID: caseID,
+                        title: $0.title,
+                        date: $0.date,
+                        description: $0.description
+                    )
+                }
+
+                _ = try await supabase
+                    .from("timelines")
+                    .insert(items)
+                    .execute()
+            }
+
+            if !reports.isEmpty {
+                let items = reports.map {
+                    Report(
+                        reportId: UUID(),
+                        caseId: caseID,
+                        title: $0.title,
+                        date: $0.date,
+                        reportPath: $0.reportPath
+                    )
+                }
+
+                _ = try await supabase
+                    .from("reports")
+                    .insert(items)
+                    .execute()
+            }
+        }
+    func fetchCaseHistory(for patientId: UUID) async throws -> CaseHistory? {
+            let caseHistory: CaseHistory = try await supabase
+                .from("case_histories")
+                .select("*")
+                .eq("patient_id", value: patientId.uuidString)
+                .single()
+                .execute()
+                .value
+
+            return caseHistory
+        }
+
+        func fetchTimelines(for caseId: UUID) async throws -> [Timeline] {
+            let timelines: [Timeline] = try await supabase
+                .from("timelines")
+                .select("*")
+                .eq("case_id", value: caseId.uuidString)
+                .order("date", ascending: false)
+                .execute()
+                .value
+            return timelines
+        }
+
+        func fetchReports(for caseId: UUID) async throws -> [Report] {
+            let reports: [Report] = try await supabase
+                .from("reports")
+                .select("*")
+                .eq("case_id", value: caseId.uuidString)
+                .order("date", ascending: false)
+                .execute()
+                .value
+            return reports
+        }
+
+        func fetchFullCaseHistory(for patientId: UUID) async throws -> CaseHistory {
+            let caseHistory = try await fetchCaseHistory(for: patientId)
+            guard let caseHistory else {
+                return CaseHistory(caseId: UUID(), patientId: patientId, timeline: [], report: [])
+            }
+
+            let timelines = try await fetchTimelines(for: caseHistory.caseId)
+            let reports = try await fetchReports(for: caseHistory.caseId)
+
+            return CaseHistory(
+                caseId: caseHistory.caseId,
+                patientId: caseHistory.patientId,
+                timeline: timelines,
+                report: reports
+            )
+        }
+    func saveSessionNote(_ note: SessionNote) async throws -> SessionNote {
+
+        let saved: SessionNote = try await supabase
+            .from("session_notes")
+            .insert(note)
+            .select("*")
+            .single()
+            .execute()
+            .value
+
+        return saved
+    }
+    func fetchSessionNotes(patientID: UUID) async throws -> [SessionNote] {
+
+        let data: [SessionNote] = try await supabase
+            .from("session_notes")
+            .select("*")
+            .eq("patient_id", value: patientID.uuidString)
+            .order("date", ascending: false)
+            .execute()
+            .value
+
+        return data
+    }
+    func updateSessionNote(_ note: SessionNote) async throws -> SessionNote {
+
+        let updated: SessionNote = try await supabase
+            .from("session_notes")
+            .update(note)
+            .eq("session_id", value: note.sessionId!.uuidString)
+            .select("*")
+            .single()
+            .execute()
+            .value
+
+        return updated
+    }
+    func savePatientNote(_ note: PatientNote) async throws -> PatientNote {
+
+        let saved: PatientNote = try await supabase
+            .from("patient_notes")
+            .insert(note)
+            .select("*")
+            .single()
+            .execute()
+            .value
+
+        return saved
+    }
+    func fetchPatientNotes(patientID: UUID) async throws -> [PatientNote] {
+
+        let data: [PatientNote] = try await supabase
+            .from("patient_notes")
+            .select("*")
+            .eq("patient_id", value: patientID.uuidString)
+            .order("date", ascending: false)
+            .execute()
+            .value
+
+        return data
+    }
+    func updatePatientNote(_ note: PatientNote) async throws -> PatientNote {
+
+        let updated: PatientNote = try await supabase
+            .from("patient_notes")
+            .update(note)
+            .eq("note_id", value: note.noteId.uuidString)
+            .select("*")
+            .single()
+            .execute()
+            .value
+
+        return updated
+    }
 }

@@ -11,7 +11,7 @@ class PatientDetailCollectionViewController: UICollectionViewController{
 
     @IBOutlet weak var PatientProfileCollectionView: UICollectionView!
     
-  var patient: Patient!
+  var patient: Patient?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +36,7 @@ class PatientDetailCollectionViewController: UICollectionViewController{
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0{
             let profilecell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCollectionViewCell", for: indexPath) as! ProfileCollectionViewCell
-            profilecell.configureCell(with: patient)
+            profilecell.configureCell(with: patient!)
             profilecell.delegate = self
             return profilecell
         }
@@ -61,8 +61,13 @@ class PatientDetailCollectionViewController: UICollectionViewController{
                let vc = segue.destination as? SessionNoteCollectionViewController {
                 vc.patient = self.patient   
             }
+        if segue.identifier == "mood",let vc = segue.destination as? MoodAnalysisCollectionViewController{
+            vc.currPatient = self.patient
+        }
+        if segue.identifier == "case",let vc = segue.destination as? CaseHistoryViewController{
+            vc.patient = self.patient
+        }
     }
-    
 }
 
 
@@ -207,7 +212,7 @@ extension PatientDetailCollectionViewController{
     func showThirdAlert(option: Int) {
         let alert = UIAlertController(title: "Session Completed", message: "You have marked this session as Done", preferredStyle: .alert)
         let done = UIAlertAction(title: "OK", style: .default){_ in
-            if let index = globalPatient.firstIndex(where: { $0.patientID == self.patient.patientID }) {
+            if let index = globalPatient.firstIndex(where: { $0.patientID == self.patient?.patientID }) {
                 globalPatient[index].sessionStatus = true
             }
         }
@@ -289,7 +294,7 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
     func showScheduleAlert(sourceView: UIView){
         let popoverVC = ScheduleViewController()
         popoverVC.patient = self.patient
-        popoverVC.scheduleDate = self.patient.nextSessionDate
+        popoverVC.scheduleDate = self.patient?.nextSessionDate
         
         popoverVC.modalPresentationStyle = .popover
         
@@ -304,7 +309,7 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
         popoverVC.onScheduleConfirmed = { [weak self] selectedFullDate in
             guard let self = self else{return}
             print("Selected date: \(selectedFullDate)")
-            self.patient.nextSessionDate = selectedFullDate
+            self.patient?.nextSessionDate = selectedFullDate
             
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM dd"

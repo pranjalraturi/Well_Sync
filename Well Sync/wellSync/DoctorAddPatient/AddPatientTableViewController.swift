@@ -82,7 +82,30 @@ class AddPatientTableViewController: UITableViewController, UIImagePickerControl
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
             dismiss(animated: true)
         }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+
+    func generateSecurePassword() -> String {
+
+        let uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let lowercase = "abcdefghijklmnopqrstuvwxyz"
+        let numbers = "0123456789"
+        let symbols = "!@#$%^&*-_?"
+
+        let allChars = uppercase + lowercase + numbers + symbols
+
+        var password = ""
+
+        password.append(uppercase.randomElement()!)
+        password.append(lowercase.randomElement()!)
+        password.append(numbers.randomElement()!)
+        password.append(symbols.randomElement()!)
+
+        while password.count < 8 {
+            password.append(allChars.randomElement()!)
+        }
+
+        return String(password.shuffled())
+    }
+    @IBAction func saveTapped(_ sender: UIBarButtonItem) {
         guard
             let name = fullName.text,
             let emailText = email.text,
@@ -109,41 +132,21 @@ class AddPatientTableViewController: UITableViewController, UIImagePickerControl
             address: addressText,
             condition: nil,
             sessionStatus: false,
-            nextSessionDate: Calendar.current.date(byAdding: .day, value: 6, to: Date())!,
+            nextSessionDate: Calendar.current.date(byAdding: .day, value: 0, to: Date())!,
             imageURL: nil,
             previousSessionDate: Calendar.current.date(byAdding: .day, value: -6, to: Date())!,
         )
         Task{
             do{
-                try await AccessSupabase.shared.saveDoctor()
+                try await AccessSupabase.shared.savePatient(patient!)
+                try await AccessSupabase.shared
+                            .saveCaseHistory(patient!.patientID)
             }
             catch{
                 print("Error", error)
             }
         }
-//        AllPatients.append(patient!)
-
+        dismiss(animated: true)
     }
-    func generateSecurePassword() -> String {
-
-        let uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        let lowercase = "abcdefghijklmnopqrstuvwxyz"
-        let numbers = "0123456789"
-        let symbols = "!@#$%^&*-_?"
-
-        let allChars = uppercase + lowercase + numbers + symbols
-
-        var password = ""
-
-        password.append(uppercase.randomElement()!)
-        password.append(lowercase.randomElement()!)
-        password.append(numbers.randomElement()!)
-        password.append(symbols.randomElement()!)
-
-        while password.count < 8 {
-            password.append(allChars.randomElement()!)
-        }
-
-        return String(password.shuffled())
-    }
+    
 }

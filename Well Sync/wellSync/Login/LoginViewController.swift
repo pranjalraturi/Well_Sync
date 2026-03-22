@@ -28,15 +28,25 @@ class LoginViewController: UIViewController {
         gradient.endPoint = CGPoint(x: 1, y: 1)
 
         view.layer.insertSublayer(gradient, at: 0)
+        
+        var note = SessionNote(
+            sessionId: UUID(),
+            patientId: UUID(uuidString: "274e95bc-10c2-4c16-bb22-950b680d7315"),
+            date: Date(),
+            notes: "MOMOMOOMOMOMOOMOOOM",
+            images: nil,
+            voice: nil,
+            title: "MOMO"
+        )
         Task{
             do{
-//                try await AccessSupabase.shared.saveDoctor()
-                print("-----------------\n",try await AccessSupabase.shared.fetchMoodLogs(patientID: UUID(uuidString: "d207cf78-d29e-4bf1-91d2-66a5c26fd895")!))
+                try await AccessSupabase.shared.saveSessionNote(note)
             }
             catch{
-                print("Error", error)
+                print("Error ::  ",error)
             }
         }
+
     }
     @IBOutlet weak var glassView: UIView!
     let db = AccessSupabase.shared
@@ -55,6 +65,7 @@ class LoginViewController: UIViewController {
         glassView.layer.shadowOffset = CGSize(width: 0, height: 10)
 
         gradient.frame = view.bounds
+        
     }
     
     @IBAction func loginButton(_ sender: UIButton) {

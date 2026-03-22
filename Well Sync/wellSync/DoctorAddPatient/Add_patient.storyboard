@@ -263,6 +263,9 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Qua-a7-sdC"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="0BU-F8-YjZ">
                             <color key="tintColor" systemColor="linkColor"/>
+                            <connections>
+                                <action selector="saveTapped:" destination="Z6Q-nF-oS1" id="O21-jT-s27"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -304,10 +307,10 @@
     <resources>
         <image name="profile" width="736" height="1472"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

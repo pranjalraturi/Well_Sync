@@ -29,7 +29,10 @@ class ScheduleViewController: UIViewController, UICalendarSelectionSingleDateDel
     
     func loadPatientPreviousSession(){
         guard let patient = patient else{return}
-        patientPreviousSession = globalSession.filter{$0.patientId == patient.patientID}
+        Task{
+            patientPreviousSession = try await AccessSupabase.shared
+                .fetchSessionNotes(patientID: patient.patientID)
+        }
 //        patientPreviousSession.sort { $0.date > $1.date }
 //        
 //        if let lastSession = patientPreviousSession.first{

@@ -8,46 +8,46 @@
 import UIKit
 
 class deatilsCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource {
-    var session:[SessionNote] = [
-        SessionNote(
-        sessionId: UUID(),
-        patientId: UUID(),
-        date: Date(),
-        notes: "Patient reported mild anxiety and difficulty sleeping. Recommended breathing exercises and journaling.",
-        images: "session1.jpg",
-        voice: "session1.m4a",
-        title: "Initial Consultation"
-        ),
-
-        SessionNote(
-        sessionId: UUID(),
-        patientId: UUID(),
-        date: Date(),
-        notes: "Mood improved slightly. Patient completed assigned mindfulness activity for 5 days.",
-        images: "session2.jpg",
-        voice: nil,
-        title: "Weekly Progress Review"
-        ),
-
-        SessionNote(
-        sessionId: UUID(),
-        patientId: UUID(),
-        date: Date(),
-        notes: "Discussed work stress and coping mechanisms. Introduced grounding techniques.",
-        images: nil,
-        voice: "session3.m4a",
-        title: "Stress Management Session"
-        ),
-
-        SessionNote(
-        sessionId: UUID(),
-        patientId: UUID(),
-        date: Date(),
-        notes: "Patient logged mood daily. Positive trend observed. Encouraged continuation of journaling.",
-        images: "session4.jpg",
-        voice: nil,
-        title: "Mood Tracking Review"
-        )]
+//    var session:[SessionNote] = [
+//        SessionNote(
+//        sessionId: UUID(),
+//        patientId: UUID(),
+//        date: Date(),
+//        notes: "Patient reported mild anxiety and difficulty sleeping. Recommended breathing exercises and journaling.",
+//        images: "session1.jpg",
+//        voice: "session1.m4a",
+//        title: "Initial Consultation"
+//        ),
+//
+//        SessionNote(
+//        sessionId: UUID(),
+//        patientId: UUID(),
+//        date: Date(),
+//        notes: "Mood improved slightly. Patient completed assigned mindfulness activity for 5 days.",
+//        images: "session2.jpg",
+//        voice: nil,
+//        title: "Weekly Progress Review"
+//        ),
+//
+//        SessionNote(
+//        sessionId: UUID(),
+//        patientId: UUID(),
+//        date: Date(),
+//        notes: "Discussed work stress and coping mechanisms. Introduced grounding techniques.",
+//        images: nil,
+//        voice: "session3.m4a",
+//        title: "Stress Management Session"
+//        ),
+//
+//        SessionNote(
+//        sessionId: UUID(),
+//        patientId: UUID(),
+//        date: Date(),
+//        notes: "Patient logged mood daily. Positive trend observed. Encouraged continuation of journaling.",
+//        images: "session4.jpg",
+//        voice: nil,
+//        title: "Mood Tracking Review"
+//        )]
     @IBOutlet weak var tableView: UITableView!
     
     var filteredPatients:[Patient] = []

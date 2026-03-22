@@ -20,7 +20,7 @@ struct SessionNote: Codable {
     let patientId: UUID?
     let date: Date
     let notes: String
-    let images: String?
+    let images: [String]?
     let voice: String?
     let title: String
     enum CodingKeys: String, CodingKey {

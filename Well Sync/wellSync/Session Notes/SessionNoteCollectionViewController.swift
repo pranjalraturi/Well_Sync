@@ -14,7 +14,16 @@ class SessionNoteCollectionViewController: UICollectionViewController {
     var sessions:[SessionNote]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        sessions = globalSession.filter { $0.patientId == patient?.patientID }
+        Task{
+            sessions = try await AccessSupabase.shared
+                .fetchSessionNotes(
+                    patientID: patient?.patientID ?? UUID(
+                        uuidString:"00000000-0000-0000-0000-000000000000"
+                    )!
+                )
+            sessions = sessions?.filter { $0.patientId == patient?.patientID }
+            self.collectionView.reloadData()
+        }
         self.collectionView.collectionViewLayout = generateLayout()
     }
 

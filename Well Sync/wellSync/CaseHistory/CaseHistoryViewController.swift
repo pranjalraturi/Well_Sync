@@ -21,11 +21,20 @@ class CaseHistoryViewController: UIViewController {
     var patient: Patient!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        caseHistory = historyMockData()
-        timeline = caseHistory.timeline ?? []
-        reports = caseHistory.report ?? []
-       registerCells()
+        Task{
+            do{
+                caseHistory = try await AccessSupabase.shared.fetchCaseHistory(for: patient.patientID)
+                timeline = try await AccessSupabase.shared
+                    .fetchTimelines(for: caseHistory.caseId)
+                reports = try await AccessSupabase.shared
+                    .fetchReports(for: caseHistory.caseId)
+            }
+            catch{
+                print("Error Case History: ",error)
+            }
+            
+        }
+        registerCells()
         let layout = generateLayout()
         CaseHistoryCollectionView.setCollectionViewLayout(layout, animated: true)
         
@@ -221,6 +230,7 @@ extension CaseHistoryViewController: UIImagePickerControllerDelegate, UINavigati
             let text = alert.textFields?.first?.text ?? ""
             let name = text.isEmpty ? "Report" : text
             let newReport = Report(
+                reportId: UUID(),
                 caseId: self.caseHistory.caseId,
                     title: name,
                     date: Date(),

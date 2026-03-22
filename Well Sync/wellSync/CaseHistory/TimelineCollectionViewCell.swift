@@ -26,7 +26,7 @@ class TimelineCollectionViewCell: UICollectionViewCell {
         formatter.dateFormat = "dd MMM yyyy"
         dateLabel.text = formatter.string(from: timeline.date)
         titleLabel.text = timeline.title
-        descriptionLabel.text = timeline.Description
+        descriptionLabel.text = timeline.description
     }
 
 }

@@ -16,6 +16,7 @@ class MoodAnalysisCollectionViewController: UICollectionViewController {
     private var selectedSegmentIndex: Int = 0
     private var calendarCellHeight: CGFloat = 250
     private var moodLogs: [MoodLog] = []
+    var currPatient: Patient?
     // MARK: - Computed Filters
 
     var weeklyMoodLog: [MoodLog] {
@@ -59,7 +60,7 @@ class MoodAnalysisCollectionViewController: UICollectionViewController {
         Task {
             do {
                 let logs = try await AccessSupabase.shared.fetchMoodLogs(
-                    patientID: UUID(uuidString: "d207cf78-d29e-4bf1-91d2-66a5c26fd895")!
+                    patientID: currPatient?.patientID ?? UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
                 )
                 
                 await MainActor.run {

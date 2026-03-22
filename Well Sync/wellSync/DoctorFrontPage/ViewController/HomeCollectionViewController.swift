@@ -25,6 +25,7 @@ class HomeCollectionViewController: UICollectionViewController {
         super.viewWillAppear(animated)
         Task{
             await loadPatients()
+            collectionView.reloadData()
         }
     }
     @MainActor

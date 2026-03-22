@@ -52,7 +52,7 @@ struct ReportGenerator {
                     yOffset += 18
                     
                     let descRect = CGRect(x: 60, y: yOffset, width: 480, height: 100)
-                    item.Description.draw(with: descRect, options: .usesLineFragmentOrigin, attributes: [.font: UIFont.preferredFont(forTextStyle: .body)], context: nil)
+                    item.description.draw(with: descRect, options: .usesLineFragmentOrigin, attributes: [.font: UIFont.preferredFont(forTextStyle: .body)], context: nil)
                     yOffset += 45
                 }
             }
