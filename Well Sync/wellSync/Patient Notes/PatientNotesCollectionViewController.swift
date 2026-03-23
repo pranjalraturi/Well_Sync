@@ -13,10 +13,19 @@ private let reuseIdentifier = "Cell"
 class PatientNotesCollectionViewController: UICollectionViewController {
     
     var onAdd: (() -> Void)?
-    var notes: [PatientNote] = patientSampleNotes
+    var notes: [PatientNote]?
+    var patientID: UUID?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Task{
+            do{
+                notes = try await AccessSupabase.shared.fetchPatientNotes(patientID: patientID!)
+            }
+            catch{
+                print("Error: ",error)
+            }
+        }
         collectionView.register(
             UINib(nibName: "PatientNotesCollectionReusableView", bundle: nil),
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
@@ -35,7 +44,7 @@ class PatientNotesCollectionViewController: UICollectionViewController {
         case 0:
             return 1
         case 1:
-            return notes.count
+            return notes?.count ?? 0
         default:
             return 0
         }
@@ -54,7 +63,7 @@ class PatientNotesCollectionViewController: UICollectionViewController {
             return cell
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "patientNotesCell", for: indexPath) as! PatientNoteCollectionViewCell
-        cell.configure(with: notes[indexPath.row], index: indexPath.row)
+        cell.configure(with: notes![indexPath.row], index: indexPath.row)
         return cell
     }
     override func collectionView(_ collectionView: UICollectionView,
@@ -140,12 +149,21 @@ class PatientNotesCollectionViewController: UICollectionViewController {
         }
 
         let newNote = PatientNote(
-            patientId: patientP3,
+            noteId: UUID(),
+            patientId: patientID!,
             date: Date(),
             note: text
         )
 
-        notes.insert(newNote, at: 0)
+        Task{
+            do{
+                try await AccessSupabase.shared.savePatientNote(newNote)
+            }
+            catch{
+                print("Error: ",error)
+            }
+        }
+//        notes.insert(newNote, at: 0)
         textField.text = ""
         textField.resignFirstResponder()
         collectionView.reloadData()

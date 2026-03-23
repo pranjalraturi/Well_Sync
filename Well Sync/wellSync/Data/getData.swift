@@ -1875,33 +1875,33 @@ var activityLogs: [ActivityLog] = [
     ),
 ]
 
-let patientSampleNotes: [PatientNote] = [
-    PatientNote(
-        patientId: patientP3,
-        date: makeDate(2026, 3, 10, hour: 10, minute: 0),
-        note: "Tremors were noticeably worse in the morning before medication. Need to discuss whether timing of dose should be adjusted with the neurologist."
-    ),
-    PatientNote(
-        patientId: patientP3,
-        date: makeDate(2026, 3, 5, hour: 14, minute: 30),
-        note: "Felt very stiff after waking up today. The physiotherapy stretches helped after about 20 minutes. Ask doctor if this morning rigidity is expected to improve over time."
-    ),
-    PatientNote(
-        patientId: patientP3,
-        date: makeDate(2026, 2, 28, hour: 9, minute: 0),
-        note: "Had a fall near the bathroom last night. Wife was not present. Need to discuss installing grab rails and whether the walking aid needs to be upgraded."
-    ),
-    PatientNote(
-        patientId: patientP3,
-        date: makeDate(2026, 2, 21, hour: 11, minute: 0),
-        note: "Sleep has been very disturbed this week. Waking up 3 to 4 times at night. Feeling exhausted during the day and struggling to complete the balance training."
-    ),
-    PatientNote(
-        patientId: patientP3,
-        date: makeDate(2026, 2, 15, hour: 16, minute: 0),
-        note: "Mood has been low for the past few days. Not feeling motivated to do the morning walk. Wife mentioned I seem more withdrawn than usual. Want to talk about this."
-    )
-]
+//let patientSampleNotes: [PatientNote] = [
+//    PatientNote(
+//        patientId: patientP3,
+//        date: makeDate(2026, 3, 10, hour: 10, minute: 0),
+//        note: "Tremors were noticeably worse in the morning before medication. Need to discuss whether timing of dose should be adjusted with the neurologist."
+//    ),
+//    PatientNote(
+//        patientId: patientP3,
+//        date: makeDate(2026, 3, 5, hour: 14, minute: 30),
+//        note: "Felt very stiff after waking up today. The physiotherapy stretches helped after about 20 minutes. Ask doctor if this morning rigidity is expected to improve over time."
+//    ),
+//    PatientNote(
+//        patientId: patientP3,
+//        date: makeDate(2026, 2, 28, hour: 9, minute: 0),
+//        note: "Had a fall near the bathroom last night. Wife was not present. Need to discuss installing grab rails and whether the walking aid needs to be upgraded."
+//    ),
+//    PatientNote(
+//        patientId: patientP3,
+//        date: makeDate(2026, 2, 21, hour: 11, minute: 0),
+//        note: "Sleep has been very disturbed this week. Waking up 3 to 4 times at night. Feeling exhausted during the day and struggling to complete the balance training."
+//    ),
+//    PatientNote(
+//        patientId: patientP3,
+//        date: makeDate(2026, 2, 15, hour: 16, minute: 0),
+//        note: "Mood has been low for the past few days. Not feeling motivated to do the morning walk. Wife mentioned I seem more withdrawn than usual. Want to talk about this."
+//    )
+//]
 
 func getCurrentDoctor(_ username:String){
     currentDoctor = globalDoctor.first { $0.username == username }
