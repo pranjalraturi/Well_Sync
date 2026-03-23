@@ -293,8 +293,82 @@ final class AccessSupabase {
 //            .value
 //        return updated
 //    }
+    func createAppointment(_ appointment: Appointment) async throws -> Appointment {
+
+        let saved: Appointment = try await supabase
+            .from("appointments")
+            .insert(appointment)
+            .select("*")
+            .single()
+            .execute()
+            .value
+
+        return saved
+    }
+        
+    func updateAppointment(_ appointment: Appointment) async throws -> Appointment {
+
+        guard let id = appointment.appointmentId else {
+            throw NSError(domain: "Missing appointment ID", code: 0)
+        }
+
+        let updated: Appointment = try await supabase
+            .from("appointments")
+            .update(appointment)  
+            .eq("appointment_id", value: id.uuidString)
+            .select("*")
+            .single()
+            .execute()
+            .value
+
+        return updated
+    }
     
-    
+    // fetch appointments by patient
+    func fetchAppointments(patientID: UUID) async throws -> [Appointment] {
+
+        let data: [Appointment] = try await supabase
+            .from("appointments")
+            .select("*")
+            .eq("patient_id", value: patientID.uuidString)
+            .order("scheduled_at", ascending: false)
+            .execute()
+            .value
+
+        return data
+    }
+    // fetch appointments by doctor
+    func fetchAppointmentsForDoctor(doctorID: UUID) async throws -> [Appointment] {
+
+        let data: [Appointment] = try await supabase
+            .from("appointments")
+            .select("*")
+            .eq("doctor_id", value: doctorID.uuidString)
+            .order("scheduled_at", ascending: true)
+            .execute()
+            .value
+
+        return data
+    }
+    func deleteAppointment(id: UUID) async throws {
+
+        try await supabase
+            .from("appointments")
+            .delete()
+            .eq("appointment_id", value: id.uuidString)
+            .execute()
+    }
+    // mark status
+    func updateAppointmentStatus(id: UUID, status: String) async throws {
+
+        try await supabase
+            .from("appointments")
+            .update([
+                "status": status
+            ])
+            .eq("appointment_id", value: id.uuidString)
+            .execute()
+    }
     
     func saveCaseHistory(_ patientId: UUID) async throws -> CaseHistory {
             let payload = CaseHistory(

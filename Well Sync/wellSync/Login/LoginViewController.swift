@@ -82,8 +82,4 @@ class LoginViewController: UIViewController {
             }
         }
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "Patient")
-        print(type(of: vc))
-    }
 }
