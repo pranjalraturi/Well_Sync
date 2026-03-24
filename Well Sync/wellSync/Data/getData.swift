@@ -1277,603 +1277,603 @@ var activityCatalog: [Activity] = []
 //    ),
 //]
 
-var assignedActivities: [AssignedActivity] = [
+//var assignedActivities: [AssignedActivity] = [
+//
+//    // ── Patient P1: Lower back rehab ───────────────────────────
+//
+//    AssignedActivity(
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000001")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!, // Morning Walk
+//        patientID: patientP1,
+//        doctorID: docID,
+//        frequency: 1,
+//        startDate: makeDate(2026, 2, 17, hour: 0, minute: 0),
+//        endDate:   makeDate(2026, 3, 17, hour: 0, minute: 0),
+//        doctorNote: "Start with 10 minutes if pain is above 5/10. Increase to 20 minutes by week 2.",
+//        status: .active
+//    ),
+//
+//    AssignedActivity(
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000002")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000005")!, // Physio Stretches
+//        patientID: patientP1,
+//        doctorID: docID,
+//        frequency: 2,
+//        startDate: makeDate(2026, 2, 17, hour: 0, minute: 0),
+//        endDate:   makeDate(2026, 3, 17, hour: 0, minute: 0),
+//        doctorNote: "Do once in the morning and once before bed. Stop immediately if sharp shooting pain occurs.",
+//        status: .active
+//    ),
+//
+//    // Completed (past) assignment for P1
+//    AssignedActivity(
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000003")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000004")!, // BP Reading
+//        patientID: patientP1,
+//        doctorID: docID,
+//        frequency: 1,
+//        startDate: makeDate(2026, 2, 1, hour: 0, minute: 0),
+//        endDate:   makeDate(2026, 2, 14, hour: 0, minute: 0),
+//        doctorNote: "Record morning BP before any medication. Upload photo of monitor screen.",
+//        status: .completed
+//    ),
+//
+//    // ── Patient P2: Anxiety & cardiac recovery ─────────────────
+//    AssignedActivity(
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000009")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!, // Journaling
+//        patientID: patientP2,
+//        doctorID: docID,
+//        frequency: 1,
+//        startDate: makeDate(2026, 2, 10, hour: 0, minute: 0),
+//        endDate:   makeDate(2026, 3, 10, hour: 0, minute: 0),
+//        doctorNote: "Write at least one page per day. Focus on mood and anxiety levels.",
+//        status: .active
+//    ),
+//
+//    // ── Patient P2: Walking (completed) ───────────────────────
+//
+//    AssignedActivity(
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000010")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!, // Morning Walk
+//        patientID: patientP2,
+//        doctorID: docID,
+//        frequency: 1,
+//        startDate: makeDate(2026, 1, 15, hour: 0, minute: 0),
+//        endDate:   makeDate(2026, 2, 15, hour: 0, minute: 0),
+//        doctorNote: "Light 15-minute walk daily. Avoid steep inclines during cardiac recovery.",
+//        status: .completed
+//    ),
+//
+//    AssignedActivity(
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000004")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!, // Breathing Exercise
+//        patientID: patientP2,
+//        doctorID: docID,
+//        frequency: 3,
+//        startDate: makeDate(2026, 2, 1, hour: 0, minute: 0),
+//        endDate:   makeDate(2026, 3, 1, hour: 0, minute: 0),
+//        doctorNote: "Do morning, afternoon, and before bed. Use the 4-4-6 pattern. Log each session.",
+//        status: .active
+//    ),
+//
+//    AssignedActivity(
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000005")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000006")!, // Medication Photo
+//        patientID: patientP2,
+//        doctorID: docID,
+//        frequency: 1,
+//        startDate: makeDate(2026, 2, 1, hour: 0, minute: 0),
+//        endDate:   makeDate(2026, 4, 1, hour: 0, minute: 0),
+//        doctorNote: "Colchicine adherence is critical for pericarditis. Upload photo every evening after taking dose.",
+//        status: .active
+//    ),
+//
+//    // ── Patient P3: Parkinson's balance ────────────────────────
+//    AssignedActivity(
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000011")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!, // Breathing Exercise
+//        patientID: patientP3,
+//        doctorID: docID,
+//        frequency: 2,
+//        startDate: makeDate(2026, 2, 19, hour: 0, minute: 0),
+//        endDate:   makeDate(2026, 3, 19, hour: 0, minute: 0),
+//        doctorNote: "Use 4-4-6 pattern. Helps manage Parkinson's-related respiratory stiffness.",
+//        status: .active
+//    ),
+//
+//    // ── Patient P3: Journaling (completed) ────────────────────
+//
+//    AssignedActivity(
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000012")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!, // Journaling
+//        patientID: patientP3,
+//        doctorID: docID,
+//        frequency: 1,
+//        startDate: makeDate(2026, 1, 20, hour: 0, minute: 0),
+//        endDate:   makeDate(2026, 2, 20, hour: 0, minute: 0),
+//        doctorNote: "Track motor symptom patterns daily — morning stiffness, tremor timing, and falls.",
+//        status: .completed
+//    ),
+//
+//
+//    AssignedActivity(
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000006")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000007")!, // Balance Training
+//        patientID: patientP3,
+//        doctorID: docID,
+//        frequency: 2,
+//        startDate: makeDate(2026, 2, 19, hour: 0, minute: 0),
+//        endDate:   makeDate(2026, 4, 19, hour: 0, minute: 0),
+//        doctorNote: "Only do near a wall or with a carer present. Do not attempt unsupervised if dizziness is present.",
+//        status: .active
+//    ),
+//
+//    AssignedActivity(
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000007")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!, // Morning Walk
+//        patientID: patientP3,
+//        doctorID: docID,
+//        frequency: 1,
+//        startDate: makeDate(2026, 2, 19, hour: 0, minute: 0),
+//        endDate:   makeDate(2026, 4, 19, hour: 0, minute: 0),
+//        doctorNote: "Walk with wife present at all times. Use walking aid provided. Focus on heel-strike gait pattern.",
+//        status: .active
+//    ),
+//
+//    // Cancelled assignment for P3
+//    AssignedActivity(
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000008")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000005")!, // Physio Stretches
+//        patientID: patientP3,
+//        doctorID: docID,
+//        frequency: 2,
+//        startDate: makeDate(2026, 2, 19, hour: 0, minute: 0),
+//        endDate:   makeDate(2026, 3, 5, hour: 0, minute: 0),
+//        doctorNote: "Cancelled – patient reported increased rigidity; physio has revised the programme.",
+//        status: .cancelled
+//    ),
+//]
 
-    // ── Patient P1: Lower back rehab ───────────────────────────
-
-    AssignedActivity(
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000001")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!, // Morning Walk
-        patientID: patientP1,
-        doctorID: docID,
-        frequency: 1,
-        startDate: makeDate(2026, 2, 17, hour: 0, minute: 0),
-        endDate:   makeDate(2026, 3, 17, hour: 0, minute: 0),
-        doctorNote: "Start with 10 minutes if pain is above 5/10. Increase to 20 minutes by week 2.",
-        status: .active
-    ),
-
-    AssignedActivity(
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000002")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000005")!, // Physio Stretches
-        patientID: patientP1,
-        doctorID: docID,
-        frequency: 2,
-        startDate: makeDate(2026, 2, 17, hour: 0, minute: 0),
-        endDate:   makeDate(2026, 3, 17, hour: 0, minute: 0),
-        doctorNote: "Do once in the morning and once before bed. Stop immediately if sharp shooting pain occurs.",
-        status: .active
-    ),
-
-    // Completed (past) assignment for P1
-    AssignedActivity(
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000003")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000004")!, // BP Reading
-        patientID: patientP1,
-        doctorID: docID,
-        frequency: 1,
-        startDate: makeDate(2026, 2, 1, hour: 0, minute: 0),
-        endDate:   makeDate(2026, 2, 14, hour: 0, minute: 0),
-        doctorNote: "Record morning BP before any medication. Upload photo of monitor screen.",
-        status: .completed
-    ),
-
-    // ── Patient P2: Anxiety & cardiac recovery ─────────────────
-    AssignedActivity(
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000009")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!, // Journaling
-        patientID: patientP2,
-        doctorID: docID,
-        frequency: 1,
-        startDate: makeDate(2026, 2, 10, hour: 0, minute: 0),
-        endDate:   makeDate(2026, 3, 10, hour: 0, minute: 0),
-        doctorNote: "Write at least one page per day. Focus on mood and anxiety levels.",
-        status: .active
-    ),
-
-    // ── Patient P2: Walking (completed) ───────────────────────
-
-    AssignedActivity(
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000010")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!, // Morning Walk
-        patientID: patientP2,
-        doctorID: docID,
-        frequency: 1,
-        startDate: makeDate(2026, 1, 15, hour: 0, minute: 0),
-        endDate:   makeDate(2026, 2, 15, hour: 0, minute: 0),
-        doctorNote: "Light 15-minute walk daily. Avoid steep inclines during cardiac recovery.",
-        status: .completed
-    ),
-
-    AssignedActivity(
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000004")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!, // Breathing Exercise
-        patientID: patientP2,
-        doctorID: docID,
-        frequency: 3,
-        startDate: makeDate(2026, 2, 1, hour: 0, minute: 0),
-        endDate:   makeDate(2026, 3, 1, hour: 0, minute: 0),
-        doctorNote: "Do morning, afternoon, and before bed. Use the 4-4-6 pattern. Log each session.",
-        status: .active
-    ),
-
-    AssignedActivity(
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000005")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000006")!, // Medication Photo
-        patientID: patientP2,
-        doctorID: docID,
-        frequency: 1,
-        startDate: makeDate(2026, 2, 1, hour: 0, minute: 0),
-        endDate:   makeDate(2026, 4, 1, hour: 0, minute: 0),
-        doctorNote: "Colchicine adherence is critical for pericarditis. Upload photo every evening after taking dose.",
-        status: .active
-    ),
-
-    // ── Patient P3: Parkinson's balance ────────────────────────
-    AssignedActivity(
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000011")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!, // Breathing Exercise
-        patientID: patientP3,
-        doctorID: docID,
-        frequency: 2,
-        startDate: makeDate(2026, 2, 19, hour: 0, minute: 0),
-        endDate:   makeDate(2026, 3, 19, hour: 0, minute: 0),
-        doctorNote: "Use 4-4-6 pattern. Helps manage Parkinson's-related respiratory stiffness.",
-        status: .active
-    ),
-
-    // ── Patient P3: Journaling (completed) ────────────────────
-
-    AssignedActivity(
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000012")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!, // Journaling
-        patientID: patientP3,
-        doctorID: docID,
-        frequency: 1,
-        startDate: makeDate(2026, 1, 20, hour: 0, minute: 0),
-        endDate:   makeDate(2026, 2, 20, hour: 0, minute: 0),
-        doctorNote: "Track motor symptom patterns daily — morning stiffness, tremor timing, and falls.",
-        status: .completed
-    ),
-
-
-    AssignedActivity(
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000006")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000007")!, // Balance Training
-        patientID: patientP3,
-        doctorID: docID,
-        frequency: 2,
-        startDate: makeDate(2026, 2, 19, hour: 0, minute: 0),
-        endDate:   makeDate(2026, 4, 19, hour: 0, minute: 0),
-        doctorNote: "Only do near a wall or with a carer present. Do not attempt unsupervised if dizziness is present.",
-        status: .active
-    ),
-
-    AssignedActivity(
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000007")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!, // Morning Walk
-        patientID: patientP3,
-        doctorID: docID,
-        frequency: 1,
-        startDate: makeDate(2026, 2, 19, hour: 0, minute: 0),
-        endDate:   makeDate(2026, 4, 19, hour: 0, minute: 0),
-        doctorNote: "Walk with wife present at all times. Use walking aid provided. Focus on heel-strike gait pattern.",
-        status: .active
-    ),
-
-    // Cancelled assignment for P3
-    AssignedActivity(
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000008")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000005")!, // Physio Stretches
-        patientID: patientP3,
-        doctorID: docID,
-        frequency: 2,
-        startDate: makeDate(2026, 2, 19, hour: 0, minute: 0),
-        endDate:   makeDate(2026, 3, 5, hour: 0, minute: 0),
-        doctorNote: "Cancelled – patient reported increased rigidity; physio has revised the programme.",
-        status: .cancelled
-    ),
-]
-
-var activityLogs: [ActivityLog] = [
-
-    // ── P1 logs – Morning Walk ─────────────────────────────────
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000001")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP1,
-        date: makeDate(2026, 2, 17, hour: 8, minute: 0),
-        time: "08:00 AM",
-        duration: 720,   // 12 minutes
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000001")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP1,
-        date: makeDate(2026, 2, 18, hour: 7, minute: 45),
-        time: "07:45 AM",
-        duration: 1080,  // 18 minutes
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000001")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP1,
-        date: makeDate(2026, 2, 19, hour: 8, minute: 15),
-        time: "08:15 AM",
-        duration: 1200,  // 20 minutes
-        uploadPath: nil
-    ),
-
-    // ── P1 logs – Physio Stretches (frequency 2/day) ───────────
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000002")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000005")!,
-        patientID: patientP1,
-        date: makeDate(2026, 2, 17, hour: 7, minute: 0),
-        time: "07:00 AM",
-        duration: 600,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000002")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000005")!,
-        patientID: patientP1,
-        date: makeDate(2026, 2, 17, hour: 21, minute: 0),
-        time: "09:00 PM",
-        duration: 600,
-        uploadPath: nil
-    ),
-    // ── P2 logs – Walking (completed assignment) ───────────────
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000010")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP2,
-        date: makeDate(2026, 1, 17, hour: 8, minute: 0),
-        time: "08:00 AM",
-        duration: 900,   // 15 minutes
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000010")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP2,
-        date: makeDate(2026, 1, 19, hour: 8, minute: 30),
-        time: "08:30 AM",
-        duration: 900,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000010")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP2,
-        date: makeDate(2026, 1, 22, hour: 7, minute: 45),
-        time: "07:45 AM",
-        duration: 1080,  // 18 minutes
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000010")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP2,
-        date: makeDate(2026, 2, 1, hour: 8, minute: 0),
-        time: "08:00 AM",
-        duration: 900,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000010")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP2,
-        date: makeDate(2026, 2, 10, hour: 8, minute: 15),
-        time: "08:15 AM",
-        duration: 960,
-        uploadPath: nil
-    ),
-    // ── P2 logs – Journaling ───────────────────────────────────
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000009")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
-        patientID: patientP2,
-        date: makeDate(2026, 2, 11, hour: 21, minute: 0),
-        time: "09:00 PM",
-        duration: nil,
-        uploadPath: "uploads/p2/journal_20260211.jpg"
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000009")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
-        patientID: patientP2,
-        date: makeDate(2026, 2, 12, hour: 20, minute: 30),
-        time: "08:30 PM",
-        duration: nil,
-        uploadPath: "uploads/p2/journal_20260212.jpg"
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000009")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
-        patientID: patientP2,
-        date: makeDate(2026, 2, 14, hour: 22, minute: 0),
-        time: "10:00 PM",
-        duration: nil,
-        uploadPath: "uploads/p2/journal_20260214.jpg"
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000009")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
-        patientID: patientP2,
-        date: makeDate(2026, 2, 16, hour: 21, minute: 15),
-        time: "09:15 PM",
-        duration: nil,
-        uploadPath: "uploads/p2/journal_20260216.jpg"
-    ),
-
-    // Only 1 out of 2 done on Feb 18 (partially completed day)
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000002")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000005")!,
-        patientID: patientP1,
-        date: makeDate(2026, 2, 18, hour: 7, minute: 30),
-        time: "07:30 AM",
-        duration: 600,
-        uploadPath: nil
-    ),
-
-    // ── P1 logs – BP Reading (completed assignment) ────────────
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000003")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000004")!,
-        patientID: patientP1,
-        date: makeDate(2026, 2, 3, hour: 8, minute: 0),
-        time: "08:00 AM",
-        duration: nil,
-        uploadPath: "uploads/p1/bp_20260203.jpg"
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000003")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000004")!,
-        patientID: patientP1,
-        date: makeDate(2026, 2, 5, hour: 8, minute: 10),
-        time: "08:10 AM",
-        duration: nil,
-        uploadPath: "uploads/p1/bp_20260205.jpg"
-    ),
-
-    // ── P2 logs – Breathing Exercise (frequency 3/day) ─────────
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000004")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
-        patientID: patientP2,
-        date: makeDate(2026, 2, 14, hour: 8, minute: 0),
-        time: "08:00 AM",
-        duration: 300,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000004")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
-        patientID: patientP2,
-        date: makeDate(2026, 2, 14, hour: 13, minute: 0),
-        time: "01:00 PM",
-        duration: 300,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000004")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
-        patientID: patientP2,
-        date: makeDate(2026, 2, 14, hour: 21, minute: 30),
-        time: "09:30 PM",
-        duration: 300,
-        uploadPath: nil
-    ),
-
-    // ── P2 logs – Medication Upload ────────────────────────────
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000005")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000006")!,
-        patientID: patientP2,
-        date: makeDate(2026, 2, 14, hour: 21, minute: 0),
-        time: "09:00 PM",
-        duration: nil,
-        uploadPath: "uploads/p2/med_20260214.jpg"
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000005")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000006")!,
-        patientID: patientP2,
-        date: makeDate(2026, 2, 17, hour: 21, minute: 15),
-        time: "09:15 PM",
-        duration: nil,
-        uploadPath: "uploads/p2/med_20260217.jpg"
-    ),
-
-    // ── P3 logs – Balance Training ─────────────────────────────
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000006")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000007")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 21, hour: 10, minute: 0),
-        time: "10:00 AM",
-        duration: 180,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000006")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000007")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 21, hour: 16, minute: 0),
-        time: "04:00 PM",
-        duration: 180,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000006")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000007")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 24, hour: 10, minute: 30),
-        time: "10:30 AM",
-        duration: 180,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000011")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 20, hour: 9, minute: 0),
-        time: "09:00 AM",
-        duration: 300,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000011")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 20, hour: 20, minute: 0),
-        time: "08:00 PM",
-        duration: 300,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000011")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 22, hour: 9, minute: 30),
-        time: "09:30 AM",
-        duration: 300,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000011")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 23, hour: 8, minute: 0),
-        time: "08:00 AM",
-        duration: 300,
-        uploadPath: nil
-    ),
-
-    // ── P3 logs – Journaling (completed assignment) ────────────
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000012")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
-        patientID: patientP3,
-        date: makeDate(2026, 1, 21, hour: 20, minute: 0),
-        time: "08:00 PM",
-        duration: nil,
-        uploadPath: "uploads/p3/journal_20260121.jpg"
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000012")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
-        patientID: patientP3,
-        date: makeDate(2026, 1, 24, hour: 21, minute: 0),
-        time: "09:00 PM",
-        duration: nil,
-        uploadPath: "uploads/p3/journal_20260124.jpg"
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000012")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 5, hour: 20, minute: 30),
-        time: "08:30 PM",
-        duration: nil,
-        uploadPath: "uploads/p3/journal_20260205.jpg"
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000012")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 15, hour: 21, minute: 30),
-        time: "09:30 PM",
-        duration: nil,
-        uploadPath: "uploads/p3/journal_20260215.jpg"
-    ),
-
-    // ── P3 logs – Morning Walk (extra logs for existing bbbb...007) ──
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000007")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP3,
-        date: makeDate(2026, 3, 18, hour: 8, minute: 0),
-        time: "08:00 AM",
-        duration: 900,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000007")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 24, hour: 9, minute: 0),
-        time: "09:00 AM",
-        duration: 960,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000007")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 26, hour: 9, minute: 30),
-        time: "09:30 AM",
-        duration: 1020,
-        uploadPath: nil
-    ),
-    // ── P3 logs – Morning Walk ─────────────────────────────────
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000007")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 19, hour: 9, minute: 0),
-        time: "09:00 AM",
-        duration: 900,
-        uploadPath: nil
-    ),
-
-    ActivityLog(
-        logID: UUID(),
-        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000007")!,
-        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
-        patientID: patientP3,
-        date: makeDate(2026, 2, 21, hour: 9, minute: 15),
-        time: "09:15 AM",
-        duration: 1020,
-        uploadPath: nil
-    ),
-]
+//var activityLogs: [ActivityLog] = [
+//
+//    // ── P1 logs – Morning Walk ─────────────────────────────────
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000001")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP1,
+//        date: makeDate(2026, 2, 17, hour: 8, minute: 0),
+//        time: "08:00 AM",
+//        duration: 720,   // 12 minutes
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000001")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP1,
+//        date: makeDate(2026, 2, 18, hour: 7, minute: 45),
+//        time: "07:45 AM",
+//        duration: 1080,  // 18 minutes
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000001")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP1,
+//        date: makeDate(2026, 2, 19, hour: 8, minute: 15),
+//        time: "08:15 AM",
+//        duration: 1200,  // 20 minutes
+//        uploadPath: nil
+//    ),
+//
+//    // ── P1 logs – Physio Stretches (frequency 2/day) ───────────
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000002")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000005")!,
+//        patientID: patientP1,
+//        date: makeDate(2026, 2, 17, hour: 7, minute: 0),
+//        time: "07:00 AM",
+//        duration: 600,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000002")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000005")!,
+//        patientID: patientP1,
+//        date: makeDate(2026, 2, 17, hour: 21, minute: 0),
+//        time: "09:00 PM",
+//        duration: 600,
+//        uploadPath: nil
+//    ),
+//    // ── P2 logs – Walking (completed assignment) ───────────────
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000010")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 1, 17, hour: 8, minute: 0),
+//        time: "08:00 AM",
+//        duration: 900,   // 15 minutes
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000010")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 1, 19, hour: 8, minute: 30),
+//        time: "08:30 AM",
+//        duration: 900,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000010")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 1, 22, hour: 7, minute: 45),
+//        time: "07:45 AM",
+//        duration: 1080,  // 18 minutes
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000010")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 2, 1, hour: 8, minute: 0),
+//        time: "08:00 AM",
+//        duration: 900,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000010")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 2, 10, hour: 8, minute: 15),
+//        time: "08:15 AM",
+//        duration: 960,
+//        uploadPath: nil
+//    ),
+//    // ── P2 logs – Journaling ───────────────────────────────────
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000009")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 2, 11, hour: 21, minute: 0),
+//        time: "09:00 PM",
+//        duration: nil,
+//        uploadPath: "uploads/p2/journal_20260211.jpg"
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000009")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 2, 12, hour: 20, minute: 30),
+//        time: "08:30 PM",
+//        duration: nil,
+//        uploadPath: "uploads/p2/journal_20260212.jpg"
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000009")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 2, 14, hour: 22, minute: 0),
+//        time: "10:00 PM",
+//        duration: nil,
+//        uploadPath: "uploads/p2/journal_20260214.jpg"
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000009")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 2, 16, hour: 21, minute: 15),
+//        time: "09:15 PM",
+//        duration: nil,
+//        uploadPath: "uploads/p2/journal_20260216.jpg"
+//    ),
+//
+//    // Only 1 out of 2 done on Feb 18 (partially completed day)
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000002")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000005")!,
+//        patientID: patientP1,
+//        date: makeDate(2026, 2, 18, hour: 7, minute: 30),
+//        time: "07:30 AM",
+//        duration: 600,
+//        uploadPath: nil
+//    ),
+//
+//    // ── P1 logs – BP Reading (completed assignment) ────────────
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000003")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000004")!,
+//        patientID: patientP1,
+//        date: makeDate(2026, 2, 3, hour: 8, minute: 0),
+//        time: "08:00 AM",
+//        duration: nil,
+//        uploadPath: "uploads/p1/bp_20260203.jpg"
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000003")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000004")!,
+//        patientID: patientP1,
+//        date: makeDate(2026, 2, 5, hour: 8, minute: 10),
+//        time: "08:10 AM",
+//        duration: nil,
+//        uploadPath: "uploads/p1/bp_20260205.jpg"
+//    ),
+//
+//    // ── P2 logs – Breathing Exercise (frequency 3/day) ─────────
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000004")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 2, 14, hour: 8, minute: 0),
+//        time: "08:00 AM",
+//        duration: 300,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000004")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 2, 14, hour: 13, minute: 0),
+//        time: "01:00 PM",
+//        duration: 300,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000004")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 2, 14, hour: 21, minute: 30),
+//        time: "09:30 PM",
+//        duration: 300,
+//        uploadPath: nil
+//    ),
+//
+//    // ── P2 logs – Medication Upload ────────────────────────────
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000005")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000006")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 2, 14, hour: 21, minute: 0),
+//        time: "09:00 PM",
+//        duration: nil,
+//        uploadPath: "uploads/p2/med_20260214.jpg"
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000005")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000006")!,
+//        patientID: patientP2,
+//        date: makeDate(2026, 2, 17, hour: 21, minute: 15),
+//        time: "09:15 PM",
+//        duration: nil,
+//        uploadPath: "uploads/p2/med_20260217.jpg"
+//    ),
+//
+//    // ── P3 logs – Balance Training ─────────────────────────────
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000006")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000007")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 21, hour: 10, minute: 0),
+//        time: "10:00 AM",
+//        duration: 180,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000006")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000007")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 21, hour: 16, minute: 0),
+//        time: "04:00 PM",
+//        duration: 180,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000006")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000007")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 24, hour: 10, minute: 30),
+//        time: "10:30 AM",
+//        duration: 180,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000011")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 20, hour: 9, minute: 0),
+//        time: "09:00 AM",
+//        duration: 300,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000011")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 20, hour: 20, minute: 0),
+//        time: "08:00 PM",
+//        duration: 300,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000011")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 22, hour: 9, minute: 30),
+//        time: "09:30 AM",
+//        duration: 300,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000011")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000002")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 23, hour: 8, minute: 0),
+//        time: "08:00 AM",
+//        duration: 300,
+//        uploadPath: nil
+//    ),
+//
+//    // ── P3 logs – Journaling (completed assignment) ────────────
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000012")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 1, 21, hour: 20, minute: 0),
+//        time: "08:00 PM",
+//        duration: nil,
+//        uploadPath: "uploads/p3/journal_20260121.jpg"
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000012")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 1, 24, hour: 21, minute: 0),
+//        time: "09:00 PM",
+//        duration: nil,
+//        uploadPath: "uploads/p3/journal_20260124.jpg"
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000012")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 5, hour: 20, minute: 30),
+//        time: "08:30 PM",
+//        duration: nil,
+//        uploadPath: "uploads/p3/journal_20260205.jpg"
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000012")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000003")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 15, hour: 21, minute: 30),
+//        time: "09:30 PM",
+//        duration: nil,
+//        uploadPath: "uploads/p3/journal_20260215.jpg"
+//    ),
+//
+//    // ── P3 logs – Morning Walk (extra logs for existing bbbb...007) ──
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000007")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 3, 18, hour: 8, minute: 0),
+//        time: "08:00 AM",
+//        duration: 900,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000007")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 24, hour: 9, minute: 0),
+//        time: "09:00 AM",
+//        duration: 960,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000007")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 26, hour: 9, minute: 30),
+//        time: "09:30 AM",
+//        duration: 1020,
+//        uploadPath: nil
+//    ),
+//    // ── P3 logs – Morning Walk ─────────────────────────────────
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000007")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 19, hour: 9, minute: 0),
+//        time: "09:00 AM",
+//        duration: 900,
+//        uploadPath: nil
+//    ),
+//
+//    ActivityLog(
+//        logID: UUID(),
+//        assignedID: UUID(uuidString: "bbbb0000-0000-0000-0000-000000000007")!,
+//        activityID: UUID(uuidString: "aaaa0000-0000-0000-0000-000000000001")!,
+//        patientID: patientP3,
+//        date: makeDate(2026, 2, 21, hour: 9, minute: 15),
+//        time: "09:15 AM",
+//        duration: 1020,
+//        uploadPath: nil
+//    ),
+//]
 
 //let patientSampleNotes: [PatientNote] = [
 //    PatientNote(
@@ -1949,60 +1949,67 @@ struct TodayActivityItem {
         }
     }
 }
+func buildTodayItems(for patientID: UUID) async throws -> [TodayActivityItem] {
+    let today = Date()
 
-func buildTodayItems(for patientID: UUID) -> [TodayActivityItem] {
-//    let today = Date()
+    let allAssignments   = try await AccessSupabase.shared.fetchAssignments(for: patientID)
+    let todayAssignments = allAssignments.filter { $0.isActiveToday }
+    let allLogs          = try await AccessSupabase.shared.fetchLogs(for: patientID)
 
-    let todayAssignments = assignedActivities.filter {
-        $0.patientID == patientID && $0.isActiveToday
-    }
+    var items: [TodayActivityItem] = []
 
-    return todayAssignments.compactMap { assignment in
-        guard let activity = activityCatalog.first(where: {
-            $0.activityID == assignment.activityID
-        }) else { return nil }
+    for assignment in todayAssignments {
+        guard let activity = try await AccessSupabase.shared.fetchActivityByID(
+            assignment.activityID                      // ← UUID used as ID lookup
+        ) else { continue }
 
-        let todayLogs = activityLogs.filter {
-//            $0.assignedID == assignment.assignedID &&
-//            Calendar.current.isDate($0.date, inSameDayAs: today)
+        let logs = allLogs.filter {
             $0.assignedID == assignment.assignedID
         }
-
-        return TodayActivityItem(
-            activity: activity,
-            assignment: assignment,
+        let todayLogs = logs.filter {
+            Calendar.current.isDate($0.date, inSameDayAs: today)
+        }
+        
+        items.append(TodayActivityItem(
+            activity:       activity,
+            assignment:     assignment,
             completedToday: todayLogs.count,
-            type: activity.type,
-            logs: todayLogs
-        )
+            type:           activity.type,
+            logs:           logs
+        ))
     }
+    return items
 }
+
 struct LogSummaryItem {
     let activity: Activity
     let totalLogs: Int
 }
 
-func buildLogSummaries(for patientID: UUID) -> [LogSummaryItem] {
+func buildLogSummaries(for patientID: UUID) async throws -> [LogSummaryItem] {
 
-    // Step 1: Get all inactive assigned activities for this patient
-    let inactiveAssignments = assignedActivities.filter {
-        $0.patientID == patientID && !$0.isActiveToday
-    }
+    // Was: assignedActivities.filter
+    let allAssignments = try await AccessSupabase.shared.fetchAssignments(for: patientID)
+    let inactiveAssignments = allAssignments.filter { !$0.isActiveToday }
 
-    // Step 2: For each inactive assignment, find its Activity + its logs
-    return inactiveAssignments.compactMap { assignment in
+    // Was: activityLogs.filter
+    let allLogs = try await AccessSupabase.shared.fetchLogs(for: patientID)
 
-        // Step 3: Look up the Activity from the catalog
-        guard let activity = activityCatalog.first(where: {
-            $0.activityID == assignment.activityID
-        }) else { return nil }
+    var summaries: [LogSummaryItem] = []
 
-        // Step 4: Find all logs that belong to this specific assignment
-        let logs = activityLogs.filter {
-            $0.assignedID == assignment.assignedID
+    for assignment in inactiveAssignments {
+
+        guard let activity = try await AccessSupabase.shared.fetchActivityByID(
+            assignment.activityID
+        ) else {
+            print("Activity not found for ID: \(assignment.activityID)")
+            continue
         }
 
-        return LogSummaryItem(activity: activity, totalLogs: logs.count)
+        let logs = allLogs.filter { $0.assignedID == assignment.assignedID }
+
+        summaries.append(LogSummaryItem(activity: activity, totalLogs: logs.count))
     }
-    .sorted { $0.totalLogs > $1.totalLogs }
+
+    return summaries.sorted { $0.totalLogs > $1.totalLogs }
 }

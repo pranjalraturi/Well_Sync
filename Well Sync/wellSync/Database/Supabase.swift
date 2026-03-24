@@ -150,17 +150,27 @@ final class AccessSupabase {
             .value
         return data
     }
-    func fetchActivity(byName name: String, doctorID: UUID) async throws -> Activity? {
+    func fetchActivity(byName name: String) async throws -> Activity? {
         let results: [Activity] = try await supabase
             .from("activities")
             .select()
-            .eq("doctor_id", value: doctorID.uuidString)
-            .ilike("name", value: name)   // case-insensitive match
+            .ilike("name", value: name)   // case-insensitive match by name only
             .limit(1)
             .execute()
             .value
         return results.first
     }
+//    func fetchActivity(byName name: String, doctorID: UUID) async throws -> Activity? {
+//        let results: [Activity] = try await supabase
+//            .from("activities")
+//            .select()
+//            .eq("doctor_id", value: doctorID.uuidString)
+//            .ilike("name", value: name)   // case-insensitive match
+//            .limit(1)
+//            .execute()
+//            .value
+//        return results.first
+//    }
     func fetchLogs(for patientID: UUID) async throws -> [ActivityLog] {
         let data: [ActivityLog] = try await supabase
             .from("activity_logs")
@@ -170,6 +180,16 @@ final class AccessSupabase {
             .execute()
             .value
         return data
+    }
+    func fetchActivityByID(_ activityID: UUID) async throws -> Activity? {
+        let results: [Activity] = try await supabase
+            .from("activities")
+            .select()
+            .eq("activity_id", value: activityID.uuidString)  // searches by ID
+            .limit(1)
+            .execute()
+            .value
+        return results.first
     }
     
     func saveMoodLog(_ log: MoodLog) async throws {

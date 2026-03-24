@@ -20,43 +20,57 @@ class SummaryActivityTableViewCell: UITableViewCell {
         contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: 80).isActive = true
     }
 
-    func configure(for patientID: UUID) {
+    func configure(for patientID: UUID) async {
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
-        let activeAssignments = assignedActivities.filter {
-            $0.patientID == patientID && $0.status == .active
-        }
+        do {
+            // Was: assignedActivities.filter
+            let allAssignments = try await AccessSupabase.shared.fetchAssignments(for: patientID)
+            let activeAssignments = allAssignments.filter { $0.status == .active }
 
-        for (index, assignment) in activeAssignments.enumerated() {
-            guard let activity = activityCatalog.first(where: {
-                $0.activityID == assignment.activityID
-            }) else { continue }
+            // Was: activityLogs.filter
+            let allLogs = try await AccessSupabase.shared.fetchLogs(for: patientID)
 
-            let today         = Date()
-            let end           = min(assignment.endDate, today)
-            let days          = Calendar.current.dateComponents(
-                                    [.day], from: assignment.startDate, to: end
-                                ).day ?? 0
-            let totalExpected = max(1, (days + 1) * assignment.frequency)
-            let totalCompleted = activityLogs.filter {
-                $0.assignedID == assignment.assignedID
-            }.count
-            let ratio = min(Float(totalCompleted) / Float(totalExpected), 1.0)
+            for (index, assignment) in activeAssignments.enumerated() {
 
-            let rowView = buildActivityRow(
-                activity:       activity,
-                totalCompleted: totalCompleted,
-                totalExpected:  totalExpected,
-                ratio:          ratio
-            )
-            stackView.addArrangedSubview(rowView)
+                // Was: activityCatalog.first(where:)
+                guard let activity = try await AccessSupabase.shared.fetchActivityByID(
+                    assignment.activityID
+                ) else { continue }
 
-            if index < activeAssignments.count - 1 {
-                let divider             = UIView()
-                divider.backgroundColor = UIColor.separator
-                divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-                stackView.addArrangedSubview(divider)
+                let today          = Date()
+                let end            = min(assignment.endDate, today)
+                let days           = Calendar.current.dateComponents(
+                                         [.day], from: assignment.startDate, to: end
+                                     ).day ?? 0
+                let totalExpected  = max(1, (days + 1) * assignment.frequency)
+                let totalCompleted = allLogs.filter {
+                    $0.assignedID == assignment.assignedID
+                }.count
+                let ratio = min(Float(totalCompleted) / Float(totalExpected), 1.0)
+
+                let rowView = buildActivityRow(
+                    activity:       activity,
+                    totalCompleted: totalCompleted,
+                    totalExpected:  totalExpected,
+                    ratio:          ratio
+                )
+
+                // UI updates must be on main thread
+                DispatchQueue.main.async {
+                    self.stackView.addArrangedSubview(rowView)
+
+                    if index < activeAssignments.count - 1 {
+                        let divider             = UIView()
+                        divider.backgroundColor = UIColor.separator
+                        divider.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+                        self.stackView.addArrangedSubview(divider)
+                    }
+                }
             }
+
+        } catch {
+            print("SummaryActivityTableViewCell configure error:", error)
         }
     }
 

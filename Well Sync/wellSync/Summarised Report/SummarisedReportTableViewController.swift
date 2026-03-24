@@ -29,7 +29,14 @@ class SummarisedReportTableViewController: UITableViewController {
             print("SummaryViewController: no patient passed")
             return
         }
-        todayItems    = buildTodayItems(for: patientID)
+        Task{
+            do{
+                todayItems = try await buildTodayItems(for: patientID)
+                print("5-->", patientID)
+            }catch {
+                print("Activity in Summarised report error \(error)")
+            }
+        }
         tableView.reloadData()
     }
 
@@ -58,7 +65,11 @@ class SummarisedReportTableViewController: UITableViewController {
                 cell.selectedBackgroundView?.backgroundColor = .clear
 
                 if let patientID = patient?.patientID {
-                    cell.configure(for: patientID)
+                    Task{
+                        do{
+                            await cell.configure(for: patientID)
+                        }
+                    }
                 }
                 return cell
             }
