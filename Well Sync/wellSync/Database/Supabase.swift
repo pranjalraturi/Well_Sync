@@ -370,6 +370,14 @@ final class AccessSupabase {
             .execute()
     }
     
+    func updatePatient(_ patient: Patient) async throws {
+        try await supabase
+        .from("patients")
+        .update(patient) 
+        .eq("patient_id", value: patient.patientID.uuidString)
+        .execute()
+    }
+    
     func saveCaseHistory(_ patientId: UUID) async throws -> CaseHistory {
             let payload = CaseHistory(
                 caseId: UUID(),

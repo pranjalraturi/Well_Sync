@@ -41,12 +41,24 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         let age = Calendar.current.dateComponents([.year], from: patient.dob, to: Date())
         AgeNumberLabel.text = "\(age.year ?? 0)"
         disorderLabel.text = patient.condition
-        guard let nextDate = patient.nextSessionDate else { return }
+        guard let nextDate = patient.nextSessionDate else {
+            calendarButton.setTitle("Schedule", for: .normal)
+            calendarButton.backgroundColor = .systemBlue
+            return
+        }
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM dd"
             let dateString = formatter.string(from: nextDate)
             calendarButton.setTitle("   \(dateString)", for: .normal)
-            calendarButton.tintColor = .systemGray
+        if Calendar.current.isDateInToday(nextDate) {
+                calendarButton.backgroundColor = .systemBlue
+                calendarButton.setTitleColor(.white, for: .normal)
+                calendarButton.tintColor = .white
+            } else {
+                calendarButton.backgroundColor = .systemGray5
+                calendarButton.setTitleColor(.secondaryLabel, for: .normal)
+                calendarButton.tintColor = .secondaryLabel
+            }
 //        }else{
 //            calendarButton.setTitle("", for: .normal)
 //        }

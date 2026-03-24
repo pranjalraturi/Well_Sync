@@ -220,73 +220,9 @@ extension PatientDetailCollectionViewController{
         alert.addAction(done)
         present(alert, animated: true)
     }
-    
-    
-//    func showScheduleAlert(sourceView: UIView) {
-//
-//        let alert = UIAlertController(title: "",
-//                                      message: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
-//                                      preferredStyle: .actionSheet)
-//
-//        let calendarView = UICalendarView()
-//           calendarView.translatesAutoresizingMaskIntoConstraints = false
-//           calendarView.calendar = .current
-//           calendarView.locale = .current
-//           calendarView.fontDesign = .rounded
-//           let selection = UICalendarSelectionSingleDate(delegate: self)
-//           calendarView.selectionBehavior = selection
-//           alert.view.addSubview(calendarView)
-//        
-//        let divider = UIView()
-//           divider.backgroundColor = UIColor.separator
-//           divider.translatesAutoresizingMaskIntoConstraints = false
-//           alert.view.addSubview(divider)
-//        
-//        let timeLabel = UILabel()
-//            timeLabel.text = "Time"
-//            timeLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-//            timeLabel.translatesAutoresizingMaskIntoConstraints = false
-//            alert.view.addSubview(timeLabel)
-//        
-//        let timePicker = UIDatePicker()
-//           timePicker.datePickerMode = .time
-//           timePicker.preferredDatePickerStyle = .wheels
-//           timePicker.translatesAutoresizingMaskIntoConstraints = false
-//           alert.view.addSubview(timePicker)
-//        
-//        NSLayoutConstraint.activate([
-//            calendarView.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 0),
-//               calendarView.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 8),
-//               calendarView.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -8),
-//            calendarView.heightAnchor.constraint(equalToConstant: 280),
-//            
-//            divider.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 6),
-//                   divider.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 16),
-//                   divider.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -16),
-//                   divider.heightAnchor.constraint(equalToConstant: 0.5),
-//
-//               timeLabel.topAnchor.constraint(equalTo: calendarView.bottomAnchor, constant: 16),
-//               timeLabel.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 20),
-//
-//               timePicker.topAnchor.constraint(equalTo: timeLabel.bottomAnchor, constant: 0),
-//               timePicker.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 8),
-//               timePicker.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -8),
-//               timePicker.heightAnchor.constraint(equalToConstant: 100),
-//            ])
-//        let schedule = UIAlertAction(title: "Schedule", style: .default){_ in
-//            print("Time Selected:", timePicker.date)
-//        }
-//        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-//        alert.addAction(schedule)
-//        alert.addAction(cancel)
-//        
-//        if let popover = alert.popoverPresentationController {
-//            popover.sourceView = sourceView
-//            popover.sourceRect = sourceView.bounds
-//        }
-//        present(alert, animated: true)
-//    }
 }
+
+
 extension PatientDetailCollectionViewController: ProfileCellDelegate {
     func calendarButtonTapped(from view: UIView){
         showScheduleAlert(sourceView: view)
@@ -294,7 +230,9 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
     func showScheduleAlert(sourceView: UIView){
         let popoverVC = ScheduleViewController()
         popoverVC.patient = self.patient
-        popoverVC.scheduleDate = self.patient?.nextSessionDate
+        let originalDateBeforeChange = self.patient?.nextSessionDate
+        popoverVC.scheduleDate = originalDateBeforeChange
+       
         
         popoverVC.modalPresentationStyle = .popover
         
@@ -306,36 +244,84 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
             popover.permittedArrowDirections = .any
             popover.delegate = self
         }
+        
+        popoverVC.onScheduleCancelled = { [weak self] in
+                guard let self = self, var patient = self.patient else { return }
+                Task {
+                    do {
+                        let appointments = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
+                        // Find upcoming appointment
+                        if let apptToDelete = appointments.first(where: { $0.status == .upcoming }), let id = apptToDelete.appointmentId {
+                            try await AccessSupabase.shared.deleteAppointment(id: id)
+                        }
+                        
+                        patient.nextSessionDate = nil
+                        try await AccessSupabase.shared.updatePatient(patient)
+                        
+                        await MainActor.run {
+                            self.patient = patient
+                            self.PatientProfileCollectionView.reloadData()
+                        }
+                    } catch {
+                        print("Error deleting: \(error)")
+                    }
+                }
+            }
+        
+        
         popoverVC.onScheduleConfirmed = { [weak self] selectedFullDate in
-            guard let self = self else{return}
-            print("Selected date: \(selectedFullDate)")
-            self.patient?.nextSessionDate = selectedFullDate
-            
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MMM dd"
-            let dateString = formatter.string(from: selectedFullDate)
-            
-            if let profileCell = self.PatientProfileCollectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? ProfileCollectionViewCell{
-                profileCell.calendarButton.setTitle("   \(dateString)", for: .normal)
+            guard let self = self,
+            var patient = self.patient else{return}
+            Task{
+                do{
+                    let appointments = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
+                    let futureUpcomingAppt = appointments.first(where:{
+                        $0.status == .upcoming &&
+                        ($0.scheduledAt ?? Date.distantPast) > Date()
+                    })
+                    if let apptToUpdate = futureUpcomingAppt{
+                        var updatedAppt = apptToUpdate
+                        updatedAppt.scheduledAt = selectedFullDate
+                        _ = try await AccessSupabase.shared.updateAppointment(updatedAppt)
+                        print("Schedule update")
+                    }else{
+                        let newAppointment = Appointment(
+                            appointmentId: UUID(), patientId: patient.patientID, doctorId: patient.docID, scheduledAt: selectedFullDate, status: .upcoming
+                        )
+                        _ = try await AccessSupabase.shared.createAppointment(newAppointment)
+                        print("new Appointment")
+                    }
+                    if let currentNextDate = patient.nextSessionDate {
+                        patient.previousSessionDate = currentNextDate
+                    }
+                    patient.nextSessionDate = selectedFullDate
+                    try await AccessSupabase.shared.updatePatient(patient)
+                    await MainActor.run {
+                        self.patient = patient
+                        self.PatientProfileCollectionView.reloadData()
+//                        let formatter = DateFormatter()
+//                        formatter.dateFormat = "MMM dd"
+//                        let dateString = formatter.string(from: selectedFullDate)
+//                        
+//                        if let profileCell = self.PatientProfileCollectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? ProfileCollectionViewCell {
+//                            profileCell.calendarButton.setTitle("   \(dateString)", for: .normal)
+//                            profileCell.calendarButton.backgroundColor = .systemGray5
+//                            profileCell.calendarButton.setTitleColor(.secondaryLabel, for: .normal)
+//                            profileCell.calendarButton.tintColor = .secondaryLabel
+//                        }
+                    }
+                }catch{
+                    print("Scheduling Error: \(error)")
+                }
             }
         }
         present(popoverVC, animated: true)
     }
 }
+      
 
 extension PatientDetailCollectionViewController: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
 }
-//extension PatientDetailCollectionViewController: UICalendarSelectionSingleDateDelegate {
-//
-//    func dateSelection(_ selection: UICalendarSelectionSingleDate,
-//                       didSelectDate dateComponents: DateComponents?) {
-//
-//        guard let components = dateComponents,
-//              let date = Calendar.current.date(from: components) else { return }
-//
-//        print("Selected date:", date)
-//    }
-//}

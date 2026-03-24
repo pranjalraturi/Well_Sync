@@ -10,14 +10,19 @@ struct Appointment: Codable {
     let appointmentId: UUID?
     let patientId: UUID
     let doctorId: UUID
-    let scheduledAt: Date
-    let status: String   // scheduled / completed / missed / cancelled
+    var scheduledAt: Date
+    let status: status   // scheduled / completed / missed / cancelled
 
     enum CodingKeys: String, CodingKey {
         case appointmentId = "appointment_id"
         case patientId = "patient_id"
         case doctorId = "doctor_id"
         case scheduledAt = "scheduled_at"
-        case status
+        case status = "status"
+    }
+    enum status: String, Codable {
+        case upcoming
+        case missed
+        case completed
     }
 }
