@@ -111,22 +111,27 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     }
     func load() {
         let today = Date()
-        let currentPatientID = UUID(uuidString: "00000000-0000-0000-0000-000000000002")!
 
-        let allToday = buildTodayItems(for: currentPatientID).map { item in
-            let todayLogs = item.logs.filter {
-                Calendar.current.isDate($0.date, inSameDayAs: today)
+        Task{
+            do{
+                let allToday = try await buildTodayItems(for: patient!.patientID).map { item in
+                    let todayLogs = item.logs.filter {
+                        Calendar.current.isDate($0.date, inSameDayAs: today)
+                    }
+                    return TodayActivityItem(
+                        activity: item.activity,
+                        assignment: item.assignment,
+                        completedToday: todayLogs.count,
+                        type: item.type,
+                        logs: todayLogs
+                    )
+                }
+                self.toDoItems = allToday.filter { !$0.isCompletedToday }
+                self.collectionView.reloadData()
+            }catch{
+                print("Load activity error: \(error)")
             }
-            return TodayActivityItem(
-                activity: item.activity,
-                assignment: item.assignment,
-                completedToday: todayLogs.count,
-                type: item.type,
-                logs: todayLogs
-            )
-        }
-
-        toDoItems = allToday.filter { !$0.isCompletedToday }
+        }        
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {

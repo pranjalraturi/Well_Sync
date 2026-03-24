@@ -89,12 +89,16 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let patientID = patient?.patientID else {
-            print("SummaryViewController: no patient passed")
-            return
+        Task{
+            do{
+                activities = try await buildTodayItems(for: patient!.patientID)
+                previousActivity = try await buildLogSummaries(for: patient!.patientID)
+                print("1-->",patient!.patientID)
+            }catch{
+                print("Activity log error: \(error)")
+            }
+            collectionView.reloadData()
         }
-        activities   = buildTodayItems(for: patient!.patientID)
-        previousActivity = buildLogSummaries(for: patient!.patientID)
         // Register cell classes
         self.collectionView!.register(UINib(nibName: "UploadCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "uploadCell")
         self.collectionView!.register(UINib(nibName: "GraphCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "graphCell")
@@ -253,11 +257,16 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        guard let patientID = patient?.patientID else { return }
-        
-        activities       = buildTodayItems(for: patientID)
-        previousActivity = buildLogSummaries(for: patientID)
-        collectionView.reloadData()
+        Task{
+            do{
+                activities   = try await buildTodayItems(for: patient!.patientID)
+                previousActivity = try await buildLogSummaries(for: patient!.patientID)
+                print("2-->",patient!.patientID)
+            }catch{
+                print("Activity log error: \(error)")
+            }
+            collectionView.reloadData()
+        }
     }
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == "showAddActivity",

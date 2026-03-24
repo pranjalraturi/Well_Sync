@@ -26,23 +26,23 @@ class ActivityTableViewController: UITableViewController {
         loadData()
     }
 
+    // In ActivityTableViewController loadData()
     private func loadData() {
-        let today = Date()
+        guard let patientID = patient?.patientID else { return }
 
-        todayItems = buildTodayItems(for: currentPatientID).map { item in
-            let todayLogs = item.logs.filter {
-                Calendar.current.isDate($0.date, inSameDayAs: today)
+        Task {
+            do {
+                todayItems   = try await buildTodayItems(for: patientID)
+                logSummaries = try await buildLogSummaries(for: patientID)
+                print("3-->",patientID)
+
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } catch {
+                print("loadData error:", error)
             }
-            return TodayActivityItem(
-                activity: item.activity,
-                assignment: item.assignment,
-                completedToday: todayLogs.count,
-                type: item.type,
-                logs: todayLogs
-            )
         }
-        logSummaries = buildLogSummaries(for: currentPatientID)
-        tableView.reloadData()
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {

@@ -301,8 +301,7 @@ class AddActivityTableViewController: UITableViewController {
                         return
                     }
                     if let existing = try await AccessSupabase.shared.fetchActivity(
-                        byName: selectedName,
-                        doctorID: patient!.docID
+                        byName: selectedName
                     ) {
                         savedActivity = existing
                     } else {
@@ -347,9 +346,9 @@ class AddActivityTableViewController: UITableViewController {
         }
     }
  
-        @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
-            dismiss(animated: true)
-        }
+    @IBAction func cancelTapped(_ sender: UIBarButtonItem) {
+        dismiss(animated: true)
+    }
 
     private func resolveFrequency() -> Int? {
         switch frequencyButton.title(for: .normal) {
