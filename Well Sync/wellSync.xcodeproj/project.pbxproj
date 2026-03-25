@@ -197,6 +197,7 @@
 				INFOPLIST_FILE = wellSync/Info.plist;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app reads your health data.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app updates your health data.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need microphone access";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -235,6 +236,7 @@
 				INFOPLIST_FILE = wellSync/Info.plist;
 				INFOPLIST_KEY_NSHealthShareUsageDescription = "This app reads your health data.";
 				INFOPLIST_KEY_NSHealthUpdateUsageDescription = "This app updates your health data.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "We need microphone access";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import AVFoundation
+import UniformTypeIdentifiers
 
-
-class AddSessionCollectionViewController: UICollectionViewController,TextFieldCollectionViewCellDelegate {
+class AddSessionCollectionViewController: UICollectionViewController,TextFieldCollectionViewCellDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIDocumentPickerDelegate {
 
     var recording:[String] = ["abc"]
     var image:[String] = []
+    var audioRecorder: AVAudioRecorder?
+    
     @IBOutlet weak var clipButton: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -157,30 +160,96 @@ class AddSessionCollectionViewController: UICollectionViewController,TextFieldCo
     */
     func setup() {
         
-        // Camera action
         let camera = UIAction(title: "Camera", image: UIImage(systemName: "camera")) { _ in
-            print("Camera tapped")
+            self.openCamera()
         }
         
-        // Photo Library action
         let library = UIAction(title: "Photo Library", image: UIImage(systemName: "photo")) { _ in
-            print("Photo Library tapped")
+            self.openGallery()
         }
         
-        // Recording action
         let recording = UIAction(title: "Recording", image: UIImage(systemName: "mic")) { _ in
-            print("Recording tapped")
+            self.pickAudioFromStorage()
         }
         
-        // Create menu
         let menu = UIMenu(title: "", children: [camera, library, recording])
         
         clipButton.menu = menu
-        clipButton.primaryAction = nil
         clipButton.target = nil
+        clipButton.primaryAction = nil
         clipButton.action = nil
     }
-    
+    func openCamera() {
+        guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+            print("Camera not available")
+            return
+        }
+        
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    func openGallery() {
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        present(picker, animated: true)
+    }
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[.originalImage] as? UIImage {
+            print("Image selected: \(image)")
+        }
+        
+        picker.dismiss(animated: true)
+    }
+    func startRecording() {
+        
+        let session = AVAudioSession.sharedInstance()
+        
+        do {
+            try session.setCategory(.playAndRecord, mode: .default)
+            try session.setActive(true)
+            
+            let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                .appendingPathComponent("recording.m4a")
+            
+            let settings: [String: Any] = [
+                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+                AVSampleRateKey: 12000,
+                AVNumberOfChannelsKey: 1,
+                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+            ]
+            
+            audioRecorder = try AVAudioRecorder(url: url, settings: settings)
+            audioRecorder?.record()
+            
+            print("Recording started...")
+            
+        } catch {
+            print("Recording failed")
+        }
+    }
+    func pickAudioFromStorage() {
+        
+        let types: [UTType] = [.audio]   // only audio files
+        
+        let picker = UIDocumentPickerViewController(forOpeningContentTypes: types)
+        picker.delegate = self
+        picker.allowsMultipleSelection = false
+        
+        present(picker, animated: true)
+    }
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        
+        guard let url = urls.first else { return }
+        
+        print("Selected file:", url)
+        
+//        playSelectedAudio(url: url)
+    }
     @IBAction func upload(_ sender: UIBarButtonItem) {
     }
     
