@@ -218,9 +218,6 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                        <connections>
-                                            <segue destination="ilq-DI-Ja1" kind="show" identifier="login" id="Yd9-VM-Qxd"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>

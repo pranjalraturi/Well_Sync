@@ -81,7 +81,7 @@
                                                             <rect key="frame" x="0.0" y="210.33333333333337" width="329" height="34.333333333333343"/>
                                                             <buttonConfiguration key="configuration" style="plain" title="Register as a Doctor"/>
                                                             <connections>
-                                                                <segue destination="IYT-Tj-vR0" kind="show" id="52P-ng-2sc"/>
+                                                                <segue destination="IYT-Tj-vR0" kind="show" id="zR5-zc-Eyb"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -179,7 +179,7 @@
         <!--register-->
         <scene sceneID="tmp-es-fQo">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="register" storyboardName="Registration" referencedIdentifier="register" id="IYT-Tj-vR0" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Registration" referencedIdentifier="register" id="IYT-Tj-vR0" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="7Df-xf-9zH"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oFm-14-XTE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

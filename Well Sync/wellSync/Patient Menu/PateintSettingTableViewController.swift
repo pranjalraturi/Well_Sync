@@ -18,13 +18,37 @@ class PateintSettingTableViewController: UITableViewController {
         didSelectRowAt indexPath: IndexPath
     ) {
         if indexPath.section == 2 && indexPath.row == 4{
-            performSegue(withIdentifier: "logoutPatients", sender: nil)
+            logout()
         }
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "logoutPatients"{
-            self.navigationController?.isNavigationBarHidden = true
-            self.tabBarController?.isTabBarHidden = true
+    func logout() {
+        Task {
+            do {
+                // Step 1: logout from Supabase
+                try await SupabaseManager.shared.signOut()
+                
+                // Step 2: clear local session
+                SessionManager.shared.clearSession()
+                
+                // Step 3: UI update on main thread
+                await MainActor.run {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let loginVC = storyboard.instantiateViewController(withIdentifier: "login")
+                    
+                    let nav = UINavigationController(rootViewController: loginVC)
+                    nav.isNavigationBarHidden = true
+                    
+                    if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let window = scene.windows.first {
+                        
+                        window.rootViewController = nav
+                        window.makeKeyAndVisible()
+                    }
+                }
+                
+            } catch {
+                print("Logout failed: \(error)")
+            }
         }
     }
 }

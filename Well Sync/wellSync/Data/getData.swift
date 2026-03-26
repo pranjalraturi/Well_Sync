@@ -8,93 +8,94 @@
 import Foundation
 let docID = UUID(uuidString: "6bf94a4d-cc66-4d87-a90d-be2500434e3d")!
 var currentDoctor: Doctor?
-var globalDoctor: [Doctor] = [
-    Doctor(
-        docID: docID,
-        username: "admin",
-        email: "meera.kumari@clinic.com",
-        password: "Doc@1234",
-        name: "Dr. Meera Kumari",
-        dob: makeDate(1990, 3, 15),
-        address: "Bengaluru, Karnataka",
-        experience: 15,
-        doctorImage: "profile",
-        qualification: "MBBS, MD (Psychiatry)",
-        registrationNumber: "KMC-2005-04821",
-        identityNumber: "AADHAAR-9876-5432-1012",
-        educationImageData: "image",
-        registrationImageData: "image",
-        identityImageData: "image"
-    ),
-    Doctor(
-        docID: UUID(),
-        username: "dr.priya_mehta",
-        email: "priya.mehta@clinic.com",
-        password: "Doc@1234",
-        name: "Dr. Priya Mehta",
-        dob: makeDate(1990, 3, 15),
-        address: "45, Linking Road, Mumbai, Maharashtra",
-        experience: 10,
-        doctorImage: "Image",
-        qualification: "MBBS, DPM (Psychological Medicine)",
-        registrationNumber: "MMC-2010-07634",
-        identityNumber: "AADHAAR-8765-4321-0923",
-        educationImageData: "image",
-        registrationImageData: "image",
-        identityImageData: "image"
-    ),
-    Doctor(
-        docID: UUID(),
-        username: "dr.rohan_verma",
-        email: "rohan.verma@clinic.com",
-        password: "Doc@1234",
-        name: "Dr. Rohan Verma",
-        dob: makeDate(1990, 3, 15),
-        address: "7, Sector 18, Noida, Uttar Pradesh",
-        experience: 20,
-        doctorImage: "Image 1",
-        qualification: "MBBS, MD (Neurology), Fellowship in Psychiatry",
-        registrationNumber: "DMC-2003-03312",
-        identityNumber: "AADHAAR-7654-3210-8834",
-        educationImageData: nil,
-        registrationImageData: nil,
-        identityImageData: nil
-    ),
-    Doctor(
-        docID: UUID(),
-        username: "dr.sneha_iyer",
-        email: "sneha.iyer@clinic.com",
-        password: "Doc@1234",
-        name: "Dr. Sneha Iyer",
-        dob: makeDate(1990, 3, 15),
-        address: "23, Anna Nagar, Chennai, Tamil Nadu",
-        experience: 8,
-        doctorImage: "Image",
-        qualification: "MBBS, MD (Psychiatry), CBT Certified",
-        registrationNumber: "TNMC-2015-09821",
-        identityNumber: "AADHAAR-6543-2109-7745",
-        educationImageData: nil,
-        registrationImageData: nil,
-        identityImageData: nil
-    ),
-    Doctor(
-        docID: UUID(),
-        username: "dr.kabir_nair",
-        email: "kabir.nair@clinic.com",
-        password: "Doc@1234",
-        name: "Dr. Kabir Nair",
-        dob: makeDate(1990, 3, 15),
-        address: "8, Indiranagar, Bengaluru, Karnataka",
-        experience: 25,
-        doctorImage: "Image 1",
-        qualification: "MBBS, MD (Psychiatry), PhD (Clinical Psychology)",
-        registrationNumber: "KMC-2000-01123",
-        identityNumber: "AADHAAR-5432-1098-6656",
-        educationImageData: nil,
-        registrationImageData: nil,
-        identityImageData: nil
-    )
-]
+
+//var globalDoctor: [Doctor] = [
+//    Doctor(
+//        docID: docID,
+//        username: "admin",
+//        email: "meera.kumari@clinic.com",
+//        password: "Doc@1234",
+//        name: "Dr. Meera Kumari",
+//        dob: makeDate(1990, 3, 15),
+//        address: "Bengaluru, Karnataka",
+//        experience: 15,
+//        doctorImage: "profile",
+//        qualification: "MBBS, MD (Psychiatry)",
+//        registrationNumber: "KMC-2005-04821",
+//        identityNumber: "AADHAAR-9876-5432-1012",
+//        educationImageData: "image",
+//        registrationImageData: "image",
+//        identityImageData: "image"
+//    ),
+//    Doctor(
+//        docID: UUID(),
+//        username: "dr.priya_mehta",
+//        email: "priya.mehta@clinic.com",
+//        password: "Doc@1234",
+//        name: "Dr. Priya Mehta",
+//        dob: makeDate(1990, 3, 15),
+//        address: "45, Linking Road, Mumbai, Maharashtra",
+//        experience: 10,
+//        doctorImage: "Image",
+//        qualification: "MBBS, DPM (Psychological Medicine)",
+//        registrationNumber: "MMC-2010-07634",
+//        identityNumber: "AADHAAR-8765-4321-0923",
+//        educationImageData: "image",
+//        registrationImageData: "image",
+//        identityImageData: "image"
+//    ),
+//    Doctor(
+//        docID: UUID(),
+//        username: "dr.rohan_verma",
+//        email: "rohan.verma@clinic.com",
+//        password: "Doc@1234",
+//        name: "Dr. Rohan Verma",
+//        dob: makeDate(1990, 3, 15),
+//        address: "7, Sector 18, Noida, Uttar Pradesh",
+//        experience: 20,
+//        doctorImage: "Image 1",
+//        qualification: "MBBS, MD (Neurology), Fellowship in Psychiatry",
+//        registrationNumber: "DMC-2003-03312",
+//        identityNumber: "AADHAAR-7654-3210-8834",
+//        educationImageData: nil,
+//        registrationImageData: nil,
+//        identityImageData: nil
+//    ),
+//    Doctor(
+//        docID: UUID(),
+//        username: "dr.sneha_iyer",
+//        email: "sneha.iyer@clinic.com",
+//        password: "Doc@1234",
+//        name: "Dr. Sneha Iyer",
+//        dob: makeDate(1990, 3, 15),
+//        address: "23, Anna Nagar, Chennai, Tamil Nadu",
+//        experience: 8,
+//        doctorImage: "Image",
+//        qualification: "MBBS, MD (Psychiatry), CBT Certified",
+//        registrationNumber: "TNMC-2015-09821",
+//        identityNumber: "AADHAAR-6543-2109-7745",
+//        educationImageData: nil,
+//        registrationImageData: nil,
+//        identityImageData: nil
+//    ),
+//    Doctor(
+//        docID: UUID(),
+//        username: "dr.kabir_nair",
+//        email: "kabir.nair@clinic.com",
+//        password: "Doc@1234",
+//        name: "Dr. Kabir Nair",
+//        dob: makeDate(1990, 3, 15),
+//        address: "8, Indiranagar, Bengaluru, Karnataka",
+//        experience: 25,
+//        doctorImage: "Image 1",
+//        qualification: "MBBS, MD (Psychiatry), PhD (Clinical Psychology)",
+//        registrationNumber: "KMC-2000-01123",
+//        identityNumber: "AADHAAR-5432-1098-6656",
+//        educationImageData: nil,
+//        registrationImageData: nil,
+//        identityImageData: nil
+//    )
+//]
 var globalPatient: [Patient] = []
 //[
 //    Patient(
@@ -1903,9 +1904,9 @@ var activityCatalog: [Activity] = []
 //    )
 //]
 
-func getCurrentDoctor(_ username:String){
-    currentDoctor = globalDoctor.first { $0.username == username }
-}
+//func getCurrentDoctor(_ username:String){
+//    currentDoctor = globalDoctor.first { $0.username == username }
+//}
 
 func makeDate(_ year: Int, _ month: Int, _ day: Int, hour: Int = 0, minute: Int = 0) -> Date {
     var components = DateComponents()

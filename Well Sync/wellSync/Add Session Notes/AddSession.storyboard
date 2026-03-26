@@ -46,17 +46,17 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem systemItem="done" id="B3v-ez-Kre"/>
-                            <barButtonItem image="paperclip" catalog="system" id="fwy-CA-vdu">
+                            <barButtonItem systemItem="done" id="B3v-ez-Kre">
                                 <connections>
-                                    <action selector="upload:" destination="MB1-hs-0Dl" id="HO3-r5-pow"/>
+                                    <action selector="upload:" destination="MB1-hs-0Dl" id="DQ3-dN-8ft"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem image="paperclip" catalog="system" id="fwy-CA-vdu"/>
                         </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="clipButton" destination="fwy-CA-vdu" id="5u0-ZS-jcO"/>
+                        <outlet property="clipButton" destination="fwy-CA-vdu" id="Pn0-Pf-HCb"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fYC-Ch-pvq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

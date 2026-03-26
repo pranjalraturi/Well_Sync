@@ -18,12 +18,27 @@ class DoctorSettingTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
 
         if indexPath.section == 3 && indexPath.row == 1 {
-            
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginVC = storyboard.instantiateViewController(withIdentifier: "login")
-            
-            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                    sceneDelegate.window?.rootViewController = loginVC
+            Task {
+                do {
+                    try await SupabaseManager.shared.signOut()
+                    SessionManager.shared.clearSession()
+                    
+                    await MainActor.run {
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let loginVC = storyboard.instantiateViewController(withIdentifier: "login")
+                        
+                        let nav = UINavigationController(rootViewController: loginVC)
+                        nav.isNavigationBarHidden = true
+                        
+                        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                            sceneDelegate.window?.rootViewController = nav
+                            sceneDelegate.window?.makeKeyAndVisible()
+                        }
+                    }
+                    
+                } catch {
+                    print("Logout failed: \(error)")
+                }
             }
         }
     }

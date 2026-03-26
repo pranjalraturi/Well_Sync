@@ -678,4 +678,27 @@ final class AccessSupabase {
             }
             return image
         }
+    // MARK: - Fetch doctor by auth_id (called after login to load profile)
+    func fetchDoctorByAuthID(_ authID: UUID) async throws -> Doctor {
+        let doctor: Doctor = try await supabase
+            .from("doctors")
+            .select()
+            .eq("auth_id", value: authID.uuidString)
+            .single()
+            .execute()
+            .value
+        return doctor
+    }
+
+    // MARK: - Fetch patient by auth_id (called after login to load profile)
+    func fetchPatientByAuthID(_ authID: UUID) async throws -> Patient {
+        let patient: Patient = try await supabase
+            .from("patients")
+            .select()
+            .eq("auth_id", value: authID.uuidString)
+            .single()
+            .execute()
+            .value
+        return patient
+    }
 }

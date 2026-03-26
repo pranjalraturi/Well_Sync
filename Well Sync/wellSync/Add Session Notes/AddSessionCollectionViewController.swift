@@ -251,6 +251,7 @@ class AddSessionCollectionViewController: UICollectionViewController,TextFieldCo
 //        playSelectedAudio(url: url)
     }
     @IBAction func upload(_ sender: UIBarButtonItem) {
+        
     }
     
     func textFieldCell(_ cell: textFieldCollectionViewCell, didChangeHeight height: CGFloat) {

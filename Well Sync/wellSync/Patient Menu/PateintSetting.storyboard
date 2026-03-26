@@ -234,23 +234,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Setting" id="dOQ-Q2-CIo"/>
-                    <connections>
-                        <segue destination="YzQ-SJ-O1t" kind="show" identifier="logoutPatients" id="bhh-ow-gOG"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xUb-DR-sm9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1492.3664122137404" y="-494.36619718309862"/>
-        </scene>
-        <!--login-->
-        <scene sceneID="j5L-iY-WFS">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Main" referencedIdentifier="login" id="YzQ-SJ-O1t" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="vGA-Qt-a60"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wCJ-Ex-hRp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2237" y="-302"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="XGw-zx-Bgw">

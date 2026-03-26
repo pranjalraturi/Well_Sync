@@ -19,25 +19,15 @@ class ProfileTableViewController: UITableViewController {
         filldata();
     }
     func filldata(){
-        if currentDoctor == nil{
+        if SessionManager.shared.currentDoctor == nil{
             return
         }
-        doctorNameLabel.text = currentDoctor!.name
-        doctorCityLabel.text = currentDoctor!.address
+        var doctor = SessionManager.shared.currentDoctor
+        doctorNameLabel.text = doctor!.name
+        doctorCityLabel.text = doctor!.address
         
-        doctorAgeLabel.text = String(Calendar.current.dateComponents([.year], from: currentDoctor!.dob, to: Date()).year!)
-        doctorExperienceLabel.text = String(currentDoctor!.experience)
-        doctorMailLabel.text = currentDoctor!.email
+        doctorAgeLabel.text = String(Calendar.current.dateComponents([.year], from: doctor!.dob, to: Date()).year!)
+        doctorExperienceLabel.text = String(doctor!.experience)
+        doctorMailLabel.text = doctor!.email
     }
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if indexPath.section == 3 && indexPath.row == 1{
-//            performSegue(withIdentifier: "logout", sender: nil)
-//        }
-//    }
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "logout"{
-//            self.navigationController?.isNavigationBarHidden = true
-//            self.tabBarController?.isTabBarHidden = true
-//        }
-//    }
 }

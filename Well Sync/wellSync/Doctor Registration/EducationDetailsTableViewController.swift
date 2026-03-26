@@ -165,48 +165,134 @@ class EducationDetailsTableViewController: UITableViewController, UIImagePickerC
                }
            controller.dismiss(animated: true)
        }
-@IBAction func saveButtonTapped(_ sender: Any) {
-    let qualification = qualificationTextField.text
-    let registrationNumber = registrationTextField.text
-    let identityNumber = identityTextField.text
-    let educationImage = educationImageView.image
-    let educationImagePath = ""
-    let identityImage = identityImageView.image
-    let identityImageDataPath = ""
-    let registrationImage = registrationImageView.image
-    let registrationImagePath = ""
-    
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd" // Adjust to your actual input format if different
-    let parsedDOB = dob != nil ? dateFormatter.date(from: dob!) ?? Date() : Date()
-    
-    let doctor = Doctor(
-        docID: UUID(), username: username,
-        email: email,
-        password: password,
-        name: name,
-        dob: parsedDOB,
-        address: address,
-        experience: experience,
-        doctorImage: "",
-        qualification: "",
-        registrationNumber: registrationNumber,
-        identityNumber: identityNumber,
-        educationImageData: educationImagePath,
-        registrationImageData: registrationImagePath,
-        identityImageData: identityImageDataPath
-    )
-//    let doctor = currentDoctor!
-    print("Doctor object created")
-    print(doctor)
-    UserDoctors.append(doctor)
-    print("the array of user doctors")
-    print(UserDoctors)
-    performSegue(withIdentifier: "successFull", sender: nil)
-    }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "successFull" {
-            self.navigationController?.isNavigationBarHidden = true
+//@IBAction func saveButtonTapped(_ sender: Any) {
+//    let qualification = qualificationTextField.text
+//    let registrationNumber = registrationTextField.text
+//    let identityNumber = identityTextField.text
+//    let educationImage = educationImageView.image
+//    let educationImagePath = ""
+//    let identityImage = identityImageView.image
+//    let identityImageDataPath = ""
+//    let registrationImage = registrationImageView.image
+//    let registrationImagePath = ""
+//    
+//    let dateFormatter = DateFormatter()
+//    dateFormatter.dateFormat = "yyyy-MM-dd" // Adjust to your actual input format if different
+//    let parsedDOB = dob != nil ? dateFormatter.date(from: dob!) ?? Date() : Date()
+//    
+//    let doctor = Doctor(
+//        docID: UUID(), username: username,
+//        email: email,
+//        password: password,
+//        name: name,
+//        dob: parsedDOB,
+//        address: address,
+//        experience: experience,
+//        doctorImage: "",
+//        qualification: "",
+//        registrationNumber: registrationNumber,
+//        identityNumber: identityNumber,
+//        educationImageData: educationImagePath,
+//        registrationImageData: registrationImagePath,
+//        identityImageData: identityImageDataPath
+//    )
+////    let doctor = currentDoctor!
+//    print("Doctor object created")
+//    print(doctor)
+//    UserDoctors.append(doctor)
+//    print("the array of user doctors")
+//    print(UserDoctors)
+//    performSegue(withIdentifier: "successFull", sender: nil)
+//    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "successFull" {
+//            self.navigationController?.isNavigationBarHidden = true
+//        }
+//    }
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let qualification = qualificationTextField.text, !qualification.isEmpty else {
+            showAlert(message: "Please fill in all fields.")
+            return
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+//        let parsedDOB = dob != nil ? dateFormatter.date(from: dob!) ?? Date() : Date()
+        
+        let parsedDOB: Date
+
+        if let dobString = dob, !dobString.isEmpty,
+           let date = dateFormatter.date(from: dobString) {
+            parsedDOB = date
+        } else {
+            parsedDOB = Date()
+        }
+        // Show loading
+        let alert = UIAlertController(title: nil, message: "Registering...", preferredStyle: .alert)
+        present(alert, animated: true)
+        
+        Task {
+            do {
+                // Step 1: Create Supabase Auth account → get auth UUID
+                let authID = try await SupabaseManager.shared.signUp(
+                    email: email,
+                    password: password
+                )
+                var imagePath: String? = nil
+                if let image = docImage {
+                    imagePath = try await AccessSupabase.shared.uploadProfileImage(image)
+                }
+                // Step 2: Save doctor profile to doctors table, linking auth_id
+                let doctor = Doctor(
+                    docID: UUID(),
+                    authID: authID,           // ← Link to Supabase Auth
+                    username: username,
+                    email: email,
+                    // No password field anymore
+                    name: name,
+                    dob: parsedDOB,
+                    address: address,
+                    experience: experience,
+                    doctorImage: imagePath,
+                    qualification: qualification,
+                    registrationNumber: registrationTextField.text,
+                    identityNumber: identityTextField.text,
+                    educationImageData: "",
+                    registrationImageData: "",
+                    identityImageData: ""
+                )
+                
+                try await AccessSupabase.shared.saveDoctor(doctor: doctor)
+                
+                await MainActor.run {
+                    alert.dismiss(animated: true) {
+                        SessionManager.shared.currentDoctor = doctor
+
+                        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                           let window = scene.windows.first {
+
+                            let storyboard = UIStoryboard(name: "DoctorFrontPage", bundle: nil)
+                            let homeVC = storyboard.instantiateViewController(withIdentifier: "doctor")
+
+                            window.rootViewController = homeVC
+                            window.makeKeyAndVisible()
+                        }
+                    }
+                }
+                
+            } catch {
+                await MainActor.run {
+                    alert.dismiss(animated: true) {
+                        self.showAlert(message: "Registration failed: \(error.localizedDescription)")
+                    }
+                    
+                }
+            }
         }
     }
+    private func showAlert(message: String) {
+            let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+        }
 }

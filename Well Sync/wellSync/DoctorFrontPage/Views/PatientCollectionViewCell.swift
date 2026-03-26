@@ -17,7 +17,6 @@ class PatientCollectionViewCell: UICollectionViewCell {
     @IBOutlet var conditionLabel: UILabel!
     @IBOutlet weak var lastDate: UILabel!
     @IBOutlet weak var time: UILabel!
-    var color:UIColor = .systemYellow
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,7 +29,6 @@ class PatientCollectionViewCell: UICollectionViewCell {
         label.layer.masksToBounds = true
         label.textAlignment = .center
         contentView.layer.cornerRadius = 20
-        contentView.layer.borderWidth = 1.5
         
         contentView.layer.masksToBounds = true
     }
@@ -97,8 +95,6 @@ class PatientCollectionViewCell: UICollectionViewCell {
             let dateString = formatter.string(from: date)
             lastDate.text = "Last session: \(dateString)"
         }
-        
-        contentView.layer.borderColor = color.cgColor
     }
 
 }

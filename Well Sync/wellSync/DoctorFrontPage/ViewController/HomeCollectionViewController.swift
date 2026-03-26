@@ -3,7 +3,7 @@ import UIKit
 class HomeCollectionViewController: UICollectionViewController {
     var patient: [Patient] = []
     var viewModel: AccessSupabase?
-   
+    var doctor: Doctor?
     @IBOutlet weak var ellipsisButtonTapped: UIBarButtonItem!
 
     var selectedPatient: Patient?
@@ -30,7 +30,7 @@ class HomeCollectionViewController: UICollectionViewController {
     }
 
     func loadPatients() {
-        guard let id = UUID(uuidString: "6bf94a4d-cc66-4d87-a90d-be2500434e3d") else { return }
+        guard let id = self.doctor?.docID else { return }
         spinner.startAnimating()
 
             Task {
@@ -387,7 +387,7 @@ extension HomeCollectionViewController {
             
             if let nav = segue.destination as? UINavigationController,
                let destinationVC = nav.topViewController as? AddPatientTableViewController {
-                
+                destinationVC.doctor = doctor
                 destinationVC.onDismiss = { [weak self] in
                     guard let self = self else { return }
 
