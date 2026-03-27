@@ -10,12 +10,12 @@ import UIKit
 class PatientDetailCollectionViewController: UICollectionViewController{
 
     @IBOutlet weak var PatientProfileCollectionView: UICollectionView!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
     
   var patient: Patient?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print(patient.name)
         registerCells()
         let Layout = generateLayout()
         PatientProfileCollectionView.setCollectionViewLayout(Layout, animated: true)
@@ -212,8 +212,30 @@ extension PatientDetailCollectionViewController{
     func showThirdAlert(option: Int) {
         let alert = UIAlertController(title: "Session Completed", message: "You have marked this session as Done", preferredStyle: .alert)
         let done = UIAlertAction(title: "OK", style: .default){_ in
-            if let index = globalPatient.firstIndex(where: { $0.patientID == self.patient?.patientID }) {
-                globalPatient[index].sessionStatus = true
+            guard var patient = self.patient else {return}
+            Task{
+                do{
+                    let appts = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
+                    if var currentAppt = appts.first(where: {$0.status == .upcoming}){
+                        currentAppt.status = .completed
+                      _ = try await AccessSupabase.shared.updateAppointment(currentAppt)
+                    }
+                    
+                    patient.previousSessionDate = Date()
+//                    patient.nextSessionDate = nil
+                    patient.sessionStatus = true
+                    
+                    try await AccessSupabase.shared.updatePatient(patient)
+                    
+                    await MainActor.run{
+                        self.patient = patient
+                        self.PatientProfileCollectionView.reloadData()
+                        
+                        self.doneButton.tintColor = .systemGreen
+                    }
+                }catch{
+                    print("Completion Error: \(error)")
+                }
             }
         }
         done.setValue(UIColor.systemGreen, forKey: "titleTextColor")
@@ -255,13 +277,17 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
                             try await AccessSupabase.shared.deleteAppointment(id: id)
                         }
                         
-                        let pre = patient.previousSessionDate
-                        patient.nextSessionDate = patient.previousSessionDate
-                        patient.previousSessionDate = pre
-                        try await AccessSupabase.shared.updatePatient(patient)
-                        
+//                        let pre = patient.previousSessionDate
+//                        patient.nextSessionDate = nil
+//                        patient.previousSessionDate = pre
+//                        try await AccessSupabase.shared.updatePatient(patient)
+//                        try await AccessSupabase.shared.supabase
+//                            .from("patients")
+//                            .update(["next_session_date": NSNull()])
+//                            .eq("patient_id", value: patient.patientID)
+//                            .execute()
                         await MainActor.run {
-                            self.patient = patient
+                            self.patient?.nextSessionDate = nil
                             self.PatientProfileCollectionView.reloadData()
                         }
                     } catch {
@@ -295,28 +321,15 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
                         _ = try await AccessSupabase.shared.createAppointment(newAppointment)
                         print("new Appointment")
                     }
-//                    if let currentNextDate = patient.nextSessionDate {
-//                        patient.previousSessionDate = currentNextDate
-//                    }
-                    if let currentNext = patient.nextSessionDate, currentNext < selectedFullDate {
-                                     patient.previousSessionDate = currentNext
-                                }
+//                    if let currentNext = patient.nextSessionDate, currentNext < selectedFullDate {
+//                                     patient.previousSessionDate = currentNext
+//                                }
                     patient.nextSessionDate = selectedFullDate
                     print(patient.previousSessionDate)
                     try await AccessSupabase.shared.updatePatient(patient)
                     await MainActor.run {
                         self.patient = patient
                         self.PatientProfileCollectionView.reloadData()
-//                        let formatter = DateFormatter()
-//                        formatter.dateFormat = "MMM dd"
-//                        let dateString = formatter.string(from: selectedFullDate)
-//                        
-//                        if let profileCell = self.PatientProfileCollectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? ProfileCollectionViewCell {
-//                            profileCell.calendarButton.setTitle("   \(dateString)", for: .normal)
-//                            profileCell.calendarButton.backgroundColor = .systemGray5
-//                            profileCell.calendarButton.setTitleColor(.secondaryLabel, for: .normal)
-//                            profileCell.calendarButton.tintColor = .secondaryLabel
-//                        }
                     }
                 }catch{
                     print("Scheduling Error: \(error)")
@@ -328,21 +341,17 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
             
             Task {
                 do {
-                    // 1. Fetch appointments to find the one marked as 'upcoming'
                     let appointments = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
                     
                     if let apptToUpdate = appointments.first(where: { $0.status == .upcoming }) {
                         var updatedAppt = apptToUpdate
                         updatedAppt.scheduledAt = newDate
                         
-                        // 2. Update Appointment in Database
                         _ = try await AccessSupabase.shared.updateAppointment(updatedAppt)
                         
-                        // 3. Update Patient's nextSessionDate
                         patient.nextSessionDate = newDate
                         try await AccessSupabase.shared.updatePatient(patient)
                         
-                        // 4. UI Refresh
                         await MainActor.run {
                             self.patient = patient
                             self.PatientProfileCollectionView.reloadData()
