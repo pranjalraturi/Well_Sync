@@ -11,7 +11,7 @@ struct Appointment: Codable {
     let patientId: UUID
     let doctorId: UUID
     var scheduledAt: Date
-    let status: status   // scheduled / completed / missed / cancelled
+    var status: status   // scheduled / completed / missed / cancelled
 
     enum CodingKeys: String, CodingKey {
         case appointmentId = "appointment_id"

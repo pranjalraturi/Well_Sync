@@ -24,7 +24,6 @@ class ProfileCollectionViewCell: UICollectionViewCell {
   
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
 //    func configureCell(with patient: Patient){
