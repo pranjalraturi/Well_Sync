@@ -188,29 +188,40 @@ extension PatientDetailCollectionViewController{
         }
     }
     @IBAction func doneButtonTapped(_ sender: UIBarButtonItem){
-        let alert = UIAlertController(title: "Session Note", message: "Have you Added the session Note?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-                self.showSecondAlert(option: 1)
-            }))
+        guard let patient = self.patient else { return }
+        
+        if patient.sessionStatus == true{
+            showAlreadyDone()
+            return
+        }
+        let alert = UIAlertController(title: "Session Note", message: "Add the session Note?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Later", style: .default, handler: { _ in
-                self.showSecondAlert(option: 0)
+                self.handleAlertFlow(patient)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .destructive))
             present(alert, animated: true)
         }
-    func showSecondAlert(option: Int) {
-        let alert = UIAlertController(title: "Next Session Date", message: "Have you schedule the next session?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { _ in
-            self.showThirdAlert(option: 1)
-        }))
+    func handleAlertFlow(_ patient: Patient){
+        let calendar = Calendar.current
+            if let nextDate = patient.nextSessionDate,
+               nextDate > Date(),
+               !calendar.isDateInToday(nextDate) {
+                showThirdAlert()
+                
+            } else {
+                showSecondAlert()
+            }
+    }
+    func showSecondAlert() {
+        let alert = UIAlertController(title: "Next Session Date", message: "Schedule the next session", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Later", style: .default, handler: { _ in
-            self.showThirdAlert(option: 0)
+            self.showThirdAlert()
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .destructive))
         present(alert, animated: true)
     }
-    func showThirdAlert(option: Int) {
-        let alert = UIAlertController(title: "Session Completed", message: "You have marked this session as Done", preferredStyle: .alert)
+    func showThirdAlert() {
+        let alert = UIAlertController(title: "Session Completed", message:  "Marking this session as Done", preferredStyle: .alert)
         let done = UIAlertAction(title: "OK", style: .default){_ in
             guard var patient = self.patient else {return}
             Task{
@@ -230,7 +241,6 @@ extension PatientDetailCollectionViewController{
                     await MainActor.run{
                         self.patient = patient
                         self.PatientProfileCollectionView.reloadData()
-                        
                         self.doneButton.tintColor = .systemGreen
                     }
                 }catch{
@@ -240,6 +250,12 @@ extension PatientDetailCollectionViewController{
         }
         done.setValue(UIColor.systemGreen, forKey: "titleTextColor")
         alert.addAction(done)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive))
+        present(alert, animated: true)
+    }
+    func showAlreadyDone(){
+        let alert = UIAlertController(title: "Session Already Done", message: "This session has already been marked as Done", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
 }
@@ -286,6 +302,7 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
 //                            .update(["next_session_date": NSNull()])
 //                            .eq("patient_id", value: patient.patientID)
 //                            .execute()
+                        try await AccessSupabase.shared.clearNextSessionDate(patientID: patient.patientID)
                         await MainActor.run {
                             self.patient?.nextSessionDate = nil
                             self.PatientProfileCollectionView.reloadData()

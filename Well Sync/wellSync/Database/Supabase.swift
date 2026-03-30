@@ -1101,6 +1101,12 @@ final class AccessSupabase {
             .execute()
     }
     
+    func clearNextSessionDate(patientID: UUID) async throws{
+        
+        let updatedData: [String: String?] = ["next_session_date": nil]
+        
+        try await supabase.from("patients").update(updatedData).eq("patient_id", value: patientID.uuidString).execute()
+    }
     func updatePatient(_ patient: Patient) async throws {
         try await supabase
         .from("patients")

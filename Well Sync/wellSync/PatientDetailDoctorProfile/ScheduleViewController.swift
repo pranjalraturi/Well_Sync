@@ -36,9 +36,12 @@ class ScheduleViewController: UIViewController, UICalendarSelectionSingleDateDel
                 await MainActor.run {
 //                    self.allAppointments = patientPreviousAppointments.filter { $0.status == .completed || $0.status == .missed }
                     self.allAppointments = fetched
+                    self.calendarView.delegate = nil
                     self.calendarView.delegate = self
                     self.calendarView.reloadDecorations(forDateComponents: [], animated: true)
                     self.updateButtonText()
+                    self.calendarView.setNeedsLayout()
+                    self.calendarView.layoutIfNeeded()
                 }
             }catch{
                 print("Error loading appointments: \(error)")
