@@ -160,6 +160,77 @@ final class AccessSupabase {
             .value
         return results.first
     }
+    
+    // Fetch activity by ID
+//    func fetchActivity(byID activityID: UUID) async throws -> Activity? {
+//        let response = try await supabase
+//            .from("activities")
+//            .select()
+//            .eq("activity_id", value: activityID.uuidString)
+//            .single()
+//            .execute()
+//        
+//        let decoder = JSONDecoder()
+//        decoder.dateDecodingStrategy = .iso8601
+//        
+//        if response.data.isEmpty {
+//            return nil
+//        }
+//        
+//        return try decoder.decode(Activity.self, from: response.data)
+//    }
+
+    // Fetch assigned activities for a patient
+    func fetchAssignedActivities(for patientID: UUID, activeOnly: Bool) async throws -> [AssignedActivity] {
+        var query = supabase
+            .from("assigned_activities")
+            .select()
+            .eq("patient_id", value: patientID.uuidString)
+        
+        if activeOnly {
+            query = query.eq("status", value: "active")
+        }
+        
+        let response = try await query.execute()
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        return try decoder.decode([AssignedActivity].self, from: response.data)
+    }
+
+    // Fetch activity logs for an assignment on a specific date
+    func fetchActivityLogs(assignedID: UUID, date: Date) async throws -> [ActivityLog] {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: date)
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+        
+        let formatter = ISO8601DateFormatter()
+        
+        let response = try await supabase
+            .from("activity_logs")
+            .select()
+            .eq("assigned_id", value: assignedID.uuidString)
+            .gte("date", value: formatter.string(from: startOfDay))
+            .lt("date", value: formatter.string(from: endOfDay))
+            .execute()
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        return try decoder.decode([ActivityLog].self, from: response.data)
+    }
+
+    // Fetch total log count for an assignment
+    func fetchActivityLogCount(assignedID: UUID) async throws -> Int {
+        let response = try await supabase
+            .from("activity_logs")
+            .select("log_id", head: false, count: .exact)
+            .eq("assigned_id", value: assignedID.uuidString)
+            .execute()
+        
+        return response.count ?? 0
+    }
 //    func fetchActivity(byName name: String, doctorID: UUID) async throws -> Activity? {
 //        let results: [Activity] = try await supabase
 //            .from("activities")
@@ -408,6 +479,27 @@ final class AccessSupabase {
         .update(patient) 
         .eq("patient_id", value: patient.patientID.uuidString)
         .execute()
+    }
+    func getPublicImageURL(path: String) throws -> URL {
+        try supabase.storage
+            .from(bucketName)
+            .getPublicURL(path: path)
+    }
+
+    func getSignedImageURL(path: String, expiresIn: Int = 3600) async throws -> URL {
+        try await supabase.storage
+            .from(bucketName)
+            .createSignedURL(path: path, expiresIn: expiresIn)
+    }
+
+    func downloadImage(path: String) async throws -> UIImage {
+        let data = try await supabase.storage
+            .from(bucketName)
+            .download(path: path)
+        guard let image = UIImage(data: data) else {
+            throw NSError(domain: "ImageError", code: 2, userInfo: [NSLocalizedDescriptionKey: "Could not decode image data"])
+        }
+        return image
     }
     
     func saveCaseHistory(_ patientId: UUID) async throws -> CaseHistory {

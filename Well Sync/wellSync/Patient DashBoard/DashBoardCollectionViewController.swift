@@ -14,7 +14,6 @@ class ActivityRingView: UIView {
             didSetup = true
         }
     }
-
     
     private func setupLayers() {
         let center = CGPoint(x: bounds.midX, y: bounds.midY)
@@ -122,7 +121,6 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                         activity: item.activity,
                         assignment: item.assignment,
                         completedToday: todayLogs.count,
-                        type: item.type,
                         logs: todayLogs
                     )
                 }
@@ -159,7 +157,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
 //                .filter { cal.isDate($0.date, equalTo: Date(), toGranularity: .weekOfYear) }
 //                .map { $0.date }
 //
-////            cell.configure(streakCount: 7, loggedDates: thisWeeksLogs)  // ✅ actually calls configure
+//            cell.configure(streakCount: 7, loggedDates: thisWeeksLogs)  // ✅ actually calls configure
 //            return cell                                // ✅ early return
 //        }
         if indexPath.row == 0 {

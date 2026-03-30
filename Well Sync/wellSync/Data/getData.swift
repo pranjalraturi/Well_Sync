@@ -1211,7 +1211,7 @@ var globalPatient: [Patient] = []
 let patientP1 = UUID(uuidString: "00000000-0000-0000-0000-000000000008")!
 let patientP2 = UUID(uuidString: "00000000-0000-0000-0000-000000000004")!
 let patientP3 = UUID(uuidString: "00000000-0000-0000-0000-000000000002")!
-var activityCatalog: [Activity] = []
+//var activityCatalog: [Activity] = []
 //var activityCatalog: [Activity] = [
 //
 //    Activity(
@@ -1923,7 +1923,6 @@ struct TodayActivityItem {
     let activity: Activity
     let assignment: AssignedActivity
     let completedToday: Int
-    let type: ActivityType
     let logs: [ActivityLog]
 
     var remaining: Int {
@@ -1934,6 +1933,9 @@ struct TodayActivityItem {
         guard assignment.frequency > 0 else { return 0 }
         return min(Float(completedToday) / Float(assignment.frequency), 1.0)
     }
+    var isUploadType: Bool {
+        return assignment.isUploadType
+    }
 
     var isCompletedToday: Bool {
         return completedToday >= assignment.frequency
@@ -1943,11 +1945,90 @@ struct TodayActivityItem {
         return "\(completedToday) of \(assignment.frequency) done today"
     }
 
-    var actionLabel: String {
-        switch activity.type {
-        case .timer:  return "Start Timer"
-        case .upload: return "Upload Photo"
-        }
+//    var actionLabel: String {
+//        switch activity.type {
+//        case .timer:  return "Start Timer"
+//        case .upload: return "Upload Photo"
+//        }
+//    }
+}
+
+//func buildTodayItems(for patientID: UUID) async throws -> [TodayActivityItem] {
+//    // 1. Fetch all active assignments for this patient
+//    let assignments = try await AccessSupabase.shared.fetchAssignedActivities(
+//        for: patientID,
+//        activeOnly: true
+//    )
+//    
+//    // 2. For each assignment, fetch the activity and today's logs
+//    var items: [TodayActivityItem] = []
+//    
+//    for assignment in assignments where assignment.isActiveToday {
+//        // Fetch the activity from catalog
+//        let activity = try await AccessSupabase.shared.fetchActivity(
+//            byID: assignment.activityID
+//        )
+//        
+//        // Fetch today's logs for this assignment
+//        let logs = try await AccessSupabase.shared.fetchActivityLogs(
+//            assignedID: assignment.assignedID,
+//            date: Date()
+//        )
+//        
+//        if let activity = activity {
+//            let item = TodayActivityItem(
+//                assignment: assignment,  // Include full assignment
+//                activity: activity,
+//                logs: logs
+//            )
+//            items.append(item)
+//        }
+//    }
+//    
+//    return items
+//}
+//
+//func buildLogSummaries(for patientID: UUID) async throws -> [LogSummaryItem] {
+//    // 1. Fetch all completed/past assignments
+//    let assignments = try await AccessSupabase.shared.fetchAssignedActivities(
+//        for: patientID,
+//        activeOnly: false
+//    )
+//    
+//    // 2. For each assignment, fetch activity and log count
+//    var items: [LogSummaryItem] = []
+//    
+//    for assignment in assignments where !assignment.isActiveToday {
+//        // Fetch the activity from catalog
+//        let activity = try await AccessSupabase.shared.fetchActivity(
+//            byID: assignment.activityID
+//        )
+//        
+//        // Fetch total log count for this assignment
+//        let logCount = try await AccessSupabase.shared.fetchActivityLogCount(
+//            assignedID: assignment.assignedID
+//        )
+//        
+//        if let activity = activity {
+//            let item = LogSummaryItem(
+//                assignment: assignment,  // Include full assignment
+//                activity: activity,
+//                totalLogs: logCount
+//            )
+//            items.append(item)
+//        }
+//    }
+//    
+//    return items
+//}
+struct LogSummaryItem {
+    let assignment: AssignedActivity  // Store the full assignment
+    let activity: Activity
+    let totalLogs: Int
+    
+    // Convenience property for cell type
+    var isUploadType: Bool {
+        return assignment.isUploadType
     }
 }
 func buildTodayItems(for patientID: UUID) async throws -> [TodayActivityItem] {
@@ -1970,21 +2051,23 @@ func buildTodayItems(for patientID: UUID) async throws -> [TodayActivityItem] {
         let todayLogs = logs.filter {
             Calendar.current.isDate($0.date, inSameDayAs: today)
         }
+//        if let activity = activity {
+        //            let item = TodayActivityItem(
+        //                assignment: assignment,  // Include full assignment
+        //                activity: activity,
+        //                logs: logs
+        //            )
+        //            items.append(item)
+        //        }
         
         items.append(TodayActivityItem(
             activity:       activity,
             assignment:     assignment,
             completedToday: todayLogs.count,
-            type:           activity.type,
             logs:           logs
         ))
     }
     return items
-}
-
-struct LogSummaryItem {
-    let activity: Activity
-    let totalLogs: Int
 }
 
 func buildLogSummaries(for patientID: UUID) async throws -> [LogSummaryItem] {
@@ -2009,7 +2092,11 @@ func buildLogSummaries(for patientID: UUID) async throws -> [LogSummaryItem] {
 
         let logs = allLogs.filter { $0.assignedID == assignment.assignedID }
 
-        summaries.append(LogSummaryItem(activity: activity, totalLogs: logs.count))
+        summaries.append(LogSummaryItem(
+                            assignment: assignment,  // Include full assignment
+                            activity: activity,
+                            totalLogs: logs.count
+                        ))
     }
 
     return summaries.sorted { $0.totalLogs > $1.totalLogs }

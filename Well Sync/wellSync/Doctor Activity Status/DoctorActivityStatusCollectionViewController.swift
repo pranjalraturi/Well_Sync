@@ -89,6 +89,16 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadActivity()
+        // Register cell classes
+        self.collectionView!.register(UINib(nibName: "UploadCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "uploadCell")
+        self.collectionView!.register(UINib(nibName: "GraphCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "graphCell")
+        self.collectionView.register(UINib(nibName: "HeaderCollectionReusableView", bundle: nil), forSupplementaryViewOfKind: "header", withReuseIdentifier: "headerCell")
+        
+        self.collectionView!.collectionViewLayout = generateLayout()
+    }
+
+    func loadActivity(){
         Task{
             do{
                 activities = try await buildTodayItems(for: patient!.patientID)
@@ -99,14 +109,7 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
             }
             collectionView.reloadData()
         }
-        // Register cell classes
-        self.collectionView!.register(UINib(nibName: "UploadCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "uploadCell")
-        self.collectionView!.register(UINib(nibName: "GraphCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "graphCell")
-        self.collectionView.register(UINib(nibName: "HeaderCollectionReusableView", bundle: nil), forSupplementaryViewOfKind: "header", withReuseIdentifier: "headerCell")
-        
-        self.collectionView!.collectionViewLayout = generateLayout()
     }
-
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
@@ -124,48 +127,58 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0{
+        if indexPath.section == 0 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "activityStateCell", for: indexPath) as! activitystatusringCollectionViewCell
             cell.configure(progress: 3.0/7.0)
             return cell
         }
-        if indexPath.section == 1
-        {
+        
+        if indexPath.section == 1 {
+            // Current activities
+            let item = activities[indexPath.row]
             let cell: UICollectionViewCell
-            if activities[indexPath.row].type == .upload {
+            
+            // Cell type determined by ASSIGNMENT's tracking method
+            if item.isUploadType {  // Uses assignment.hasImage || assignment.hasRecording
                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: "uploadCell", for: indexPath) as! UploadCollectionViewCell
-            }
-            else {
+            } else {
+                // Timer type
                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: "graphCell", for: indexPath) as! GraphCollectionViewCell
             }
+            
             if let label = cell.viewWithTag(2) as? UILabel {
-                label.text = activities[indexPath.row].activity.name
+                label.text = item.activity.name
             }
             if let logLabel = cell.viewWithTag(3) as? UILabel {
-                logLabel.text = String(activities[indexPath.row].logs.count)
+                logLabel.text = String(item.logs.count)
             }
             if let iconView = cell.viewWithTag(4) as? UIImageView {
-                iconView.image = UIImage(systemName: activities[indexPath.row].activity.iconName)
+                iconView.image = UIImage(systemName: item.activity.iconName)
             }
             
             return cell
         }
-        else{
+        else {
+            // Previous activities
+            let item = previousActivity[indexPath.row]
             let cell: UICollectionViewCell
-            if previousActivity[indexPath.row].activity.type == .upload {
+            
+            // Cell type determined by ASSIGNMENT's tracking method
+            if item.isUploadType {  // Uses assignment.hasImage || assignment.hasRecording
                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: "uploadCell", for: indexPath) as! UploadCollectionViewCell
-            }
-            else {
+            } else {
+                // Timer type
                 cell = collectionView.dequeueReusableCell(withReuseIdentifier: "graphCell", for: indexPath) as! GraphCollectionViewCell
             }
+            
             if let label = cell.viewWithTag(2) as? UILabel {
-                label.text = previousActivity[indexPath.row].activity.name
+                label.text = item.activity.name
             }
             if let logLabel = cell.viewWithTag(3) as? UILabel {
-                logLabel.text = String(previousActivity[indexPath.row].totalLogs)
+                logLabel.text = String(item.totalLogs)
             }
             if let iconView = cell.viewWithTag(4) as? UIImageView {
-                iconView.image = UIImage(systemName: previousActivity[indexPath.row].activity.iconName)
+                iconView.image = UIImage(systemName: item.activity.iconName)
             }
             return cell
         }
@@ -274,10 +287,9 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
            let addVC = nav.topViewController as? AddActivityTableViewController {
 
             addVC.patient = self.patient
-//            addVC.onSave = { [weak self] newAssignment in
-//                self?.activities = buildTodayItems(for: self!.patient!.patientID)
-//                self?.collectionView.reloadData()
-//            }
+            addVC.onSave = {
+                self.loadActivity()
+            }
         }
     }
     
