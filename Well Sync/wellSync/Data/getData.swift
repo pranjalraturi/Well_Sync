@@ -2024,6 +2024,7 @@ struct TodayActivityItem {
 struct LogSummaryItem {
     let assignment: AssignedActivity  // Store the full assignment
     let activity: Activity
+    let logs: [ActivityLog]
     let totalLogs: Int
     
     // Convenience property for cell type
@@ -2031,45 +2032,98 @@ struct LogSummaryItem {
         return assignment.isUploadType
     }
 }
+
 func buildTodayItems(for patientID: UUID) async throws -> [TodayActivityItem] {
     let today = Date()
 
-    let allAssignments   = try await AccessSupabase.shared.fetchAssignments(for: patientID)
+    print("🔍 Building today items for patient: \(patientID)")
+    
+    // Fetch all assignments for this patient
+    let allAssignments = try await AccessSupabase.shared.fetchAssignments(for: patientID)
+    print("📋 Found \(allAssignments.count) total assignments")
+    
     let todayAssignments = allAssignments.filter { $0.isActiveToday }
-    let allLogs          = try await AccessSupabase.shared.fetchLogs(for: patientID)
+    print("✅ Found \(todayAssignments.count) active assignments today")
+    
+    // Fetch ALL logs for this patient (across all assignments)
+    let allLogs = try await AccessSupabase.shared.fetchLogs(for: patientID)
+    print("📝 Found \(allLogs.count) total logs for patient")
 
     var items: [TodayActivityItem] = []
 
     for assignment in todayAssignments {
+        // Fetch the activity details
         guard let activity = try await AccessSupabase.shared.fetchActivityByID(
-            assignment.activityID                      // ← UUID used as ID lookup
-        ) else { continue }
+            assignment.activityID
+        ) else {
+            print("❌ Activity not found for ID: \(assignment.activityID)")
+            continue
+        }
 
-        let logs = allLogs.filter {
+        // Filter logs for THIS assignment
+        let logsForThisAssignment = allLogs.filter {
             $0.assignedID == assignment.assignedID
         }
-        let todayLogs = logs.filter {
+        
+        print("📊 Activity '\(activity.name)': \(logsForThisAssignment.count) logs")
+        
+        // Filter logs for TODAY
+        let todayLogs = logsForThisAssignment.filter {
             Calendar.current.isDate($0.date, inSameDayAs: today)
         }
-//        if let activity = activity {
-        //            let item = TodayActivityItem(
-        //                assignment: assignment,  // Include full assignment
-        //                activity: activity,
-        //                logs: logs
-        //            )
-        //            items.append(item)
-        //        }
+        
+        print("   └─ \(todayLogs.count) logs today")
         
         items.append(TodayActivityItem(
-            activity:       activity,
-            assignment:     assignment,
+            activity: activity,
+            assignment: assignment,
             completedToday: todayLogs.count,
-            logs:           logs
+            logs: logsForThisAssignment  // All logs for this assignment
         ))
     }
+    
+    print("🎯 Returning \(items.count) activity items")
     return items
 }
-
+//func buildTodayItems(for patientID: UUID) async throws -> [TodayActivityItem] {
+//    let today = Date()
+//
+//    let allAssignments   = try await AccessSupabase.shared.fetchAssignments(for: patientID)
+//    let todayAssignments = allAssignments.filter { $0.isActiveToday }
+//    let allLogs          = try await AccessSupabase.shared.fetchLogs(for: patientID)
+//
+//    var items: [TodayActivityItem] = []
+//
+//    for assignment in todayAssignments {
+//        guard let activity = try await AccessSupabase.shared.fetchActivityByID(
+//            assignment.activityID                      // ← UUID used as ID lookup
+//        ) else { continue }
+//
+//        let logs = allLogs.filter {
+//            $0.assignedID == assignment.assignedID
+//        }
+//        let todayLogs = logs.filter {
+//            Calendar.current.isDate($0.date, inSameDayAs: today)
+//        }
+////        if let activity = activity {
+//        //            let item = TodayActivityItem(
+//        //                assignment: assignment,  // Include full assignment
+//        //                activity: activity,
+//        //                logs: logs
+//        //            )
+//        //            items.append(item)
+//        //        }
+//        
+//        items.append(TodayActivityItem(
+//            activity:       activity,
+//            assignment:     assignment,
+//            completedToday: todayLogs.count,
+//            logs:           logs
+//        ))
+//    }
+//    return items
+//}
+//
 func buildLogSummaries(for patientID: UUID) async throws -> [LogSummaryItem] {
 
     // Was: assignedActivities.filter
@@ -2093,8 +2147,9 @@ func buildLogSummaries(for patientID: UUID) async throws -> [LogSummaryItem] {
         let logs = allLogs.filter { $0.assignedID == assignment.assignedID }
 
         summaries.append(LogSummaryItem(
-                            assignment: assignment,  // Include full assignment
+                            assignment: assignment,  
                             activity: activity,
+                            logs: logs,
                             totalLogs: logs.count
                         ))
     }

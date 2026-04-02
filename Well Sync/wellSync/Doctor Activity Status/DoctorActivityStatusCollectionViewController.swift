@@ -244,10 +244,10 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
             return section
     }
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 2{
-            if indexPath.row == 0 {
-                performSegue(withIdentifier: "Journal", sender: nil)
-            }
+        if indexPath.section == 1 && activities[indexPath.row].isUploadType == true{
+            performSegue(withIdentifier: "Journal", sender: indexPath)
+        }else if indexPath.section == 2 && previousActivity[indexPath.row].isUploadType == true{
+            performSegue(withIdentifier: "Journal", sender: indexPath)
         }
     }
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -281,14 +281,39 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
             collectionView.reloadData()
         }
     }
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if segue.identifier == "showAddActivity",
-       let nav = segue.destination as? UINavigationController,
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showAddActivity",
+           let nav = segue.destination as? UINavigationController,
            let addVC = nav.topViewController as? AddActivityTableViewController {
-
+            
             addVC.patient = self.patient
             addVC.onSave = {
                 self.loadActivity()
+            }
+        }
+        let s = sender as? IndexPath
+        print( segue.identifier == "Journal")
+        print((segue.destination as? JournalTableViewController))
+        print(sender)
+        if segue.identifier == "Journal",
+           let journalVC = segue.destination as? JournalTableViewController,
+           let indexPath = sender as? IndexPath {
+            
+            if indexPath.section == 1 {
+                // Current activity
+                let item = activities[indexPath.row]
+                print(item,self.patient!)
+                journalVC.selectedAssignment = item.assignment
+                journalVC.selectedActivity = item.activity
+                journalVC.patient = self.patient
+                
+            } else if indexPath.section == 2 {
+                // Previous activity
+                let item = previousActivity[indexPath.row]
+                print(item,self.patient!)
+                journalVC.selectedAssignment = item.assignment
+                journalVC.selectedActivity = item.activity
+                journalVC.patient = self.patient
             }
         }
     }

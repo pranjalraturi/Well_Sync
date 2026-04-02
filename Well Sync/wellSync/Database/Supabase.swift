@@ -132,6 +132,90 @@ final class AccessSupabase {
             .value
         return saved
     }
+    
+    // MARK: - Activity Log Methods
+
+    /// Fetch ALL logs for a patient (across all assignments)
+    func fetchLogs(for patientID: UUID) async throws -> [ActivityLog] {
+        let response = try await supabase
+            .from("activity_logs")
+            .select()
+            .eq("patient_id", value: patientID.uuidString)
+            .order("date", ascending: false)
+            .order("time", ascending: false)
+            .execute()
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        return try decoder.decode([ActivityLog].self, from: response.data)
+    }
+
+    /// Fetch logs for a specific assignment
+    func fetchLogsForAssignment(_ assignedID: UUID) async throws -> [ActivityLog] {
+        let response = try await supabase
+            .from("activity_logs")
+            .select()
+            .eq("assigned_id", value: assignedID.uuidString)
+            .order("date", ascending: false)
+            .order("time", ascending: false)
+            .execute()
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        return try decoder.decode([ActivityLog].self, from: response.data)
+    }
+
+    /// Fetch all assignments for a specific patient and activity
+    func fetchAssignments(for patientID: UUID, activityID: UUID) async throws -> [AssignedActivity] {
+        let response = try await supabase
+            .from("assigned_activities")
+            .select()
+            .eq("patient_id", value: patientID.uuidString)
+            .eq("activity_id", value: activityID.uuidString)
+            .order("start_date", ascending: false)
+            .execute()
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        return try decoder.decode([AssignedActivity].self, from: response.data)
+    }
+
+    /// Fetch all assignments for a patient
+    func fetchAssignments(for patientID: UUID) async throws -> [AssignedActivity] {
+        let response = try await supabase
+            .from("assigned_activities")
+            .select()
+            .eq("patient_id", value: patientID.uuidString)
+            .order("start_date", ascending: false)
+            .execute()
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        return try decoder.decode([AssignedActivity].self, from: response.data)
+    }
+
+    /// Fetch activity by ID
+    func fetchActivityByID(_ activityID: UUID) async throws -> Activity? {
+        let response = try await supabase
+            .from("activities")
+            .select()
+            .eq("activity_id", value: activityID.uuidString)
+            .single()
+            .execute()
+        
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        
+        if response.data.isEmpty {
+            return nil
+        }
+        
+        return try decoder.decode(Activity.self, from: response.data)
+    }
     func fetchActivities(for doctorID: UUID) async throws -> [Activity] {
         let data: [Activity] = try await supabase
             .from("activities")
@@ -140,16 +224,17 @@ final class AccessSupabase {
             .execute()
             .value
         return data
+        
     }
-    func fetchAssignments(for patientID: UUID) async throws -> [AssignedActivity] {
-        let data: [AssignedActivity] = try await supabase
-            .from("assigned_activities")
-            .select()
-            .eq("patient_id", value: patientID.uuidString)
-            .execute()
-            .value
-        return data
-    }
+//    func fetchAssignments(for patientID: UUID) async throws -> [AssignedActivity] {
+//        let data: [AssignedActivity] = try await supabase
+//            .from("assigned_activities")
+//            .select()
+//            .eq("patient_id", value: patientID.uuidString)
+//            .execute()
+//            .value
+//        return data
+//    }
     func fetchActivity(byName name: String) async throws -> Activity? {
         let results: [Activity] = try await supabase
             .from("activities")
@@ -178,6 +263,48 @@ final class AccessSupabase {
 //        }
 //        
 //        return try decoder.decode(Activity.self, from: response.data)
+//    }
+    // Fetch logs for a specific assignment
+//    func fetchLogs(for assignedID: UUID) async throws -> [ActivityLog] {
+//        let response = try await supabase
+//            .from("activity_logs")
+//            .select()
+//            .eq("assigned_id", value: assignedID.uuidString)
+//            .order("date", ascending: false)  // Newest first
+//            .order("time", ascending: false)
+//            .execute()
+//        
+//        let decoder = JSONDecoder()
+//        decoder.dateDecodingStrategy = .iso8601
+//        
+//        return try decoder.decode([ActivityLog].self, from: response.data)
+//    }
+//    func fetchAssignments(for patientID: UUID) async throws -> [AssignedActivity] {
+//        let response = try await supabase
+//            .from("assigned_activities")
+//            .select()
+//            .eq("patient_id", value: patientID.uuidString)
+//            .order("start_date", ascending: false)
+//            .execute()
+//        
+//        let decoder = JSONDecoder()
+//        decoder.dateDecodingStrategy = .iso8601
+//        
+//        return try decoder.decode([AssignedActivity].self, from: response.data)
+//    }
+//    func fetchAssignments(for patientID: UUID, activityID: UUID) async throws -> [AssignedActivity] {
+//        let response = try await supabase
+//            .from("assigned_activities")
+//            .select()
+//            .eq("patient_id", value: patientID.uuidString)
+//            .eq("activity_id", value: activityID.uuidString)
+//            .order("start_date", ascending: false)
+//            .execute()
+//        
+//        let decoder = JSONDecoder()
+//        decoder.dateDecodingStrategy = .iso8601
+//        
+//        return try decoder.decode([AssignedActivity].self, from: response.data)
 //    }
 
     // Fetch assigned activities for a patient
@@ -242,26 +369,27 @@ final class AccessSupabase {
 //            .value
 //        return results.first
 //    }
-    func fetchLogs(for patientID: UUID) async throws -> [ActivityLog] {
-        let data: [ActivityLog] = try await supabase
-            .from("activity_logs")
-            .select()
-            .eq("patient_id", value: patientID.uuidString)
-            .order("date", ascending: false)
-            .execute()
-            .value
-        return data
-    }
-    func fetchActivityByID(_ activityID: UUID) async throws -> Activity? {
-        let results: [Activity] = try await supabase
-            .from("activities")
-            .select()
-            .eq("activity_id", value: activityID.uuidString)  // searches by ID
-            .limit(1)
-            .execute()
-            .value
-        return results.first
-    }
+//    func fetchLogs(for patientID: UUID) async throws -> [ActivityLog] {
+//        let data: [ActivityLog] = try await supabase
+//            .from("activity_logs")
+//            .select()
+//            .eq("patient_id", value: patientID.uuidString)
+//            .order("date", ascending: false)
+//            .execute()
+//            .value
+//        return data
+//    }
+//    func fetchActivityByID(_ activityID: UUID) async throws -> Activity? {
+//        let results: [Activity] = try await supabase
+//            .from("activities")
+//            .select()
+//            .eq("activity_id", value: activityID.uuidString)  // searches by ID
+//            .limit(1)
+//            .execute()
+//            .value
+//        return results.first
+//    }
+    
     
     func saveMoodLog(_ log: MoodLog) async throws {
 
@@ -765,7 +893,6 @@ final class AccessSupabase {
         return doctor
     }
 
-    // MARK: - Fetch patient by auth_id (called after login to load profile)
     func fetchPatientByAuthID(_ authID: UUID) async throws -> Patient {
         let patient: Patient = try await supabase
             .from("patients")
@@ -775,5 +902,12 @@ final class AccessSupabase {
             .execute()
             .value
         return patient
+    }
+    
+    func downloadFile(path: String) async throws -> Data {
+        let data = try await supabase.storage
+            .from("Patient_profile")   // ← replace with your actual bucket
+            .download(path: path)
+        return data
     }
 }

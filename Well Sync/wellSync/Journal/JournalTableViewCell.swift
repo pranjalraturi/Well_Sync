@@ -17,7 +17,8 @@ class JournalTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        contentView.heightAnchor.constraint(equalToConstant: 130).isActive = true
+        cardView.isUserInteractionEnabled = false
+//        contentView.heightAnchor.constraint(equalToConstant: 130).isActive = true
     }
 
     func configure(with data: JournalEntry) {
@@ -39,6 +40,4 @@ class JournalTableViewCell: UITableViewCell {
             iconImage.image = UIImage(systemName: "play.circle.fill")
         }
     }
-
-
 }
