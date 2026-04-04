@@ -205,53 +205,51 @@ extension CaseHistoryViewController: UIImagePickerControllerDelegate, UINavigati
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage?{
-        selectedImage = image
+            self.selectedImage = image
+            self.selectedURL = nil
         }
         picker.dismiss(animated: true)
-        self.NamingAlert()
+        self.NamingAlert(defaultName: "")
     }
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let url = urls.first else { return }
-        selectedURL = url
-//        if let data = try? Data(contentsOf: url),
-//            let image = UIImage(data: data){
-//            selectedImage = image
-//        }
-        selectedImage = nil
-        self.NamingAlert()
+        self.selectedURL = url
+        self.selectedImage = nil
+        let fileName = url.deletingPathExtension().lastPathComponent
+        self.NamingAlert(defaultName: fileName)
     }
     
-    func NamingAlert(){
+    func NamingAlert(defaultName: String){
         let alert = UIAlertController(title: "Add Report", message: "\n\n\n\n", preferredStyle: .alert)
-        let preview = UIImageView(frame: CGRect(x: 30, y: 50, width: 100, height: 100))
-        preview.contentMode = .scaleAspectFill
-        preview.image = selectedImage
-        preview.clipsToBounds = true
-        preview.layer.cornerRadius = 20
-        preview.layer.masksToBounds = true
-        
-        alert.view.addSubview(preview)
-        alert.addTextField{textField in
-          textField.placeholder = "Enter Report Name"
-        }
-        
-        let nameAction = UIAlertAction(title: "Add", style: .default) { _ in
-//            let text = alert.textFields?.first?.text ?? ""
-//            let name = text.isEmpty ? "Report" : text
-//            let newReport = Report(
-//                reportId: UUID(),
-//                caseId: self.caseHistory.caseId,
-//                    title: name,
-//                    date: Date(),
-//                reportPath: [self.selectedURL?.path ?? ""]
-//                )
-//            self.reports.insert(newReport, at: 0)
-//            self.CaseHistoryCollectionView.reloadSections(IndexSet(integer: 0))
-            
+        let addAction = UIAlertAction(title: "Add", style: .default) { _ in
             guard let name = alert.textFields?.first?.text, !name.isEmpty else { return }
             self.uploadReportAndSave(name: name)
         }
-        alert.addAction(nameAction)
+        addAction.isEnabled = !defaultName.isEmpty
+        alert.addTextField { textField in
+            textField.placeholder = "Enter Report Name"
+            textField.text = defaultName
+            textField.autocapitalizationType = .words
+            textField.addAction(UIAction(handler: { _ in
+                        let text = textField.text ?? ""
+                        addAction.isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
+                    }), for: .editingChanged)
+                }
+        
+            let preview = UIImageView(frame: CGRect(x: 30, y: 50, width: 100, height: 100))
+            preview.contentMode = .scaleAspectFill
+            preview.image = self.selectedImage ?? UIImage(systemName: "doc.fill")
+            preview.clipsToBounds = true
+            preview.layer.cornerRadius = 15
+            preview.layer.masksToBounds = true
+            
+            alert.view.addSubview(preview)
+            //        alert.addTextField{textField in
+            //          textField.placeholder = "Enter Report Name"
+            //        }
+
+        
+        alert.addAction(addAction)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         present(alert, animated: true)
     }
@@ -345,15 +343,46 @@ extension CaseHistoryViewController: QLPreviewControllerDataSource, UICollection
             }
         }
     
+//    func openReport(_ report: Report) {
+//        guard let path = report.reportPaths.first,
+//              let url = URL(string: path) else { return }
+//
+//        self.generatedReportURl = url
+//        
+//        let preview = QLPreviewController()
+//        preview.dataSource = self
+//        present(preview, animated: true)
+//    }
+    
     func openReport(_ report: Report) {
-        guard let path = report.reportPaths.first,
-              let url = URL(string: path) else { return }
+        guard let publicURLString = report.reportPaths.first else { return }
 
-        self.generatedReportURl = url
-        
-        let preview = QLPreviewController()
-        preview.dataSource = self
-        present(preview, animated: true)
+        Task {
+            do {
+                // 1. Download data from Supabase
+                let data = try await AccessSupabase.shared.downloadReportData(url: publicURLString)
+                
+                // 2. Create a local temporary URL
+                // We use the file extension from the public URL (like .pdf or .jpg)
+                let fileExtension = URL(string: publicURLString)?.pathExtension ?? "pdf"
+                let tempURL = FileManager.default.temporaryDirectory
+                    .appendingPathComponent(UUID().uuidString)
+                    .appendingPathExtension(fileExtension)
+                
+                // 3. Write data to the local disk
+                try data.write(to: tempURL)
+                
+                // 4. Update UI on Main Thread
+                await MainActor.run {
+                    self.generatedReportURl = tempURL // Set the LOCAL url
+                    let preview = QLPreviewController()
+                    preview.dataSource = self
+                    self.present(preview, animated: true)
+                }
+            } catch {
+                print("Error opening report: \(error)")
+            }
+        }
     }
     
 }

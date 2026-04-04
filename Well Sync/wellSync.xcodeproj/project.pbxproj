@@ -199,7 +199,7 @@
 				CODE_SIGN_ENTITLEMENTS = wellSync/wellSync.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 625SMQ6P5N;
+				DEVELOPMENT_TEAM = 2SHJZNL8XT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = wellSync/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Need Camera For Accessing Some Usefull Features";
@@ -239,7 +239,7 @@
 				CODE_SIGN_ENTITLEMENTS = wellSync/wellSync.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 625SMQ6P5N;
+				DEVELOPMENT_TEAM = 2SHJZNL8XT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = wellSync/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Need Camera For Accessing Some Usefull Features";

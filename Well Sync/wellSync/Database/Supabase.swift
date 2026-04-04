@@ -790,6 +790,23 @@ final class AccessSupabase {
         
         return publicURL.absoluteString
     }
+    
+    func downloadReportData(url: String) async throws -> Data {
+        // Extract the path from the full public URL
+        // Public URL looks like: .../storage/v1/object/public/PatientHistory/reports/filename.jpg
+        // We need just: reports/filename.jpg
+        let components = url.components(separatedBy: "/")
+        guard let reportsIndex = components.firstIndex(of: "reports") else {
+            throw NSError(domain: "PathError", code: 1, userInfo: [NSLocalizedDescriptionKey: "Invalid URL format"])
+        }
+        let path = components[reportsIndex...].joined(separator: "/")
+        
+        // Download raw data
+        return try await supabase.storage
+            .from(reportBucket)
+            .download(path: path)
+    }
+    
     func saveSessionNote(_ note: SessionNote) async throws -> SessionNote {
 
         let saved: SessionNote = try await supabase
