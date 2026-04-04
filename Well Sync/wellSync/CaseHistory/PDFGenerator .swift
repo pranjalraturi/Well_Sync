@@ -9,13 +9,11 @@ import UIKit
 import PDFKit
 
 struct ReportGenerator {
-//    static func createPDF(patient: Patient, history: CaseHistory) -> URL?
-    static func createPDF(history: CaseHistory) -> URL? {
+    static func createPDF(patient: Patient, history: CaseHistory) -> URL?{
         let pageRect = CGRect(x: 0, y: 0, width: 595.2, height: 841.8)
         let renderer = UIGraphicsPDFRenderer(bounds: pageRect)
         
-//        let fileName = "CaseHistory_\(patient.name.replacingOccurrences(of: " ", with:"_")).pdf"
-        let fileName = "CaseHistory_Aarav_Sharma.pdf"
+        let fileName = "CaseHistory_\(patient.name.replacingOccurrences(of: " ", with:"_")).pdf"
         let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
         
         do{
@@ -30,14 +28,15 @@ struct ReportGenerator {
                 title.draw(at: CGPoint(x: 50, y: 50), withAttributes: [.font: bodyFont])
                 
                 var yOffset: CGFloat = 100
-//                "Patient: \(patient.name)".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font: bodyFont])
-//                 yOffset += 20
-//                "Condition: \(patient.condition)".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font:bodyFont])
-//                yOffset += 40
-                "Patient: Aarav Sharma".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font: bodyFont])
+                "Patient: \(patient.name)".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font: bodyFont])
                  yOffset += 20
-                "Condition: Maladaptive Day Dreaming".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font:bodyFont])
+                let conditionText = patient.condition ?? "N/A"
+                "Condition: \(conditionText)".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font:bodyFont])
                 yOffset += 40
+//                "Patient: Aarav Sharma".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font: bodyFont])
+//                 yOffset += 20
+//                "Condition: Maladaptive Day Dreaming".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font:bodyFont])
+//                yOffset += 40
                 "Treatment Timeline".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font: headerFont])
                 yOffset += 30
                 

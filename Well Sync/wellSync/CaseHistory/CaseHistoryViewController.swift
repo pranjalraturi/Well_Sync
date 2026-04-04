@@ -12,7 +12,7 @@ import QuickLook
 class CaseHistoryViewController: UIViewController {
     @IBOutlet weak var CaseHistoryCollectionView: UICollectionView!
     
-    var caseHistory: CaseHistory!
+    var caseHistory: CaseHistory?
     var timeline: [Timeline] = []
     var reports: [Report] = []
     var selectedImage: UIImage?
@@ -328,7 +328,7 @@ extension CaseHistoryViewController: QLPreviewControllerDataSource, UICollection
                 print("No case history")
                 return
             }
-        if let url = ReportGenerator.createPDF(history: caseHistory){
+        if let url = ReportGenerator.createPDF(patient: patient, history: caseHistory){
             self.generatedReportURl = url
             
             let previewController = QLPreviewController()
