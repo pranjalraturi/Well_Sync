@@ -77,6 +77,7 @@ class TodayTableViewCell: UITableViewCell {
         iconImageView.image      = UIImage(systemName: iconName)
 //        checkmarkView.isHidden   = true
         subtitleBottomConstraint.constant = 8
+        addPhotoButton.isHidden  = true
     }
 //    @IBAction func uploadTapped(_ sender: Any) {
 //        let alert = UIAlertController(title: "Add Photo", message: "choose an Option", preferredStyle: .actionSheet)
