@@ -32,15 +32,15 @@ class PatientCellAppointment: UICollectionViewCell {
         label.textAlignment = .center
     }
 
-    func configure(with patient: Patient) {
+    func configure(name: String, condition: String, previousSessionDate: Date?, imageName: String?) {
 
-        nameLabel.text = patient.name
-        conditionLabel.text = patient.condition
+        nameLabel.text = name
+        conditionLabel.text = condition
 
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM yy"
 
-        if let previousDate = patient.previousSessionDate {
+        if let previousDate = previousSessionDate {
             lastDate.text = formatter.string(from: previousDate)
         } else {
             lastDate.text = "No previous session"
@@ -49,13 +49,12 @@ class PatientCellAppointment: UICollectionViewCell {
         let timeFormatter = DateFormatter()
         timeFormatter.dateFormat = "hh:mm a"
 
-       // timeLabel.text = timeFormatter.string(from: patient.nextSessionDate)
-
-        if let image = patient.imageURL {
-            profileImage.image = UIImage(named: image)
-        } else {
-            profileImage.image = UIImage(systemName: "person.circle")
-        }
+//        if let image = imageName {
+//            profileImage.image = UIImage(named: image)
+//        } else {
+//            profileImage.image = UIImage(systemName: "person.circle")
+//        }
     
     }
 }
+

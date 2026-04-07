@@ -165,8 +165,11 @@ class HomeCollectionViewController: UICollectionViewController {
         let storyboard = UIStoryboard(name: "Appointment", bundle: nil)
 
         let vc = storyboard.instantiateViewController(
-            withIdentifier: "AppointmentsCollectionViewController"
-        )
+            withIdentifier: "appointment"
+        ) as! AppointmentCollectionViewController   // ✅ cast
+
+        vc.doctorID = doctor?.docID   // 🔥 THIS IS THE FIX
+
         navigationController?.pushViewController(vc, animated: true)
     }
 

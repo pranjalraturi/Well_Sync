@@ -31,13 +31,20 @@ class AllPatientCollectionViewController: UICollectionViewController {
     @MainActor
     func loadPatients() async {
 
-        guard let doctorId = UUID(uuidString: "6bf94a4d-cc66-4d87-a90d-be2500434e3d") else { return }
+        guard let doctorId = UUID(uuidString: "1e6cdfb3-5795-40f1-a691-ab3a1ed844bd") else { return }
 
-//        let fetched = await viewModel?.fetc hPatients(for: doctorId)
-
-//        patients = fetched ?? []
-        patients = globalPatient
-        filteredPatients = patients
+        do {
+            let fetched = try await viewModel?.fetchPatients(for: doctorId)
+            patients = fetched ?? []
+            // If you intend to use globalPatient instead, uncomment the next line and remove the previous assignment.
+            // patients = globalPatient
+            filteredPatients = patients
+        } catch {
+            // Handle error (log, show alert, etc.) and fall back to empty list
+            print("Failed to fetch patients: \(error)")
+            patients = []
+            filteredPatients = []
+        }
 
         collectionView.reloadSections(IndexSet(integer: 1))
     }
