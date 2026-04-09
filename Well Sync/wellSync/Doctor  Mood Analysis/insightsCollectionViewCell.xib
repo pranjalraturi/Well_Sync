@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,22 +17,26 @@
                 <rect key="frame" x="0.0" y="0.0" width="439" height="167"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Insights" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sQJ-PY-I46">
-                        <rect key="frame" x="12" y="12" width="415" height="33.666666666666664"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Insights" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sQJ-PY-I46">
+                        <rect key="frame" x="12" y="11.999999999999998" width="415" height="26.333333333333329"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="YHU-7a-uf1">
-                        <rect key="frame" x="16" y="53.666666666666664" width="411" height="101.33333333333334"/>
+                        <rect key="frame" x="16" y="46.333333333333336" width="411" height="108.66666666666666"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Any Insight that is entered by the patient during mood logging" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3e8-8W-Tx2">
-                                <rect key="frame" x="0.0" y="0.0" width="411" height="101.33333333333333"/>
+                                <rect key="frame" x="0.0" y="0.0" width="411" height="108.66666666666667"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
+                        <constraints>
+                            <constraint firstItem="3e8-8W-Tx2" firstAttribute="top" secondItem="YHU-7a-uf1" secondAttribute="top" id="e6M-Cv-3fY"/>
+                            <constraint firstAttribute="bottom" secondItem="3e8-8W-Tx2" secondAttribute="bottom" id="lNS-JC-mw5"/>
+                        </constraints>
                     </stackView>
                 </subviews>
             </view>
@@ -42,19 +46,21 @@
                 <constraint firstAttribute="bottom" secondItem="YHU-7a-uf1" secondAttribute="bottom" constant="12" id="05B-0n-xm1"/>
                 <constraint firstItem="YHU-7a-uf1" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="1SH-6Y-FUB"/>
                 <constraint firstAttribute="trailing" secondItem="YHU-7a-uf1" secondAttribute="trailing" constant="12" id="CoU-xP-NKA"/>
-                <constraint firstItem="sQJ-PY-I46" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" constant="-54.670000000000002" id="G0E-gA-ALW"/>
                 <constraint firstAttribute="trailing" secondItem="sQJ-PY-I46" secondAttribute="trailing" constant="12" id="V7y-Kj-GIk"/>
                 <constraint firstItem="sQJ-PY-I46" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="12" id="gnB-vr-tXA"/>
                 <constraint firstItem="sQJ-PY-I46" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="12" id="mO5-O6-OXi"/>
                 <constraint firstItem="YHU-7a-uf1" firstAttribute="top" secondItem="sQJ-PY-I46" secondAttribute="bottom" constant="8" id="yjf-S2-qtj"/>
             </constraints>
             <size key="customSize" width="439" height="167"/>
+            <connections>
+                <outlet property="insight" destination="3e8-8W-Tx2" id="rXx-yE-6uX"/>
+            </connections>
             <point key="canvasLocation" x="435.87786259541986" y="194.71830985915494"/>
         </collectionViewCell>
     </objects>
     <resources>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

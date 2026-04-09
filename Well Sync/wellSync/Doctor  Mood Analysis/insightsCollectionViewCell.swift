@@ -9,9 +9,11 @@ import UIKit
 
 class insightsCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var insight: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-
+    func configur(with text: String) {
+        insight.text = text
+    }
 }

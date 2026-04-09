@@ -82,18 +82,13 @@ class ActivityStatusRingView: UIView {
 
 class DoctorActivityStatusCollectionViewController: UICollectionViewController {
     
-    var patient: Patient?{
-        didSet{
-            
-        }
-    }
+    var patient: Patient?
 
     var activities: [TodayActivityItem] = []
     var previousActivity: [LogSummaryItem] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        loadActivity()
         // Register cell classes
         self.collectionView!.register(UINib(nibName: "UploadCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "uploadCell")
         self.collectionView!.register(UINib(nibName: "GraphCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "graphCell")
@@ -111,7 +106,7 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
             }catch{
                 print("Activity log error: \(error)")
             }
-            collectionView.reloadData()
+            collectionView.reloadSections(IndexSet([1,2]))
         }
     }
 
@@ -273,17 +268,17 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        Task{
-            do{
-                activities   = try await buildTodayItems(for: patient!.patientID)
-                previousActivity = try await buildLogSummaries(for: patient!.patientID)
-                print("2-->",patient!.patientID)
-            }catch{
-                print("Activity log error: \(error)")
-            }
-            collectionView.reloadData()
-        }
+        loadActivity()
+//        Task{
+//            do{
+//                activities   = try await buildTodayItems(for: patient!.patientID)
+//                previousActivity = try await buildLogSummaries(for: patient!.patientID)
+//                print("2-->",patient!.patientID)
+//            }catch{
+//                print("Activity log error: \(error)")
+//            }
+//            collectionView.reloadData()
+//        }
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showAddActivity",

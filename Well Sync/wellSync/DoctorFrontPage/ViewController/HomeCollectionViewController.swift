@@ -159,8 +159,8 @@ class HomeCollectionViewController: UICollectionViewController {
 
         let vc = storyboard.instantiateViewController(
             withIdentifier: "AllPatientViewController"
-        )
-
+        ) as! AllPatientCollectionViewController
+        vc.doctor = doctor
         navigationController?.pushViewController(vc, animated: true)
     }
 
@@ -183,6 +183,7 @@ class HomeCollectionViewController: UICollectionViewController {
         let vc = storyboard.instantiateViewController(
             withIdentifier: "doctorProfile"
         )
+
         navigationController?.pushViewController(vc, animated: true)
     }
 

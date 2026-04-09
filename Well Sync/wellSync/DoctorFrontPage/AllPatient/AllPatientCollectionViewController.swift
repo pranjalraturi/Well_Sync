@@ -13,6 +13,7 @@ class AllPatientCollectionViewController: UICollectionViewController {
     var filteredPatients: [Patient] = []
 
     var viewModel: AccessSupabase?
+    var doctor:Doctor?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,11 +28,10 @@ class AllPatientCollectionViewController: UICollectionViewController {
             await loadPatients()
         }
     }
-
-    @MainActor
+    
     func loadPatients() async {
 
-        guard let doctorId = UUID(uuidString: "1e6cdfb3-5795-40f1-a691-ab3a1ed844bd") else { return }
+        guard let doctorId = doctor?.docID else { return }
 
         do {
             let fetched = try await viewModel?.fetchPatients(for: doctorId)
