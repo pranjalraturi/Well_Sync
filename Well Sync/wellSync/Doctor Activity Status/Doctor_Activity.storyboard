@@ -156,6 +156,86 @@
             </objects>
             <point key="canvasLocation" x="4308" y="-202"/>
         </scene>
+        <!--Appointments-->
+        <scene sceneID="UXB-Lv-qYt">
+            <objects>
+                <collectionViewController storyboardIdentifier="mood" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0gD-Ec-LDi" customClass="GraphCollectionViewController" customModule="sample2" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="heU-6o-PPa">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="P9a-IG-4W8">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="segment" id="kmQ-V1-HMw">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="72"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nER-Jk-s0G">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="72"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="dkO-zo-hDQ">
+                                            <rect key="frame" x="0.0" y="12" width="393" height="32"/>
+                                            <segments>
+                                                <segment title="Weekly"/>
+                                                <segment title="Monthly"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="sectionChanged:" destination="0gD-Ec-LDi" eventType="valueChanged" id="Oct-rr-aYF"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="dkO-zo-hDQ" firstAttribute="leading" secondItem="nER-Jk-s0G" secondAttribute="leading" id="7dC-3N-dkt"/>
+                                        <constraint firstItem="dkO-zo-hDQ" firstAttribute="top" secondItem="nER-Jk-s0G" secondAttribute="top" constant="12" id="JmH-26-rJ5"/>
+                                        <constraint firstAttribute="trailing" secondItem="dkO-zo-hDQ" secondAttribute="trailing" id="yJU-uT-Kmd"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="393" height="72"/>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="B7R-Ps-eXj" customClass="CalendarCellAct" customModule="sample2" customModuleProvider="target">
+                                <rect key="frame" x="1" y="82" width="391" height="133"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="WS2-Oh-bUw">
+                                    <rect key="frame" x="0.0" y="0.0" width="391" height="133"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="391" height="133"/>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="0gD-Ec-LDi" id="dQx-OJ-I37"/>
+                            <outlet property="delegate" destination="0gD-Ec-LDi" id="3sV-3Q-c4Y"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Appointments" id="HRr-Cb-ZUF"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hCQ-HW-drb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5848" y="-335"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="6ou-QW-AbY">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="KKg-5w-hyL" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="UFj-rT-qwf">
+                        <rect key="frame" x="0.0" y="118" width="393" height="106"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="0gD-Ec-LDi" kind="relationship" relationship="rootViewController" id="v5Q-5L-ad7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wqk-SW-TA1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4921" y="-335"/>
+        </scene>
     </scenes>
     <resources>
         <systemColor name="secondaryLabelColor">
