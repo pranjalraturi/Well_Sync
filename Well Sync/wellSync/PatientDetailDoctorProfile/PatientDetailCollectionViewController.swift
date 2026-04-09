@@ -22,6 +22,8 @@ class PatientDetailCollectionViewController: UICollectionViewController{
         
         PatientProfileCollectionView.delegate = self
         PatientProfileCollectionView.dataSource = self
+        
+        updateDoneButtonColor()
     }
     func registerCells(){
         PatientProfileCollectionView.register(UINib(nibName: "ProfileCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ProfileCollectionViewCell")
@@ -191,6 +193,7 @@ extension PatientDetailCollectionViewController{
         guard let patient = self.patient else { return }
         
         if patient.sessionStatus == true{
+            updateDoneButtonColor()
             showAlreadyDone()
             return
         }
@@ -233,16 +236,16 @@ extension PatientDetailCollectionViewController{
                     }
                     
                     patient.previousSessionDate = Date()
-//                    patient.nextSessionDate = nil
+
                     patient.sessionStatus = true
                     
                     try await AccessSupabase.shared.updatePatient(patient)
                     
-                    await MainActor.run{
+                    await MainActor.run {
                         self.patient = patient
-                        self.PatientProfileCollectionView.reloadData()
-                        self.doneButton.tintColor = .systemGreen
-                    }
+                        self.updateDoneButtonColor()
+//                                        self.PatientProfileCollectionView?.reloadData()
+                                    }
                 }catch{
                     print("Completion Error: \(error)")
                 }
@@ -257,6 +260,12 @@ extension PatientDetailCollectionViewController{
         let alert = UIAlertController(title: "Session Already Done", message: "This session has already been marked as Done", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
+    }
+    
+    func updateDoneButtonColor(){
+        if patient?.sessionStatus == true {
+                doneButton.tintColor = .systemGreen
+            }
     }
 }
 
@@ -288,20 +297,9 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
                 Task {
                     do {
                         let appointments = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
-                        // Find upcoming appointment
                         if let apptToDelete = appointments.first(where: { $0.status == .upcoming }), let id = apptToDelete.appointmentId {
                             try await AccessSupabase.shared.deleteAppointment(id: id)
                         }
-                        
-//                        let pre = patient.previousSessionDate
-//                        patient.nextSessionDate = nil
-//                        patient.previousSessionDate = pre
-//                        try await AccessSupabase.shared.updatePatient(patient)
-//                        try await AccessSupabase.shared.supabase
-//                            .from("patients")
-//                            .update(["next_session_date": NSNull()])
-//                            .eq("patient_id", value: patient.patientID)
-//                            .execute()
                         try await AccessSupabase.shared.clearNextSessionDate(patientID: patient.patientID)
                         await MainActor.run {
                             self.patient?.nextSessionDate = nil
@@ -322,7 +320,6 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
                     let appointments = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
                     let futureUpcomingAppt = appointments.first(where:{
                         $0.status == .upcoming
-//                        && ($0.scheduledAt ?? Date.distantPast) > Date()
                     })
                     if let apptToUpdate = futureUpcomingAppt{
                         print(patient.nextSessionDate)

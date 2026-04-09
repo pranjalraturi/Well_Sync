@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8m3-QQ-gP6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8m3-QQ-gP6">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Case History-->
+        <!--Patient History-->
         <scene sceneID="Lxt-qc-b6o">
             <objects>
                 <viewController storyboardIdentifier="caseHistory" useStoryboardIdentifierAsRestorationIdentifier="YES" id="it9-CX-NOg" customClass="CaseHistoryViewController" customModule="wellSync" customModuleProvider="target" sceneMemberID="viewController">
@@ -47,7 +47,7 @@
                             <constraint firstItem="1g9-82-R6B" firstAttribute="trailing" secondItem="FBS-80-taa" secondAttribute="trailing" id="kdS-HU-lWR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Case History" largeTitleDisplayMode="always" id="lSd-TP-JWb">
+                    <navigationItem key="navigationItem" title="Patient History" largeTitleDisplayMode="always" id="lSd-TP-JWb">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="square.and.arrow.down" catalog="system" id="sIR-lS-w6t">
                             <connections>
                                 <action selector="downLoadButtonTapped:" destination="it9-CX-NOg" id="Bb3-4U-BPF"/>

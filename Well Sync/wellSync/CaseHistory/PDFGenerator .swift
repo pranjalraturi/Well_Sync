@@ -33,10 +33,6 @@ struct ReportGenerator {
                 let conditionText = patient.condition ?? "N/A"
                 "Condition: \(conditionText)".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font:bodyFont])
                 yOffset += 40
-//                "Patient: Aarav Sharma".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font: bodyFont])
-//                 yOffset += 20
-//                "Condition: Maladaptive Day Dreaming".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font:bodyFont])
-//                yOffset += 40
                 "Treatment Timeline".draw(at: CGPoint(x: 50, y: yOffset), withAttributes: [.font: headerFont])
                 yOffset += 30
                 
