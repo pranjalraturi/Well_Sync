@@ -42,36 +42,6 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
     private var barRanges: [DisplayRange] = [.weekly, .weekly]
     private var barOffsets: [Int] = [0, 0]
 
-    
-//    private func currentRangeText() -> String {
-//        let calendar = Calendar.current
-//        let today = Date()
-//
-//        switch displayRange {
-//
-//        case .weekly:
-//            let startOfWeek = calendar.dateInterval(of: .weekOfYear, for: today)!.start
-//            let targetStart = calendar.date(byAdding: .weekOfYear, value: lineOffset, to: startOfWeek)!
-//
-//            let targetEnd = calendar.date(byAdding: .day, value: 6, to: targetStart)!
-//
-//            let formatter = DateFormatter()
-//            formatter.dateFormat = "MMM d"
-//
-//            return "\(formatter.string(from: targetStart)) – \(formatter.string(from: targetEnd))"
-//
-//
-//        case .monthly:
-//            let startOfMonth = calendar.dateInterval(of: .month, for: today)!.start
-//            let target = calendar.date(byAdding: .month, value: lineOffset, to: startOfMonth)!
-//
-//            let formatter = DateFormatter()
-//            formatter.dateFormat = "MMM yyyy"
-//
-//            return formatter.string(from: target)
-//        }
-//    }
-    
     private func barRangeText(for index: Int) -> String {
         let calendar = Calendar.current
         let today = Date()
