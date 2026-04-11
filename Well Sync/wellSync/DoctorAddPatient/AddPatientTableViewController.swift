@@ -22,7 +22,6 @@ class AddPatientTableViewController: UITableViewController,
  
     // ─── Outlets ───
     @IBOutlet weak var fullName:       UITextField!
-    @IBOutlet weak var dateOfBirth:    UITextField!
     @IBOutlet var address:             UITextField!
     @IBOutlet var contact:             UITextField!
     @IBOutlet var email:               UITextField!
@@ -31,6 +30,8 @@ class AddPatientTableViewController: UITableViewController,
     @IBOutlet var moreInfo:            UITextField!
     @IBOutlet var patientImageView:    UIImageView!
     @IBOutlet var addPhotoButton:      UIButton!
+    @IBOutlet var dateOfBirth:         UIDatePicker!
+    @IBOutlet var gender:              UIButton!
  
     // ─────────────────────────────────────────────────────────────
     // MARK: - Lifecycle
@@ -39,6 +40,13 @@ class AddPatientTableViewController: UITableViewController,
     override func viewDidLoad() {
         super.viewDidLoad()
         setupPhotoMenu()
+        
+        dateOfBirth.maximumDate = Date()
+        
+        setupGenderMenu()
+        
+//        dateOfBirth.preferredDatePickerStyle = .compact
+//        dateOfBirth.datePickerMode = .date
     }
  
     // ─────────────────────────────────────────────────────────────
@@ -56,6 +64,21 @@ class AddPatientTableViewController: UITableViewController,
         }
         addPhotoButton.menu = UIMenu(title: "", children: [camera, photoLibrary])
         addPhotoButton.showsMenuAsPrimaryAction = true
+    }
+
+    func setupGenderMenu() {
+        
+        gender.setTitle("Select", for: .normal)
+        let options = ["Male", "Female", "Other", "Not Specified"]
+        let menuChildren = options.map { title in
+            UIAction(title: title){ _ in
+                self.gender.setTitle(title, for: .normal)
+            }
+        }
+        
+        gender.menu = UIMenu(children: menuChildren)
+        gender.showsMenuAsPrimaryAction = true
+        gender.changesSelectionAsPrimaryAction = false
     }
  
     @IBAction func addPhotoTapped(_ sender: Any) {
@@ -141,9 +164,15 @@ class AddPatientTableViewController: UITableViewController,
         }
  
         // ── 3. Parse date of birth ──
-        let formatter        = DateFormatter()
-        formatter.dateFormat = "dd/MM/yyyy"
-        let dobDate = formatter.date(from: dateOfBirth.text ?? "") ?? Date()
+//        let formatter        = DateFormatter()
+//        formatter.dateFormat = "dd/MM/yyyy"
+        let dobDate = dateOfBirth.date
+        let selectedGender : String?
+        if gender.currentTitle == "Select" || gender.currentTitle == nil {
+            selectedGender = nil
+        }else{
+            selectedGender = gender.currentTitle
+        }
  
         // ── 4. Generate a secure temporary password for the patient ──
         let generatedPassword = generateSecurePassword()
@@ -195,11 +224,12 @@ class AddPatientTableViewController: UITableViewController,
                     sessionStatus:        false,
                     nextSessionDate:      Calendar.current.date(byAdding: .day, value: 0, to: Date())!,
                     imageURL:             imagePath,
-                    previousSessionDate:  Calendar.current.date(byAdding: .day, value: -6, to: Date())!
+                    previousSessionDate:  Calendar.current.date(byAdding: .day, value: -6, to: Date())!,
+                    gender :              selectedGender
                 )
  
                 try await AccessSupabase.shared.savePatient(newPatient)
-//                try await AccessSupabase.shared.saveCaseHistory(newPatient.patientID)
+                try await AccessSupabase.shared.saveCaseHistory(newPatient.patientID)
  
                 self.patient = newPatient
  

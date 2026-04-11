@@ -134,6 +134,7 @@ struct Patient: Codable {
     var nextSessionDate: Date?
     var imageURL: String?
     var previousSessionDate: Date?
+    var gender: String?
 
     enum CodingKeys: String, CodingKey {
         case patientID = "patient_id"
@@ -146,5 +147,12 @@ struct Patient: Codable {
         case nextSessionDate = "next_session_date"
         case imageURL = "image_url"
         case previousSessionDate = "previous_session_date"
+        case gender = "gender"
+    }
+    
+    enum gender: String{
+        case Male
+        case Female
+        case Other
     }
 }

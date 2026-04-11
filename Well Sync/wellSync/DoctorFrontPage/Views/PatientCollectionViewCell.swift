@@ -18,10 +18,13 @@ class PatientCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var lastDate: UILabel!
     @IBOutlet weak var time: UILabel!
     
+    @IBOutlet var sessionStatusLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupTag(conditionLabel)
         setupTag(sessionLabel)
+        setupLabel(sessionStatusLabel)
     }
     
     private func setupTag(_ label: UILabel) {
@@ -31,6 +34,16 @@ class PatientCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 20
         
         contentView.layer.masksToBounds = true
+    }
+    
+    private func setupLabel(_ label: UILabel) {
+        label.layer.cornerRadius = 8
+        label.clipsToBounds = true
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        label.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
+        label.textColor = UIColor.systemGreen
+        label.layer.masksToBounds = true
     }
     
     

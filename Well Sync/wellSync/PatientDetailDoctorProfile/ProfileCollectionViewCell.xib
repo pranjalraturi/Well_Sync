@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -44,7 +44,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="fDu-oi-LC9">
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="fDu-oi-LC9">
                                                 <rect key="frame" x="0.0" y="24" width="280" height="18"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dVY-3n-ccy">
@@ -54,7 +54,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="268.69999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="Msn-Ch-Pej">
-                                                        <rect key="frame" x="49.333333333333357" y="0.0" width="230.66666666666663" height="18"/>
+                                                        <rect key="frame" x="41.333333333333357" y="0.0" width="238.66666666666663" height="18"/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                         <color key="textColor" systemColor="secondaryLabelColor"/>
                                                         <nil key="highlightedColor"/>
@@ -121,10 +121,10 @@
                 </userDefinedRuntimeAttribute>
             </userDefinedRuntimeAttributes>
             <connections>
-                <outlet property="AgeLabel" destination="dVY-3n-ccy" id="lh2-Uc-aKW"/>
-                <outlet property="AgeNumberLabel" destination="Msn-Ch-Pej" id="YMM-iD-qgg"/>
+                <outlet property="AgeNumberLabel" destination="dVY-3n-ccy" id="8me-jJ-TV4"/>
                 <outlet property="calendarButton" destination="EBg-kT-ya7" id="2yD-wV-QFo"/>
                 <outlet property="disorderLabel" destination="ZfQ-fW-1hb" id="FHa-cB-AsX"/>
+                <outlet property="genderLabel" destination="Msn-Ch-Pej" id="cCs-ct-gan"/>
                 <outlet property="nameLabel" destination="teu-6c-lnP" id="qOs-PV-k2v"/>
                 <outlet property="profileImageView" destination="Nzi-vr-8dU" id="kZh-cd-r9H"/>
             </connections>

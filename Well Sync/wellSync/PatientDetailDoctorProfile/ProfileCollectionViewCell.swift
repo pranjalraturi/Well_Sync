@@ -15,10 +15,10 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var AgeLabel: UILabel!
     @IBOutlet weak var AgeNumberLabel: UILabel!
     @IBOutlet weak var disorderLabel: UILabel!
     @IBOutlet weak var calendarButton: UIButton!
+    @IBOutlet weak var genderLabel: UILabel!
     
     
   
@@ -88,24 +88,30 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         }
         
         nameLabel.text = patient.name
-        AgeLabel.text = "Age: "
+        if let gender = patient.gender, !gender.isEmpty, gender.lowercased() != "Not Specified" {
+                genderLabel.text = gender
+                genderLabel.isHidden = false
+            } else {
+                genderLabel.text = ""
+                genderLabel.isHidden = true
+            }
         
         let age = Calendar.current.dateComponents([.year], from: patient.dob, to: Date())
         AgeNumberLabel.text = "\(age.year ?? 0)"
         
         disorderLabel.text = patient.condition
         guard let nextDate = patient.nextSessionDate else {
-            calendarButton.setTitle("Schedule", for: .normal)
-            calendarButton.backgroundColor = .systemBlue
-            calendarButton.setTitleColor(.white, for: .normal)
+            calendarButton.setTitle("  Schedule", for: .normal)
+            calendarButton.backgroundColor = .systemBlue.withAlphaComponent(0.75)
+            calendarButton.setTitleColor(.systemBlue, for: .normal)
             return
         }
             
         if Calendar.current.isDateInToday(nextDate) {
-                calendarButton.setTitle("Schedule", for: .normal)
-                calendarButton.backgroundColor = .systemBlue
-                calendarButton.setTitleColor(.white, for: .normal)
-                calendarButton.tintColor = .white
+                calendarButton.setTitle("  Schedule", for: .normal)
+                calendarButton.backgroundColor = .systemBlue.withAlphaComponent(0.12)
+                calendarButton.setTitleColor(.systemBlue, for: .normal)
+                calendarButton.tintColor = .systemBlue
             } else {
                 let formatter = DateFormatter()
                 formatter.dateFormat = "MMM dd"
