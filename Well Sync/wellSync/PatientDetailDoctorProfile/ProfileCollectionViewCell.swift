@@ -102,14 +102,14 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         disorderLabel.text = patient.condition
         guard let nextDate = patient.nextSessionDate else {
             calendarButton.setTitle("  Schedule", for: .normal)
-            calendarButton.backgroundColor = .systemBlue.withAlphaComponent(0.75)
+            calendarButton.backgroundColor = .systemBlue.withAlphaComponent(0.12)
             calendarButton.setTitleColor(.systemBlue, for: .normal)
             return
         }
             
         if Calendar.current.isDateInToday(nextDate) {
                 calendarButton.setTitle("  Schedule", for: .normal)
-                calendarButton.backgroundColor = .systemBlue.withAlphaComponent(0.12)
+            calendarButton.backgroundColor = .systemBlue.withAlphaComponent(0.12)
                 calendarButton.setTitleColor(.systemBlue, for: .normal)
                 calendarButton.tintColor = .systemBlue
             } else {

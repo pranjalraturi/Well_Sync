@@ -20,11 +20,17 @@ class PatientCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var sessionStatusLabel: UILabel!
     
+    @IBOutlet var leftButton: UIButton!
+    @IBOutlet var rightButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupTag(conditionLabel)
         setupTag(sessionLabel)
         setupLabel(sessionStatusLabel)
+        
+        setupButton(leftButton, bgColor: .systemBlue, textColor: .systemBlue)
+        setupButton(rightButton, bgColor: .systemBlue, textColor: .systemBlue)
     }
     
     private func setupTag(_ label: UILabel) {
@@ -41,12 +47,24 @@ class PatientCollectionViewCell: UICollectionViewCell {
         label.clipsToBounds = true
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.2)
+        label.backgroundColor = .systemGreen.withAlphaComponent(0.12)
         label.textColor = UIColor.systemGreen
         label.layer.masksToBounds = true
     }
     
+    private func setupButton(_ button: UIButton, bgColor: UIColor, textColor: UIColor) {
+        button.layer.cornerRadius = 18
+        button.clipsToBounds = true
+        
+        button.backgroundColor = bgColor.withAlphaComponent(0.12)
+        button.setTitleColor(textColor, for: .normal)
+    }
     
+//    private func configureButtons(_ patient: Patient){
+//        if patient.sessionStatus == .done{
+//
+//        }
+//    }
     func configureCell(with: Patient) {
         
         // Default image

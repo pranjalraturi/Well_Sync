@@ -10,7 +10,7 @@ class HomeCollectionViewController: UICollectionViewController {
         }
     }
     @IBOutlet weak var ellipsisButtonTapped: UIBarButtonItem!
-
+    var selectedFilter: FilterType = .all
     var selectedPatient: Patient?
     
     let spinner = UIActivityIndicatorView(style: .large)
@@ -84,24 +84,36 @@ class HomeCollectionViewController: UICollectionViewController {
             }
         }
     }
+    func filteredPatients() -> [Patient] {
+        switch selectedFilter {
+        case .all:
+            return upcoming + missed + done
+        case .upcoming:
+            return upcoming
+        case .missed:
+            return missed
+        case .done:
+            return done
+        }
+    }
 
-    func numberOfPatients(in section: Int) -> Int {
-        switch section {
-        case 1: return upcoming.count
-        case 2: return missed.count
-        case 3: return done.count
-        default: return 0
-        }
-    }
+//    func numberOfPatients(in section: Int) -> Int {
+//        switch section {
+//        case 1: return upcoming.count
+//        case 2: return missed.count
+//        case 3: return done.count
+//        default: return 0
+//        }
+//    }
     
-    func patientSection(at index: Int, section: Int) -> Patient {
-        switch section {
-        case 1: return upcoming[index]
-        case 2: return missed[index]
-        case 3: return done[index]
-        default: return upcoming[index]
-        }
-    }
+//    func patientSection(at index: Int, section: Int) -> Patient {
+//        switch section {
+//        case 1: return upcoming[index]
+//        case 2: return missed[index]
+//        case 3: return done[index]
+//        default: return upcoming[index]
+//        }
+//    }
     
     private func setupCollectionView() {
 
@@ -115,10 +127,15 @@ class HomeCollectionViewController: UICollectionViewController {
             forCellWithReuseIdentifier: "TopCell"
         )
 
+//        collectionView.register(
+//            UINib(nibName: "SectionHeaderView", bundle: nil),
+//            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+//            withReuseIdentifier: "header"
+//        )
+        
         collectionView.register(
-            UINib(nibName: "SectionHeaderView", bundle: nil),
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: "header"
+            UINib(nibName: "FilterCollectionViewCell", bundle: nil),
+            forCellWithReuseIdentifier: "FilterCell"
         )
     }
     func setupMenu() {
@@ -199,7 +216,7 @@ class HomeCollectionViewController: UICollectionViewController {
 
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        return 3
     }
 
     
@@ -208,35 +225,37 @@ class HomeCollectionViewController: UICollectionViewController {
 
         if section == 0 {
             return 2
+        } else if section == 1{
+            return 1
         } else {
-            return numberOfPatients(in: section)
+            return filteredPatients().count
         }
     }
 
 }
-extension HomeCollectionViewController {
-
-    override func collectionView(_ collectionView: UICollectionView,
-                                 viewForSupplementaryElementOfKind kind: String,
-                                 at indexPath: IndexPath) -> UICollectionReusableView {
-
-        let header = collectionView.dequeueReusableSupplementaryView(
-            ofKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: "header",
-            for: indexPath
-        ) as! SectionHeaderView
-
-        if indexPath.section == 1 {
-            header.configure(withTitle: "Upcoming")
-        } else if indexPath.section == 2 {
-            header.configure(withTitle: "Missed")
-        } else if indexPath.section == 3 {
-            header.configure(withTitle: "Done")
-        }
-
-        return header
-    }
-}
+//extension HomeCollectionViewController {
+//
+//    override func collectionView(_ collectionView: UICollectionView,
+//                                 viewForSupplementaryElementOfKind kind: String,
+//                                 at indexPath: IndexPath) -> UICollectionReusableView {
+//
+//        let header = collectionView.dequeueReusableSupplementaryView(
+//            ofKind: UICollectionView.elementKindSectionHeader,
+//            withReuseIdentifier: "header",
+//            for: indexPath
+//        ) as! SectionHeaderView
+//
+//        if indexPath.section == 1 {
+//            header.configure(withTitle: "Upcoming")
+//        } else if indexPath.section == 2 {
+//            header.configure(withTitle: "Missed")
+//        } else if indexPath.section == 3 {
+//            header.configure(withTitle: "Done")
+//        }
+//
+//        return header
+//    }
+//}
 extension HomeCollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView,
@@ -257,13 +276,33 @@ extension HomeCollectionViewController {
             applyShadow(cell: cell)
             return cell
         }
+        
+        if indexPath.section == 1 {
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: "FilterCell",
+                    for: indexPath
+                ) as! FilterCollectionViewCell
 
+                cell.configure(
+                    allCount: upcoming.count + missed.count + done.count,
+                    upcomingCount: upcoming.count,
+                    missedCount: missed.count,
+                    doneCount: done.count
+                )
+                cell.onFilterSelected = { [weak self] filter in
+                    guard let self = self else { return }
+                    self.selectedFilter = filter
+                    self.collectionView.reloadData()
+                }
+
+                return cell
+            }
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "PatientCell",
             for: indexPath
         ) as! PatientCollectionViewCell
 
-        let patient = patientSection(at: indexPath.row, section: indexPath.section)
+        let patient = filteredPatients()[indexPath.row]
 
         cell.configureCell(with: patient)
 
@@ -281,19 +320,19 @@ extension HomeCollectionViewController {
         cell.layer.masksToBounds = false
     }
 
-    func headerItem() -> NSCollectionLayoutBoundarySupplementaryItem {
-
-        let headerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(60)
-        )
-
-        return NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: headerSize,
-            elementKind: UICollectionView.elementKindSectionHeader,
-            alignment: .top
-        )
-    }
+//    func headerItem() -> NSCollectionLayoutBoundarySupplementaryItem {
+//
+//        let headerSize = NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(1.0),
+//            heightDimension: .absolute(60)
+//        )
+//
+//        return NSCollectionLayoutBoundarySupplementaryItem(
+//            layoutSize: headerSize,
+//            elementKind: UICollectionView.elementKindSectionHeader,
+//            alignment: .top
+//        )
+//}
 
     func createLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { sectionIndex, _ in
@@ -303,17 +342,17 @@ extension HomeCollectionViewController {
 
     func sectionLayout(for section: Int) -> NSCollectionLayoutSection {
 
-        let header = headerItem()
+//        let header = headerItem()
 
         switch section {
         case 0:
             return topSectionLayout()
 
-        case 1,2,3:
-            let layout = patientSectionLayout()
-            layout.boundarySupplementaryItems = [header]
-            return layout
-
+        case 1:
+            return filterSectionLayout()
+            
+        case 2:
+            return patientSectionLayout()
         default:
             return patientSectionLayout()
         }
@@ -358,7 +397,7 @@ extension HomeCollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(150)
+            heightDimension: .absolute(170)
         )
 
         let group = NSCollectionLayoutGroup.vertical(
@@ -373,14 +412,29 @@ extension HomeCollectionViewController {
 
         return section
     }
-
+    
+    func filterSectionLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(40))
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16)
+        return section
+    }
     
     override func collectionView(_ collectionView: UICollectionView,
                                  didSelectItemAt indexPath: IndexPath) {
 
-        guard indexPath.section != 0 else { return }
+        guard indexPath.section == 2 else { return }
 
-        let patient = patientSection(at: indexPath.row, section: indexPath.section)
+        let patient = filteredPatients()[indexPath.row]
         //print(patient.name)
         selectedPatient = patient
         performSegue(withIdentifier: "PatientDetail", sender: self)

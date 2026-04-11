@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="FilterCell" id="gTV-IL-0wX" customClass="FilterCollectionViewCell" customModule="wellSync" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="420" height="41"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="420" height="41"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rki-7m-lil" customClass="PaddingLabel" customModule="wellSync" customModuleProvider="target">
+                        <rect key="frame" x="4" y="8" width="37.333333333333336" height="25"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yd1-dc-mOR" customClass="PaddingLabel" customModule="wellSync" customModuleProvider="target">
+                        <rect key="frame" x="49.333333333333329" y="8" width="37.333333333333329" height="25"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="93Z-1r-LlY" customClass="PaddingLabel" customModule="wellSync" customModuleProvider="target">
+                        <rect key="frame" x="94.666666666666671" y="8" width="37.333333333333329" height="25"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cz6-Lo-Pft" customClass="PaddingLabel" customModule="wellSync" customModuleProvider="target">
+                        <rect key="frame" x="140" y="8" width="37.333333333333343" height="25"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="93Z-1r-LlY" secondAttribute="bottom" constant="8" id="1r6-oi-coV"/>
+                <constraint firstAttribute="bottom" secondItem="rki-7m-lil" secondAttribute="bottom" constant="8" id="AUY-xK-nmF"/>
+                <constraint firstAttribute="bottom" secondItem="yd1-dc-mOR" secondAttribute="bottom" constant="8" id="Bh9-sU-jb4"/>
+                <constraint firstItem="rki-7m-lil" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="Gaa-vQ-D71"/>
+                <constraint firstItem="rki-7m-lil" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="4" id="U0r-Db-MM4"/>
+                <constraint firstItem="93Z-1r-LlY" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="eUr-QI-jOo"/>
+                <constraint firstItem="yd1-dc-mOR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="eh2-4s-6DM"/>
+                <constraint firstItem="Cz6-Lo-Pft" firstAttribute="leading" secondItem="93Z-1r-LlY" secondAttribute="trailing" constant="8" id="gQq-6H-Xit"/>
+                <constraint firstAttribute="bottom" secondItem="Cz6-Lo-Pft" secondAttribute="bottom" constant="8" id="hs6-AM-Udy"/>
+                <constraint firstItem="93Z-1r-LlY" firstAttribute="leading" secondItem="yd1-dc-mOR" secondAttribute="trailing" constant="8" id="qlQ-ng-lHp"/>
+                <constraint firstItem="yd1-dc-mOR" firstAttribute="leading" secondItem="rki-7m-lil" secondAttribute="trailing" constant="8" id="twx-Qs-6Zq"/>
+                <constraint firstItem="Cz6-Lo-Pft" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="wLM-Xw-CIX"/>
+            </constraints>
+            <size key="customSize" width="419" height="41"/>
+            <connections>
+                <outlet property="Done" destination="Cz6-Lo-Pft" id="p4o-lw-Mxr"/>
+                <outlet property="Missed" destination="93Z-1r-LlY" id="RrO-Ik-Gb6"/>
+                <outlet property="Upcoming" destination="yd1-dc-mOR" id="6hI-mg-vMk"/>
+                <outlet property="all" destination="rki-7m-lil" id="RbZ-QY-WUM"/>
+            </connections>
+            <point key="canvasLocation" x="62.595419847328245" y="142.6056338028169"/>
+        </collectionViewCell>
+    </objects>
+</document>
