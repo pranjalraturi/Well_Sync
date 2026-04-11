@@ -978,4 +978,79 @@ final class AccessSupabase {
             .download(path: path)
         return data
     }
+    
+    func saveSleepLog(_ log: sleepVital) async throws {
+
+        try await supabase
+            .from("sleep_logs")
+            .insert(log)
+            .execute()
+
+        print("✅ Single sleep log inserted")
+    }
+
+    func saveSleepLogs(_ logs: [sleepVital]) async throws {
+        guard !logs.isEmpty else { return }
+
+        try await supabase
+            .from("sleep_logs")
+            .upsert(logs, onConflict: "patient_id,start_time,end_time")
+            .execute()
+
+        print("✅ Upserted \(logs.count) sleep logs")
+    }
+
+//    func fetchSleepLogs(for patientID: UUID) async throws -> [sleepVital] {
+//        let logs: [sleepVital] = try await supabase
+//            .from("sleep_logs")
+//            .select("*")
+//            .eq("patient_id", value: patientID.uuidString)
+//            .order("log_date", ascending: false) // ✅ FIXED
+//            .execute()
+//            .value
+//
+//        return logs
+//    }
+    func fetchSleepLogs(for patientID: UUID) async throws -> [sleepVital] {
+
+        let response = try await supabase
+            .from("sleep_logs")
+            .select("*")
+            .eq("patient_id", value: patientID.uuidString)
+            .order("log_date", ascending: false)
+            .execute()
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let string = try container.decode(String.self)
+
+            // All formats Supabase can return
+            let formats = [
+                "yyyy-MM-dd'T'HH:mm:ss.SSS",   // 2026-04-11T05:41:45.769  ← your crash
+                "yyyy-MM-dd'T'HH:mm:ss.SSSZ",  // with timezone + ms
+                "yyyy-MM-dd'T'HH:mm:ssZ",       // with timezone
+                "yyyy-MM-dd'T'HH:mm:ss",        // no timezone, no ms
+                "yyyy-MM-dd"                     // date only (log_date column)
+            ]
+
+            for format in formats {
+                let f = DateFormatter()
+                f.dateFormat = format
+                f.locale = Locale(identifier: "en_US_POSIX")
+                f.timeZone = TimeZone(abbreviation: "UTC")
+                if let date = f.date(from: string) { return date }
+            }
+
+            throw DecodingError.dataCorruptedError(
+                in: container,
+                debugDescription: "Invalid date format: \(string)"
+            )
+        }
+
+        return try decoder.decode([sleepVital].self, from: response.data)
+    }
+    func fetchExistingSleepLogs(patientID: UUID) async throws -> [sleepVital] {
+        return try await fetchSleepLogs(for: patientID)
+    }
 }

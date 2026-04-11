@@ -69,7 +69,16 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
         self.collectionView!.register(UINib(nibName: "PatientBarVitalsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "patientBarVitalsCell")
         collectionView.collectionViewLayout = generateLayout()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        guard let patient = patient else { return }
+
+        AccessHealthKit.healthKit.syncSleepToSupabase(
+            patientID: patient.patientID,
+            nightsBack: 30
+        )
+    }
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
@@ -225,7 +234,14 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
         ]
         collectionView.reloadItems(at: items)
     }
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "sleepLog"){
+            guard let vc = segue.destination as? UINavigationController,let dvc = vc.viewControllers.first as? VitalLogTableViewController else {
+                return
+            }
+            dvc.patient = patient
+        }
+    }
 }
 
 private extension Array {

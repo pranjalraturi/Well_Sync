@@ -7,15 +7,8 @@
 
 import UIKit
 
-enum LogType {
-    case heartRate
-    case sleep
-}
-
 class VitalLogTableViewController: UITableViewController {
     
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
-    @IBOutlet weak var heartText1: UITextField!
     @IBOutlet weak var textField2: UITextField!
     @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var label2: UILabel!
@@ -24,103 +17,112 @@ class VitalLogTableViewController: UITableViewController {
     @IBOutlet weak var startSleep: UIDatePicker!
     @IBOutlet weak var endSleep: UIDatePicker!
     
-//    let textfield2 = IndexPath(row: 1, section: 3)
-//    let textfield1 = IndexPath(row: 1, section: 2)
-    
-    var isTextFieldVisible1: Bool = false
-    var isTextFieldVisible2: Bool = false
-    
-    var selectedLogType: LogType = .heartRate
-
-    func setTextFieldVisibility(isVisible1: Bool, isVisible2: Bool) {
-        let oldVisible1 = isTextFieldVisible1
-        let oldVisible2 = isTextFieldVisible2
-        
-        isTextFieldVisible1 = isVisible1
-        isTextFieldVisible2 = isVisible2
-        
-        var inserts: [IndexPath] = []
-        var deletes: [IndexPath] = []
-        
-        if oldVisible1 != isVisible1 {
-            let ip = IndexPath(row: 1, section: 2)
-            if isVisible1 {
-                inserts.append(ip)
-            } else {
-                deletes.append(ip)
-            }
-        }
-        
-        if oldVisible2 != isVisible2 {
-            let ip = IndexPath(row: 1, section: 3)
-            if isVisible2 {
-                inserts.append(ip)
-            } else {
-                deletes.append(ip)
-            }
-        }
-        
-        tableView.beginUpdates()
-        if !deletes.isEmpty {
-            tableView.deleteRows(at: deletes, with: .middle)
-        }
-        if !inserts.isEmpty {
-            tableView.insertRows(at: inserts, with: .middle)
-        }
-        tableView.endUpdates()
-    }
+    var patient:Patient?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateLabels()
     }
         
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 2 {
-            return isTextFieldVisible1 ? 2 : 1
+            return 1
         }
         
         if section == 3 {
-            return isTextFieldVisible2 ? 2 : 1
+            return 2
         }
         
         return super.tableView(tableView, numberOfRowsInSection: section)
     }
-    
-    func updateLabels() {
-        if selectedLogType == .heartRate {
-            startSleep.isHidden = true
-            endSleep.isHidden = true
-            
-            label1.text = "Enter your heart rate"
-            label2.text = "What were you doing at that time?"
-            label3.text = "Device used for measurement"
-            
-            setTextFieldVisibility(isVisible1: true, isVisible2: true)
-        }
-        else {
-            startSleep.isHidden = false
-            endSleep.isHidden = false
-            
-            label1.text = "Start Time"
-            label2.text = "End Time"
-            label3.text = "I felt that the quality of sleep was?"
-            
-            setTextFieldVisibility(isVisible1: false, isVisible2: false)
-        }
-    }
 
-    @IBAction func segmentChanged(_ sender: UISegmentedControl) {
-        selectedLogType = sender.selectedSegmentIndex == 0 ? .heartRate : .sleep
-        updateLabels()
-    }
+//    @IBAction func savedata(_ sender: UIBarButtonItem) {
+//        guard let patient = patient else { return }
+//
+//            let start = startSleep.date
+//            let end = endSleep.date
+//
+//            guard end > start else {
+//                print("Invalid time")
+//                return
+//            }
+//
+//            let duration = end.timeIntervalSince(start) / 60
+//
+//            let log = sleepVital(
+//                id: nil,
+//                patient_id: patient.patientID,
+//                log_date: Calendar.current.startOfDay(for: start),
+//                start_time: start,
+//                end_time: end,
+//                duration_minutes: duration,
+//                quality: textField2.text ?? ""
+//            )
+//
+//            Task {
+//                do {
+//                    // 1. Save to HealthKit
+//                    try await AccessHealthKit.healthKit.saveSleepToHealthKit(
+//                        startTime: start,
+//                        endTime: end
+//                    )
+//
+//                    // 2. Save to Supabase
+//                    _ = try await AccessSupabase.shared.saveSleepLog(log)
+//
+//                    print("✅ Saved to HealthKit + DB")
+//                    dismiss(animated: true)
+//
+//                } catch {
+//                    print("❌ Save error: \(error)")
+//                }
+//            }
+//    }
     @IBAction func savedata(_ sender: UIBarButtonItem) {
-        if selectedLogType == .heartRate {
-            
+        guard let patient = patient else { return }
+
+        let start = startSleep.date
+        let end = endSleep.date
+
+        guard end > start else {
+            print("Invalid time")
+            return
         }
-        else{
-            
+
+        let duration = end.timeIntervalSince(start) / 60
+
+        let qualityText = textField2.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        let log = sleepVital(
+            id: nil,
+            patient_id: patient.patientID,
+            log_date: Date(),
+            start_time: start,
+            end_time: end,
+            duration_minutes: duration,
+            quality: (qualityText?.isEmpty == true ? "" : qualityText)! // ✅ FIX
+        )
+
+        Task {
+            do {
+                // ✅ HealthKit optional (won't crash if denied)
+                try await AccessHealthKit.healthKit.saveSleepToHealthKit(
+                    startTime: start,
+                    endTime: end
+                )
+
+                // ✅ Always save to DB
+                try await AccessSupabase.shared.saveSleepLog(log)
+
+                print("✅ Saved to DB")
+                dismiss(animated: true)
+
+            } catch {
+                print("❌ DB Save error: \(error)")
+            }
         }
+    }
+    @IBAction func close(_ sender: UIBarButtonItem) {
+        dismiss(animated: true)
     }
 }
 

@@ -67,7 +67,7 @@
                     <navigationItem key="navigationItem" title="Health Stats" id="Qa4-Z8-oXD">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="npi-5C-wat">
                             <connections>
-                                <segue destination="xdp-AV-fq3" kind="presentation" id="Yhy-ds-DeD"/>
+                                <segue destination="xdp-AV-fq3" kind="presentation" identifier="sleepLog" id="Yhy-ds-DeD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -109,6 +109,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="E2Q-MS-23o" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aB0-hp-SK5">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
