@@ -77,6 +77,10 @@ class PatientDetailCollectionViewController: UICollectionViewController{
         if segue.identifier == "case",let vc = segue.destination as? CaseHistoryViewController{
             vc.patient = self.patient
         }
+        if segue.identifier == "vitals" {
+            let destination = segue.destination as! VitalsCollectionViewController
+            destination.patient = self.patient
+        }
     }
 }
 

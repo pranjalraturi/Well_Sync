@@ -278,7 +278,6 @@ class AccessHealthKit {
                             sleepVital(
                                 id: nil,
                                 patient_id: patientID,
-                                log_date: Calendar.current.startOfDay(for: $0.startTime),
                                 start_time: $0.startTime,
                                 end_time: $0.endTime,
                                 duration_minutes: $0.durationMinutes,
@@ -318,6 +317,47 @@ class AccessHealthKit {
 
                 } catch {
                     print("❌ Sync error:", error)
+                }
+            }
+        }
+    }
+    func syncStepsToSupabase(patientID: UUID, daysBack: Int) {
+
+        let endDate   = Date()
+        let startDate = Calendar.current.date(byAdding: .day, value: -daysBack, to: endDate)!
+
+        // Step 1: Get steps from HealthKit
+        getSteps(from: startDate, to: endDate) { hkStepsByDay in
+
+            print("📱 HealthKit days with steps:", hkStepsByDay.count)
+
+            guard !hkStepsByDay.isEmpty else {
+                print("❌ No steps data from HealthKit")
+                return
+            }
+
+            Task {
+                do {
+                    let calendar = Calendar.current
+
+                    // Step 2: Convert [Date: Double] → [StepsVital]
+                    // One row per day — upsert will INSERT or UPDATE automatically
+                    let logs: [StepsVital] = hkStepsByDay.map { (date, steps) in
+                        StepsVital(
+                            id:         nil,
+                            patient_id: patientID,
+                            log_date:   calendar.startOfDay(for: date),
+                            step_count: steps
+                        )
+                    }
+
+                    // Step 3: Upsert to Supabase
+                    // If morning had 500 and now it's 1200 → row gets updated automatically
+                    try await AccessSupabase.shared.saveStepsLogs(logs)
+                    print("✅ Synced \(logs.count) step logs to Supabase")
+
+                } catch {
+                    print("❌ Steps sync error:", error)
                 }
             }
         }

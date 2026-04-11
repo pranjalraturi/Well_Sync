@@ -17,41 +17,10 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <color key="tintColor" systemColor="secondaryLabelColor"/>
                         <sections>
-                            <tableViewSection id="zGk-Sz-r4Z">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="ApM-HU-3zP">
-                                        <rect key="frame" x="20" y="18" width="353" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ApM-HU-3zP" id="6zO-Ba-kKc">
-                                            <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date and Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Wc-MO-6Q2">
-                                                    <rect key="frame" x="16.000000000000007" y="14.666666666666664" width="110.66666666666669" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="TE5-E6-IB6">
-                                                    <rect key="frame" x="154.66666666666663" y="8" width="190.33333333333337" height="34.333333333333336"/>
-                                                </datePicker>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="6Wc-MO-6Q2" firstAttribute="leading" secondItem="6zO-Ba-kKc" secondAttribute="leading" constant="16" id="1QZ-k2-CW0"/>
-                                                <constraint firstItem="6Wc-MO-6Q2" firstAttribute="centerY" secondItem="6zO-Ba-kKc" secondAttribute="centerY" id="8xD-4O-l9q"/>
-                                                <constraint firstItem="TE5-E6-IB6" firstAttribute="centerY" secondItem="6zO-Ba-kKc" secondAttribute="centerY" id="DgZ-Y7-ln3"/>
-                                                <constraint firstAttribute="trailing" secondItem="TE5-E6-IB6" secondAttribute="trailing" constant="8" id="VFn-wA-g2a"/>
-                                                <constraint firstItem="TE5-E6-IB6" firstAttribute="leading" secondItem="6Wc-MO-6Q2" secondAttribute="trailing" constant="28" id="arx-G0-G0e"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection id="ErY-N2-cmt">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="hDl-Aq-9F9">
-                                        <rect key="frame" x="20" y="104" width="353" height="50"/>
+                                        <rect key="frame" x="20" y="18" width="353" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hDl-Aq-9F9" id="bqh-u8-xcu">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
@@ -64,10 +33,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="zIq-we-gBk">
-                                                    <rect key="frame" x="238" y="4" width="107" height="42"/>
+                                                    <rect key="frame" x="175" y="4" width="170" height="42"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="107" id="Ode-x6-Iem"/>
                                                         <constraint firstAttribute="height" constant="42" id="Tim-RX-isO"/>
+                                                        <constraint firstAttribute="width" constant="170" id="bJS-yB-Yck"/>
                                                     </constraints>
                                                 </datePicker>
                                             </subviews>
@@ -87,7 +56,7 @@
                             <tableViewSection id="WkQ-VH-b6S">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="tWD-o7-gDX">
-                                        <rect key="frame" x="20" y="190" width="353" height="50"/>
+                                        <rect key="frame" x="20" y="104" width="353" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tWD-o7-gDX" id="0Y8-go-BKl">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
@@ -100,10 +69,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="wBZ-zN-TiV">
-                                                    <rect key="frame" x="238" y="4" width="107" height="42"/>
+                                                    <rect key="frame" x="175" y="4" width="170" height="42"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="42" id="NbM-Ex-4oY"/>
-                                                        <constraint firstAttribute="width" constant="107" id="Sxo-6r-5jN"/>
+                                                        <constraint firstAttribute="width" constant="170" id="Sxo-6r-5jN"/>
                                                     </constraints>
                                                 </datePicker>
                                             </subviews>
@@ -123,7 +92,7 @@
                             <tableViewSection id="n0H-97-rHH">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="c4i-MO-AkH">
-                                        <rect key="frame" x="20" y="276" width="353" height="50"/>
+                                        <rect key="frame" x="20" y="190" width="353" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="c4i-MO-AkH" id="kL9-iZ-gh2">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
@@ -145,13 +114,13 @@
                                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="50" id="4O9-Js-X5I">
-                                        <rect key="frame" x="20" y="326" width="353" height="50"/>
+                                        <rect key="frame" x="20" y="240" width="353" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4O9-Js-X5I" id="X8i-dV-ySi">
                                             <rect key="frame" x="0.0" y="0.0" width="353" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e6x-a3-Fae">
+                                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="(eg. Good, Bad, Normal, Lazzy....)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="e6x-a3-Fae">
                                                     <rect key="frame" x="16" y="8" width="321" height="34"/>
                                                     <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -191,7 +160,6 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="datePicker" destination="TE5-E6-IB6" id="EA2-P1-Uaa"/>
                         <outlet property="endSleep" destination="wBZ-zN-TiV" id="e2N-xG-693"/>
                         <outlet property="label1" destination="sw6-l5-SMs" id="ahf-1l-WoX"/>
                         <outlet property="label2" destination="OPO-f1-SJI" id="Sf3-WG-OcX"/>

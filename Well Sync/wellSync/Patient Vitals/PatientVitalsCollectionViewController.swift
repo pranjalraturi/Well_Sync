@@ -68,16 +68,11 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
         super.viewDidLoad()
         self.collectionView!.register(UINib(nibName: "PatientBarVitalsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "patientBarVitalsCell")
         collectionView.collectionViewLayout = generateLayout()
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        guard let patient = patient else { return }
-
         AccessHealthKit.healthKit.syncSleepToSupabase(
-            patientID: patient.patientID,
+            patientID: patient!.patientID,
             nightsBack: 30
         )
+        AccessHealthKit.healthKit.syncStepsToSupabase(patientID: patient!.patientID, daysBack: 30)
     }
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
@@ -205,7 +200,7 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
     }
     
     func didTapPrevBarRange(for index: Int) {
-        barOffsets[index] = max(barOffsets[index] - 1, -2)
+        barOffsets[index] = max(barOffsets[index] - 1, -10)
         reloadBar(at: index)
     }
 
@@ -217,14 +212,6 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
     func reloadBar(at barIndex: Int) {
         let indexPath = IndexPath(item: barIndex, section: 1)
         collectionView.reloadItems(at: [indexPath])
-    }
-
-    
-    func didChangeBarRange(for barIndex: Int, to range: Int) {
-        let newRange = DisplayRange(rawValue: range) ?? .weekly
-        barRanges[barIndex] = newRange
-        barOffsets[barIndex] = min(max(barOffsets[barIndex], -2), 0)
-        reloadBar(at: barIndex)
     }
 
     func reloadAllCharts() {
@@ -240,6 +227,9 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
                 return
             }
             dvc.patient = patient
+            dvc.onSave = {
+                self.reloadAllCharts()
+            }
         }
     }
 }
