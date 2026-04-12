@@ -315,6 +315,16 @@
             </objects>
             <point key="canvasLocation" x="2149" y="1581"/>
         </scene>
+        <!--sessionNoteScreen-->
+        <scene sceneID="faf-oO-BLZ">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="sessionNoteScreen" storyboardName="SessionNotes" referencedIdentifier="sessionNoteScreen" id="8cw-Ov-2Fp" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="b1b-bz-8lx"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tru-IQ-O0N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1871" y="428"/>
+        </scene>
         <!--Kanak-->
         <scene sceneID="UXz-Ht-ULs">
             <objects>
@@ -388,6 +398,7 @@
                         <outlet property="ellipsisButtonTapped" destination="X7o-e5-G7o" id="klm-0h-xXh"/>
                         <segue destination="Ktp-cf-v9k" kind="show" identifier="PatientDetail" id="zb7-bm-X89"/>
                         <segue destination="HKh-aw-Ce3" kind="show" identifier="allPatientSegue" id="F1q-mN-Ma9"/>
+                        <segue destination="8cw-Ov-2Fp" kind="show" identifier="DoctorActionToNotes" id="WB7-7K-dzH"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wx2-iR-aaf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

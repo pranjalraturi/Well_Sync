@@ -20,6 +20,10 @@ class PatientCollectionViewCell: UICollectionViewCell {
     @IBOutlet var leftButton: UIButton!
     @IBOutlet var rightButton: UIButton!
     
+    var onAction: ((doctorAction) -> Void)?
+    
+    private var leftAction: doctorAction?
+    private var rightAction: doctorAction?
     override func awakeFromNib() {
         super.awakeFromNib()
         setupTag(conditionLabel)
@@ -59,26 +63,32 @@ class PatientCollectionViewCell: UICollectionViewCell {
 
         case .completed:
             leftButton.setTitle("Next Session Date", for: .normal)
+            leftAction = .nextSession
             leftButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.15)
             leftButton.setTitleColor(.systemOrange, for: .normal)
             rightButton.setTitle("Add Session Note", for: .normal)
+            rightAction = .addNote
             rightButton.backgroundColor = UIColor.systemIndigo.withAlphaComponent(0.25)
             rightButton.setTitleColor(.systemIndigo.withAlphaComponent(0.75), for: .normal)
 
         case .scheduled:
             leftButton.setTitle("Reschedule", for: .normal)
+            leftAction = .reschedule
             leftButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.15)
             leftButton.setTitleColor(.systemOrange, for: .normal)
             rightButton.setTitle("Mark as Done", for: .normal)
+            rightAction = .markDone
             rightButton.backgroundColor = UIColor.systemRed.withAlphaComponent(0.15)
             rightButton.setTitleColor(.systemRed, for: .normal)
             rightButton.isEnabled = true
 
         case .missed:
             leftButton.setTitle("Reschedule", for: .normal)
+            leftAction = .reschedule
             leftButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.15)
             leftButton.setTitleColor(.systemOrange, for: .normal)
             rightButton.setTitle("Notify", for: .normal)
+            rightAction = .notify
             rightButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.15)
             rightButton.setTitleColor(.systemBlue, for: .normal)
             rightButton.isEnabled = true
@@ -147,6 +157,18 @@ class PatientCollectionViewCell: UICollectionViewCell {
             lastDate.text = "Last session: \(dateString)"
         }
         configureButtons(status: status)
+    }
+    
+    @IBAction func leftButtonTapped(_ sender: UIButton) {
+        if let action = leftAction {
+            onAction?(action)
+        }
+    }
+
+    @IBAction func rightButtonTapped(_ sender: UIButton) {
+        if let action = rightAction {
+            onAction?(action)
+        }
     }
 
 }

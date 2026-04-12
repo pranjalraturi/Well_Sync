@@ -80,6 +80,9 @@
                             <color key="baseForegroundColor" systemColor="systemBackgroundColor"/>
                             <color key="baseBackgroundColor" systemColor="systemBackgroundColor"/>
                         </buttonConfiguration>
+                        <connections>
+                            <action selector="rightButtonTapped:" destination="yD5-KR-l1I" eventType="touchUpInside" id="cIV-dI-0TQ"/>
+                        </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Ky-Mo-AKH" userLabel="left Button">
                         <rect key="frame" x="12" y="91" width="168" height="28"/>
@@ -92,6 +95,9 @@
                             <color key="baseForegroundColor" systemColor="systemBackgroundColor"/>
                             <color key="baseBackgroundColor" systemColor="systemBackgroundColor"/>
                         </buttonConfiguration>
+                        <connections>
+                            <action selector="leftButtonTapped:" destination="yD5-KR-l1I" eventType="touchUpInside" id="MC4-Eu-SBR"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>

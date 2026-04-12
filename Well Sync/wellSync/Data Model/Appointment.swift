@@ -45,3 +45,11 @@ struct AppointmentWithPatient: Decodable {
         case patient = "patients"
     }
 }
+
+enum doctorAction{
+    case nextSession
+    case addNote
+    case reschedule
+    case markDone
+    case notify
+}

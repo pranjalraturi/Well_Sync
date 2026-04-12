@@ -280,7 +280,27 @@ extension HomeCollectionViewController {
         let patient = item.patient
 
         cell.configureCell(with: patient, status: item.status)
+        cell.onAction = { [weak self] action in
+            guard let self = self else { return }
 
+            switch action {
+
+            case .nextSession:
+                self.setNextSessionDate(for: patient)
+
+            case .addNote:
+                self.addSessionNote(for: patient)
+
+            case .reschedule:
+                self.reschedule(patient)
+
+            case .markDone:
+                self.showMarkAsDoneAlert(for: item, at: indexPath)
+
+            case .notify:
+                self.notifyPatient(patient)
+            }
+        }
         applyShadow(cell: cell)
         return cell
     }
@@ -412,6 +432,12 @@ extension HomeCollectionViewController {
             let AllPatientVC = segue.destination as! AllPatientCollectionViewController
             AllPatientVC.doctor = doctor
         }
+        if segue.identifier == "DoctorActionToNotes",
+               let vc = segue.destination as? SessionNoteCollectionViewController,
+               let patient = sender as? Patient {
+                
+                vc.patient = patient
+            }
         if segue.identifier == "AddPatientSegue" {
             
             if let nav = segue.destination as? UINavigationController,
@@ -447,4 +473,154 @@ extension HomeCollectionViewController {
         }
     }
 }
+extension HomeCollectionViewController{
+    func reschedule(_ patient: Patient) {
+        print("Reschedule \(patient.name)")
+    }
 
+
+    func notifyPatient(_ patient: Patient) {
+        print("Notify \(patient.name)")
+    }
+
+    func addSessionNote(for patient: Patient) {
+        performSegue(withIdentifier: "DoctorActionToNotes", sender: patient)
+    }
+
+    func setNextSessionDate(for patient: Patient) {
+        print("Next session \(patient.name)")
+    }
+    
+    func showMarkAsDoneAlert(for item: AppointmentWithPatient, at indexPath: IndexPath) {
+        
+        let alert = UIAlertController(
+            title: "Mark as Done",
+            message: "You are marking \(item.patient.name)'s session as completed.",
+            preferredStyle: .alert
+        )
+        
+        let confirm = UIAlertAction(title: "OK", style: .default) { _ in
+            
+            self.showCheckmarkAnimation(at: indexPath)
+            Task {
+                do {
+                    let updatedAppointment = Appointment(
+                                        appointmentId: item.appointmentId,
+                                        patientId: item.patientId,
+                                        doctorId: item.doctorId,
+                                        scheduledAt: item.scheduledAt,
+                                        status: .completed
+                                    )
+                    
+                    _ = try await AccessSupabase.shared.updateAppointment(updatedAppointment)
+                    try await Task.sleep(nanoseconds: 1_200_000_000)
+                    await MainActor.run {
+                        self.loadAppointments()
+                    }
+                    
+                } catch {
+                    print("Error:", error)
+                }
+            }
+        }
+        confirm.setValue(UIColor.systemGreen, forKey: "titleTextColor")
+        alert.addAction(confirm)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .destructive))
+        present(alert, animated: true)
+    }
+    
+//    private func showCheckmarkAnimation(at indexPath: IndexPath) {
+//        
+//        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+//        
+//        let checkmark = UIImageView(image: UIImage(systemName: "checkmark.circle.fill"))
+//        checkmark.tintColor = .systemGreen
+//        checkmark.translatesAutoresizingMaskIntoConstraints = false
+//        checkmark.alpha = 0
+//        checkmark.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+//        
+//        cell.contentView.addSubview(checkmark)
+//        
+//        // Center the checkmark
+//        NSLayoutConstraint.activate([
+//            checkmark.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor),
+//            checkmark.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
+//            checkmark.widthAnchor.constraint(equalToConstant: 40),
+//            checkmark.heightAnchor.constraint(equalToConstant: 40)
+//        ])
+//        
+//        // 🔥 Animate
+//        UIView.animate(withDuration: 0.25, animations: {
+//            checkmark.alpha = 1
+//            checkmark.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+//        }) { _ in
+//            
+//            UIView.animate(withDuration: 0.2, animations: {
+//                checkmark.transform = .identity
+//            }) { _ in
+//                
+//                UIView.animate(withDuration: 0.2, animations: {
+//                    checkmark.alpha = 0
+//                }) { _ in
+//                    checkmark.removeFromSuperview()
+//                }
+//            }
+//        }
+//    }
+    
+    private func showCheckmarkAnimation(at indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+
+        // — Ripple ring —
+        let ripple = UIView()
+        ripple.layer.cornerRadius = 30
+        ripple.layer.borderWidth  = 2
+        ripple.layer.borderColor  = UIColor.systemGreen.cgColor
+        ripple.frame              = CGRect(x: 0, y: 0, width: 60, height: 60)
+        ripple.center             = cell.contentView.center
+        ripple.alpha              = 0.8
+        cell.contentView.addSubview(ripple)
+
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut) {
+            ripple.transform = CGAffineTransform(scaleX: 2.8, y: 2.8)
+            ripple.alpha     = 0
+        } completion: { _ in
+            ripple.removeFromSuperview()
+        }
+
+        // — Checkmark icon with spring bounce —
+        let checkmark = UIImageView(image: UIImage(systemName: "checkmark.circle.fill"))
+        checkmark.tintColor                          = .systemGreen
+        checkmark.translatesAutoresizingMaskIntoConstraints = false
+        checkmark.alpha                              = 0
+        checkmark.transform                          = CGAffineTransform(scaleX: 0.3, y: 0.3)
+        cell.contentView.addSubview(checkmark)
+
+        NSLayoutConstraint.activate([
+            checkmark.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor),
+            checkmark.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
+            checkmark.widthAnchor.constraint(equalToConstant: 52),
+            checkmark.heightAnchor.constraint(equalToConstant: 52)
+        ])
+
+        // Pop in with spring
+        UIView.animate(withDuration: 0.4, delay: 0.05,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0.8) {
+            checkmark.alpha     = 1
+            checkmark.transform = .identity
+        } completion: { _ in
+
+            // Hold for a moment, then fade + slide up
+            UIView.animate(withDuration: 0.3, delay: 0.5,
+                           options: .curveEaseIn) {
+                checkmark.alpha     = 0
+                checkmark.transform = CGAffineTransform(translationX: 0, y: -10)
+            } completion: { _ in
+                checkmark.removeFromSuperview()
+            }
+        }
+    }
+}
