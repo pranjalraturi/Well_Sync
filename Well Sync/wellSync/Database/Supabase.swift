@@ -595,6 +595,48 @@ final class AccessSupabase {
             .execute()
     }
     
+    func markMissedAppointments(for doctorID: UUID) async throws {
+        let now = ISO8601DateFormatter().string(from: Date())
+        try await supabase
+            .from("appointments")
+            .update([
+                "status": "missed"
+            ])
+            .eq("doctor_id", value: doctorID.uuidString)
+            .eq("status", value: "scheduled")
+            .lt("scheduled_at", value: now)
+            .execute()
+    }
+    
+    func fetchTodayAppointmentsWithPatients(doctorID: UUID) async throws -> [AppointmentWithPatient] {
+        
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: Date())
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+
+        let formatter = ISO8601DateFormatter()
+
+        let response = try await supabase
+            .from("appointments")
+            .select("""
+                appointment_id,
+                patient_id,
+                doctor_id,
+                scheduled_at,
+                status,
+                patients (*)
+            """)
+            .eq("doctor_id", value: doctorID.uuidString)
+            .gte("scheduled_at", value: formatter.string(from: startOfDay))
+            .lt("scheduled_at", value: formatter.string(from: endOfDay))
+            .execute()
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+
+        return try decoder.decode([AppointmentWithPatient].self, from: response.data)
+    }
+    
     func clearNextSessionDate(patientID: UUID) async throws{
         
         let updatedData: [String: String?] = ["next_session_date": nil]

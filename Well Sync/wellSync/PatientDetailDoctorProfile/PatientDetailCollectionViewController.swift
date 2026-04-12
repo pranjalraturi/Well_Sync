@@ -271,9 +271,11 @@ extension PatientDetailCollectionViewController{
             Task{
                 do{
                     let appts = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
-                    if var currentAppt = appts.first(where: {$0.status == .upcoming}){
+                    let calendar = Calendar.current
+                    if var currentAppt = appts.first(where: {($0.status == .scheduled || $0.status == .missed) && calendar.isDateInToday($0.scheduledAt)}){
                         currentAppt.status = .completed
-                      _ = try await AccessSupabase.shared.updateAppointment(currentAppt)
+                      let x = try await AccessSupabase.shared.updateAppointment(currentAppt)
+                        print(x)
                     }
                     
                     patient.previousSessionDate = Date()
@@ -338,7 +340,7 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
                 Task {
                     do {
                         let appointments = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
-                        if let apptToDelete = appointments.first(where: { $0.status == .upcoming }), let id = apptToDelete.appointmentId {
+                        if let apptToDelete = appointments.first(where: { $0.status == .scheduled }), let id = apptToDelete.appointmentId {
                             try await AccessSupabase.shared.deleteAppointment(id: id)
                         }
                         try await AccessSupabase.shared.clearNextSessionDate(patientID: patient.patientID)
@@ -360,18 +362,17 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
                 do{
                     let appointments = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
                     let futureUpcomingAppt = appointments.first(where:{
-                        $0.status == .upcoming
+                        $0.status == .scheduled
                     })
                     if let apptToUpdate = futureUpcomingAppt{
                         print(patient.nextSessionDate)
-//                        patient.previousSessionDate = patient.nextSessionDate
                         var updatedAppt = apptToUpdate
                         updatedAppt.scheduledAt = selectedFullDate
                         _ = try await AccessSupabase.shared.updateAppointment(updatedAppt)
                         print("Schedule update")
                     }else{
                         let newAppointment = Appointment(
-                            appointmentId: UUID(), patientId: patient.patientID, doctorId: patient.docID, scheduledAt: selectedFullDate, status: .upcoming
+                            appointmentId: UUID(), patientId: patient.patientID, doctorId: patient.docID, scheduledAt: selectedFullDate, status: .scheduled
                         )
                         _ = try await AccessSupabase.shared.createAppointment(newAppointment)
                         print("new Appointment")
@@ -398,7 +399,7 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
                 do {
                     let appointments = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
                     
-                    if let apptToUpdate = appointments.first(where: { $0.status == .upcoming }) {
+                    if let apptToUpdate = appointments.first(where: { $0.status == .scheduled }) {
                         var updatedAppt = apptToUpdate
                         updatedAppt.scheduledAt = newDate
                         

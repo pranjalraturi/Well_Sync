@@ -17,9 +17,6 @@ class PatientCollectionViewCell: UICollectionViewCell {
     @IBOutlet var conditionLabel: UILabel!
     @IBOutlet weak var lastDate: UILabel!
     @IBOutlet weak var time: UILabel!
-    
-    @IBOutlet var sessionStatusLabel: UILabel!
-    
     @IBOutlet var leftButton: UIButton!
     @IBOutlet var rightButton: UIButton!
     
@@ -27,7 +24,6 @@ class PatientCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         setupTag(conditionLabel)
         setupTag(sessionLabel)
-        setupLabel(sessionStatusLabel)
         
         setupButton(leftButton, bgColor: .systemBlue, textColor: .systemBlue)
         setupButton(rightButton, bgColor: .systemBlue, textColor: .systemBlue)
@@ -40,16 +36,6 @@ class PatientCollectionViewCell: UICollectionViewCell {
         contentView.layer.cornerRadius = 20
         
         contentView.layer.masksToBounds = true
-    }
-    
-    private func setupLabel(_ label: UILabel) {
-        label.layer.cornerRadius = 8
-        label.clipsToBounds = true
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.backgroundColor = .systemGreen.withAlphaComponent(0.12)
-        label.textColor = UIColor.systemGreen
-        label.layer.masksToBounds = true
     }
     
     private func setupButton(_ button: UIButton, bgColor: UIColor, textColor: UIColor) {
@@ -65,7 +51,41 @@ class PatientCollectionViewCell: UICollectionViewCell {
 //
 //        }
 //    }
-    func configureCell(with: Patient) {
+    
+    private func configureButtons(status: Appointment.status) {
+
+
+        switch status {
+
+        case .completed:
+            leftButton.setTitle("Next Session Date", for: .normal)
+            leftButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.15)
+            leftButton.setTitleColor(.systemOrange, for: .normal)
+            rightButton.setTitle("Add Session Note", for: .normal)
+            rightButton.backgroundColor = UIColor.systemIndigo.withAlphaComponent(0.25)
+            rightButton.setTitleColor(.systemIndigo.withAlphaComponent(0.75), for: .normal)
+
+        case .scheduled:
+            leftButton.setTitle("Reschedule", for: .normal)
+            leftButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.15)
+            leftButton.setTitleColor(.systemOrange, for: .normal)
+            rightButton.setTitle("Mark as Done", for: .normal)
+            rightButton.backgroundColor = UIColor.systemRed.withAlphaComponent(0.15)
+            rightButton.setTitleColor(.systemRed, for: .normal)
+            rightButton.isEnabled = true
+
+        case .missed:
+            leftButton.setTitle("Reschedule", for: .normal)
+            leftButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.15)
+            leftButton.setTitleColor(.systemOrange, for: .normal)
+            rightButton.setTitle("Notify", for: .normal)
+            rightButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.15)
+            rightButton.setTitleColor(.systemBlue, for: .normal)
+            rightButton.isEnabled = true
+        }
+    }
+    
+    func configureCell(with: Patient, status: Appointment.status) {
         
         // Default image
         profileImage.image = UIImage(systemName: "person.circle")
@@ -126,6 +146,7 @@ class PatientCollectionViewCell: UICollectionViewCell {
             let dateString = formatter.string(from: date)
             lastDate.text = "Last session: \(dateString)"
         }
+        configureButtons(status: status)
     }
 
 }

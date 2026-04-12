@@ -21,8 +21,27 @@ struct Appointment: Codable {
         case status = "status"
     }
     enum status: String, Codable {
-        case upcoming
+        case scheduled
         case missed
         case completed
+    }
+}
+
+
+struct AppointmentWithPatient: Decodable {
+    let appointmentId: UUID
+    let patientId: UUID
+    let doctorId: UUID
+    let scheduledAt: Date
+    let status: Appointment.status
+    let patient: Patient
+
+    enum CodingKeys: String, CodingKey {
+        case appointmentId = "appointment_id"
+        case patientId = "patient_id"
+        case doctorId = "doctor_id"
+        case scheduledAt = "scheduled_at"
+        case status
+        case patient = "patients"
     }
 }

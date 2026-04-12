@@ -1,12 +1,14 @@
 import UIKit
 
 class HomeCollectionViewController: UICollectionViewController {
-    var patient: [Patient] = []
+    var patients: [Patient] = []
+    var appointments: [AppointmentWithPatient] = []
     var viewModel: AccessSupabase?
     var doctor: Doctor?{
         didSet{
             guard doctor != nil else { return }
             loadPatients()
+            loadAppointments()
         }
     }
     @IBOutlet weak var ellipsisButtonTapped: UIBarButtonItem!
@@ -30,61 +32,72 @@ class HomeCollectionViewController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadPatients()
-        collectionView.reloadData()
+        loadAppointments()
     }
-
-    func loadPatients() {
+    func loadAppointments() {
         guard let id = self.doctor?.docID else { return }
         spinner.startAnimating()
 
-            Task {
-                do {
-                    let fetchedPatients = try await viewModel?.fetchPatients(for: id) ?? []
-
-                    await MainActor.run {
-                        self.patient = fetchedPatients
-                        self.categorizePatients()
-                        self.collectionView.reloadData()
-                        self.spinner.stopAnimating()
-                    }
-                } catch {
-                    print(error)
-                    await MainActor.run {
-                        self.spinner.stopAnimating()
-                    }
+        Task {
+            do {
+                try await viewModel?.markMissedAppointments(for: id)
+                let data = try await viewModel?.fetchTodayAppointmentsWithPatients(doctorID: id) ?? []
+                await MainActor.run {
+                    self.appointments = data
+                    self.categorizeAppointments()
+                    self.collectionView.reloadData()
+                    self.spinner.stopAnimating()
+                }
+            } catch {
+                print(error)
+                await MainActor.run {
+                    self.spinner.stopAnimating()
                 }
             }
+        }
+    }
+    func loadPatients() {
+        guard let id = self.doctor?.docID else { return }
+
+        Task {
+            do {
+                let data = try await viewModel?.fetchPatients(for: id) ?? []
+
+                await MainActor.run {
+                    self.patients = data
+                    self.collectionView.reloadData()
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
     
-    var upcoming: [Patient] = []
-    var missed: [Patient] = []
-    var done: [Patient] = []
+    
+    var upcoming: [AppointmentWithPatient] = []
+    var missed: [AppointmentWithPatient] = []
+    var done: [AppointmentWithPatient] = []
 
     // Categorize function
-    private func categorizePatients() {
+    private func categorizeAppointments() {
         upcoming.removeAll()
         missed.removeAll()
         done.removeAll()
 
-        let now = Date()
-        let calendar = Calendar.current
-        
+        for item in appointments {
+            switch item.status {
+            case .completed:
+                done.append(item)
 
-        for p in patient ?? [] {
-            guard calendar.isDateInToday(p.nextSessionDate!) else { continue }
+            case .scheduled:
+                upcoming.append(item)
 
-            if p.sessionStatus == true {
-                done.append(p)
-            }
-            else if calendar.isDate(p.nextSessionDate ?? Date(), inSameDayAs: now) && p.nextSessionDate ?? Date() > now {
-                upcoming.append(p)
-            }
-            else if p.nextSessionDate! < now {
-                missed.append(p)
+            case .missed:
+                missed.append(item)
             }
         }
     }
-    func filteredPatients() -> [Patient] {
+    func filteredAppointments() -> [AppointmentWithPatient] {
         switch selectedFilter {
         case .all:
             return upcoming + missed + done
@@ -97,23 +110,6 @@ class HomeCollectionViewController: UICollectionViewController {
         }
     }
 
-//    func numberOfPatients(in section: Int) -> Int {
-//        switch section {
-//        case 1: return upcoming.count
-//        case 2: return missed.count
-//        case 3: return done.count
-//        default: return 0
-//        }
-//    }
-    
-//    func patientSection(at index: Int, section: Int) -> Patient {
-//        switch section {
-//        case 1: return upcoming[index]
-//        case 2: return missed[index]
-//        case 3: return done[index]
-//        default: return upcoming[index]
-//        }
-//    }
     
     private func setupCollectionView() {
 
@@ -228,34 +224,11 @@ class HomeCollectionViewController: UICollectionViewController {
         } else if section == 1{
             return 1
         } else {
-            return filteredPatients().count
+            return filteredAppointments().count
         }
     }
 
 }
-//extension HomeCollectionViewController {
-//
-//    override func collectionView(_ collectionView: UICollectionView,
-//                                 viewForSupplementaryElementOfKind kind: String,
-//                                 at indexPath: IndexPath) -> UICollectionReusableView {
-//
-//        let header = collectionView.dequeueReusableSupplementaryView(
-//            ofKind: UICollectionView.elementKindSectionHeader,
-//            withReuseIdentifier: "header",
-//            for: indexPath
-//        ) as! SectionHeaderView
-//
-//        if indexPath.section == 1 {
-//            header.configure(withTitle: "Upcoming")
-//        } else if indexPath.section == 2 {
-//            header.configure(withTitle: "Missed")
-//        } else if indexPath.section == 3 {
-//            header.configure(withTitle: "Done")
-//        }
-//
-//        return header
-//    }
-//}
 extension HomeCollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView,
@@ -268,7 +241,7 @@ extension HomeCollectionViewController {
             ) as! TopSectionCollectionViewCell
 
             if indexPath.row == 0 {
-                    cell.configure(title: "Active Patients", subtitle: "\(patient.count)")
+                    cell.configure(title: "Active Patients", subtitle: "\(patients.count)")
                     
             } else {
                 cell.configure(title: "Today's Session", subtitle: "\(upcoming.count+done.count+missed.count)")
@@ -303,9 +276,10 @@ extension HomeCollectionViewController {
             for: indexPath
         ) as! PatientCollectionViewCell
 
-        let patient = filteredPatients()[indexPath.row]
+        let item = filteredAppointments()[indexPath.row]
+        let patient = item.patient
 
-        cell.configureCell(with: patient)
+        cell.configureCell(with: patient, status: item.status)
 
         applyShadow(cell: cell)
         return cell
@@ -320,20 +294,6 @@ extension HomeCollectionViewController {
         cell.layer.shadowRadius = 10
         cell.layer.masksToBounds = false
     }
-
-//    func headerItem() -> NSCollectionLayoutBoundarySupplementaryItem {
-//
-//        let headerSize = NSCollectionLayoutSize(
-//            widthDimension: .fractionalWidth(1.0),
-//            heightDimension: .absolute(60)
-//        )
-//
-//        return NSCollectionLayoutBoundarySupplementaryItem(
-//            layoutSize: headerSize,
-//            elementKind: UICollectionView.elementKindSectionHeader,
-//            alignment: .top
-//        )
-//}
 
     func createLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { sectionIndex, _ in
@@ -437,8 +397,8 @@ extension HomeCollectionViewController {
             return
         }
         if indexPath.section == 2 {
-            let patient = filteredPatients()[indexPath.row]
-            selectedPatient = patient
+            let item = filteredAppointments()[indexPath.row]
+            selectedPatient = item.patient
             performSegue(withIdentifier: "PatientDetail", sender: self)
         }
     }
@@ -460,11 +420,28 @@ extension HomeCollectionViewController {
                 destinationVC.onDismiss = { [weak self] in
                     guard let self = self else { return }
 
-                        if let newPatient = destinationVC.patient {
-                            self.patient.append(newPatient)
-                            self.categorizePatients()
-                            self.collectionView.reloadData()
-                        }
+                    guard let newPatient = destinationVC.patient,
+                              let doctorID = self.doctor?.docID else { return }
+                    
+                    Task {
+                           do {
+                               let appointment = Appointment(
+                                   appointmentId: nil,
+                                   patientId: newPatient.patientID,
+                                   doctorId: doctorID,
+                                   scheduledAt: Date(),
+                                   status: .scheduled
+                               )
+                               try await self.viewModel?.createAppointment(appointment)
+                               await MainActor.run {
+                                   self.loadPatients()
+                                   self.loadAppointments()
+                               }
+
+                           } catch {
+                               print("Error creating appointment:", error)
+                           }
+                       }
                 }
             }
         }
