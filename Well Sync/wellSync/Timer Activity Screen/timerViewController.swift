@@ -64,7 +64,7 @@ class timerViewController: UIViewController {
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
     var isRunning = false
-        var isPaused = false
+    var isPaused = false
     
     var onSave: (() -> Void)?
     var activityItem: TodayActivityItem?

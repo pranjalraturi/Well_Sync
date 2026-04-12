@@ -21,7 +21,14 @@ class JournalTableViewCell: UITableViewCell {
 //        contentView.heightAnchor.constraint(equalToConstant: 130).isActive = true
     }
 
-    func configure(with data: JournalEntry) {
+    func configure(with data: JournalEntry, sender: Any?) {
+        let tint: UIColor
+        if sender is DoctorActivityStatusCollectionViewController {
+            tint = .systemOrange
+        } else {
+            tint = .systemBlue   // default: patient side (ActivityTableViewController)
+        }
+        iconImage.tintColor  = tint
 
         titleLabel.text = data.title
         subtitleLabel.text = data.subtitle

@@ -457,9 +457,14 @@ class ActivityTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section == 1 else { return }
-        let identifier = logSummaries[indexPath.row].isUploadType ? "Journal" : "timerSegue"
-        performSegue(withIdentifier: identifier, sender: indexPath)
+        if indexPath.section == 0 {
+            let identifier = todayItems[indexPath.row].isUploadType ? "Journal" : "timerSegue"
+            performSegue(withIdentifier: identifier, sender: indexPath)
+        }else{
+            let identifier = logSummaries[indexPath.row].isUploadType ? "Journal" : "timerSegue"
+            performSegue(withIdentifier: identifier, sender: indexPath)
+        }
+        
     }
 
     // MARK: - Segues
@@ -474,23 +479,35 @@ class ActivityTableViewController: UITableViewController {
             timerVC.patient      = patient
         }
 
-        guard let indexPath = sender as? IndexPath,
-              indexPath.section == 1 else { return }
+        guard let indexPath = sender as? IndexPath else { return }
 
         if segue.identifier == "Journal",
            let journalVC = segue.destination as? JournalTableViewController {
-            let item = logSummaries[indexPath.row]
-            journalVC.selectedAssignment = item.assignment
-            journalVC.selectedActivity   = item.activity
-            journalVC.patient            = patient
+            if indexPath.section == 0 {
+                let item = todayItems[indexPath.row]
+                journalVC.selectedAssignment = item.assignment
+                journalVC.selectedActivity = item.activity
+            }else{
+                let item = logSummaries[indexPath.row]
+                journalVC.selectedAssignment = item.assignment
+                journalVC.selectedActivity = item.activity
+            }
+            journalVC.patient = patient
         }
 
         if segue.identifier == "timerSegue",
            let graphVC = segue.destination as? GraphCollectionViewController {
-            let item      = logSummaries[indexPath.row]
-            graphVC.activity = item.activity
-            graphVC.logs     = item.logs
-            graphVC.patient  = patient
+            if indexPath.section == 0 {
+                let item = todayItems[indexPath.row]
+                graphVC.activity = item.activity
+                graphVC.logs     = item.logs
+            }
+            else{
+                let item = logSummaries[indexPath.row]
+                graphVC.activity = item.activity
+                graphVC.logs = item.logs
+            }
+            graphVC.patient = patient
         }
     }
 }

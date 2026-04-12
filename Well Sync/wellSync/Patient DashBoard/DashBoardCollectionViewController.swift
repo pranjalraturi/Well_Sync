@@ -395,6 +395,14 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                 self?.resetMoodViews()
             }
         }
+        if segue.identifier == "Timer",
+           let nav    = segue.destination as? UINavigationController,
+           let timerVC = nav.viewControllers.first as? timerViewController,
+           let item   = sender as? TodayActivityItem {
+            timerVC.onSave       = { self.load() }
+            timerVC.activityItem = item
+            timerVC.patient      = patient
+        }
     }
 
     func resetMoodViews() {

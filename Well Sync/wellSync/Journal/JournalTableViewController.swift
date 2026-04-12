@@ -129,7 +129,7 @@ class JournalTableViewController: UITableViewController {
             ? currentAssignmentLogs[indexPath.row]
             : allActivityLogs[indexPath.row]
         
-        cell.configure(with: entry)
+        cell.configure(with: entry, sender: Any?.self)
         return cell
     }
     

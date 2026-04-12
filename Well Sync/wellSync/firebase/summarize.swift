@@ -73,7 +73,7 @@ class Summarise: UIViewController {
 
     lazy var model: GenerativeModel = {
         let ai = FirebaseAI.firebaseAI(backend: .googleAI())
-        return ai.generativeModel(modelName: "gemini-1.5-flash")
+        return ai.generativeModel(modelName: "gemini-3-flash-preview")
 //        gemini-2.0-flash
     }()
 
@@ -87,21 +87,20 @@ class Summarise: UIViewController {
         // ── Journal / handwriting ───────────────────────────────────────
         if name.contains("journal") || name.contains("diary") || name.contains("writing") {
             let extract = """
-                    This is a photo of a handwritten journal page.
-                    Please extract ALL the handwritten text as written. some words may be incomplete/or is not an actual word like comparnt, meaning compartment.
-                    there may be some words which do not make sense in the sentence, as they miss some letters or are miss spelled, so correct them.
-                    Preserve line breaks. Ignore any watermarks.
-                    Do NOT add any numbering, bullet points, or formatting.
-                    Do not paraphrase or remove or add any information from your side.
-                    Only return the extracted text, nothing else.
+            This is a photo of a handwritten journal page.
+            Please extract ALL the handwritten text as written. some words may be incomplete/or is not an actual word like comparnt, meaning compartment.
+            there may be some words which do not make sense in the sentence, as they miss some letters or are miss spelled, so correct them.
+            Preserve line breaks. Ignore any watermarks.
+            Do NOT add any numbering, bullet points, or formatting.
+            Do not paraphrase or remove or add any information from your side.
+            Only return the extracted text, nothing else.
             """
             let summarise = """
-                    Here is text extracted from a handwritten journal entry:
-
-                    {TEXT}
-
-                    Please provide a clear, concise summary in 3-5 sentences.
-                    Focus on the key points and main ideas.
+            Here is text extracted from a handwritten journal entry:
+            {TEXT}
+            Please provide a clear, concise summary in 3-5 sentences.
+            summarise but do not paraphrase, keep it natural.
+            Focus on the key points and main ideas.
             """
             return (extract, summarise)
         }
