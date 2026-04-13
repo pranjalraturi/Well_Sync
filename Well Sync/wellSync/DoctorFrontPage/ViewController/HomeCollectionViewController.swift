@@ -3,6 +3,7 @@ import UIKit
 class HomeCollectionViewController: UICollectionViewController {
     var patients: [Patient] = []
     var appointments: [AppointmentWithPatient] = []
+    var selectedAppointment: AppointmentWithPatient?
     var viewModel: AccessSupabase?
     var doctor: Doctor?{
         didSet{
@@ -77,8 +78,6 @@ class HomeCollectionViewController: UICollectionViewController {
     var upcoming: [AppointmentWithPatient] = []
     var missed: [AppointmentWithPatient] = []
     var done: [AppointmentWithPatient] = []
-
-    // Categorize function
     private func categorizeAppointments() {
         upcoming.removeAll()
         missed.removeAll()
@@ -280,29 +279,29 @@ extension HomeCollectionViewController {
         let patient = item.patient
 
         cell.configureCell(with: patient, status: item.status)
-        cell.onAction = { [weak self] action in
+        cell.onAction = { [weak self] action, sourceView in
             guard let self = self else { return }
 
             switch action {
 
-            case .nextSession:
-                self.setNextSessionDate(for: patient)
+                case .nextSession:
+                    self.setNextSessionDate(for: patient, sourceView: sourceView)
 
-            case .addNote:
-                self.addSessionNote(for: patient)
+                case .addNote:
+                    self.addSessionNote(for: patient)
 
-            case .reschedule:
-                self.reschedule(patient)
+                case .reschedule:
+                    self.reschedule(item, sourceView: sourceView)
 
-            case .markDone:
-                self.showMarkAsDoneAlert(for: item, at: indexPath)
+                case .markDone:
+                    self.showMarkAsDoneAlert(for: item, at: indexPath)
 
-            case .notify:
-                self.notifyPatient(patient)
+                case .notify:
+                    self.notifyPatient(patient)
+                }
             }
-        }
-        applyShadow(cell: cell)
-        return cell
+            applyShadow(cell: cell)
+            return cell
     }
 }
 extension HomeCollectionViewController {
@@ -419,6 +418,7 @@ extension HomeCollectionViewController {
         if indexPath.section == 2 {
             let item = filteredAppointments()[indexPath.row]
             selectedPatient = item.patient
+            selectedAppointment = item
             performSegue(withIdentifier: "PatientDetail", sender: self)
         }
     }
@@ -427,6 +427,7 @@ extension HomeCollectionViewController {
         if segue.identifier == "PatientDetail" {
             let destinationVC = segue.destination as! PatientDetailCollectionViewController
             destinationVC.patient = selectedPatient
+            destinationVC.selectedAppointment = selectedAppointment
         }
         if segue.identifier == "allPatientSegue" {
             let AllPatientVC = segue.destination as! AllPatientCollectionViewController
@@ -474,11 +475,6 @@ extension HomeCollectionViewController {
     }
 }
 extension HomeCollectionViewController{
-    func reschedule(_ patient: Patient) {
-        print("Reschedule \(patient.name)")
-    }
-
-
     func notifyPatient(_ patient: Patient) {
         print("Notify \(patient.name)")
     }
@@ -487,8 +483,139 @@ extension HomeCollectionViewController{
         performSegue(withIdentifier: "DoctorActionToNotes", sender: patient)
     }
 
-    func setNextSessionDate(for patient: Patient) {
-        print("Next session \(patient.name)")
+    // ✅ RESCHEDULE — patient already has a scheduled appointment, delete + create new
+    func reschedule(_ item: AppointmentWithPatient, sourceView: UIView) {
+        
+        var patient = item.patient
+        
+        let popoverVC = ScheduleViewController()
+        popoverVC.patient = patient
+        popoverVC.scheduleDate = item.scheduledAt  // pass current scheduled date
+        popoverVC.modalPresentationStyle = .popover
+        popoverVC.preferredContentSize = CGSize(width: 320, height: 500)
+        
+        if let popover = popoverVC.popoverPresentationController {
+            popover.sourceView = sourceView
+            popover.sourceRect = sourceView.bounds
+            popover.permittedArrowDirections = .any
+            popover.delegate = self
+        }
+        
+       
+        popoverVC.onScheduleCancelled = { [weak self] in
+            guard let self = self else { return }
+            Task {
+                do {
+                    let appointments = try await AccessSupabase.shared
+                        .fetchAppointments(patientID: patient.patientID)
+                    
+                    if let apptToDelete = appointments.first(where: { $0.status == .scheduled }),
+                       let id = apptToDelete.appointmentId {
+                        try await AccessSupabase.shared.deleteAppointment(id: id)
+                        print("Appointment cancelled")
+                    }
+                    try await AccessSupabase.shared.clearNextSessionDate(patientID: patient.patientID)
+                    
+                    await MainActor.run {
+                        self.loadAppointments()
+                    }
+                } catch {
+                    print(" Cancel error: \(error)")
+                }
+            }
+        }
+        
+        // RESCHEDULE — delete old, create new
+        popoverVC.onScheduleChange = { [weak self] newDate in
+            guard let self = self else { return }
+            Task {
+                do {
+                    // Delete old scheduled appointment
+                    let appointments = try await AccessSupabase.shared
+                        .fetchAppointments(patientID: patient.patientID)
+                    
+                    if let oldAppt = appointments.first(where: { $0.status == .scheduled }),
+                       let oldID = oldAppt.appointmentId {
+                        try await AccessSupabase.shared.deleteAppointment(id: oldID)
+                        print("✅ Old appointment deleted")
+                    }
+                    
+                    // Create new appointment
+                    let newAppointment = Appointment(
+                        appointmentId: UUID(),
+                        patientId: patient.patientID,
+                        doctorId: patient.docID,
+                        scheduledAt: newDate,
+                        status: .scheduled
+                    )
+                    try await AccessSupabase.shared.createAppointment(newAppointment)
+                    print("✅ New appointment created: \(newDate)")
+                    
+                    // Update patient
+                    patient.nextSessionDate = newDate
+                    try await AccessSupabase.shared.updatePatient(patient)
+                    
+                    await MainActor.run {
+                        self.loadAppointments()
+                    }
+                } catch {
+                    print("❌ Reschedule error: \(error)")
+                }
+            }
+        }
+        
+        present(popoverVC, animated: true)
+    }
+
+
+    // ✅ NEXT SESSION — session is completed, schedule the next one fresh
+    func setNextSessionDate(for patient: Patient, sourceView: UIView) {
+        
+        var mutablePatient = patient
+        
+        let popoverVC = ScheduleViewController()
+        popoverVC.patient = mutablePatient
+        popoverVC.scheduleDate = nil  // no current scheduled date → shows "Schedule" button
+        popoverVC.modalPresentationStyle = .popover
+        popoverVC.preferredContentSize = CGSize(width: 320, height: 500)
+        
+        if let popover = popoverVC.popoverPresentationController {
+            popover.sourceView = sourceView
+            popover.sourceRect = sourceView.bounds
+            popover.permittedArrowDirections = .any
+            popover.delegate = self
+        }
+        
+        // ✅ SCHEDULE next session
+        popoverVC.onScheduleConfirmed = { [weak self] selectedFullDate in
+            guard let self = self else { return }
+            Task {
+                do {
+                    // Create new appointment
+                    let newAppointment = Appointment(
+                        appointmentId: UUID(),
+                        patientId: mutablePatient.patientID,
+                        doctorId: mutablePatient.docID,
+                        scheduledAt: selectedFullDate,
+                        status: .scheduled
+                    )
+                    try await AccessSupabase.shared.createAppointment(newAppointment)
+                    print("✅ Next session created: \(selectedFullDate)")
+                    
+                    // Update patient's next session date
+                    mutablePatient.nextSessionDate = selectedFullDate
+                    try await AccessSupabase.shared.updatePatient(mutablePatient)
+                    
+                    await MainActor.run {
+                        self.loadAppointments()
+                    }
+                } catch {
+                    print("❌ Next session error: \(error)")
+                }
+            }
+        }
+        
+        present(popoverVC, animated: true)
     }
     
     func showMarkAsDoneAlert(for item: AppointmentWithPatient, at indexPath: IndexPath) {
@@ -529,44 +656,6 @@ extension HomeCollectionViewController{
         present(alert, animated: true)
     }
     
-//    private func showCheckmarkAnimation(at indexPath: IndexPath) {
-//        
-//        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-//        
-//        let checkmark = UIImageView(image: UIImage(systemName: "checkmark.circle.fill"))
-//        checkmark.tintColor = .systemGreen
-//        checkmark.translatesAutoresizingMaskIntoConstraints = false
-//        checkmark.alpha = 0
-//        checkmark.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
-//        
-//        cell.contentView.addSubview(checkmark)
-//        
-//        // Center the checkmark
-//        NSLayoutConstraint.activate([
-//            checkmark.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor),
-//            checkmark.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
-//            checkmark.widthAnchor.constraint(equalToConstant: 40),
-//            checkmark.heightAnchor.constraint(equalToConstant: 40)
-//        ])
-//        
-//        // 🔥 Animate
-//        UIView.animate(withDuration: 0.25, animations: {
-//            checkmark.alpha = 1
-//            checkmark.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-//        }) { _ in
-//            
-//            UIView.animate(withDuration: 0.2, animations: {
-//                checkmark.transform = .identity
-//            }) { _ in
-//                
-//                UIView.animate(withDuration: 0.2, animations: {
-//                    checkmark.alpha = 0
-//                }) { _ in
-//                    checkmark.removeFromSuperview()
-//                }
-//            }
-//        }
-//    }
     
     private func showCheckmarkAnimation(at indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
@@ -622,5 +711,10 @@ extension HomeCollectionViewController{
                 checkmark.removeFromSuperview()
             }
         }
+    }
+}
+extension HomeCollectionViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none  // keeps it as a popover on iPhone too
     }
 }

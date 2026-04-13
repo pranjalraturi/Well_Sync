@@ -20,7 +20,7 @@ class PatientCollectionViewCell: UICollectionViewCell {
     @IBOutlet var leftButton: UIButton!
     @IBOutlet var rightButton: UIButton!
     
-    var onAction: ((doctorAction) -> Void)?
+    var onAction: ((doctorAction, UIView) -> Void)?
     
     private var leftAction: doctorAction?
     private var rightAction: doctorAction?
@@ -57,36 +57,46 @@ class PatientCollectionViewCell: UICollectionViewCell {
 //    }
     
     private func configureButtons(status: Appointment.status) {
+        leftButton.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .subheadline).pointSize, weight: .medium)
+            return outgoing
+        }
+        rightButton.configuration?.titleTextAttributesTransformer = UIConfigurationTextAttributesTransformer { incoming in
+            var outgoing = incoming
+            outgoing.font = UIFont.systemFont(ofSize: UIFont.preferredFont(forTextStyle: .subheadline).pointSize, weight: .medium)
+            return outgoing
+        }
 
-
+        rightButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .footnote)
         switch status {
 
         case .completed:
-            leftButton.setTitle("Next Session Date", for: .normal)
+            leftButton.setTitle("Next Session", for: .normal)
             leftAction = .nextSession
-            leftButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.15)
-            leftButton.setTitleColor(.systemOrange, for: .normal)
-            rightButton.setTitle("Add Session Note", for: .normal)
+            leftButton.backgroundColor = UIColor.systemTeal.withAlphaComponent(0.15)
+            leftButton.setTitleColor(.systemTeal, for: .normal)
+            rightButton.setTitle("Session Note", for: .normal)
             rightAction = .addNote
-            rightButton.backgroundColor = UIColor.systemIndigo.withAlphaComponent(0.25)
-            rightButton.setTitleColor(.systemIndigo.withAlphaComponent(0.75), for: .normal)
+            rightButton.backgroundColor = UIColor.systemMint.withAlphaComponent(0.15)
+            rightButton.setTitleColor(.systemMint, for: .normal)
 
         case .scheduled:
             leftButton.setTitle("Reschedule", for: .normal)
             leftAction = .reschedule
-            leftButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.15)
-            leftButton.setTitleColor(.systemOrange, for: .normal)
-            rightButton.setTitle("Mark as Done", for: .normal)
+            leftButton.backgroundColor = UIColor.systemTeal.withAlphaComponent(0.15)
+            leftButton.setTitleColor(.systemTeal, for: .normal)
+            rightButton.setTitle("Mark Done", for: .normal)
             rightAction = .markDone
-            rightButton.backgroundColor = UIColor.systemRed.withAlphaComponent(0.15)
-            rightButton.setTitleColor(.systemRed, for: .normal)
+            rightButton.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.15)
+            rightButton.setTitleColor(.systemGreen, for: .normal)
             rightButton.isEnabled = true
 
         case .missed:
             leftButton.setTitle("Reschedule", for: .normal)
             leftAction = .reschedule
-            leftButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.15)
-            leftButton.setTitleColor(.systemOrange, for: .normal)
+            leftButton.backgroundColor = UIColor.systemTeal.withAlphaComponent(0.15)
+            leftButton.setTitleColor(.systemTeal, for: .normal)
             rightButton.setTitle("Notify", for: .normal)
             rightAction = .notify
             rightButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.15)
@@ -161,13 +171,13 @@ class PatientCollectionViewCell: UICollectionViewCell {
     
     @IBAction func leftButtonTapped(_ sender: UIButton) {
         if let action = leftAction {
-            onAction?(action)
+            onAction?(action, sender)
         }
     }
 
     @IBAction func rightButtonTapped(_ sender: UIButton) {
         if let action = rightAction {
-            onAction?(action)
+            onAction?(action, sender)
         }
     }
 

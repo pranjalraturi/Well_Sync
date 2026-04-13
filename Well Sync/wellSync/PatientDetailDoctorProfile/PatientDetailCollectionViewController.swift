@@ -12,8 +12,30 @@ class PatientDetailCollectionViewController: UICollectionViewController{
     @IBOutlet weak var PatientProfileCollectionView: UICollectionView!
     @IBOutlet weak var doneButton: UIBarButtonItem!
     
-  var patient: Patient?
+    var patient: Patient?
+    var selectedAppointment: AppointmentWithPatient?
     var sessionNotes : [SessionNote] = []
+    
+    var patientAppointments: [Appointment] = []
+    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        registerCells()
+//        let Layout = generateLayout()
+//        PatientProfileCollectionView.setCollectionViewLayout(Layout, animated: true)
+//        
+//        PatientProfileCollectionView.delegate = self
+//        PatientProfileCollectionView.dataSource = self
+//        
+//        updateDoneButtonColor()
+//        loadSessionNotes()
+//        if let appointment = selectedAppointment {
+//            let isToday = Calendar.current.isDateInToday(appointment.scheduledAt)
+//            doneButton.isEnabled = isToday
+//        } else {
+//            doneButton.isEnabled = false
+//        }
+//    }
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCells()
@@ -25,14 +47,33 @@ class PatientDetailCollectionViewController: UICollectionViewController{
         
         updateDoneButtonColor()
         loadSessionNotes()
-        if let sessionDate = patient?.nextSessionDate{
-            let cal = Calendar.current
-            
-            if !cal.isDateInToday(sessionDate){
-                doneButton.isEnabled = false
+        loadPatientAppointments() // ✅ ADD THIS
+        
+        if let appointment = selectedAppointment {
+            let isToday = Calendar.current.isDateInToday(appointment.scheduledAt)
+            doneButton.isEnabled = isToday
+        } else {
+            doneButton.isEnabled = false
+        }
+    }
+
+    // ✅ ADD THIS NEW FUNCTION anywhere in the class
+    func loadPatientAppointments() {
+        guard let patientID = patient?.patientID else { return }
+        Task {
+            do {
+                let appts = try await AccessSupabase.shared
+                    .fetchAppointments(patientID: patientID)
+                await MainActor.run {
+                    self.patientAppointments = appts
+                    self.PatientProfileCollectionView.reloadData()
+                }
+            } catch {
+                print("❌ Error loading appointments: \(error)")
             }
         }
     }
+    
     func registerCells(){
         PatientProfileCollectionView.register(UINib(nibName: "ProfileCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ProfileCollectionViewCell")
     }
@@ -46,7 +87,9 @@ class PatientDetailCollectionViewController: UICollectionViewController{
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0{
             let profilecell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProfileCollectionViewCell", for: indexPath) as! ProfileCollectionViewCell
-            profilecell.configureCell(with: patient!)
+//            profilecell.configureCell(with: patient!)
+            // ✅ NEW
+            profilecell.configureCell(with: patient!, appointments: patientAppointments)
             profilecell.delegate = self
             return profilecell
         }
@@ -69,7 +112,8 @@ class PatientDetailCollectionViewController: UICollectionViewController{
         }
         if segue.identifier == "sessionNotes",
                let vc = segue.destination as? SessionNoteCollectionViewController {
-                vc.patient = self.patient   
+                vc.patient = self.patient
+//            vc.appointment = self.appointment
             }
         if segue.identifier == "mood",let vc = segue.destination as? MoodAnalysisCollectionViewController{
             vc.currPatient = self.patient
@@ -88,28 +132,28 @@ class PatientDetailCollectionViewController: UICollectionViewController{
 extension PatientDetailCollectionViewController{
     
     func generateLayout() -> UICollectionViewLayout {
-
-           let layout = UICollectionViewCompositionalLayout { [weak self]
-               sectionIndex, environment -> NSCollectionLayoutSection in
-
-               guard let self = self else {
-                   return self!.generateSectionForDetailCells()
-               }
-
-               switch sectionIndex {
-               case 0:
-                   return self.generateSectionForProfile()
-               default:
-                   return self.generateSectionForDetailCells()
-               }
-           }
+        
+        let layout = UICollectionViewCompositionalLayout { [weak self]
+            sectionIndex, environment -> NSCollectionLayoutSection in
             
+            guard let self = self else {
+                return self!.generateSectionForDetailCells()
+            }
             
+            switch sectionIndex {
+            case 0:
+                return self.generateSectionForProfile()
+            default:
+                return self.generateSectionForDetailCells()
+            }
+        }
+        
+        
         layout.register(RoundedBackgroundCollectionReusableView.self,
                         forDecorationViewOfKind: "background")
-
-           return layout
-       }
+        
+        return layout
+    }
     func cardStyle(cell:UICollectionViewCell){
         cell.backgroundColor = .systemBackground
         cell.layer.masksToBounds = false
@@ -119,63 +163,63 @@ extension PatientDetailCollectionViewController{
         cell.layer.shadowOffset = CGSize(width: 0, height: 4)
     }
     func generateSectionForProfile() -> NSCollectionLayoutSection{
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(160))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(160))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
-            
-            let section = NSCollectionLayoutSection(group: group)
-            
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0)
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(160))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(160))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 16, trailing: 0)
         return section
     }
     
     func generateSectionForDetailCells() -> NSCollectionLayoutSection {
-
+        
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .absolute(70)
         )
-
+        
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
+        
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .absolute(70)
         )
-
+        
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: groupSize,
             subitem: item,
             count: 1
         )
-
+        
         let section = NSCollectionLayoutSection(group: group)
-
+        
         section.contentInsets = NSDirectionalEdgeInsets(
             top: 4,
             leading: 28,
             bottom: 4,
             trailing: 28
         )
-
+        
         let backgroundItem = NSCollectionLayoutDecorationItem.background(
             elementKind: "background"
         )
-
+        
         backgroundItem.contentInsets = NSDirectionalEdgeInsets(
             top: -8,
             leading: 16,
             bottom: -8,
             trailing: 16
         )
-
+        
         
         section.decorationItems = [backgroundItem]
         return section
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.section
         {
@@ -211,14 +255,16 @@ extension PatientDetailCollectionViewController{
                     self.sessionNotes = fetchedNotes
                 }
             }catch{
-                    print("Session Notes can't be fetched")
+                print("Session Notes can't be fetched")
             }
         }
     }
+}
+extension PatientDetailCollectionViewController{
     @IBAction func doneButtonTapped(_ sender: UIBarButtonItem){
         guard let patient = self.patient else { return }
-        
-        if patient.sessionStatus == true{
+        guard let selectedAppointment = self.selectedAppointment else { return }
+        if selectedAppointment.status == .completed{
             updateDoneButtonColor()
             showAlreadyDone()
             return
@@ -270,18 +316,31 @@ extension PatientDetailCollectionViewController{
             guard var patient = self.patient else {return}
             Task{
                 do{
-                    let appts = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
-                    let calendar = Calendar.current
-                    if var currentAppt = appts.first(where: {($0.status == .scheduled || $0.status == .missed) && calendar.isDateInToday($0.scheduledAt)}){
-                        currentAppt.status = .completed
-                      let x = try await AccessSupabase.shared.updateAppointment(currentAppt)
-                        print(x)
-                    }
-                    
-                    patient.previousSessionDate = Date()
+                    if let selected = self.selectedAppointment {
 
+                        let updated = Appointment(
+                            appointmentId: selected.appointmentId,
+                            patientId: selected.patientId,
+                            doctorId: selected.doctorId,
+                            scheduledAt: selected.scheduledAt,
+                            status: .completed
+                        )
+
+                        try await AccessSupabase.shared.updateAppointment(updated)
+                        self.selectedAppointment = AppointmentWithPatient(
+                            appointmentId: selected.appointmentId,
+                            patientId: selected.patientId,
+                            doctorId: selected.doctorId,
+                            scheduledAt: selected.scheduledAt,
+                            status: .completed,
+                            patient: patient
+                        )
+
+                    } else {
+                        print("No selected appointment")
+                    }
+                    patient.previousSessionDate = Date()
                     patient.sessionStatus = true
-                    
                     try await AccessSupabase.shared.updatePatient(patient)
                     
                     await MainActor.run {
@@ -306,7 +365,7 @@ extension PatientDetailCollectionViewController{
     }
     
     func updateDoneButtonColor(){
-        if patient?.sessionStatus == true {
+        if selectedAppointment?.status == .completed {
                 doneButton.tintColor = .systemGreen
             }
     }
@@ -320,9 +379,8 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
     func showScheduleAlert(sourceView: UIView){
         let popoverVC = ScheduleViewController()
         popoverVC.patient = self.patient
-        let originalDateBeforeChange = self.patient?.nextSessionDate
-        popoverVC.scheduleDate = originalDateBeforeChange
-       
+        popoverVC.scheduleDate = self.selectedAppointment?.scheduledAt
+        
         
         popoverVC.modalPresentationStyle = .popover
         
@@ -335,90 +393,209 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
             popover.delegate = self
         }
         
+        //        popoverVC.onScheduleCancelled = { [weak self] in
+        //                guard let self = self, var patient = self.patient else { return }
+        //                Task {
+        //                    do {
+        //                        let appointments = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
+        //                        if let apptToDelete = appointments.first(where: { $0.status == .scheduled }), let id = apptToDelete.appointmentId {
+        //                            try await AccessSupabase.shared.deleteAppointment(id: id)
+        //                        }
+        //                        try await AccessSupabase.shared.clearNextSessionDate(patientID: patient.patientID)
+        //                        await MainActor.run {
+        //                            self.patient?.nextSessionDate = nil
+        //                            self.PatientProfileCollectionView.reloadData()
+        //                        }
+        //                    } catch {
+        //                        print("Error deleting: \(error)")
+        //                    }
+        //                }
+        //            }
+        //
+        //
+        //        popoverVC.onScheduleConfirmed = { [weak self] selectedFullDate in
+        //            guard let self = self,
+        //            var patient = self.patient else{return}
+        //            Task{
+        //                do{
+        //                      let newAppointment = Appointment(
+        //                            appointmentId: UUID(),
+        //                            patientId: patient.patientID,
+        //                            doctorId: patient.docID,
+        //                            scheduledAt: selectedFullDate,
+        //                            status: .scheduled
+        //                        )
+        //                    let created = try await AccessSupabase.shared.createAppointment(newAppointment)
+        //                        print("Created new appointment")
+        //                    patient.nextSessionDate = selectedFullDate
+        //                    print(patient.previousSessionDate)
+        //                    try await AccessSupabase.shared.updatePatient(patient)
+        //                    await MainActor.run {
+        //                        self.patient = patient
+        //                        self.PatientProfileCollectionView.reloadData()
+        //                    }
+        //                }catch{
+        //                    print("Scheduling Error: \(error)")
+        //                }
+        //            }
+        //        }
+        //        popoverVC.onScheduleChange = { [weak self] newDate in
+        //            guard let self = self, var patient = self.patient else { return }
+        //
+        //            Task {
+        //                do {
+        //                        if let selected = self.selectedAppointment {
+        //
+        //                            let updatedAppt = Appointment(
+        //                                appointmentId: selected.appointmentId,
+        //                                patientId: selected.patientId,
+        //                                doctorId: selected.doctorId,
+        //                                scheduledAt: newDate,
+        //                                status: .scheduled
+        //                            )
+        //
+        //                            try await AccessSupabase.shared.updateAppointment(updatedAppt)
+        //
+        //                            self.selectedAppointment = AppointmentWithPatient(
+        //                                appointmentId: selected.appointmentId,
+        //                                patientId: selected.patientId,
+        //                                doctorId: selected.doctorId,
+        //                                scheduledAt: newDate,
+        //                                status: .scheduled,
+        //                                patient: patient
+        //                            )
+        //                        patient.nextSessionDate = newDate
+        //                        try await AccessSupabase.shared.updatePatient(patient)
+        //                        await MainActor.run {
+        //                            self.patient = patient
+        //                            self.PatientProfileCollectionView.reloadData()
+        //                            print("Session successfully changed to \(newDate)")
+        //                        }
+        //                    }
+        //                } catch {
+        //                    print("Error changing session: \(error)")
+        //                }
+        //            }
+        //        }
+        //        present(popoverVC, animated: true)
+        // ✅ CANCEL: Fetch the scheduled appointment, delete it, clear patient's next session date
         popoverVC.onScheduleCancelled = { [weak self] in
-                guard let self = self, var patient = self.patient else { return }
-                Task {
-                    do {
-                        let appointments = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
-                        if let apptToDelete = appointments.first(where: { $0.status == .scheduled }), let id = apptToDelete.appointmentId {
-                            try await AccessSupabase.shared.deleteAppointment(id: id)
-                        }
-                        try await AccessSupabase.shared.clearNextSessionDate(patientID: patient.patientID)
-                        await MainActor.run {
-                            self.patient?.nextSessionDate = nil
-                            self.PatientProfileCollectionView.reloadData()
-                        }
-                    } catch {
-                        print("Error deleting: \(error)")
+            guard let self = self, let patient = self.patient else { return }
+            
+            Task {
+                do {
+                    // Step 1: Fetch all appointments for this patient
+                    let appointments = try await AccessSupabase.shared
+                        .fetchAppointments(patientID: patient.patientID)
+                    
+                    // Step 2: Find the one that is currently "scheduled" (upcoming)
+                    if let apptToDelete = appointments.first(where: { $0.status == .scheduled }),
+                       let id = apptToDelete.appointmentId {
+                        
+                        // Step 3: Delete it from Supabase
+                        try await AccessSupabase.shared.deleteAppointment(id: id)
+                        print("✅ Appointment deleted")
                     }
+                    
+                    // Step 4: Clear the patient's next session date
+                    try await AccessSupabase.shared.clearNextSessionDate(patientID: patient.patientID)
+                    print("✅ Next session date cleared")
+                    
+                    // Step 5: Update UI on main thread
+                    await MainActor.run {
+                        self.patient?.nextSessionDate = nil
+                        self.PatientProfileCollectionView.reloadData()
+                    }
+                    
+                } catch {
+                    print("❌ Error cancelling appointment: \(error)")
                 }
             }
-        
-        
+        }
+
+
+        // ✅ SCHEDULE (New): Create appointment + update patient
         popoverVC.onScheduleConfirmed = { [weak self] selectedFullDate in
-            guard let self = self,
-            var patient = self.patient else{return}
-            Task{
-                do{
-                    let appointments = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
-                    let futureUpcomingAppt = appointments.first(where:{
-                        $0.status == .scheduled
-                    })
-                    if let apptToUpdate = futureUpcomingAppt{
-                        print(patient.nextSessionDate)
-                        var updatedAppt = apptToUpdate
-                        updatedAppt.scheduledAt = selectedFullDate
-                        _ = try await AccessSupabase.shared.updateAppointment(updatedAppt)
-                        print("Schedule update")
-                    }else{
-                        let newAppointment = Appointment(
-                            appointmentId: UUID(), patientId: patient.patientID, doctorId: patient.docID, scheduledAt: selectedFullDate, status: .scheduled
-                        )
-                        _ = try await AccessSupabase.shared.createAppointment(newAppointment)
-                        print("new Appointment")
-                    }
-//                    if let currentNext = patient.nextSessionDate, currentNext < selectedFullDate {
-//                                     patient.previousSessionDate = currentNext
-//                                }
+            guard let self = self, var patient = self.patient else { return }
+            
+            Task {
+                do {
+                    // Step 1: Create the new appointment in Supabase
+                    let newAppointment = Appointment(
+                        appointmentId: UUID(),
+                        patientId: patient.patientID,
+                        doctorId: patient.docID,
+                        scheduledAt: selectedFullDate,
+                        status: .scheduled
+                    )
+                    let created = try await AccessSupabase.shared.createAppointment(newAppointment)
+                    print("✅ New appointment created: \(created.scheduledAt)")
+                    
+                    // Step 2: Update the patient's next session date
                     patient.nextSessionDate = selectedFullDate
-                    print(patient.previousSessionDate)
                     try await AccessSupabase.shared.updatePatient(patient)
+                    print("✅ Patient next session date updated")
+                    
+                    // Step 3: Update UI
                     await MainActor.run {
                         self.patient = patient
                         self.PatientProfileCollectionView.reloadData()
                     }
-                }catch{
-                    print("Scheduling Error: \(error)")
+                    
+                } catch {
+                    print("❌ Scheduling Error: \(error)")
                 }
             }
         }
+
+
+        // ✅ RESCHEDULE: Delete OLD appointment → Create NEW appointment → Update patient
         popoverVC.onScheduleChange = { [weak self] newDate in
             guard let self = self, var patient = self.patient else { return }
             
             Task {
                 do {
-                    let appointments = try await AccessSupabase.shared.fetchAppointments(patientID: patient.patientID)
+                    // Step 1: Fetch all appointments for this patient
+                    let appointments = try await AccessSupabase.shared
+                        .fetchAppointments(patientID: patient.patientID)
                     
-                    if let apptToUpdate = appointments.first(where: { $0.status == .scheduled }) {
-                        var updatedAppt = apptToUpdate
-                        updatedAppt.scheduledAt = newDate
+                    // Step 2: Find the currently scheduled (upcoming) appointment
+                    if let oldAppt = appointments.first(where: { $0.status == .scheduled }),
+                       let oldID = oldAppt.appointmentId {
                         
-                        _ = try await AccessSupabase.shared.updateAppointment(updatedAppt)
-                        
-                        patient.nextSessionDate = newDate
-                        try await AccessSupabase.shared.updatePatient(patient)
-                        
-                        await MainActor.run {
-                            self.patient = patient
-                            self.PatientProfileCollectionView.reloadData()
-                            print("Session successfully changed to \(newDate)")
-                        }
+                        // Step 3: Delete the old appointment
+                        try await AccessSupabase.shared.deleteAppointment(id: oldID)
+                        print("✅ Old appointment deleted: \(oldAppt.scheduledAt)")
                     }
+                    
+                    // Step 4: Create a brand new appointment with the new date
+                    let newAppointment = Appointment(
+                        appointmentId: UUID(),
+                        patientId: patient.patientID,
+                        doctorId: patient.docID,
+                        scheduledAt: newDate,
+                        status: .scheduled
+                    )
+                    let created = try await AccessSupabase.shared.createAppointment(newAppointment)
+                    print("✅ New appointment created: \(created.scheduledAt)")
+                    
+                    // Step 5: Update the patient's next session date
+                    patient.nextSessionDate = newDate
+                    try await AccessSupabase.shared.updatePatient(patient)
+                    print("✅ Patient next session date updated to: \(newDate)")
+                    
+                    // Step 6: Update UI
+                    await MainActor.run {
+                        self.patient = patient
+                        self.PatientProfileCollectionView.reloadData()
+                    }
+                    
                 } catch {
-                    print("Error changing session: \(error)")
+                    print("❌ Error rescheduling: \(error)")
                 }
             }
         }
+
         present(popoverVC, animated: true)
     }
 }

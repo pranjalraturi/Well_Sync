@@ -176,7 +176,7 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
     }
     
     private func handleCancellation() {
-        guard scheduleDate != nil else { return }
+        guard selectedDate != nil else { return }
         onScheduleCancelled?()
         dismiss(animated: true)
     }
@@ -213,7 +213,7 @@ extension ScheduleViewController {
         
         let today = Calendar.current.startOfDay(for: Date())
         
-        if date <= today {
+        if date < today {
             calendar.deselect(date)
             UIImpactFeedbackGenerator(style: .medium).impactOccurred()
             selectedDate = nil
@@ -246,28 +246,32 @@ extension ScheduleViewController {
         }
         
         let isNextSession = patient?.nextSessionDate != nil &&
-        cal.isDate(patient!.nextSessionDate!, inSameDayAs: date)
+            cal.isDate(patient!.nextSessionDate!, inSameDayAs: date)
         
-        // 🔥 PRIORITY ORDER (VERY IMPORTANT)
-        
-        // 🔴 1. Missed
+        // 🔴 Missed → red
         if appts.contains(where: { $0.status == .missed }) {
             return UIColor.systemRed.withAlphaComponent(0.25)
         }
         
-        // 🟢 2. Completed
+        // 🟢 Completed → green
         if appts.contains(where: { $0.status == .completed }) {
             return UIColor.systemGreen.withAlphaComponent(0.25)
         }
         
-        // 🔵 3. Future next session
+        // 🔵 FIX: Scheduled appointment exists for this date → always blue
+        // This catches today's session AND future sessions from allAppointments
+        if appts.contains(where: { $0.status == .scheduled }) {
+            return UIColor.systemBlue.withAlphaComponent(0.25)
+        }
+        
+        // 🔵 nextSessionDate is set and is in the future → blue
         if let nextSession = patient?.nextSessionDate,
            isNextSession,
            nextSession > today {
             return UIColor.systemBlue.withAlphaComponent(0.25)
         }
         
-        // ⚪ 4. Next session but no data (fallback)
+        // ⚫ nextSessionDate is today or past → gray (stale/expired marker)
         if isNextSession {
             return UIColor.systemGray.withAlphaComponent(0.25)
         }

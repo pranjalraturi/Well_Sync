@@ -89,6 +89,7 @@ import Foundation
 class SessionNoteCollectionViewController: UICollectionViewController {
 
     var patient: Patient?
+    var appointment: Appointment?
     var sessions: [SessionNote] = []
 
     override func viewDidLoad() {
@@ -162,6 +163,7 @@ class SessionNoteCollectionViewController: UICollectionViewController {
         if let navVC = segue.destination as? UINavigationController,
            let addVC = navVC.topViewController as? AddSessionCollectionViewController {
             addVC.patientID = patient?.patientID
+            addVC.appointmentID = appointment?.appointmentId
             addVC.onSessionAdded = { [weak self] in
                 self?.loadSessionNotes()
             }
