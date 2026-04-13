@@ -82,13 +82,16 @@ class NextSessionCell: UICollectionViewCell {
 
         if days == 0{
             statusLabel.text         = "Today"
-            statusLabel.textColor    = .systemRed
-            statusLabel.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
+            statusLabel.textColor    = .systemGreen
+            statusLabel.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.1)
         }else if days == 1{
             statusLabel.text = "Tomorrow"
+            statusLabel.textColor    = .systemYellow
+            statusLabel.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.1)
         }else if days<0{
             statusLabel.text         = "Missed"
             statusLabel.textColor    = .systemRed
+            statusLabel.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
         }else {
             statusLabel.text = "In \(days) days"
         }

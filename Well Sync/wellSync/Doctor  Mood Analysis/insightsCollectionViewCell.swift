@@ -10,9 +10,13 @@ import UIKit
 class insightsCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var insight: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        insight.numberOfLines = 0
+        insight.lineBreakMode = .byWordWrapping
     }
+
     func configur(with text: String) {
         insight.text = text
     }

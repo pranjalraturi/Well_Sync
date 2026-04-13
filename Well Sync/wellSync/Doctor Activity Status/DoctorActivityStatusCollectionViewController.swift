@@ -160,7 +160,6 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
             do{
                 activities = try await buildTodayItems(for: patient!.patientID)
                 previousActivity = try await buildLogSummaries(for: patient!.patientID)
-                print("1-->",patient!.patientID)
             }catch{
                 print("Activity log error: \(error)")
             }
