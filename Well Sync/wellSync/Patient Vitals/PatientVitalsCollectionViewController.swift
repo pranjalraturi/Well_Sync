@@ -68,6 +68,7 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
         super.viewDidLoad()
         self.collectionView!.register(UINib(nibName: "PatientBarVitalsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "patientBarVitalsCell")
         collectionView.collectionViewLayout = generateLayout()
+        
     }
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
