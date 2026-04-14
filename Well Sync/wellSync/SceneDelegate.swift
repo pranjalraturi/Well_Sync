@@ -62,6 +62,8 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    private let hasSeenAppOnboardingKey = "has_seen_app_onboarding"
+    private let splashDisplayDuration: TimeInterval = 0.45
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
@@ -69,15 +71,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         // Create the window
         window = UIWindow(windowScene: windowScene)
-        
-        // Show a launch screen while checking session
-        // (this is just the login screen briefly while we check)
-        window?.makeKeyAndVisible()
-        
-        // Check if user is still authenticated with Supabase
-        Task {
-            await checkAndRestoreSession()
-        }
+
+        showSplashAndRoute()
     }
     
     // MARK: - Session Check on App Launch
@@ -117,6 +112,44 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
+    private func showSplashAndRoute() {
+        let splashStoryboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+        let splashVC = splashStoryboard.instantiateInitialViewController() ?? UIViewController()
+
+        setRootViewController(splashVC, animated: false)
+        window?.makeKeyAndVisible()
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + splashDisplayDuration) { [weak self] in
+            guard let self else { return }
+
+            if self.shouldShowAppOnboarding() {
+                self.showOnboardingScreen()
+            } else {
+                Task {
+                    await self.checkAndRestoreSession()
+                }
+            }
+        }
+    }
+
+    private func showOnboardingScreen() {
+        let storyboard = UIStoryboard(name: "WellSyncOnboarding", bundle: nil)
+
+        guard let onboardingVC = storyboard.instantiateInitialViewController()
+                as? WellSyncOnboardingViewController else {
+            Task { await checkAndRestoreSession() }
+            return
+        }
+
+        onboardingVC.onFinish = { [weak self] in
+            Task { @MainActor in
+                self?.markAppOnboardingSeen()
+                await self?.checkAndRestoreSession()
+            }
+        }
+
+        setRootViewController(onboardingVC, animated: true)
+    }
     // MARK: - Navigation Helpers
     private func showLoginScreen() {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -125,7 +158,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let nav = UINavigationController(rootViewController: loginVC)
         nav.isNavigationBarHidden = true
         
-        window?.rootViewController = nav
+        setRootViewController(nav, animated: true)
     }
     
     func showDoctorDashboard(doctor: Doctor) {
@@ -139,14 +172,37 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                    let home = nav.viewControllers.first as? HomeCollectionViewController {
                     home.doctor = doctor
                 }
-        window?.rootViewController = rootVC
+        setRootViewController(rootVC, animated: true)
         }
     
     func showPatientDashboard(patient: Patient) {
         let storyboard = UIStoryboard(name: "Patient_Dashboard", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Patient") as! TabBar
         vc.patient = patient
-        window?.rootViewController = vc
+        setRootViewController(vc, animated: true)
+    }
+
+    private func shouldShowAppOnboarding() -> Bool {
+        !UserDefaults.standard.bool(forKey: hasSeenAppOnboardingKey)
+    }
+
+    private func markAppOnboardingSeen() {
+        UserDefaults.standard.set(true, forKey: hasSeenAppOnboardingKey)
+    }
+
+    private func setRootViewController(_ viewController: UIViewController, animated: Bool) {
+        guard let window else { return }
+
+        if animated, window.rootViewController != nil {
+            UIView.transition(with: window, duration: 0.35, options: [.transitionCrossDissolve]) {
+                let animationsEnabled = UIView.areAnimationsEnabled
+                UIView.setAnimationsEnabled(false)
+                window.rootViewController = viewController
+                UIView.setAnimationsEnabled(animationsEnabled)
+            }
+        } else {
+            window.rootViewController = viewController
+        }
     }
 
     // Keep the other SceneDelegate methods unchanged below...

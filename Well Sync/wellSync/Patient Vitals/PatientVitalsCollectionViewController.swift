@@ -4,12 +4,15 @@
 //
 //  Created by Vidit Saran Agarwal on 10/02/26.
 //
-
 import UIKit
 
 class PatientVitalsCollectionViewController: UICollectionViewController, VitalsBarRangeNavigating1 {
     
     var patient: Patient?
+    
+    // ✅ ONBOARDING
+    private var onboardingSequence: FeatureOnboardingSequence?
+    
     enum DisplayRange: Int {
         case weekly = 0
         case monthly = 1
@@ -25,7 +28,6 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
         ("Steps", .systemOrange)
     ]
 
-    
     private var displayRange: DisplayRange = .weekly {
         didSet {
             barRanges = Array(repeating: displayRange, count: allVitals.count)
@@ -38,7 +40,6 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
         .steps
     ]
 
-    
     private var barRanges: [DisplayRange] = [.weekly, .weekly]
     private var barOffsets: [Int] = [0, 0]
 
@@ -47,6 +48,7 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
         let today = Date()
         let barRange = barRanges[safe: index] ?? .weekly
         let offset = barOffsets[safe: index] ?? 0
+        
         switch barRange {
         case .weekly:
             let startOfWeek = calendar.dateInterval(of: .weekOfYear, for: today)!.start
@@ -55,6 +57,7 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
             let formatter = DateFormatter()
             formatter.dateFormat = "MMM d"
             return "\(formatter.string(from: targetStart)) – \(formatter.string(from: targetEnd))"
+            
         case .monthly:
             let startOfMonth = calendar.dateInterval(of: .month, for: today)!.start
             let target = calendar.date(byAdding: .month, value: offset, to: startOfMonth)!
@@ -66,38 +69,55 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView!.register(UINib(nibName: "PatientBarVitalsCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "patientBarVitalsCell")
+        
+        self.collectionView!.register(
+            UINib(nibName: "PatientBarVitalsCollectionViewCell", bundle: nil),
+            forCellWithReuseIdentifier: "patientBarVitalsCell"
+        )
+        
         collectionView.collectionViewLayout = generateLayout()
         
+        // ✅ INIT ONBOARDING
+        onboardingSequence = FeatureOnboardingSequence(
+            viewController: self,
+            storageKey: "patient_vitals"
+        ) { [weak self] in
+            self?.makeOnboardingSteps() ?? []
+        }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        startOnboardingIfPossible()
+    }
+
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
     }
 
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0{
-            return 1
-        }
+    override func collectionView(_ collectionView: UICollectionView,
+                                 numberOfItemsInSection section: Int) -> Int {
+        if section == 0 { return 1 }
         return displayedVitals.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0{
-            if indexPath.row == 0{
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "segment1", for: indexPath)
-                return cell
-            }
+    override func collectionView(_ collectionView: UICollectionView,
+                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        if indexPath.section == 0 {
+            return collectionView.dequeueReusableCell(
+                withReuseIdentifier: "segment1",
+                for: indexPath
+            )
         }
-        
-        
+
         let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: "patientBarVitalsCell",
             for: indexPath
         ) as! PatientBarVitalsCollectionViewCell
 
         let barIndex = indexPath.row
-        guard barIndex >= 0, barIndex < barMetrics.count else { return cell }
+        guard barIndex < barMetrics.count else { return cell }
 
         if let label = cell.viewWithTag(1) as? UILabel {
             label.text = displayedVitals[barIndex].title
@@ -114,87 +134,49 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
         )
 
         return cell
-
-
     }
-    
+
     func generateLayout() -> UICollectionViewCompositionalLayout {
-        
-        return UICollectionViewCompositionalLayout { sectionIndex, _ in
+        UICollectionViewCompositionalLayout { sectionIndex, _ in
             
             let height: NSCollectionLayoutDimension
             
             switch sectionIndex {
             case 0:
                 height = .estimated(50)
-                let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .fractionalHeight(1.0)
-                )
-                
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                
-                let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: height
-                )
-                
-                let group = NSCollectionLayoutGroup.vertical(
-                    layoutSize: groupSize,
-                    subitems: [item]
-                )
-                group.interItemSpacing = .fixed(12)
-                let section = NSCollectionLayoutSection(group: group)
-                section.interGroupSpacing = 12
-                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
-                
-                return section
-                
             default:
                 height = .absolute(280)
             }
             
-            let itemSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(1.0)
-            )
-            
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
-            let groupSize = NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: height
+            let item = NSCollectionLayoutItem(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .fractionalHeight(1.0)
+                )
             )
             
             let group = NSCollectionLayoutGroup.vertical(
-                layoutSize: groupSize,
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: height
+                ),
                 subitems: [item]
             )
-            group.interItemSpacing = .fixed(8)
-            let section = NSCollectionLayoutSection(group: group)
-            section.interGroupSpacing = 8
-            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 0, trailing: 16)
             
+            let section = NSCollectionLayoutSection(group: group)
+            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 0, trailing: 16)
             
             return section
         }
     }
-    
-    func reloadLineSection() {
-        displayedVitals = allVitals
-        let lineIndexPath = IndexPath(item: 0, section: 1)
-        if collectionView.numberOfSections > 1 && collectionView.numberOfItems(inSection: 1) > 0 {
-            collectionView.reloadItems(at: [lineIndexPath])
-        } else {
-            collectionView.reloadData()
-        }
-    }
-    
+
+    // MARK: - Actions
+
     @IBAction func valueChnaged(_ sender: UISegmentedControl) {
         guard let range = DisplayRange(rawValue: sender.selectedSegmentIndex) else { return }
         displayRange = range
     }
-    
+
     func didTapPrevBarRange(for index: Int) {
         barOffsets[index] = max(barOffsets[index] - 1, -10)
         reloadBar(at: index)
@@ -206,26 +188,72 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
     }
 
     func reloadBar(at barIndex: Int) {
-        let indexPath = IndexPath(item: barIndex, section: 1)
-        collectionView.reloadItems(at: [indexPath])
+        collectionView.reloadItems(at: [IndexPath(item: barIndex, section: 1)])
+        
+        DispatchQueue.main.async {
+            self.startOnboardingIfPossible()
+        }
     }
 
     func reloadAllCharts() {
-        let items = [
+        collectionView.reloadItems(at: [
             IndexPath(item: 0, section: 1),
             IndexPath(item: 1, section: 1)
-        ]
-        collectionView.reloadItems(at: items)
+        ])
+        
+        DispatchQueue.main.async {
+            self.startOnboardingIfPossible()
+        }
     }
+
+    // MARK: - Segue
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "sleepLog"){
-            guard let vc = segue.destination as? UINavigationController,let dvc = vc.viewControllers.first as? VitalLogTableViewController else {
-                return
-            }
-            dvc.patient = patient
-            dvc.onSave = {
-                self.reloadAllCharts()
-            }
+        if segue.identifier == "sleepLog",
+           let nav = segue.destination as? UINavigationController,
+           let vc  = nav.viewControllers.first as? VitalLogTableViewController {
+            
+            vc.patient = patient
+            vc.onSave = { self.reloadAllCharts() }
+        }
+    }
+
+    // MARK: - ✅ ONBOARDING
+
+    private func makeOnboardingSteps() -> [FeatureSpotlightStep] {
+        collectionView.layoutIfNeeded()
+
+        return [
+            FeatureSpotlightStep(
+                title: "Switch time range",
+                message: "Toggle between weekly and monthly views.",
+                placement: .below,
+                targetProvider: { [weak self] in
+                    self?.collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
+                }
+            ),
+            FeatureSpotlightStep(
+                title: "Sleep insights",
+                message: "Track your sleep trends here.",
+                placement: .below,
+                targetProvider: { [weak self] in
+                    self?.collectionView.cellForItem(at: IndexPath(item: 0, section: 1))
+                }
+            ),
+            FeatureSpotlightStep(
+                title: "Steps tracking",
+                message: "Monitor your daily movement.",
+                placement: .above,
+                targetProvider: { [weak self] in
+                    self?.collectionView.cellForItem(at: IndexPath(item: 1, section: 1))
+                }
+            )
+        ]
+    }
+
+    private func startOnboardingIfPossible() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.onboardingSequence?.startIfNeeded()
         }
     }
 }

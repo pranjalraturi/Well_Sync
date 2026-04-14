@@ -5,6 +5,7 @@ class ActivityRingView: UIView {
     private let trackLayer    = CAShapeLayer()
     private let progressLayer = CAShapeLayer()
     private var didSetup      = false
+    private var onboardingSequence: FeatureOnboardingSequence?
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -80,7 +81,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     
     var currentStreak: Int = 0
     var totalTodayItems: Int = 0
-
+    private var onboardingSequence: FeatureOnboardingSequence?
     var patient: Patient? {
         didSet {
             guard patient != nil else { return }
@@ -113,6 +114,12 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         collectionView.collectionViewLayout  = generateLayout()
         collectionView.alwaysBounceVertical  = true
 
+        onboardingSequence = FeatureOnboardingSequence(
+            viewController: self,
+            storageKey: "patient_dashboard"
+        ) { [weak self] in
+            self?.makeOnboardingSteps() ?? []
+        }
         let menu = makeDashboardMenu()
         let more = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), menu: menu)
         navigationItem.rightBarButtonItem = more
@@ -132,14 +139,24 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
             self?.performSegue(withIdentifier: "Timer", sender: item)
         }
         
+        
     }
 
+    private func startOnboardingIfPossible() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.onboardingSequence?.startIfNeeded()
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         load()
         resetMoodViews()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        startOnboardingIfPossible()
+    }
 
     func load() {
         guard let patientID = patient?.patientID else { return }
@@ -189,6 +206,10 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                     self.toDoItems      = allToday.filter { !$0.isCompletedToday }
                     self.collectionView.reloadSections(IndexSet([0, 2]))
                     self.collectionView.reloadItems(at: [IndexPath(row: 0, section: 1),IndexPath(row: 1, section: 1)])
+                    
+                    DispatchQueue.main.async {
+                        self.startOnboardingIfPossible()
+                    }
                 }
 
             } catch {
@@ -431,5 +452,120 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         cell.contentView.layer.masksToBounds = true
         cell.layer.cornerRadius            = 20
         cell.layer.shadowPath              = UIBezierPath(roundedRect: cell.bounds, cornerRadius: 20).cgPath
+    }
+    private func makeOnboardingSteps() -> [FeatureSpotlightStep] {
+        collectionView.layoutIfNeeded()
+
+        return [
+            FeatureSpotlightStep(
+                title: "Your streak at a glance",
+                message: "This shows your weekly consistency.",
+                placement: .below,
+                prepare: nil,
+                targetProvider: { [weak self] in
+                    guard let self,
+                          let cell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 0))
+                    else { return nil }
+                    return self.spotlightTarget(in: cell)
+                }
+            ),
+            FeatureSpotlightStep(
+                title: "Track daily progress",
+                message: "See how much of today’s tasks are complete.",
+                placement: .below,
+                prepare: nil,
+                targetProvider: { [weak self] in
+                    guard let self,
+                          let cell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 1))
+                    else { return nil }
+                    return self.spotlightTarget(in: cell)
+                }
+            ),
+            FeatureSpotlightStep(
+                title: "Monitor mood",
+                message: "Track your mood trends here.",
+                placement: .below,
+                prepare: { [weak self] in
+                    self?.scrollDashboard(to: IndexPath(item: 1, section: 1))
+                },
+                targetProvider: { [weak self] in
+                    guard let self,
+                          let cell = self.collectionView.cellForItem(at: IndexPath(item: 1, section: 1))
+                    else { return nil }
+                    return self.spotlightTarget(in: cell)
+                }
+            ),
+            FeatureSpotlightStep(
+                title: "Next session info",
+                message: "Your upcoming appointment is shown here.",
+                placement: .below,
+                prepare: { [weak self] in
+                    self?.scrollDashboard(to: IndexPath(item: 2, section: 1))
+                },
+                targetProvider: { [weak self] in
+                    guard let self,
+                          let cell = self.collectionView.cellForItem(at: IndexPath(item: 2, section: 1))
+                    else { return nil }
+                    return self.spotlightTarget(in: cell)
+                }
+            ),
+            FeatureSpotlightStep(
+                title: "Log mood quickly",
+                message: "Tap here to record your mood.",
+                placement: .above,
+                prepare: { [weak self] in
+                    self?.scrollDashboard(to: IndexPath(item: 3, section: 1))
+                },
+                targetProvider: { [weak self] in
+                    guard let self,
+                          let cell = self.collectionView.cellForItem(at: IndexPath(item: 3, section: 1))
+                    else { return nil }
+                    return self.spotlightTarget(in: cell)
+                }
+            ),
+            FeatureSpotlightStep(
+                title: "Your tasks",
+                message: "Pending activities appear here.",
+                placement: .above,
+                prepare: { [weak self] in
+                    self?.scrollToTodoStep()
+                },
+                targetProvider: { [weak self] in
+                    self?.todoSpotlightTarget()
+                }
+            )
+        ]
+    }
+    private func spotlightTarget(in cell: UICollectionViewCell) -> UIView {
+        cell.contentView.subviews.first ?? cell.contentView
+    }
+
+    private func scrollDashboard(to indexPath: IndexPath) {
+        guard collectionView.numberOfSections > indexPath.section else { return }
+        guard collectionView.numberOfItems(inSection: indexPath.section) > indexPath.item else { return }
+
+        collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
+        collectionView.layoutIfNeeded()
+    }
+
+    private func scrollToTodoStep() {
+        if !toDoItems.isEmpty {
+            scrollDashboard(to: IndexPath(item: 0, section: 2))
+        } else {
+            scrollDashboard(to: IndexPath(item: 4, section: 1))
+        }
+    }
+
+    private func todoSpotlightTarget() -> UIView? {
+        if !toDoItems.isEmpty,
+           let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 2)) {
+            return spotlightTarget(in: cell)
+        }
+
+        if let cell = collectionView.cellForItem(at: IndexPath(item: 4, section: 1)) {
+            return spotlightTarget(in: cell)
+        }
+
+        return nil
     }
 }
