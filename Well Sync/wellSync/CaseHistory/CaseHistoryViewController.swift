@@ -30,33 +30,97 @@ class CaseHistoryViewController: UIViewController {
         CaseHistoryCollectionView.delegate = self
     }
     
-    func loadData(){
+//    func loadData(){
+//        Task {
+//               do {
+//                   let full = try await AccessSupabase.shared
+//                       .fetchFullCaseHistory(for: patient.patientID)
+//
+//                   self.caseHistory = full
+//                   self.timeline = full.timeline ?? []
+//                   self.reports = full.report ?? []
+//
+//                   await MainActor.run {
+//                       self.CaseHistoryCollectionView.reloadData()
+//                   }
+//               } catch {
+//                   print("Error:", error)
+//               }
+//           }
+//    }
+
+    func loadData() {
         Task {
-               do {
-                   let full = try await AccessSupabase.shared
-                       .fetchFullCaseHistory(for: patient.patientID)
+            do {
+                // 1. Fetch case history (for reports)
+                let full = try await AccessSupabase.shared
+                    .fetchFullCaseHistory(for: patient.patientID)
 
-                   self.caseHistory = full
-                   self.timeline = full.timeline ?? []
-                   self.reports = full.report ?? []
+                self.caseHistory = full
+                self.reports = full.report ?? []
 
-                   await MainActor.run {
-                       self.CaseHistoryCollectionView.reloadData()
-                   }
-               } catch {
-                   print("Error:", error)
-               }
-           }
+                // 2. Fetch appointments AND session notes in parallel
+                async let appointmentsFetch = AccessSupabase.shared
+                    .fetchAppointments(patientID: patient.patientID)
+                async let sessionsFetch = AccessSupabase.shared
+                    .fetchSessionNotes(patientID: patient.patientID)
+
+                let (appointments, sessions) = try await (appointmentsFetch, sessionsFetch)
+
+                // 3. Build timeline from appointments + sessions
+                self.timeline = buildTimeline(appointments: appointments, sessions: sessions, caseId: full.caseId)
+
+                await MainActor.run {
+                    self.CaseHistoryCollectionView.reloadData()
+                }
+            } catch {
+                print("Error:", error)
+            }
+        }
     }
-    func registerCells(){
-        CaseHistoryCollectionView.register(UINib(nibName: "ReportCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ReportCell")
-        CaseHistoryCollectionView.register(UINib(nibName: "TimelineCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TimelineCell")
-        CaseHistoryCollectionView.register(UINib(nibName: "HeaderView", bundle: nil), forSupplementaryViewOfKind: "header", withReuseIdentifier: "Heading")
-        CaseHistoryCollectionView.register(UINib(nibName: "ReportAddHeadingView", bundle: nil), forSupplementaryViewOfKind: "header", withReuseIdentifier: "MedicalHeading")
-    }
-  
 
-}
+    func buildTimeline(appointments: [Appointment], sessions: [SessionNote], caseId: UUID) -> [Timeline] {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMM yyyy"
+        
+        // 1. Every session note becomes a timeline entry
+        let sessionEntries: [Timeline] = sessions.compactMap { session in
+            let noteText = session.notes?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            return Timeline(
+                timelineId: session.sessionId ?? UUID(),
+                caseID: caseId,
+                title: session.title,
+                date: session.date,
+                description: noteText.isEmpty ? "No session note present" : noteText
+            )
+        }
+        
+        // 2. Only missed appointments become timeline entries
+        let missedEntries: [Timeline] = appointments.compactMap { appointment in
+            guard appointment.status == .missed,
+                  let apptId = appointment.appointmentId else { return nil }
+            
+            let formattedDate = dateFormatter.string(from: appointment.scheduledAt)
+            return Timeline(
+                timelineId: apptId,
+                caseID: caseId,
+                title: "Missed Appointment",
+                date: appointment.scheduledAt,
+                description: "The appointment on \(formattedDate) was not attended."
+            )
+        }
+        
+        // 3. Merge and sort latest first
+        return (sessionEntries + missedEntries).sorted { $0.date > $1.date }
+    }
+        func registerCells(){
+            CaseHistoryCollectionView.register(UINib(nibName: "ReportCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ReportCell")
+            CaseHistoryCollectionView.register(UINib(nibName: "TimelineCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "TimelineCell")
+            CaseHistoryCollectionView.register(UINib(nibName: "HeaderView", bundle: nil), forSupplementaryViewOfKind: "header", withReuseIdentifier: "Heading")
+            CaseHistoryCollectionView.register(UINib(nibName: "ReportAddHeadingView", bundle: nil), forSupplementaryViewOfKind: "header", withReuseIdentifier: "MedicalHeading")
+        }
+    }
 
 extension CaseHistoryViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -326,13 +390,23 @@ extension CaseHistoryViewController: QLPreviewControllerDataSource, UICollection
             print("No case history")
             return
         }
-        if let url = ReportGenerator.createPDF(patient: patient, history: caseHistory){
+//        if let url = ReportGenerator.createPDF(patient: patient, timeline: caseHistory){
+//            self.generatedReportURl = url
+//            
+//            let previewController = QLPreviewController()
+//            previewController.dataSource = self
+//            present(previewController, animated: true)
+//        }else {
+//            print("PDF generation failed")
+//        }
+        
+        if let url = ReportGenerator.createPDF(patient: patient, timeline: self.timeline){
             self.generatedReportURl = url
             
             let previewController = QLPreviewController()
             previewController.dataSource = self
             present(previewController, animated: true)
-        }else {
+        } else {
             print("PDF generation failed")
         }
     }
