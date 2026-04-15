@@ -74,10 +74,10 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="103" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="roI-Vj-iXl">
-                                <rect key="frame" x="46" y="-0.33333333333333215" width="40" height="40.666666666666657"/>
+                                <rect key="frame" x="46" y="0.0" width="40" height="40"/>
                                 <color key="backgroundColor" red="0.74909337883796456" green="0.75192334387903037" blue="0.76041323900222779" alpha="0.58590949820788529" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="tintColor" systemColor="systemOrangeColor"/>
-                                <imageReference key="image" image="plus" catalog="system" symbolScale="large" variableValue="1"/>
+                                <imageReference key="image" image="Image 3" symbolScale="large" variableValue="1"/>
                                 <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font" scale="small" weight="thin">
                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 </preferredSymbolConfiguration>
@@ -130,9 +130,9 @@
     </objects>
     <resources>
         <image name="Image 1" width="472" height="414"/>
+        <image name="Image 3" width="380" height="360"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="paintpalette" catalog="system" width="128" height="105"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

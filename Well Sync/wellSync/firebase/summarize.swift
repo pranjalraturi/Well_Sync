@@ -77,14 +77,10 @@ class Summarise: UIViewController {
 //        gemini-2.0-flash gemini-2.5-flash-lite gemini-3-flash-preview
     }()
 
-    // MARK: - Activity-aware prompt builder
-
-    /// Returns the correct extraction + summary prompts for any activity name.
-    /// Add more cases here as new activity types are introduced.
     static func prompts(for activityName: String) -> (extract: String, summarise: String) {
         let name = activityName.lowercased()
 
-        // ── Journal / handwriting ───────────────────────────────────────
+        // Journal / handwriting
         if name.contains("journal") || name.contains("diary") || name.contains("writing") {
             let extract = """
             This is a photo of a handwritten journal page.
@@ -105,7 +101,7 @@ class Summarise: UIViewController {
             return (extract, summarise)
         }
 
-        // ── Exercise / physiotherapy ────────────────────────────────────
+        // Exercise / physiotherapy
         if name.contains("exercise") || name.contains("physio") ||
            name.contains("workout") || name.contains("stretch") {
             let extract = """
@@ -125,7 +121,7 @@ class Summarise: UIViewController {
             return (extract, summarise)
         }
 
-        // ── Meal / food / nutrition ─────────────────────────────────────
+        // Meal / food / nutrition
         if name.contains("meal") || name.contains("food") ||
            name.contains("diet") || name.contains("nutrition") || name.contains("eat") {
             let extract = """
@@ -145,7 +141,7 @@ class Summarise: UIViewController {
             return (extract, summarise)
         }
 
-        // ── Mood / mental health ────────────────────────────────────────
+        // Mood / mental health
         if name.contains("mood") || name.contains("mental") ||
            name.contains("emotion") || name.contains("feeling") {
             let extract = """
@@ -164,7 +160,7 @@ class Summarise: UIViewController {
             return (extract, summarise)
         }
 
-        // ── Default fallback for any other activity ─────────────────────
+        // Default fallback for any other activity
         let extract = """
         This is a photo submitted by a patient as part of their health activity log.
         Describe all visible content clearly and factually.
@@ -183,8 +179,6 @@ class Summarise: UIViewController {
         return (extract, summarise)
     }
 
-    // MARK: - Main summarise method (activity-aware)
-
     func extractAndSummarise(image: UIImage, activityName: String) async throws -> String {
         guard let imageData = image.jpegData(compressionQuality: 0.8) else {
             throw SummariseError.imageConversionFailed
@@ -193,19 +187,15 @@ class Summarise: UIViewController {
         let imagePart = InlineDataPart(data: imageData, mimeType: "image/jpeg")
         let (extractPrompt, summariseTemplate) = Summarise.prompts(for: activityName)
 
-        // Step 1 — Extract content from image
-        print("✍️ Extracting content for activity: \(activityName)")
+        print("Extracting content for activity: \(activityName)")
         let extractResponse = try await model.generateContent(extractPrompt, imagePart)
         let extractedText   = extractResponse.text ?? "No content found."
 
-        // Step 2 — Summarise the extracted content
-        print("🧠 Summarising...")
+        print("Summarising...")
         let summaryPrompt    = summariseTemplate.replacingOccurrences(of: "{TEXT}", with: extractedText)
         let summaryResponse  = try await model.generateContent(summaryPrompt)
         return summaryResponse.text ?? "Could not summarise."
     }
-
-    // MARK: - Legacy method (kept for backward compatibility)
 
     func extractAndSummarizeWithGemini(image: UIImage) async throws -> String {
         return try await extractAndSummarise(image: image, activityName: "journal")

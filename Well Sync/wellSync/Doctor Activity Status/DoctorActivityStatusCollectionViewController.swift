@@ -211,7 +211,6 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
             
             cell.configure(progress: currentWeekProgress)
             
-            // Update labels (use proper outlets ideally)
             if let percentLabel = cell.viewWithTag(101) as? UILabel {
                 percentLabel.text = "\(Int(currentWeekProgress * 100))%"
             }
@@ -254,6 +253,10 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
                     withReuseIdentifier: "graphCell",
                     for: indexPath
                 ) as! GraphCollectionViewCell
+                // In cellForItemAt, section == 1, graph cell branch:
+                print("🔍 Logs count for \(item.activity.name): \(item.logs.count)")
+                // Also print each log's date:
+                item.logs.forEach { print("   📅 \($0.date)") }
                 
                 cell.configure(with: item.logs)
                 
@@ -460,6 +463,7 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
             if indexPath.section == 1 {
                 // Current activity — all logs for that assignment
                 let item = activities[indexPath.row]
+                graphVC.assigned = item.assignment
                 graphVC.activity = item.activity
                 graphVC.logs     = item.logs        // [ActivityLog] already fetched
                 graphVC.patient  = self.patient
@@ -467,6 +471,7 @@ class DoctorActivityStatusCollectionViewController: UICollectionViewController {
             } else if indexPath.section == 2 {
                 // Previous activity — all logs for that assignment
                 let item = previousActivity[indexPath.row]
+                graphVC.assigned = item.assignment
                 graphVC.activity = item.activity
                 graphVC.logs     = item.logs        // [ActivityLog] already fetched
                 graphVC.patient  = self.patient

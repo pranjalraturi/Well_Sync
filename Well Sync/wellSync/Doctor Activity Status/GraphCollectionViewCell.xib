@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -55,7 +55,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A0C-of-WwV" customClass="BarChartView" customModule="DGCharts">
-                        <rect key="frame" x="244" y="56.666666666666664" width="90" height="28.333333333333336"/>
+                        <rect key="frame" x="244" y="44.666666666666657" width="90" height="40.333333333333343"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="90" id="nVj-yu-bMO"/>
@@ -85,7 +85,7 @@
                 <constraint firstItem="2xQ-Z0-EWc" firstAttribute="leading" secondItem="Itw-Ep-4P0" secondAttribute="trailing" constant="4" id="dzp-8s-OgN"/>
                 <constraint firstItem="7XY-E1-Nta" firstAttribute="top" secondItem="fhM-Hb-UYj" secondAttribute="top" constant="20" id="ksp-6N-VIC"/>
                 <constraint firstItem="7XY-E1-Nta" firstAttribute="leading" secondItem="fhM-Hb-UYj" secondAttribute="leading" constant="20" id="lEn-x0-e9D"/>
-                <constraint firstItem="A0C-of-WwV" firstAttribute="top" secondItem="Itw-Ep-4P0" secondAttribute="bottom" constant="16" id="rrP-79-5m4"/>
+                <constraint firstItem="A0C-of-WwV" firstAttribute="top" secondItem="Itw-Ep-4P0" secondAttribute="bottom" constant="4" id="rrP-79-5m4"/>
                 <constraint firstItem="7XY-E1-Nta" firstAttribute="centerY" secondItem="J5g-Ym-eOl" secondAttribute="centerY" id="zqv-Sq-qFh"/>
             </constraints>
             <size key="customSize" width="354" height="97"/>
@@ -113,7 +113,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
-            <color red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.55294117649999996" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

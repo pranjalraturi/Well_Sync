@@ -10,19 +10,16 @@ import UIKit
 
 class ImageSummarySheetViewController: UIViewController {
     
-    // MARK: - Outlets (connect in storyboard)
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var loadingLabel: UILabel!
     @IBOutlet weak var summaryTextView: UITextView!
     
-    // MARK: - Properties
     var image: UIImage?
     var entryTitle: String = "Journal Entry"
     var storedSummary: String?   
     
-    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,19 +27,16 @@ class ImageSummarySheetViewController: UIViewController {
         summaryTextView.isHidden = true
         
         if let stored = storedSummary, !stored.isEmpty {
-            // ── Fast path: show pre-stored summary immediately ──
             spinner.stopAnimating()
             loadingLabel.isHidden = true
             summaryTextView.text  = stored
             summaryTextView.isHidden = false
         } else {
-            // ── Fallback: generate on-the-fly for old logs ──
             spinner.startAnimating()
             fetchSummary()
         }
     }
     
-    // MARK: - API
     
     private func fetchSummary() {
         guard let image,
@@ -63,7 +57,6 @@ class ImageSummarySheetViewController: UIViewController {
                 }
 
             } catch {
-                // ✅ Now this catch block is reachable
                 DispatchQueue.main.async {
                     self.spinner.stopAnimating()
                     self.loadingLabel.isHidden = true

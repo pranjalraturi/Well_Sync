@@ -8,8 +8,6 @@ import UIKit
 
 class insightCollectionViewCellGr: UICollectionViewCell {
 
-    // MARK: - UI Elements
-
     private let totalLogsLabel: UILabel = {
         let l = UILabel()
         l.font = .systemFont(ofSize: 13, weight: .medium)
@@ -35,13 +33,13 @@ class insightCollectionViewCellGr: UICollectionViewCell {
         p.translatesAutoresizingMaskIntoConstraints = false
         return p
     }()
-
-    private let trendIconLabel: UILabel = {
-        let l = UILabel()
-        l.font = .systemFont(ofSize: 22)
-        l.translatesAutoresizingMaskIntoConstraints = false
-        return l
-    }()
+//
+//    private let trendIconLabel: UILabel = {
+//        let l = UILabel()
+//        l.font = .systemFont(ofSize: 22)
+//        l.translatesAutoresizingMaskIntoConstraints = false
+//        return l
+//    }()
 
     private let trendTextLabel: UILabel = {
         let l = UILabel()
@@ -65,7 +63,6 @@ class insightCollectionViewCellGr: UICollectionViewCell {
         return v
     }()
 
-    // MARK: - Stat boxes (total logs | this week | last week)
 
     private let statStack: UIStackView = {
         let s = UIStackView()
@@ -76,7 +73,6 @@ class insightCollectionViewCellGr: UICollectionViewCell {
         return s
     }()
 
-    // MARK: - Lifecycle
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -84,28 +80,23 @@ class insightCollectionViewCellGr: UICollectionViewCell {
         setupUI()
     }
 
-    // MARK: - Layout
 
     private func setupUI() {
 
-        // Remove the placeholder label from XIB
         subviews.forEach { if $0 is UILabel { $0.removeFromSuperview() } }
 
-        // Stat boxes
         let totalBox  = makeStatBox(title: "Total Logs")
         let weekBox   = makeStatBox(title: "This Week")
         let lastBox   = makeStatBox(title: "Last Week")
 
         [totalBox, weekBox, lastBox].forEach { statStack.addArrangedSubview($0) }
 
-        // Trend row
-        let trendRow = UIStackView(arrangedSubviews: [trendIconLabel, trendTextLabel, UIView(), trendSubLabel])
+        let trendRow = UIStackView(arrangedSubviews: [trendTextLabel, UIView(), trendSubLabel])
         trendRow.axis = .horizontal
         trendRow.spacing = 6
         trendRow.alignment = .center
         trendRow.translatesAutoresizingMaskIntoConstraints = false
 
-        // Main vertical stack
         let vStack = UIStackView(arrangedSubviews: [
             statStack,
             divider,
@@ -130,13 +121,12 @@ class insightCollectionViewCellGr: UICollectionViewCell {
         ])
     }
 
-    // Builds a small vertical label pair: big number on top, grey title below
     private func makeStatBox(title: String) -> UIView {
         let numberLabel = UILabel()
         numberLabel.font = .systemFont(ofSize: 22, weight: .bold)
         numberLabel.textColor = .label
         numberLabel.textAlignment = .center
-        numberLabel.tag = 100          // used to find & update later
+        numberLabel.tag = 100
 
         let titleLabel = UILabel()
         titleLabel.font = .systemFont(ofSize: 11, weight: .regular)
@@ -148,84 +138,69 @@ class insightCollectionViewCellGr: UICollectionViewCell {
         stack.axis = .vertical
         stack.spacing = 2
         stack.alignment = .center
-        stack.tag = 200                // used to find the container
+        stack.tag = 200
         return stack
     }
 
-    // MARK: - Configure
-
-    /// Call this from GraphCollectionViewController after passing logs.
-    /// - Parameters:
-    ///   - logs:      All logs for the activity (all time)
-    ///   - frequency: How many times per day the activity should be done (from assignment)
     func configure(with logs: [ActivityLog], frequency: Int) {
 
         let calendar = Calendar.current
         let today    = Date()
 
-        // --- 1. Total logs (all time) ---
         let totalLogs = logs.count
 
-        // --- 2. This week logs (Sun → today) ---
         let weekday       = calendar.component(.weekday, from: today)
         let weekStart     = calendar.date(byAdding: .day,
                                           value: -(weekday - 1),
                                           to: calendar.startOfDay(for: today))!
         let thisWeekLogs  = logs.filter { $0.date >= weekStart && $0.date <= today }.count
 
-        // --- 3. Last week logs ---
         let lastWeekStart = calendar.date(byAdding: .day, value: -7, to: weekStart)!
         let lastWeekEnd   = calendar.date(byAdding: .second, value: -1, to: weekStart)!
         let lastWeekLogs  = logs.filter { $0.date >= lastWeekStart && $0.date <= lastWeekEnd }.count
 
-        // --- 4. Today completion ---
         let todayLogs       = logs.filter { calendar.isDateInToday($0.date) }.count
         let safeFrequency   = max(frequency, 1)
         let completionRatio = Float(min(todayLogs, safeFrequency)) / Float(safeFrequency)
 
-        // --- 5. Trend vs last week ---
         let diff            = thisWeekLogs - lastWeekLogs
-        let trendIcon: String
+//        let trendIcon: String
         let trendText: String
         let trendColor: UIColor
 
         if lastWeekLogs == 0 && thisWeekLogs == 0 {
-            trendIcon  = "➖"
+//            trendIcon  = ""
             trendText  = "No data yet"
             trendColor = .secondaryLabel
         } else if diff > 0 {
-            trendIcon  = "📈"
+//            trendIcon  = ""
             trendText  = "+\(diff) logs vs last week"
             trendColor = .systemGreen
         } else if diff < 0 {
-            trendIcon  = "📉"
+//            trendIcon  = ""
             trendText  = "\(diff) logs vs last week"
             trendColor = .systemRed
         } else {
-            trendIcon  = "➡️"
+//            trendIcon  = ""
             trendText  = "Same as last week"
             trendColor = .systemOrange
         }
 
-        // --- 6. Update stat boxes ---
         let boxes = statStack.arrangedSubviews
         updateStatBox(boxes[0], value: "\(totalLogs)")
         updateStatBox(boxes[1], value: "\(thisWeekLogs)")
         updateStatBox(boxes[2], value: "\(lastWeekLogs)")
 
-        // --- 7. Update completion bar ---
         completionLabel.text              = "Today: \(todayLogs) of \(safeFrequency) completed"
         progressBar.setProgress(completionRatio, animated: true)
         progressBar.progressTintColor     = completionRatio >= 1.0 ? .systemGreen : .systemTeal
 
-        // --- 8. Update trend ---
-        trendIconLabel.text               = trendIcon
+//        trendIconLabel.text               = trendIcon
         trendTextLabel.text               = trendText
         trendTextLabel.textColor          = trendColor
         trendSubLabel.text                = lastWeekLogs == 0 ? "" : "\(Int(completionRatio * 100))% today"
     }
 
-    // Finds the number label (tag 100) inside the stat box stack and sets its text
     private func updateStatBox(_ view: UIView, value: String) {
         if let stack = view as? UIStackView,
            let numLabel = stack.arrangedSubviews.first(where: { $0.tag == 100 }) as? UILabel {

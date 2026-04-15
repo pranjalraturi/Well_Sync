@@ -106,6 +106,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Activity Status" id="smD-bw-grw">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="JdT-oY-kpf">
+                            <color key="tintColor" systemColor="systemOrangeColor"/>
                             <connections>
                                 <segue destination="Yh4-d4-lCG" kind="presentation" identifier="showAddActivity" id="FRl-hD-yP5"/>
                             </connections>
@@ -229,6 +230,9 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.55294117649999996" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
