@@ -9,7 +9,7 @@ import UIKit
 
 class activitystatusringCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var ringContainer: ActivityRingView!
+    @IBOutlet weak var ringContainer: ActivityStatusRingView!
     override func awakeFromNib() {
         super.awakeFromNib()
     }

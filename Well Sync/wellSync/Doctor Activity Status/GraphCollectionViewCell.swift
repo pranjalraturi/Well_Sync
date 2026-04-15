@@ -17,17 +17,17 @@ class GraphCollectionViewCell: UICollectionViewCell {
     }
     func barchart() {
 
-        let values = [5, 3, 1, 2, 3, 4, 5]
+//        let values = [5, 3, 1, 2, 3, 4, 5]
 
         var entries: [BarChartDataEntry] = []
 
-        for i in 0..<values.count {
-            entries.append(BarChartDataEntry(x: Double(i), y: Double(values[i])))
-        }
+//        for i in 0..<values.count {
+//            entries.append(BarChartDataEntry(x: Double(i), y: Double(values[i])))
+//        }
 
         let dataSet = BarChartDataSet(entries: entries)
 
-        dataSet.colors = [.systemOrange,.systemGray4,.systemGray4,.systemGray4,.systemGray4,.systemGray4,.systemOrange]
+//        dataSet.colors = [.systemOrange]
         dataSet.drawValuesEnabled = false   // hide value labels
         dataSet.highlightEnabled = false
 
@@ -71,7 +71,7 @@ class GraphCollectionViewCell: UICollectionViewCell {
         for log in logs {
             if log.date >= weekInterval.start && log.date <= weekInterval.end {
                 let weekday = calendar.component(.weekday, from: log.date)
-                let index = (weekday + 5) % 7   // convert to Mon=0...Sun=6
+                let index = (weekday + 5) % 6   // convert to Mon=0...Sun=6
                 dailyCounts[index] += 1
             }
         }
@@ -84,9 +84,7 @@ class GraphCollectionViewCell: UICollectionViewCell {
         
         let dataSet = BarChartDataSet(entries: entries)
         
-        dataSet.colors = dailyCounts.enumerated().map {
-            ($0.offset == 0 || $0.offset == 6) ? .systemOrange : .systemGray4
-        }
+        dataSet.colors = [.systemOrange]
         
         dataSet.drawValuesEnabled = false
         dataSet.highlightEnabled = false
