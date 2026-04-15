@@ -18,6 +18,7 @@ class PatientDetailCollectionViewController: UICollectionViewController{
     // ✅ ADD THIS PROPERTY
     var moodLogs: [MoodLog] = []
     var patientAppointments: [Appointment] = []
+    var actionIntent: PatientNavigationIntent?
     func loadMoodLogs() {
         guard let patientID = patient?.patientID else { return }
 
@@ -54,7 +55,19 @@ class PatientDetailCollectionViewController: UICollectionViewController{
             doneButton.isEnabled = false
         }
     }
-    
+    private var hasTriggeredIntent = false
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        guard let intent = actionIntent,
+              !hasTriggeredIntent else { return }
+
+        hasTriggeredIntent = true
+        actionIntent = nil
+
+        triggerCalendar(for: intent)
+    }
     func loadPatientAppointments() {
         guard let patientID = patient?.patientID else { return }
         Task {
@@ -610,5 +623,24 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
 extension PatientDetailCollectionViewController: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
+    }
+    
+    func triggerCalendar(for intent: PatientNavigationIntent) {
+
+        let indexPath = IndexPath(item: 0, section: 0)
+
+        // ✅ ADD THIS LINE
+        PatientProfileCollectionView.layoutIfNeeded()
+
+        guard let cell = PatientProfileCollectionView.cellForItem(at: indexPath) as? ProfileCollectionViewCell else {
+            print("❌ Profile cell not found")
+            return
+        }
+
+        guard let sourceView = cell.calendarButton else { return }
+        if intent == .nextSession {
+            self.selectedAppointment = nil
+        }
+        self.calendarButtonTapped(from: sourceView)
     }
 }

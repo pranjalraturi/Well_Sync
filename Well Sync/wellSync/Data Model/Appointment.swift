@@ -53,3 +53,7 @@ enum doctorAction{
     case markDone
     case notify
 }
+enum PatientNavigationIntent {
+    case nextSession
+    case reschedule
+}
