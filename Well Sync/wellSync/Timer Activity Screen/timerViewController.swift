@@ -302,18 +302,6 @@ class timerViewController: UIViewController {
     // MARK: - Log Activity
     @IBAction func logActivity(_ sender: UIBarButtonItem) {
         
-//        let duration = totalTime - remainingTime
-//        
-//        guard duration > 0 else {
-//            print("No activity logged")
-//            return
-//        }
-//        
-//        print("Logged duration:", duration)
-//        
-//        dismiss(animated: true)
-        
-        
         let duration = totalTime - remainingTime
 
         guard duration > 0 else {
@@ -334,7 +322,6 @@ class timerViewController: UIViewController {
             return
         }
 
-        // Stop the timer if still running
         timer?.invalidate()
         isRunning = false
 
@@ -350,10 +337,9 @@ class timerViewController: UIViewController {
                     patientID:  patient.patientID,
                     date:       Date(),
                     time:       timeString,
-                    duration:   duration,       // seconds elapsed, matches INTEGER column
+                    duration:   duration,
                     uploadPath: nil ,
                     summary: nil
-                    // timer activities have no upload
                 )
 
                 let saved = try await AccessSupabase.shared.saveActivityLog(log)

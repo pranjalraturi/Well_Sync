@@ -77,7 +77,6 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
         
         collectionView.collectionViewLayout = generateLayout()
         
-        // ✅ INIT ONBOARDING
         onboardingSequence = FeatureOnboardingSequence(
             viewController: self,
             storageKey: "patient_vitals"
@@ -135,7 +134,7 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
 
         return cell
     }
-
+    
     func generateLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { sectionIndex, _ in
             
@@ -164,12 +163,19 @@ class PatientVitalsCollectionViewController: UICollectionViewController, VitalsB
             )
             
             let section = NSCollectionLayoutSection(group: group)
-            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 0, trailing: 16)
+            
+            section.interGroupSpacing = 16
+            
+            section.contentInsets = NSDirectionalEdgeInsets(
+                top: 16,
+                leading: 16,
+                bottom: 0,
+                trailing: 16
+            )
             
             return section
         }
     }
-
     // MARK: - Actions
 
     @IBAction func valueChnaged(_ sender: UISegmentedControl) {

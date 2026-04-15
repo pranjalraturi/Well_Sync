@@ -30,34 +30,18 @@ class AccessHealthKit {
 
         healthStore.requestAuthorization(toShare: writeTypes, read: readTypes) { success, error in
             if success {
-                print("✅ HealthKit permission granted")
+                print("HealthKit permission granted")
             } else {
-                print("❌ Permission error: \(error?.localizedDescription ?? "unknown")")
+                print("Permission error: \(error?.localizedDescription ?? "unknown")")
             }
         }
     }
-
-    // MARK: - Date Precision Helper
-    //
-    // ROOT CAUSE OF "ON CONFLICT DO UPDATE command cannot affect row a second time":
-    //
-    // HealthKit timestamps have sub-second precision (e.g. 05:41:45.769 and 05:41:45.770).
-    // Our Swift dedup key used full Double precision so those two dates looked DIFFERENT
-    // in Swift — both passed the dedup filter and both ended up in the upsert batch.
-    // However, the Supabase SDK encodes Date to ISO8601 WITHOUT fractional seconds
-    // (e.g. "2026-04-11T05:41:45Z"), so Postgres received two rows with IDENTICAL
-    // start_time / end_time strings in the same command → error 21000.
-    //
-    // Fix: truncate every Date to second precision BEFORE building the dedup key AND
-    // before storing it in the struct. This makes the Swift key match exactly what
-    // the Supabase SDK will send to Postgres.
 
     private func floorToSecond(_ date: Date) -> Date {
         Date(timeIntervalSince1970: floor(date.timeIntervalSince1970))
     }
 
     private func dedupKey(start: Date, end: Date) -> String {
-        // Both dates must already be second-precision (call floorToSecond first)
         "\(start.timeIntervalSince1970)-\(end.timeIntervalSince1970)"
     }
 
@@ -177,39 +161,25 @@ class AccessHealthKit {
 
             Task {
                 do {
-                    // ── 1. Filter only actual sleep stages from HealthKit
                     let hkSleep = hkRecords.filter {
                         $0.stage.contains("Sleep") || $0.stage == "Asleep"
                     }
                     print("📱 HealthKit sleep records:", hkSleep.count)
-
-                    // ── 2. Fetch what's already in Supabase
                     let dbLogs = try await AccessSupabase.shared.fetchSleepLogs(for: patientID)
                     print("🗄️ Supabase sleep records:", dbLogs.count)
 
-                    // ── 3. HK → Supabase
-                    //
-                    // Build DB key set using second-precision dates.
-                    // DB records inserted after this fix have second precision already.
-                    // Old records with ms precision are also floored here so they still
-                    // match and don't get re-inserted.
                     let dbKeys = Set(dbLogs.map { log -> String in
                         let s = self.floorToSecond(log.start_time)
                         let e = self.floorToSecond(log.end_time)
                         return self.dedupKey(start: s, end: e)
                     })
 
-                    // Filter HK records not already in DB (compare at second precision)
                     let candidates = hkSleep.filter { hk in
                         let s = self.floorToSecond(hk.startTime)
                         let e = self.floorToSecond(hk.endTime)
                         return !dbKeys.contains(self.dedupKey(start: s, end: e))
                     }
 
-                    // Deduplicate WITHIN the batch at second precision.
-                    // This catches two HK records that are only milliseconds apart —
-                    // they have different Swift Double keys but encode to the same
-                    // ISO8601 string in the Supabase JSON payload → Postgres error 21000.
                     var seenSleepKeys = Set<String>()
                     let logsToInsert: [sleepVital] = candidates.compactMap { hk in
                         let normalStart = self.floorToSecond(hk.startTime)
@@ -219,22 +189,20 @@ class AccessHealthKit {
                         return sleepVital(
                             id:               nil,
                             patient_id:       patientID,
-                            start_time:       normalStart,   // ← second precision
-                            end_time:         normalEnd,     // ← second precision
+                            start_time:       normalStart,
+                            end_time:         normalEnd,
                             duration_minutes: hk.durationMinutes,
                             quality:          hk.stage
                         )
                     }
 
                     if logsToInsert.isEmpty {
-                        print("✅ HK→DB: nothing new to insert")
+                        print("HK→DB: nothing new to insert")
                     } else {
                         try await AccessSupabase.shared.saveSleepLogs(logsToInsert)
-                        print("✅ HK→DB: inserted \(logsToInsert.count) records")
+                        print("HK→DB: inserted \(logsToInsert.count) records")
                     }
 
-                    // ── 4. Supabase → HealthKit
-                    // Build HK key set at second precision to match the DB keys.
                     let hkKeys = Set(hkSleep.map { hk -> String in
                         let s = self.floorToSecond(hk.startTime)
                         let e = self.floorToSecond(hk.endTime)
@@ -242,7 +210,6 @@ class AccessHealthKit {
                     })
 
                     let logsToWriteToHK = dbLogs.filter { db in
-                        // Only look at records within the current sync window
                         guard db.start_time >= syncStart else { return false }
                         let s   = self.floorToSecond(db.start_time)
                         let e   = self.floorToSecond(db.end_time)
@@ -251,7 +218,7 @@ class AccessHealthKit {
                     }
 
                     if logsToWriteToHK.isEmpty {
-                        print("✅ DB→HK: nothing new to write")
+                        print("DB→HK: nothing new to write")
                     } else {
                         for log in logsToWriteToHK {
                             try await self.saveSleepToHealthKit(
@@ -259,11 +226,11 @@ class AccessHealthKit {
                                 endTime:   log.end_time
                             )
                         }
-                        print("✅ DB→HK: wrote \(logsToWriteToHK.count) records to HealthKit")
+                        print("DB→HK: wrote \(logsToWriteToHK.count) records to HealthKit")
                     }
 
                 } catch {
-                    print("❌ Sync error:", error)
+                    print("Sync error:", error)
                 }
             }
         }
@@ -288,10 +255,6 @@ class AccessHealthKit {
                 do {
                     let calendar = Calendar.current
 
-                    // Re-aggregate by startOfDay to guard against any Calendar timezone
-                    // edge case producing two slightly different Date values for the same
-                    // calendar day. Dictionary keying collapses them into one entry and
-                    // sums their step counts, so the final batch has one row per day.
                     var dedupedByDay: [Date: Double] = [:]
                     for (date, steps) in hkStepsByDay {
                         let day = calendar.startOfDay(for: date)
@@ -308,10 +271,10 @@ class AccessHealthKit {
                     }
 
                     try await AccessSupabase.shared.saveStepsLogs(logs)
-                    print("✅ Synced \(logs.count) step logs to Supabase")
+                    print("Synced \(logs.count) step logs to Supabase")
 
                 } catch {
-                    print("❌ Steps sync error:", error)
+                    print("Steps sync error:", error)
                 }
             }
         }

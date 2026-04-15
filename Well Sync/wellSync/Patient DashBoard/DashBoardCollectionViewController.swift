@@ -100,11 +100,10 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         let profile = UIAction(title: "Profile", image: UIImage(systemName: "person")) { _ in
             self.performSegue(withIdentifier: "PatientProfile", sender: nil)
         }
-        let appointments = UIAction(title: "Appointments", image: UIImage(systemName: "calendar")) { _ in }
         let settings = UIAction(title: "Settings", image: UIImage(systemName: "gear")) { _ in
             self.performSegue(withIdentifier: "PateintSetting", sender: nil)
         }
-        return UIMenu(title: "", children: [profile, appointments, settings])
+        return UIMenu(title: "", children: [profile, settings])
     }
 
     override func viewDidLoad() {
@@ -370,18 +369,6 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         return layout
     }
 
-//    @objc func moodTapped(_ sender: UITapGestureRecognizer) {
-//        guard let selectedView = sender.view else { return }
-//        let selectedIndex = selectedView.tag
-//        UIView.animate(withDuration: 0.15, delay: 0,
-//                       usingSpringWithDamping: 0.6,
-//                       initialSpringVelocity: 0.8, options: []) {
-//            selectedView.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
-//        }
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-//            self.performSegue(withIdentifier: "moodLog", sender: selectedIndex)
-//        }
-//    }
     @objc func moodTapped(_ sender: UITapGestureRecognizer) {
         guard let selectedView = sender.view else { return }
 
@@ -430,6 +417,10 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
             timerVC.activityItem = item
             timerVC.patient      = patient
         }
+        if segue.identifier == "PatientProfile",
+           let vc = segue.destination as? PatientProfileTableViewController {
+               vc.patient = patient
+           }
     }
 
     func resetMoodViews() {
