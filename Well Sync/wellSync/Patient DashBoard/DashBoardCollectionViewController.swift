@@ -78,6 +78,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     var toDoItems:    [TodayActivityItem] = []
     var ActivityLogs: [ActivityLog]       = []
     var mood:         [MoodLog]           = []
+    var nextAppointment: Appointment?
     
     var currentStreak: Int = 0
     var totalTodayItems: Int = 0
@@ -164,10 +165,11 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
 
         Task {
             do {
-                // ✅ All 3 fetched in parallel
+                // ✅ All 4 fetched in parallel
                 async let todayTask = buildTodayItems(for: patientID)
                 async let logsTask  = AccessSupabase.shared.fetchLogs(for: patientID)
                 async let moodTask  = AccessSupabase.shared.fetchMoodLogs(patientID: patientID)
+                let next = try await AccessSupabase.shared.fetchNextAppointment(patientID: patientID)
 
                 let allItems = try await todayTask
                 let logs     = try await logsTask
@@ -203,8 +205,8 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                     self.currentStreak  = streak
                     self.totalTodayItems = allToday.count
                     self.toDoItems      = allToday.filter { !$0.isCompletedToday }
-                    self.collectionView.reloadSections(IndexSet([0, 2]))
-                    self.collectionView.reloadItems(at: [IndexPath(row: 0, section: 1),IndexPath(row: 1, section: 1)])
+                    self.nextAppointment = next
+                    self.collectionView.reloadSections(IndexSet([0, 1, 2]))
                     
                     DispatchQueue.main.async {
                         self.startOnboardingIfPossible()
@@ -217,13 +219,15 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         }
     }
 
-    override func numberOfSections(in collectionView: UICollectionView) -> Int { 3 }
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 3
+    }
 
     override func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0:  return 1
-        case 1:  return 5
+        case 1:  return toDoItems.isEmpty ? 4 : 5   // ← hide row 4 when no items
         default: return toDoItems.count
         }
     }
@@ -289,10 +293,8 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: "nextSession", for: indexPath
                 ) as! NextSessionCell
-                var comps  = DateComponents()
-                comps.year = 2026; comps.month = 3; comps.day = 26
-                comps.hour = 14;   comps.minute = 0
-                let sessionDate = patient?.nextSessionDate
+                
+                let sessionDate = nextAppointment?.scheduledAt
                 cell.configure(doctorName: "Dr. Meena Kumari", sessionDate: sessionDate)
                 style(cell)
                 return cell
@@ -356,7 +358,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
             if indexPath.row == 0 || indexPath.row == 1 { return CGSize(width: halfWidth, height: 150) }
             else if indexPath.row == 2 { return CGSize(width: fullWidth, height: 122) }
             else if indexPath.row == 3 { return CGSize(width: fullWidth, height: 172) }
-            else                        { return CGSize(width: fullWidth, height: 30)  }
+            else                        { return CGSize(width: fullWidth, height: 40)  }
         default: return CGSize(width: fullWidth, height: 70)
         }
     }

@@ -636,6 +636,22 @@ final class AccessSupabase {
 
         return try decoder.decode([AppointmentWithPatient].self, from: response.data)
     }
+    func fetchNextAppointment(patientID: UUID) async throws -> Appointment? {
+        let formatter = ISO8601DateFormatter()
+        let now = formatter.string(from: Date())
+
+        let data: [Appointment] = try await supabase
+            .from("appointments")
+            .select("*")
+            .eq("patient_id", value: patientID.uuidString)
+            .gte("scheduled_at", value: now)          // only future appointments
+            .order("scheduled_at", ascending: true)    // earliest first
+            .limit(1)                                  // only the very next one
+            .execute()
+            .value
+
+        return data.first
+    }
     
     func clearNextSessionDate(patientID: UUID) async throws{
         

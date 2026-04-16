@@ -39,24 +39,7 @@ class NextSessionCell: UICollectionViewCell {
 
         dateTimeLabel.textColor  = .secondaryLabel
     }
-//
-//    private func addCountdownPill() {
-//        countdownPill.font               = .systemFont(ofSize: 12, weight: .semibold)
-//        countdownPill.textColor          = UIColor(red: 0.94, green: 0.47, blue: 0, alpha: 1)
-//        countdownPill.backgroundColor    = UIColor(red: 1.0, green: 0.95, blue: 0.88, alpha: 1)
-//        countdownPill.layer.cornerRadius = 12
-//        countdownPill.layer.masksToBounds = true
-//        countdownPill.translatesAutoresizingMaskIntoConstraints = false
-//
-//        contentView.addSubview(countdownPill)
-//
-//        // Pin pill to top-right of cell
-//        NSLayoutConstraint.activate([
-//            countdownPill.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-//            countdownPill.centerYAnchor.constraint(equalTo: doctorLabel.centerYAnchor)
-//        ])
-//    }
-
+    
     func configure(doctorName: String, sessionDate: Date?) {
         doctorLabel.text = doctorName
         guard let sessionDate else {

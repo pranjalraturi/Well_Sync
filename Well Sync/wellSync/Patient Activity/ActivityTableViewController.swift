@@ -543,10 +543,12 @@ class ActivityTableViewController: UITableViewController {
                 let item = todayItems[indexPath.row]
                 graphVC.activity = item.activity
                 graphVC.logs = item.logs
+                graphVC.assigned = item.assignment
             } else {
                 let item = logSummaries[indexPath.row]
                 graphVC.activity = item.activity
                 graphVC.logs = item.logs
+                graphVC.assigned = item.assignment
             }
 
             graphVC.patient = patient

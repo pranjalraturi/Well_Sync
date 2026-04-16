@@ -112,7 +112,7 @@ class GraphCollectionViewController: UICollectionViewController {
 
             style(cell)
 
-
+            print(assigned)
             cell.configure(
                 with: logs,
                 frequency: assigned!.frequency        

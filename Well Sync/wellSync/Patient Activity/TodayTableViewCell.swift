@@ -27,7 +27,7 @@ class TodayTableViewCell: UITableViewCell {
 
     private func setupCard() {
         selectionStyle              = .none
-        cardView.layer.borderColor  = UIColor.systemGray4.cgColor
+//        cardView.layer.borderColor  = UIColor.systemGray4.cgColor
         cardView.layer.cornerRadius = 16
         cardView.layer.borderWidth  = 0
         cardView.layer.shadowColor   = UIColor.black.cgColor
@@ -72,7 +72,7 @@ class TodayTableViewCell: UITableViewCell {
         iconImageView.image    = UIImage(systemName: item.activity.iconName, withConfiguration: symbolConfig)
 
         let done                 = item.isCompletedToday
-        cardView.backgroundColor = done ? UIColor.systemGray5 : UIColor.secondarySystemBackground
+//        cardView.backgroundColor = done ? UIColor.systemGray5 : UIColor.secondarySystemBackground
 //        contentView.alpha        = done ? 0.8 : 1.0
 
         addPhotoButton.isHidden = false
@@ -88,7 +88,7 @@ class TodayTableViewCell: UITableViewCell {
         iconImageView.image    = UIImage(systemName: item.activity.iconName, withConfiguration: symbolConfig)
 
         let done                 = item.isCompletedToday
-        cardView.backgroundColor = done ? UIColor.systemGray5 : UIColor.secondarySystemBackground
+//        cardView.backgroundColor = done ? UIColor.systemGray5 : UIColor.secondarySystemBackground
 //        contentView.alpha        = done ? 0.8 : 1.0
 
         // ← RESET hidden state before setting up (fixes reuse bug)
