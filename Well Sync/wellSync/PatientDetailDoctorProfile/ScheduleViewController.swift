@@ -55,10 +55,49 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
     
     // MARK: - Button UI Logic
     
-    func updateButtonText(){
+//    func updateButtonText(){
+//        var config = UIButton.Configuration.tinted()
+//        config.cornerStyle = .capsule
+//        
+//        guard let selected = selectedDate else {
+//            scheduleButton.setTitle("Select a Date", for: .normal)
+//            scheduleButton.isEnabled = false
+//            config.baseBackgroundColor = .systemGray4
+//            scheduleButton.configuration = config
+//            return
+//        }
+//        
+//        scheduleButton.isEnabled = true
+//        let calendarSys = Calendar.current
+//        
+//        if let currentScheduled = patient?.nextSessionDate {
+//            
+//            if calendarSys.isDateInToday(currentScheduled) {
+//                scheduleButton.setTitle("Schedule", for: .normal)
+//                config.baseBackgroundColor = .systemGreen
+//                
+//            } else if calendarSys.isDate(currentScheduled, inSameDayAs: selected) {
+//                scheduleButton.setTitle("Cancel Session", for: .normal)
+//                config.baseBackgroundColor = .systemRed
+//                
+//            } else {
+//                scheduleButton.setTitle("Reschedule", for: .normal)
+//                config.baseBackgroundColor = .systemBlue
+//            }
+//            
+//        } else {
+//            scheduleButton.setTitle("Schedule", for: .normal)
+//            config.baseBackgroundColor = .systemGreen
+//        }
+//        
+//        scheduleButton.configuration = config
+//    }
+    // MARK: - Button UI Logic
+
+    func updateButtonText() {
         var config = UIButton.Configuration.tinted()
         config.cornerStyle = .capsule
-        
+
         guard let selected = selectedDate else {
             scheduleButton.setTitle("Select a Date", for: .normal)
             scheduleButton.isEnabled = false
@@ -66,33 +105,41 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
             scheduleButton.configuration = config
             return
         }
-        
+
         scheduleButton.isEnabled = true
         let calendarSys = Calendar.current
-        
-        if let currentScheduled = patient?.nextSessionDate {
-            
-            if calendarSys.isDateInToday(currentScheduled) {
-                scheduleButton.setTitle("Schedule", for: .normal)
-                config.baseBackgroundColor = .systemGreen
-                
-            } else if calendarSys.isDate(currentScheduled, inSameDayAs: selected) {
+
+        let isToday = calendarSys.isDateInToday(selected)
+
+        let existingOnSelectedDate = allAppointments.first {
+            $0.status == .scheduled && calendarSys.isDate($0.scheduledAt, inSameDayAs: selected)
+        }
+
+        if existingOnSelectedDate != nil {
+            if isToday {
+                // Today + appointment exists → Update Time
+                scheduleButton.setTitle("Update Time", for: .normal)
+                config.baseBackgroundColor = .systemBlue
+            } else {
+                // Future date + appointment exists → Cancel
                 scheduleButton.setTitle("Cancel Session", for: .normal)
                 config.baseBackgroundColor = .systemRed
-                
-            } else {
+            }
+        } else {
+            // No appointment on selected date
+            if scheduleDate != nil {
+                // Had appointment on another date → Reschedule
                 scheduleButton.setTitle("Reschedule", for: .normal)
                 config.baseBackgroundColor = .systemBlue
+            } else {
+                // No appointment at all → Schedule new
+                scheduleButton.setTitle("Schedule", for: .normal)
+                config.baseBackgroundColor = .systemGreen
             }
-            
-        } else {
-            scheduleButton.setTitle("Schedule", for: .normal)
-            config.baseBackgroundColor = .systemGreen
         }
-        
+
         scheduleButton.configuration = config
     }
-    
     // MARK: - UI Setup
     
     func setupUI(){
@@ -181,28 +228,60 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
         dismiss(animated: true)
     }
     
+//    private func handleScheduling() {
+//        guard let day = selectedDate else { return }
+//        
+//        let calendarSys = Calendar.current
+//        let timeComponents = calendarSys.dateComponents([.hour, .minute], from: timePicker.date)
+//        
+//        var finalComponents = calendarSys.dateComponents([.year, .month, .day], from: day)
+//        finalComponents.hour = timeComponents.hour
+//        finalComponents.minute = timeComponents.minute
+//        
+//        if let finalDate = calendarSys.date(from: finalComponents) {
+//            
+//            let currentTitle = scheduleButton.title(for: .normal)
+//            
+//            if currentTitle == "Reschedule" {
+//                onScheduleChange?(finalDate)
+//            } else {
+//                onScheduleConfirmed?(finalDate)
+//            }
+//            
+//            dismiss(animated: true)
+//        }
+//    }
+    // MARK: - Scheduling Logic
+
     private func handleScheduling() {
         guard let day = selectedDate else { return }
-        
+
         let calendarSys = Calendar.current
         let timeComponents = calendarSys.dateComponents([.hour, .minute], from: timePicker.date)
-        
+
         var finalComponents = calendarSys.dateComponents([.year, .month, .day], from: day)
         finalComponents.hour = timeComponents.hour
         finalComponents.minute = timeComponents.minute
-        
-        if let finalDate = calendarSys.date(from: finalComponents) {
-            
-            let currentTitle = scheduleButton.title(for: .normal)
-            
-            if currentTitle == "Reschedule" {
-                onScheduleChange?(finalDate)
-            } else {
-                onScheduleConfirmed?(finalDate)
-            }
-            
-            dismiss(animated: true)
+
+        guard let finalDate = calendarSys.date(from: finalComponents) else { return }
+
+        let hasExistingOnSelectedDate = allAppointments.contains {
+            $0.status == .scheduled && calendarSys.isDate($0.scheduledAt, inSameDayAs: day)
         }
+
+        if hasExistingOnSelectedDate {
+            // Today with existing → update time
+            // Future date with existing → this won't be called (Cancel button handles it)
+            onScheduleChange?(finalDate)
+        } else if scheduleDate != nil {
+            // Different date → reschedule
+            onScheduleChange?(finalDate)
+        } else {
+            // Brand new → create
+            onScheduleConfirmed?(finalDate)
+        }
+
+        dismiss(animated: true)
     }
 }
 

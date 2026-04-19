@@ -49,21 +49,12 @@ class DetailCollectionViewCell: UICollectionViewCell {
         "Health Stats",
         "Patient History",
     ]
-//    let describes: [String] = [
-//        "Previous session logs",
-//        "Previous session logs",
-//        "Previous session logs",
-//        "Previous session logs",
-//        "Previous session logs",
-//        "Previous session logs"
-//    ]
     func configure(index: Int){
         separator.isHidden = (index == 5)
         
         icon.image = icons[index]
         icon.tintColor = iconsColor[index]
         title.text = titles[index]
-//        describe.text = describes[index]
     }
 }
 

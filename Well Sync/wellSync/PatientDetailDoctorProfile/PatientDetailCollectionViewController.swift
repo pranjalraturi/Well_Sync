@@ -569,52 +569,135 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
 
 
         // ✅ RESCHEDULE: Delete OLD appointment → Create NEW appointment → Update patient
+//        popoverVC.onScheduleChange = { [weak self] newDate in
+//            guard let self = self, var patient = self.patient else { return }
+//            
+//            Task {
+//                do {
+//                    // Step 1: Fetch all appointments for this patient
+//                    let appointments = try await AccessSupabase.shared
+//                        .fetchAppointments(patientID: patient.patientID)
+//                    
+//                    // Step 2: Find the currently scheduled (upcoming) appointment
+//                    if let oldAppt = appointments.first(where: { $0.status == .scheduled }),
+//                       let oldID = oldAppt.appointmentId {
+//                        
+//                        // Step 3: Delete the old appointment
+//                        try await AccessSupabase.shared.deleteAppointment(id: oldID)
+//                        print("✅ Old appointment deleted: \(oldAppt.scheduledAt)")
+//                    }
+//                    
+//                    // Step 4: Create a brand new appointment with the new date
+//                    let newAppointment = Appointment(
+//                        appointmentId: UUID(),
+//                        patientId: patient.patientID,
+//                        doctorId: patient.docID,
+//                        scheduledAt: newDate,
+//                        status: .scheduled
+//                    )
+//                    let created = try await AccessSupabase.shared.createAppointment(newAppointment)
+//                    print("✅ New appointment created: \(created.scheduledAt)")
+//                    
+//                    // Step 5: Update the patient's next session date
+//                    patient.nextSessionDate = newDate
+//                    try await AccessSupabase.shared.updatePatient(patient)
+//                    print("✅ Patient next session date updated to: \(newDate)")
+//                    
+//                    // Step 6: Update UI
+//                    await MainActor.run {
+//                        self.patient = patient
+//                        self.PatientProfileCollectionView.reloadData()
+//                    }
+//                    
+//                } catch {
+//                    print("❌ Error rescheduling: \(error)")
+//                }
+//            }
+//        }
         popoverVC.onScheduleChange = { [weak self] newDate in
             guard let self = self, var patient = self.patient else { return }
-            
+
             Task {
                 do {
-                    // Step 1: Fetch all appointments for this patient
-                    let appointments = try await AccessSupabase.shared
-                        .fetchAppointments(patientID: patient.patientID)
-                    
-                    // Step 2: Find the currently scheduled (upcoming) appointment
-                    if let oldAppt = appointments.first(where: { $0.status == .scheduled }),
-                       let oldID = oldAppt.appointmentId {
-                        
-                        // Step 3: Delete the old appointment
-                        try await AccessSupabase.shared.deleteAppointment(id: oldID)
-                        print("✅ Old appointment deleted: \(oldAppt.scheduledAt)")
+                    let calendar = Calendar.current
+
+                    // ✅ Use selectedAppointment directly — avoids the .missed status trap
+                    if let selected = self.selectedAppointment{
+                       let oldID = selected.appointmentId
+
+                        if calendar.isDate(selected.scheduledAt, inSameDayAs: newDate) {
+                            // ✅ Same day (just changing time) → UPDATE in place
+                            let updatedAppt = Appointment(
+                                appointmentId: oldID,
+                                patientId: selected.patientId,
+                                doctorId: selected.doctorId,
+                                scheduledAt: newDate,
+                                status: .scheduled   // restore to scheduled if it was missed
+                            )
+                            try await AccessSupabase.shared.updateAppointment(updatedAppt)
+                            print("✅ Same-day reschedule: time updated")
+
+                            self.selectedAppointment = AppointmentWithPatient(
+                                appointmentId: oldID,
+                                patientId: selected.patientId,
+                                doctorId: selected.doctorId,
+                                scheduledAt: newDate,
+                                status: .scheduled,
+                                patient: patient
+                            )
+
+                        } else {
+                            // ✅ Different day → delete old, create new
+                            try await AccessSupabase.shared.deleteAppointment(id: oldID)
+                            print("✅ Old appointment deleted")
+
+                            let newAppointment = Appointment(
+                                appointmentId: UUID(),
+                                patientId: patient.patientID,
+                                doctorId: patient.docID,
+                                scheduledAt: newDate,
+                                status: .scheduled
+                            )
+                            let created = try await AccessSupabase.shared.createAppointment(newAppointment)
+                            print("✅ New appointment created: \(created.scheduledAt)")
+
+                            self.selectedAppointment = AppointmentWithPatient(
+                                appointmentId: created.appointmentId!,
+                                patientId: created.patientId,
+                                doctorId: created.doctorId,
+                                scheduledAt: created.scheduledAt,
+                                status: .scheduled,
+                                patient: patient
+                            )
+                        }
+
+                    } else {
+                        // ✅ No selectedAppointment (shouldn't normally happen) → create fresh
+                        let newAppointment = Appointment(
+                            appointmentId: UUID(),
+                            patientId: patient.patientID,
+                            doctorId: patient.docID,
+                            scheduledAt: newDate,
+                            status: .scheduled
+                        )
+                        let created = try await AccessSupabase.shared.createAppointment(newAppointment)
+                        print("✅ Fresh appointment created")
                     }
-                    
-                    // Step 4: Create a brand new appointment with the new date
-                    let newAppointment = Appointment(
-                        appointmentId: UUID(),
-                        patientId: patient.patientID,
-                        doctorId: patient.docID,
-                        scheduledAt: newDate,
-                        status: .scheduled
-                    )
-                    let created = try await AccessSupabase.shared.createAppointment(newAppointment)
-                    print("✅ New appointment created: \(created.scheduledAt)")
-                    
-                    // Step 5: Update the patient's next session date
+
+                    // Always sync the patient's next session date
                     patient.nextSessionDate = newDate
                     try await AccessSupabase.shared.updatePatient(patient)
-                    print("✅ Patient next session date updated to: \(newDate)")
-                    
-                    // Step 6: Update UI
+
                     await MainActor.run {
                         self.patient = patient
                         self.PatientProfileCollectionView.reloadData()
                     }
-                    
+
                 } catch {
                     print("❌ Error rescheduling: \(error)")
                 }
             }
         }
-
         present(popoverVC, animated: true)
     }
 }

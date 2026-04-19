@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hPE-TT-onR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hPE-TT-onR">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -285,7 +285,7 @@
                     <navigationItem key="navigationItem" id="fbv-Ml-snc">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="2IB-ea-ae8">
                             <connections>
-                                <segue destination="nZE-So-izC" kind="presentation" id="BXM-Vb-Tqm"/>
+                                <segue destination="6qw-Pc-HSw" kind="presentation" identifier="edit" id="BXM-Vb-Tqm"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -330,10 +330,10 @@
             </objects>
             <point key="canvasLocation" x="400.76335877862596" y="1574.6478873239437"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Edit Profile-->
         <scene sceneID="W11-hl-Whd">
             <objects>
-                <tableViewController id="nZE-So-izC" sceneMemberID="viewController">
+                <tableViewController id="nZE-So-izC" customClass="editTableViewController" customModule="wellSync" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="insetGrouped" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="wec-VR-MWQ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -555,11 +555,46 @@
                             <outlet property="delegate" destination="nZE-So-izC" id="mUf-Qk-fYv"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="LOf-kI-i00">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="wmy-TE-fgc"/>
+                    <navigationItem key="navigationItem" title="Edit Profile" id="LOf-kI-i00">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Tb4-TD-DXb">
+                            <connections>
+                                <action selector="cancel:" destination="nZE-So-izC" id="sic-Nr-lLV"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="5TU-xq-ddJ">
+                            <connections>
+                                <action selector="saveChanges:" destination="nZE-So-izC" id="1nr-7u-zfq"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="Image" destination="iMJ-Vi-Pca" id="bvt-rH-RZy"/>
+                        <outlet property="addPhoto" destination="W4r-Ja-GNT" id="a0W-BE-UCc"/>
+                        <outlet property="address" destination="d4Y-h0-rj8" id="Zwi-eT-En5"/>
+                        <outlet property="email" destination="aaO-bT-uIy" id="ECz-Et-w68"/>
+                        <outlet property="experience" destination="d0m-vk-8W9" id="JM6-sH-eCr"/>
+                        <outlet property="name" destination="r2c-UC-kH5" id="UCE-ED-j3J"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tpI-UN-CFt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2970.2290076335876" y="1574.6478873239437"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="z09-bg-P0O">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6qw-Pc-HSw" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="cSC-zy-UiG">
+                        <rect key="frame" x="0.0" y="16" width="393" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="nZE-So-izC" kind="relationship" relationship="rootViewController" id="EgT-q9-Y49"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MaD-Iy-gMy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2043.5114503816792" y="1574.6478873239437"/>
         </scene>

@@ -50,14 +50,14 @@ struct Doctor: Codable {
     var docID: UUID?
     var authID: UUID?        // ← ADD THIS
     let username: String?
-    let email: String?
+    var email: String?
     // REMOVE: let password: String?   ← DELETE this line
 
-    let name: String?
+    var name: String?
     let dob: Date
-    let address: String?
-    let experience: Int
-    let doctorImage: String?
+    var address: String?
+    var experience: Int
+    var doctorImage: String?
     let qualification: String?
     let registrationNumber: String?
     let identityNumber: String?

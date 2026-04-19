@@ -44,32 +44,23 @@ final class AccessSupabase {
         return doctors
     }
     
-    //    func updateDoctor(_ doctor: Doctor) async throws -> Doctor {
-    //        let updated: Doctor = try await supabase
-    //            .from("doctors")
-    //            .update([
-    //                "username": doctor.username,
-    //                "email": doctor.email,
-    //                "password": doctor.password,
-    //                "name": doctor.name,
-    //                "dob": doctor.dob,
-    //                "address": doctor.address,
-    //                "experience": doctor.experience,
-    //                "doctor_image": doctor.doctorImage,
-    //                "qualification": doctor.qualification,
-    //                "registration_number": doctor.registrationNumber,
-    //                "identity_number": doctor.identityNumber,
-    //                "education_image_data": doctor.educationImageData,
-    //                "registration_image_data": doctor.registrationImageData,
-    //                "identity_image_data": doctor.identityImageData
-    //            ])
-    //            .eq("doc_id", value: doctor.docID.uuidString)
-    //            .select()
-    //            .single()
-    //            .execute()
-    //            .value
-    //        return updated
-    //    }
+    func updateDoctor(_ doctor: Doctor) async throws -> Doctor {
+
+        guard let docID = doctor.docID else {
+            throw NSError(domain: "Missing docID", code: 0)
+        }
+
+        let updated: Doctor = try await supabase
+            .from("doctors")
+            .update(doctor)   // ✅ keeping your model-based update
+            .eq("doc_id", value: docID.uuidString)   // ✅ fixed optional
+            .select()
+            .single()
+            .execute()
+            .value
+
+        return updated
+    }
     
     func savePatient(_ patients:Patient) async throws {
         let saved: Patient = try await supabase
@@ -1206,5 +1197,27 @@ final class AccessSupabase {
             .delete()
             .eq("note_id", value: noteID.uuidString)
             .execute()
+    }
+    
+    func fetchAllAppointmentsWithPatients(doctorID: UUID) async throws -> [AppointmentWithPatient] {
+        
+        let response = try await supabase
+            .from("appointments")
+            .select("""
+                appointment_id,
+                patient_id,
+                doctor_id,
+                scheduled_at,
+                status,
+                patients (*)
+            """)
+            .eq("doctor_id", value: doctorID.uuidString)
+            .order("scheduled_at", ascending: true)
+            .execute()
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+
+        return try decoder.decode([AppointmentWithPatient].self, from: response.data)
     }
 }

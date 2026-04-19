@@ -275,6 +275,7 @@
             </userDefinedRuntimeAttributes>
             <connections>
                 <outlet property="streakCountLabel" destination="Phe-ij-1Bv" id="aDs-Bu-3gr"/>
+                <outlet property="streakUnitLabel" destination="VBP-7X-0AR" id="Clb-AJ-rM9"/>
                 <outletCollection property="dayCircles" destination="aiZ-dz-TUM" collectionClass="NSMutableArray" id="O3K-VR-w8c"/>
                 <outletCollection property="dateLabels" destination="VgT-vx-6C3" collectionClass="NSMutableArray" id="000-uI-ezW"/>
                 <outletCollection property="dayCircles" destination="ryk-rt-qnT" collectionClass="NSMutableArray" id="klY-eK-Iqx"/>
