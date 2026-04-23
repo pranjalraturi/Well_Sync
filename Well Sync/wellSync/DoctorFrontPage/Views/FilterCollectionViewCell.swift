@@ -33,6 +33,9 @@ class FilterCollectionViewCell: UICollectionViewCell {
             label.layer.cornerRadius = 12
             label.clipsToBounds = true
             label.textAlignment = .center
+            
+            label.layer.borderWidth = 1
+            label.layer.borderColor = UIColor.systemGray4.cgColor
             label.layer.masksToBounds = true
             label.textColor = .darkGray
             label.backgroundColor = .clear
@@ -67,7 +70,7 @@ class FilterCollectionViewCell: UICollectionViewCell {
     private func selectLabel(_ selected: UILabel) {
         for label in labels {
             if label == selected {
-                label.backgroundColor = .black
+                label.backgroundColor = .systemGray
                 label.textColor = .white
             } else {
                 label.backgroundColor = .clear

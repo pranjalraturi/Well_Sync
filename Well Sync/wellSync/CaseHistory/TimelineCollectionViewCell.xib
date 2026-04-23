@@ -11,17 +11,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TimelineCell" id="gTV-IL-0wX" customClass="TimelineCollectionViewCell" customModule="wellSync" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="98"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="112"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="98"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="112"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ABv-gb-g55">
-                        <rect key="frame" x="48" y="30" width="264" height="60"/>
+                        <rect key="frame" x="48" y="40" width="272" height="72"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JjB-a5-qfs">
-                                <rect key="frame" x="4" y="4" width="260" height="16"/>
+                                <rect key="frame" x="4" y="8" width="268" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="aJb-Jr-Kny"/>
                                 </constraints>
@@ -30,7 +30,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="Description" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7dG-BA-X6G">
-                                <rect key="frame" x="4" y="24" width="260" height="34"/>
+                                <rect key="frame" x="4" y="28" width="268" height="36"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
@@ -38,11 +38,11 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="7dG-BA-X6G" secondAttribute="bottom" constant="2" id="0si-PS-M1F" userLabel="Description Label.bottom = Container View.bottom"/>
+                            <constraint firstAttribute="bottom" secondItem="7dG-BA-X6G" secondAttribute="bottom" constant="8" id="0si-PS-M1F" userLabel="Description Label.bottom = Container View.bottom"/>
                             <constraint firstAttribute="trailing" secondItem="JjB-a5-qfs" secondAttribute="trailing" id="2vT-K8-rvf"/>
                             <constraint firstItem="7dG-BA-X6G" firstAttribute="leading" secondItem="ABv-gb-g55" secondAttribute="leading" constant="4" id="3to-7x-7in"/>
                             <constraint firstItem="JjB-a5-qfs" firstAttribute="leading" secondItem="ABv-gb-g55" secondAttribute="leading" constant="4" id="KKh-VL-csy"/>
-                            <constraint firstItem="JjB-a5-qfs" firstAttribute="top" secondItem="ABv-gb-g55" secondAttribute="top" constant="4" id="TuN-je-SUK"/>
+                            <constraint firstItem="JjB-a5-qfs" firstAttribute="top" secondItem="ABv-gb-g55" secondAttribute="top" constant="8" id="TuN-je-SUK"/>
                             <constraint firstAttribute="trailing" secondItem="7dG-BA-X6G" secondAttribute="trailing" id="tn9-Vy-npO" userLabel="Description Label.trailing = trailing"/>
                             <constraint firstItem="7dG-BA-X6G" firstAttribute="top" secondItem="JjB-a5-qfs" secondAttribute="bottom" constant="4" id="zTI-eu-u8i"/>
                         </constraints>
@@ -53,7 +53,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qrL-mL-8JC">
-                        <rect key="frame" x="52" y="6" width="268" height="16"/>
+                        <rect key="frame" x="52" y="16" width="268" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="fNe-bM-o3J"/>
                         </constraints>
@@ -68,10 +68,10 @@
                 <constraint firstAttribute="trailing" secondItem="qrL-mL-8JC" secondAttribute="trailing" id="4LP-zn-GdQ"/>
                 <constraint firstItem="qrL-mL-8JC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="52" id="Cwp-fI-iGZ"/>
                 <constraint firstItem="ABv-gb-g55" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="48" id="Wld-Ek-ozP"/>
-                <constraint firstItem="qrL-mL-8JC" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="t78-wB-WYM"/>
-                <constraint firstAttribute="bottom" secondItem="ABv-gb-g55" secondAttribute="bottom" constant="8" id="uGm-b8-hZr" userLabel="Container View.bottom = bottom"/>
+                <constraint firstItem="qrL-mL-8JC" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="t78-wB-WYM"/>
+                <constraint firstAttribute="bottom" secondItem="ABv-gb-g55" secondAttribute="bottom" id="uGm-b8-hZr" userLabel="Container View.bottom = bottom"/>
                 <constraint firstItem="ABv-gb-g55" firstAttribute="top" secondItem="qrL-mL-8JC" secondAttribute="bottom" constant="8" id="yz3-n0-APo"/>
-                <constraint firstAttribute="trailing" secondItem="ABv-gb-g55" secondAttribute="trailing" constant="8" id="zG5-rr-EYF"/>
+                <constraint firstAttribute="trailing" secondItem="ABv-gb-g55" secondAttribute="trailing" id="zG5-rr-EYF"/>
             </constraints>
             <size key="customSize" width="320" height="98"/>
             <connections>

@@ -14,13 +14,19 @@ class SessionNoteCollectionViewController: UICollectionViewController {
     var appointment: Appointment?
     var sessions: [SessionNote] = []
     var sizeOfNotes: Int?
+//    var sessionNotes: [SessionNote] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.collectionViewLayout = generateLayout()
     }
     override func viewWillAppear(_ animated: Bool) {
-        loadSessionNotes()
+        
+        if self.sessions.isEmpty{
+            loadSessionNotes()
+        }else{
+            collectionView.reloadData()
+        }
     }
     func loadSessionNotes() {
         Task {

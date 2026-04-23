@@ -56,21 +56,14 @@ class PatientDetailCollectionViewController: UICollectionViewController{
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadSessionNotes()
+        loadPatientAppointments()
+    }
+    
     private var hasTriggeredIntent = false
 
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//
-//        guard let intent = actionIntent,
-//              !hasTriggeredIntent else { return }
-//
-//        hasTriggeredIntent = true
-//        actionIntent = nil
-//
-//        triggerCalendar(for: intent)
-//    }
-    
-    // ✅ Fires only after the screen is fully on screen
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -150,11 +143,13 @@ class PatientDetailCollectionViewController: UICollectionViewController{
         if segue.identifier == "sessionNotes",
            let vc = segue.destination as? SessionNoteCollectionViewController {
             vc.patient = self.patient
+            vc.sessions = self.sessionNotes
         }
 
         if segue.identifier == "case",
            let vc = segue.destination as? CaseHistoryViewController {
             vc.patient = self.patient
+            vc.sessions = self.sessionNotes
         }
 
         if segue.identifier == "vitals" {
@@ -307,6 +302,7 @@ extension PatientDetailCollectionViewController{
         }
         if hasSessionNote(){
             handleAlertFlow(patient)
+            return
         }
         let alert = UIAlertController(title: "Session Note", message: "Add the session Note?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Later", style: .default, handler: { _ in
@@ -316,27 +312,31 @@ extension PatientDetailCollectionViewController{
             present(alert, animated: true)
         }
     
-    func hasSessionNote() -> Bool{
-        guard let sessionDate = patient?.nextSessionDate else { return false }
-        let cal = Calendar.current
-        guard cal.isDateInToday(sessionDate) else { return false }
-        let sessionDay = cal.startOfDay(for: sessionDate)
-        let hasNote = sessionNotes.contains {
-                let noteDay = cal.startOfDay(for: $0.date)
-                return noteDay == sessionDay
-            }
-        return hasNote
-    }
-    func handleAlertFlow(_ patient: Patient){
+    
+    func hasSessionNote() -> Bool {
         let calendar = Calendar.current
-            if let nextDate = patient.nextSessionDate,
-               nextDate > Date(),
-               !calendar.isDateInToday(nextDate) {
-                showThirdAlert()
-                
-            } else {
-                showSecondAlert()
-            }
+        return sessionNotes.contains {
+            calendar.isDateInToday($0.date)
+        }
+    }
+    
+    func handleAlertFlow(_ patient: Patient) {
+        let calendar = Calendar.current
+        
+        // Check if a future scheduled appointment already exists
+        let hasFutureAppointment = patientAppointments.contains {
+            $0.status == .scheduled &&
+            $0.scheduledAt > Date() &&
+            !calendar.isDateInToday($0.scheduledAt)
+        }
+        
+        if hasFutureAppointment {
+            // Next session already booked — go straight to marking done
+            showThirdAlert()
+        } else {
+            // No future appointment — ask doctor to schedule one
+            showSecondAlert()
+        }
     }
     func showSecondAlert() {
         let alert = UIAlertController(title: "Next Session Date", message: "Schedule the next session", preferredStyle: .alert)
@@ -383,7 +383,8 @@ extension PatientDetailCollectionViewController{
                         self.patient = patient
                         self.updateDoneButtonColor()
 //                                        self.PatientProfileCollectionView?.reloadData()
-                                    }
+                        self.loadPatientAppointments()
+                    }
                 }catch{
                     print("Completion Error: \(error)")
                 }
@@ -457,6 +458,7 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
                     // Step 5: Update UI on main thread
                     await MainActor.run {
                         self.patient?.nextSessionDate = nil
+                        self.loadPatientAppointments()
                         self.PatientProfileCollectionView.reloadData()
                     }
                     
@@ -507,6 +509,7 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
 
                     await MainActor.run {
                         self.patient = patient
+                        self.loadPatientAppointments()
                         self.PatientProfileCollectionView.reloadData()
                     }
 
@@ -628,7 +631,9 @@ extension PatientDetailCollectionViewController: ProfileCellDelegate {
 
                     await MainActor.run {
                         self.patient = patient
+                        self.loadPatientAppointments()
                         self.PatientProfileCollectionView.reloadData()
+                        
                     }
 
                 } catch {

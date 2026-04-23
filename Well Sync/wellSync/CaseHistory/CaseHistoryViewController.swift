@@ -19,6 +19,7 @@ class CaseHistoryViewController: UIViewController {
     var selectedURL: URL?
     var generatedReportURl: URL?
     var patient: Patient!
+    var sessions: [SessionNote] = []
     override func viewDidLoad() {
         super.viewDidLoad()
         registerCells()
@@ -29,25 +30,6 @@ class CaseHistoryViewController: UIViewController {
         loadData()
         CaseHistoryCollectionView.delegate = self
     }
-    
-//    func loadData(){
-//        Task {
-//               do {
-//                   let full = try await AccessSupabase.shared
-//                       .fetchFullCaseHistory(for: patient.patientID)
-//
-//                   self.caseHistory = full
-//                   self.timeline = full.timeline ?? []
-//                   self.reports = full.report ?? []
-//
-//                   await MainActor.run {
-//                       self.CaseHistoryCollectionView.reloadData()
-//                   }
-//               } catch {
-//                   print("Error:", error)
-//               }
-//           }
-//    }
 
     func loadData() {
         Task {
@@ -62,13 +44,17 @@ class CaseHistoryViewController: UIViewController {
                 // 2. Fetch appointments AND session notes in parallel
                 async let appointmentsFetch = AccessSupabase.shared
                     .fetchAppointments(patientID: patient.patientID)
-                async let sessionsFetch = AccessSupabase.shared
-                    .fetchSessionNotes(patientID: patient.patientID)
-
-                let (appointments, sessions) = try await (appointmentsFetch, sessionsFetch)
+                let sessionsResult: [SessionNote]
+                if self.sessions.isEmpty {
+                    sessionsResult = try await AccessSupabase.shared.fetchSessionNotes(patientID: patient.patientID)
+                    self.sessions = sessionsResult
+                }else {
+                    sessionsResult = self.sessions
+                }
+                let appointments = try await appointmentsFetch
 
                 // 3. Build timeline from appointments + sessions
-                self.timeline = buildTimeline(appointments: appointments, sessions: sessions, caseId: full.caseId)
+                self.timeline = buildTimeline(appointments: appointments, sessions: sessionsResult, caseId: full.caseId)
 
                 await MainActor.run {
                     self.CaseHistoryCollectionView.reloadData()
@@ -83,36 +69,37 @@ class CaseHistoryViewController: UIViewController {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd MMM yyyy"
-        
+        let chronologicalSessions = sessions.sorted { $0.date < $1.date }
         // 1. Every session note becomes a timeline entry
-        let sessionEntries: [Timeline] = sessions.compactMap { session in
-            let noteText = session.notes?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-            return Timeline(
-                timelineId: session.sessionId ?? UUID(),
-                caseID: caseId,
-                title: session.title,
-                date: session.date,
-                description: noteText.isEmpty ? "No session note present" : noteText
-            )
-        }
-        
-        // 2. Only missed appointments become timeline entries
-        let missedEntries: [Timeline] = appointments.compactMap { appointment in
-            guard appointment.status == .missed,
-                  let apptId = appointment.appointmentId else { return nil }
+        let sessionEntries: [Timeline] = chronologicalSessions.enumerated().compactMap { index, session in
+                let sessionNumber = index + 1
+                let noteText = session.notes?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+                return Timeline(
+                    timelineId: session.sessionId ?? UUID(),
+                    caseID: caseId,
+                    title: "Session \(sessionNumber)",
+                    date: session.date,
+                    description: noteText.isEmpty ? "No session note present" : noteText
+                )
+            }
             
-            let formattedDate = dateFormatter.string(from: appointment.scheduledAt)
-            return Timeline(
-                timelineId: apptId,
-                caseID: caseId,
-                title: "Missed Appointment",
-                date: appointment.scheduledAt,
-                description: "The appointment on \(formattedDate) was not attended."
-            )
-        }
-        
-        // 3. Merge and sort latest first
-        return (sessionEntries + missedEntries).sorted { $0.date > $1.date }
+            // 2. Only missed appointments become timeline entries
+            let missedEntries: [Timeline] = appointments.compactMap { appointment in
+                guard appointment.status == .missed,
+                      let apptId = appointment.appointmentId else { return nil }
+                
+                let formattedDate = dateFormatter.string(from: appointment.scheduledAt)
+                return Timeline(
+                    timelineId: apptId,
+                    caseID: caseId,
+                    title: "Missed Appointment",
+                    date: appointment.scheduledAt,
+                    description: "The appointment on \(formattedDate) was not attended."
+                )
+            }
+            
+            // 3. Merge and sort latest first
+            return (sessionEntries + missedEntries).sorted { $0.date > $1.date }
     }
         func registerCells(){
             CaseHistoryCollectionView.register(UINib(nibName: "ReportCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ReportCell")
