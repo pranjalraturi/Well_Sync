@@ -4,6 +4,7 @@ class ActivityRingView: UIView {
 
     private let trackLayer    = CAShapeLayer()
     private let progressLayer = CAShapeLayer()
+    private let gradientLayer = CAGradientLayer()
     private var didSetup      = false
     private var onboardingSequence: FeatureOnboardingSequence?
 
@@ -33,14 +34,24 @@ class ActivityRingView: UIView {
         trackLayer.fillColor    = UIColor.clear.cgColor
 
         progressLayer.path        = path.cgPath
-        progressLayer.strokeColor = UIColor.systemCyan.cgColor
+        progressLayer.strokeColor = UIColor.white.cgColor // Color doesn't matter, used for mask
         progressLayer.lineWidth   = 12
         progressLayer.fillColor   = UIColor.clear.cgColor
         progressLayer.lineCap     = .round
         progressLayer.strokeEnd   = 0
 
+        gradientLayer.frame = bounds
+        gradientLayer.colors = [
+            UIColor(red: 143/255, green: 218/255, blue: 222/255, alpha: 0.75).cgColor,
+            UIColor(red: 113/255, green: 201/255, blue: 206/255, alpha: 0.75).cgColor,
+            UIColor(red: 80/255,  green: 170/255, blue: 180/255, alpha: 0.75).cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        gradientLayer.mask = progressLayer
+
         layer.addSublayer(trackLayer)
-        layer.addSublayer(progressLayer)
+        layer.addSublayer(gradientLayer)
     }
 
     func setProgress(_ value: CGFloat, animated: Bool = true, duration: CFTimeInterval = 0.8) {
@@ -111,7 +122,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .always
-        collectionView.register(UINib(nibName: "StreakCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "StreakCell")
+        collectionView.register(UINib(nibName: "StreakCompactCell", bundle: nil), forCellWithReuseIdentifier: "StreakCompactCell")
         collectionView.collectionViewLayout  = generateLayout()
         collectionView.alwaysBounceVertical  = true
         onboardingSequence = FeatureOnboardingSequence(
@@ -206,7 +217,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                     self.totalTodayItems = allToday.count
                     self.toDoItems      = allToday.filter { !$0.isCompletedToday }
                     self.nextAppointment = next
-                    self.collectionView.reloadSections(IndexSet([0, 1, 2]))
+                    self.collectionView.reloadSections(IndexSet([0, 1]))
                     
                     DispatchQueue.main.async {
                         self.startOnboardingIfPossible()
@@ -220,14 +231,13 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 3
+        return 2
     }
 
     override func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
         switch section {
-        case 0:  return 1
-        case 1:  return toDoItems.isEmpty ? 4 : 5   // ← hide row 4 when no items
+        case 0:  return toDoItems.isEmpty ? 4 : 5   // Activity Ring, Streak, Next Session, Mood Log, [section divider]
         default: return toDoItems.count
         }
     }
@@ -235,39 +245,10 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
-            
+
         case 0:
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: "StreakCell", for: indexPath
-            ) as! StreakCollectionViewCell
-
-            let cal = Calendar.current
-
-            var weekComponents = cal.dateComponents(
-                [.yearForWeekOfYear, .weekOfYear], from: Date()
-            )
-            weekComponents.weekday = 1
-            let sunday = cal.date(from: weekComponents)!
-
-            let weekDates: [Date] = (0..<7).compactMap {
-                cal.date(byAdding: .day, value: $0, to: sunday)
-            }
-
-            let loggedDaysSet = Set(
-                ActivityLogs.map { cal.startOfDay(for: $0.date) }
-            )
-            let streakData: [(date: Date, isCompleted: Bool)] = weekDates.map { date in
-                let day = cal.startOfDay(for: date)
-                return (date: date, isCompleted: loggedDaysSet.contains(day))
-            }
-
-            cell.configure(with: streakData, currentStreak: currentStreak)
-
-            style(cell)
-            return cell
-            
-        case 1:
             if indexPath.row == 0 {
+                // Activity Ring — half width
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: "activityRing", for: indexPath
                 ) as! ActivityRingCell
@@ -276,45 +257,48 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                 ? CGFloat(completed) / CGFloat(totalTodayItems)
                 : 0
                 cell.configure(progress: progress)
-                if let label = cell.viewWithTag(1) as? UILabel { label.text = items[indexPath.row + 1] }
+                if let label = cell.viewWithTag(1) as? UILabel { label.text = "Activity Status" }
                 if let label1 = cell.viewWithTag(2) as? UILabel { label1.text = "\(completed)/\(totalTodayItems)" }
                 style(cell)
                 return cell
             }
             else if indexPath.row == 1 {
+                // Streak Compact — half width, teal card
                 let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: "moodCount", for: indexPath
-                ) as! MoodCollectionViewCell
-                cell.configure(mood: mood)
+                    withReuseIdentifier: "StreakCompactCell", for: indexPath
+                ) as! StreakCompactCell
+                cell.configure(streak: currentStreak)
                 style(cell)
                 return cell
             }
             else if indexPath.row == 2 {
+                // Next Session — full width
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: "nextSession", for: indexPath
                 ) as! NextSessionCell
-                
                 let sessionDate = nextAppointment?.scheduledAt
                 cell.configure(doctorName: "Dr. Meena Kumari", sessionDate: sessionDate)
                 style(cell)
                 return cell
             }
             else if indexPath.row == 3 {
+                // Mood Log — full width, with stepper
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: "moodLog", for: indexPath
                 ) as! MoodLogCollectionViewCell
                 cell.configureTap(target: self, action: #selector(moodTapped(_:)))
-                if let label = cell.viewWithTag(1) as? UILabel { label.text = items[indexPath.row + 1] }
+                cell.configureMood(mood)
                 style(cell)
                 return cell
             }
             else {
+                // Section divider ("To Do" header)
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: "section", for: indexPath
                 )
                 return cell
             }
-            
+
         default:
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "BasicCell", for: indexPath
@@ -353,12 +337,11 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         let halfWidth = (fullWidth - 8) / 2
 
         switch indexPath.section {
-        case 0:  return CGSize(width: fullWidth, height: 140)
-        case 1:
-            if indexPath.row == 0 || indexPath.row == 1 { return CGSize(width: halfWidth, height: 150) }
+        case 0:
+            if indexPath.row == 0 || indexPath.row == 1 { return CGSize(width: halfWidth, height: 160) }
             else if indexPath.row == 2 { return CGSize(width: fullWidth, height: 122) }
-            else if indexPath.row == 3 { return CGSize(width: fullWidth, height: 172) }
-            else                        { return CGSize(width: fullWidth, height: 24)  }
+            else if indexPath.row == 3 { return CGSize(width: fullWidth, height: 210) }
+            else                        { return CGSize(width: fullWidth, height: 40)  }
         default: return CGSize(width: fullWidth, height: 60)
         }
     }
@@ -374,8 +357,8 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     @objc func moodTapped(_ sender: UITapGestureRecognizer) {
         guard let selectedView = sender.view else { return }
 
-        // ✅ Find the mood count cell and check cooldown
-        if let moodCell = collectionView.cellForItem(at: IndexPath(row: 1, section: 1)) as? MoodCollectionViewCell,
+        // ✅ Find the mood log cell and check cooldown
+        if let moodCell = collectionView.cellForItem(at: IndexPath(row: 3, section: 0)) as? MoodLogCollectionViewCell,
            !moodCell.canLogNow {
             // Shake to signal "not yet"
             let shake = CAKeyframeAnimation(keyPath: "transform.translation.x")
@@ -446,13 +429,14 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         cell.layer.cornerRadius            = 20
         cell.layer.shadowPath              = UIBezierPath(roundedRect: cell.bounds, cornerRadius: 20).cgPath
     }
+
     private func makeOnboardingSteps() -> [FeatureSpotlightStep] {
         collectionView.layoutIfNeeded()
 
         return [
             FeatureSpotlightStep(
-                title: "Your streak at a glance",
-                message: "This shows your weekly consistency.",
+                title: "Track daily progress",
+                message: "See how much of today's tasks are complete.",
                 placement: .below,
                 prepare: nil,
                 targetProvider: { [weak self] in
@@ -463,27 +447,13 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                 }
             ),
             FeatureSpotlightStep(
-                title: "Track daily progress",
-                message: "See how much of today’s tasks are complete.",
+                title: "Your streak at a glance",
+                message: "This shows your daily consistency.",
                 placement: .below,
                 prepare: nil,
                 targetProvider: { [weak self] in
                     guard let self,
-                          let cell = self.collectionView.cellForItem(at: IndexPath(item: 0, section: 1))
-                    else { return nil }
-                    return self.spotlightTarget(in: cell)
-                }
-            ),
-            FeatureSpotlightStep(
-                title: "Monitor mood",
-                message: "Track your mood trends here.",
-                placement: .below,
-                prepare: { [weak self] in
-                    self?.scrollDashboard(to: IndexPath(item: 1, section: 1))
-                },
-                targetProvider: { [weak self] in
-                    guard let self,
-                          let cell = self.collectionView.cellForItem(at: IndexPath(item: 1, section: 1))
+                          let cell = self.collectionView.cellForItem(at: IndexPath(item: 1, section: 0))
                     else { return nil }
                     return self.spotlightTarget(in: cell)
                 }
@@ -493,11 +463,11 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                 message: "Your upcoming appointment is shown here.",
                 placement: .below,
                 prepare: { [weak self] in
-                    self?.scrollDashboard(to: IndexPath(item: 2, section: 1))
+                    self?.scrollDashboard(to: IndexPath(item: 2, section: 0))
                 },
                 targetProvider: { [weak self] in
                     guard let self,
-                          let cell = self.collectionView.cellForItem(at: IndexPath(item: 2, section: 1))
+                          let cell = self.collectionView.cellForItem(at: IndexPath(item: 2, section: 0))
                     else { return nil }
                     return self.spotlightTarget(in: cell)
                 }
@@ -507,11 +477,11 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                 message: "Tap here to record your mood.",
                 placement: .above,
                 prepare: { [weak self] in
-                    self?.scrollDashboard(to: IndexPath(item: 3, section: 1))
+                    self?.scrollDashboard(to: IndexPath(item: 3, section: 0))
                 },
                 targetProvider: { [weak self] in
                     guard let self,
-                          let cell = self.collectionView.cellForItem(at: IndexPath(item: 3, section: 1))
+                          let cell = self.collectionView.cellForItem(at: IndexPath(item: 3, section: 0))
                     else { return nil }
                     return self.spotlightTarget(in: cell)
                 }
@@ -529,6 +499,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
             )
         ]
     }
+
     private func spotlightTarget(in cell: UICollectionViewCell) -> UIView {
         cell.contentView.subviews.first ?? cell.contentView
     }
@@ -543,19 +514,19 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
 
     private func scrollToTodoStep() {
         if !toDoItems.isEmpty {
-            scrollDashboard(to: IndexPath(item: 0, section: 2))
+            scrollDashboard(to: IndexPath(item: 0, section: 1))
         } else {
-            scrollDashboard(to: IndexPath(item: 4, section: 1))
+            scrollDashboard(to: IndexPath(item: 4, section: 0))
         }
     }
 
     private func todoSpotlightTarget() -> UIView? {
         if !toDoItems.isEmpty,
-           let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 2)) {
+           let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 1)) {
             return spotlightTarget(in: cell)
         }
 
-        if let cell = collectionView.cellForItem(at: IndexPath(item: 4, section: 1)) {
+        if let cell = collectionView.cellForItem(at: IndexPath(item: 4, section: 0)) {
             return spotlightTarget(in: cell)
         }
 

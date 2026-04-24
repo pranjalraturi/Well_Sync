@@ -15,7 +15,7 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="jgG-A3-iUb">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0jQ-S8-YEw">
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -58,7 +58,7 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="CTp-ou-ZzM" firstAttribute="top" secondItem="yWS-aA-EY9" secondAttribute="top" constant="12" id="4HV-9I-bUD"/>
                                                 <constraint firstItem="CTp-ou-ZzM" firstAttribute="centerX" secondItem="yWS-aA-EY9" secondAttribute="centerX" id="JuU-gV-4NI"/>
@@ -80,7 +80,7 @@
                                         <constraint firstItem="yWS-aA-EY9" firstAttribute="top" secondItem="AfK-yH-bZI" secondAttribute="topMargin" id="xJN-1L-yXB"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <size key="customSize" width="192" height="154"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -132,7 +132,7 @@
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7oh-ve-X8o">
                                                     <rect key="frame" x="16" y="112" width="136" height="2"/>
-                                                    <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="2" id="4Cp-6y-BCd"/>
                                                     </constraints>
@@ -231,7 +231,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </stackView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="WVm-Fj-umt" firstAttribute="centerY" secondItem="7oh-ve-X8o" secondAttribute="centerY" id="77A-HE-6ok"/>
                                                 <constraint firstItem="SFF-Vg-7yq" firstAttribute="centerY" secondItem="uyd-cl-eAi" secondAttribute="centerY" id="995-PC-Px3"/>
@@ -261,7 +261,7 @@
                                         <constraint firstItem="K9C-pf-qzM" firstAttribute="leading" secondItem="Edo-Ae-Ma7" secondAttribute="leadingMargin" id="snz-jr-W57"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <size key="customSize" width="184" height="154"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -326,7 +326,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="NQi-d6-EAv" firstAttribute="leading" secondItem="7nS-Hb-pMS" secondAttribute="leading" constant="16" id="9dr-qI-GZ0"/>
                                                 <constraint firstItem="jel-FQ-AOL" firstAttribute="leading" secondItem="7nS-Hb-pMS" secondAttribute="leading" constant="16" id="Aqj-qh-x9c"/>
@@ -351,7 +351,7 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="7nS-Hb-pMS" secondAttribute="trailing" id="z7b-Mi-vfH"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <size key="customSize" width="383" height="128"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -366,25 +366,38 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="moodLog" id="0JE-5U-S2D" customClass="MoodLogCollectionViewCell" customModule="wellSync" customModuleProvider="target">
-                                <rect key="frame" x="6" y="302" width="381" height="212"/>
+                                <rect key="frame" x="6" y="302" width="381" height="200"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tsa-dh-jJb">
-                                    <rect key="frame" x="0.0" y="0.0" width="381" height="212"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="381" height="200"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YBs-fb-Zse">
-                                            <rect key="frame" x="8" y="8" width="365" height="196"/>
+                                            <rect key="frame" x="8" y="8" width="365" height="184"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="How is your mood ?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yCe-hi-6Rb">
-                                                    <rect key="frame" x="16" y="16" width="172" height="30"/>
+                                                    <rect key="frame" x="16" y="12" width="193" height="24"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="30" id="3cX-YX-VqV"/>
+                                                        <constraint firstAttribute="height" constant="24" id="3cX-YX-VqV"/>
+                                                        <constraint firstAttribute="width" constant="193" id="ojj-n7-PjD"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Next Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tiM-la-BeL" customClass="PaddedLabel" customModule="wellSync" customModuleProvider="target">
+                                                    <rect key="frame" x="225" y="12" width="128" height="24"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="12"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="pRd-Vd-wXj">
-                                                    <rect key="frame" x="4" y="61.999999999999993" width="357" height="86.333333333333314"/>
+                                                    <rect key="frame" x="4" y="55.999999999999993" width="357" height="86.333333333333314"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="fNy-K3-ycC">
                                                             <rect key="frame" x="0.0" y="0.0" width="68.333333333333329" height="86.333333333333329"/>
@@ -503,14 +516,123 @@
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stL-Tk-1vN">
+                                                    <rect key="frame" x="20" y="159.66666666666666" width="325" height="3"/>
+                                                    <color key="backgroundColor" systemColor="systemGray4Color"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="3" id="stC-01-hgt"/>
+                                                    </constraints>
+                                                </view>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="stS-Dk-2wP">
+                                                    <rect key="frame" x="20" y="150" width="325" height="22"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stD-D1-3xQ">
+                                                            <rect key="frame" x="0.0" y="3.6666666666666572" width="15" height="15"/>
+                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="15" id="stC-h1-dot"/>
+                                                                <constraint firstAttribute="width" constant="15" id="stC-w1-dot"/>
+                                                            </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="10"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stD-D2-4yR">
+                                                            <rect key="frame" x="62" y="3.6666666666666572" width="15" height="15"/>
+                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="15" id="stC-h2-dot"/>
+                                                                <constraint firstAttribute="width" constant="15" id="stC-w2-dot"/>
+                                                            </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="8"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stD-D3-5zS">
+                                                            <rect key="frame" x="124" y="3.6666666666666572" width="15" height="15"/>
+                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="15" id="stC-h3-dot"/>
+                                                                <constraint firstAttribute="width" constant="15" id="stC-w3-dot"/>
+                                                            </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="8"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stD-D4-6aT">
+                                                            <rect key="frame" x="186" y="3.6666666666666572" width="15" height="15"/>
+                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="15" id="stC-h4-dot"/>
+                                                                <constraint firstAttribute="width" constant="15" id="stC-w4-dot"/>
+                                                            </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="8"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stD-D5-7bU">
+                                                            <rect key="frame" x="248" y="3.6666666666666572" width="15" height="15"/>
+                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="15" id="stC-h5-dot"/>
+                                                                <constraint firstAttribute="width" constant="15" id="stC-w5-dot"/>
+                                                            </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="8"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stD-D6-8cV">
+                                                            <rect key="frame" x="310" y="3.6666666666666572" width="15" height="15"/>
+                                                            <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="15" id="stC-h6-dot"/>
+                                                                <constraint firstAttribute="width" constant="15" id="stC-w6-dot"/>
+                                                            </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="8"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </view>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="stC-sk-hgt"/>
+                                                    </constraints>
+                                                </stackView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="yCe-hi-6Rb" firstAttribute="leading" secondItem="YBs-fb-Zse" secondAttribute="leading" constant="16" id="2N5-a3-72C"/>
-                                                <constraint firstItem="pRd-Vd-wXj" firstAttribute="top" secondItem="yCe-hi-6Rb" secondAttribute="bottom" constant="16" id="SkQ-fL-yc7"/>
+                                                <constraint firstAttribute="trailing" secondItem="tiM-la-BeL" secondAttribute="trailing" constant="12" id="2N5-a3-72D"/>
+                                                <constraint firstItem="tiM-la-BeL" firstAttribute="leading" secondItem="yCe-hi-6Rb" secondAttribute="trailing" constant="16" id="2N5-a3-72X"/>
+                                                <constraint firstItem="pRd-Vd-wXj" firstAttribute="top" secondItem="yCe-hi-6Rb" secondAttribute="bottom" constant="20" id="SkQ-fL-yc7"/>
                                                 <constraint firstItem="pRd-Vd-wXj" firstAttribute="centerX" secondItem="YBs-fb-Zse" secondAttribute="centerX" id="Uay-Up-KGQ"/>
-                                                <constraint firstItem="yCe-hi-6Rb" firstAttribute="top" secondItem="YBs-fb-Zse" secondAttribute="top" constant="16" id="m3N-og-LR4"/>
+                                                <constraint firstItem="yCe-hi-6Rb" firstAttribute="top" secondItem="YBs-fb-Zse" secondAttribute="top" constant="12" id="m3N-og-LR4"/>
+                                                <constraint firstItem="tiM-la-BeL" firstAttribute="centerY" secondItem="yCe-hi-6Rb" secondAttribute="centerY" id="m3N-og-LR5"/>
+                                                <constraint firstItem="tiM-la-BeL" firstAttribute="height" secondItem="yCe-hi-6Rb" secondAttribute="height" id="m3N-og-LR6"/>
                                                 <constraint firstAttribute="trailing" secondItem="pRd-Vd-wXj" secondAttribute="trailing" constant="4" id="pPN-te-Bw1"/>
+                                                <constraint firstAttribute="bottom" secondItem="stS-Dk-2wP" secondAttribute="bottom" constant="12" id="stC-bt-stk"/>
+                                                <constraint firstItem="stL-Tk-1vN" firstAttribute="centerY" secondItem="stS-Dk-2wP" secondAttribute="centerY" id="stC-cy-trk"/>
+                                                <constraint firstItem="stS-Dk-2wP" firstAttribute="leading" secondItem="YBs-fb-Zse" secondAttribute="leading" constant="20" id="stC-ld-stk"/>
+                                                <constraint firstItem="stL-Tk-1vN" firstAttribute="leading" secondItem="stS-Dk-2wP" secondAttribute="leading" id="stC-ld-trk"/>
+                                                <constraint firstAttribute="trailing" secondItem="stS-Dk-2wP" secondAttribute="trailing" constant="20" id="stC-tr-stk"/>
+                                                <constraint firstItem="stL-Tk-1vN" firstAttribute="trailing" secondItem="stS-Dk-2wP" secondAttribute="trailing" id="stC-tr-trk"/>
                                                 <constraint firstItem="pRd-Vd-wXj" firstAttribute="leading" secondItem="YBs-fb-Zse" secondAttribute="leading" constant="4" id="wrC-gB-pSH"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
@@ -528,8 +650,8 @@
                                         <constraint firstItem="YBs-fb-Zse" firstAttribute="leading" secondItem="tsa-dh-jJb" secondAttribute="leadingMargin" id="jMp-LL-URn"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
-                                <size key="customSize" width="381" height="212"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+                                <size key="customSize" width="381" height="200"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="layer.shadowColor">
                                         <color key="value" systemColor="systemRedColor"/>
@@ -546,33 +668,42 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
+                                    <outlet property="timerLabel" destination="tiM-la-BeL" id="tiM-la-BeL-con"/>
+                                    <outlet property="trackLine" destination="stL-Tk-1vN" id="stO-tl-con"/>
                                     <outletCollection property="moodViews" destination="oOR-hl-al2" collectionClass="NSMutableArray" id="Gq5-KS-6ri"/>
                                     <outletCollection property="moodViews" destination="xID-xz-IW8" collectionClass="NSMutableArray" id="EHt-W6-bdo"/>
                                     <outletCollection property="moodViews" destination="pw1-C1-lbe" collectionClass="NSMutableArray" id="zKz-am-W5u"/>
                                     <outletCollection property="moodViews" destination="HXE-hd-bWL" collectionClass="NSMutableArray" id="HWx-3h-bqY"/>
                                     <outletCollection property="moodViews" destination="8f2-1j-Cro" collectionClass="NSMutableArray" id="2tU-Iw-UfO"/>
+                                    <outletCollection property="stepperDots" destination="stD-D1-3xQ" collectionClass="NSMutableArray" id="stO-d1-con"/>
+                                    <outletCollection property="stepperDots" destination="stD-D2-4yR" collectionClass="NSMutableArray" id="stO-d2-con"/>
+                                    <outletCollection property="stepperDots" destination="stD-D3-5zS" collectionClass="NSMutableArray" id="stO-d3-con"/>
+                                    <outletCollection property="stepperDots" destination="stD-D4-6aT" collectionClass="NSMutableArray" id="stO-d4-con"/>
+                                    <outletCollection property="stepperDots" destination="stD-D5-7bU" collectionClass="NSMutableArray" id="stO-d5-con"/>
+                                    <outletCollection property="stepperDots" destination="stD-D6-8cV" collectionClass="NSMutableArray" id="stO-d6-con"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="section" id="5il-Xo-LrL">
-                                <rect key="frame" x="3" y="524" width="387" height="31"/>
+                                <rect key="frame" x="3" y="512" width="387" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Qmo-B6-fWu">
-                                    <rect key="frame" x="0.0" y="0.0" width="387" height="31"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="387" height="43"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To Do" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TxA-sK-DW3">
-                                            <rect key="frame" x="12" y="3.6666666666666661" width="51" height="24"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                            <rect key="frame" x="12" y="7.9999999999999982" width="55" height="26.333333333333329"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="TxA-sK-DW3" firstAttribute="leading" secondItem="Qmo-B6-fWu" secondAttribute="leading" constant="12" id="4D7-ze-FEx"/>
-                                        <constraint firstItem="TxA-sK-DW3" firstAttribute="centerY" secondItem="Qmo-B6-fWu" secondAttribute="centerY" id="dWZ-vX-0Hy"/>
+                                        <constraint firstItem="TxA-sK-DW3" firstAttribute="top" secondItem="Qmo-B6-fWu" secondAttribute="top" constant="8" id="G0i-Z4-YwO"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                                <size key="customSize" width="387" height="31"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <size key="customSize" width="387" height="43"/>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BasicCell" id="eX0-2o-ZQd" customClass="BasicCollectionViewCell" customModule="wellSync" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="565" width="386" height="70"/>
@@ -586,7 +717,7 @@
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="2" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageView:bBP-2U-bfz:image" translatesAutoresizingMaskIntoConstraints="NO" id="bBP-2U-bfz">
                                                     <rect key="frame" x="16" y="9.6666666666666679" width="35" height="35"/>
-                                                    <color key="tintColor" red="0.44313725490196076" green="0.78823529411764703" blue="0.80784313725490198" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="tintColor" red="0.0" green="0.7843137255" blue="0.70196078429999997" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="35" id="TZg-SQ-gXL"/>
                                                         <constraint firstAttribute="width" constant="35" id="hLt-8z-Kn9"/>
@@ -596,7 +727,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello World" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MOJ-PH-OEb">
                                                     <rect key="frame" x="59" y="17" width="88" height="20.333333333333329"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" red="0.44313725490196076" green="0.78823529411764703" blue="0.80784313725490198" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" red="0.0" green="0.7843137255" blue="0.70196078429999997" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehf-SX-LlZ">
@@ -610,7 +741,7 @@
                                                     <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system"/>
                                                 </button>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                                            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstItem="ehf-SX-LlZ" firstAttribute="centerY" secondItem="MOJ-PH-OEb" secondAttribute="centerY" id="4Ob-OG-D7x"/>
                                                 <constraint firstItem="MOJ-PH-OEb" firstAttribute="leading" secondItem="bBP-2U-bfz" secondAttribute="trailing" constant="8" id="Sm2-ct-4H6"/>
@@ -633,7 +764,7 @@
                                         <constraint firstItem="hcA-uy-uxx" firstAttribute="leading" secondItem="6iU-js-ss8" secondAttribute="leadingMargin" id="xqQ-Cb-FfS"/>
                                     </constraints>
                                 </collectionViewCellContentView>
-                                <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
                                 <size key="customSize" width="386" height="70"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -14812,17 +14943,26 @@ AAAAAAAMgbQ
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="secondaryLabelColor">
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.21960784310000001" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.2196078431372549" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
