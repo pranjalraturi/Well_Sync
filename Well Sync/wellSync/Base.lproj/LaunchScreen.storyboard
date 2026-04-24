@@ -15,6 +15,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchGradient" translatesAutoresizingMaskIntoConstraints="NO" id="bg-grad-123">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gzT-o9-3n8">
                                 <rect key="frame" x="124.66666666666669" y="292" width="144" height="144"/>
                                 <subviews>
@@ -48,8 +51,12 @@
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" red="0.40000000000000002" green="0.94901960779999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="LaunchBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="bg-grad-123" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="bg-t-1"/>
+                            <constraint firstItem="bg-grad-123" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="bg-l-1"/>
+                            <constraint firstAttribute="trailing" secondItem="bg-grad-123" secondAttribute="trailing" id="bg-r-1"/>
+                            <constraint firstAttribute="bottom" secondItem="bg-grad-123" secondAttribute="bottom" id="bg-b-1"/>
                             <constraint firstItem="gzT-o9-3n8" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="6mK-qe-kL9"/>
                             <constraint firstItem="C1H-LR-9V0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Acx-1J-pBk"/>
                             <constraint firstItem="UyQ-aM-uD1" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Fev-Mg-C4x"/>
@@ -65,6 +72,10 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="LaunchBackgroundColor">
+            <color red="0.90980392156862744" green="1" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <image name="LaunchGradient" width="100" height="1000"/>
         <image name="heart.text.square.fill" catalog="system" width="128" height="114"/>
     </resources>
 </document>
