@@ -90,32 +90,50 @@ class MoodCollectionViewCell: UICollectionViewCell {
         logNowBadge?.textColor = .systemGreen
         logNowBadge?.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.1)
     }
-
+    
+    private func color(for moodValue: Int) -> UIColor {
+        switch moodValue {
+        case 1: return .systemRed
+        case 2: return .systemOrange
+        case 3: return .systemYellow
+        case 4: return .systemGreen
+        case 5: return UIColor(red: 0.18, green: 0.80, blue: 0.18, alpha: 1) // vivid green
+        default: return .systemGray
+        }
+    }
+    
     private func updateStepperUI() {
         guard let dots = moodDots, !dots.isEmpty else { return }
 
-        let loggedCount = todayMood.count
-        let isReady = canLogNow
+        // Sort today's mood logs chronologically so dot[0] = earliest log
+        let sortedTodayMoods = todayMood.sorted(by: { $0.date < $1.date })
+
+        let loggedCount = sortedTodayMoods.count
+        let isReady     = canLogNow
 
         for (index, dot) in dots.enumerated() {
             dot.layer.cornerRadius = dot.frame.height / 2
-            dot.transform = .identity
-            dot.layer.sublayers?.filter { $0.name == "pulseLayer" }.forEach { $0.removeFromSuperlayer() }
+            dot.transform          = .identity
+            dot.layer.sublayers?
+                .filter { $0.name == "pulseLayer" }
+                .forEach { $0.removeFromSuperlayer() }
 
             if index < loggedCount {
-                dot.backgroundColor = .systemGreen
+                // ✅ Use the actual mood's color instead of static .systemGreen
+                let moodValue       = sortedTodayMoods[index].mood   // ← your MoodLog's mood Int field
+                dot.backgroundColor = color(for: moodValue)
                 dot.layer.borderColor = UIColor.white.cgColor
                 dot.layer.borderWidth = 2
 
             } else if index == loggedCount && isReady && loggedCount < maxDailyLogs {
-                dot.backgroundColor = .white
+                dot.backgroundColor   = .white
                 dot.layer.borderColor = UIColor.systemBlue.cgColor
                 dot.layer.borderWidth = 3
                 addPulseAnimation(to: dot)
 
             } else {
-                dot.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
-                dot.backgroundColor = .systemGray5
+                dot.transform         = CGAffineTransform(scaleX: 0.75, y: 0.75)
+                dot.backgroundColor   = .systemGray5
                 dot.layer.borderColor = UIColor.white.cgColor
                 dot.layer.borderWidth = 2
             }

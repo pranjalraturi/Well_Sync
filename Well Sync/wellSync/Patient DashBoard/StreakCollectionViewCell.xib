@@ -256,7 +256,7 @@
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+            <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="Hmx-Sd-pr6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="14" id="1ff-b2-uvL"/>
                 <constraint firstItem="Hmx-Sd-pr6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="11" id="KpE-VH-Gh5"/>
@@ -296,8 +296,8 @@
     </objects>
     <resources>
         <image name="circle.fill" catalog="system" width="128" height="123"/>
-        <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="tertiarySystemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
     </resources>
 </document>

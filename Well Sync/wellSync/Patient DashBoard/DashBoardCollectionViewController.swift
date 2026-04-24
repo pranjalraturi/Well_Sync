@@ -358,7 +358,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
             if indexPath.row == 0 || indexPath.row == 1 { return CGSize(width: halfWidth, height: 150) }
             else if indexPath.row == 2 { return CGSize(width: fullWidth, height: 122) }
             else if indexPath.row == 3 { return CGSize(width: fullWidth, height: 172) }
-            else                        { return CGSize(width: fullWidth, height: 40)  }
+            else                        { return CGSize(width: fullWidth, height: 24)  }
         default: return CGSize(width: fullWidth, height: 60)
         }
     }
@@ -367,7 +367,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 8
         layout.minimumLineSpacing      = 16
-        layout.sectionInset = UIEdgeInsets(top: 16, left: 12, bottom: 8, right: 12)
+        layout.sectionInset = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
         return layout
     }
 
@@ -436,10 +436,10 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     }
 
     func style(_ cell: UICollectionViewCell) {
-        cell.layer.shadowColor             = UIColor.white.cgColor
-        cell.layer.shadowOpacity           = 0.2
-        cell.layer.shadowOffset            = CGSize(width: 0, height: 2)
-        cell.layer.shadowRadius            = 5
+        cell.layer.shadowColor             = UIColor.systemTeal.withAlphaComponent(0.5).cgColor
+        cell.layer.shadowOpacity           = 0.25
+        cell.layer.shadowOffset            = CGSize(width: 0, height: 1)
+        cell.layer.shadowRadius            = 4
         cell.layer.masksToBounds           = false
         cell.contentView.layer.cornerRadius  = 20
         cell.contentView.layer.masksToBounds = true

@@ -29,7 +29,6 @@ class NextSessionCell: UICollectionViewCell {
     // MARK: – Appearance
 
     private func setupAppearance() {
-        backgroundColor = .secondarySystemBackground
         layer.cornerRadius = 16
         layer.masksToBounds = true
 

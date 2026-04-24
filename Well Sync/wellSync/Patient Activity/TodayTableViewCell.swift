@@ -30,10 +30,10 @@ class TodayTableViewCell: UITableViewCell {
 //        cardView.layer.borderColor  = UIColor.systemGray4.cgColor
         cardView.layer.cornerRadius = 16
         cardView.layer.borderWidth  = 0
-        cardView.layer.shadowColor   = UIColor.black.cgColor
-        cardView.layer.shadowOpacity = 0.05
-        cardView.layer.shadowOffset  = CGSize(width: 0, height: 0)
-        cardView.layer.shadowRadius  = 8
+//        cardView.layer.shadowColor   = UIColor.black.cgColor
+//        cardView.layer.shadowOpacity = 0.05
+//        cardView.layer.shadowOffset  = CGSize(width: 0, height: 0)
+//        cardView.layer.shadowRadius  = 8
         cardView.layer.masksToBounds = false
     }
     
