@@ -2,7 +2,7 @@
 //  FeatureSpotlightView.swift
 //  wellSync
 //
-//  Created by Codex on 10/04/26.
+//  Created by Pranjal on 10/04/26.
 //
 
 import UIKit
@@ -41,6 +41,9 @@ final class FeatureSpotlightView: UIView {
         static let cornerRadius: CGFloat = 16
         static let tooltipInset: CGFloat = 20
         static let spotlightPadding: CGFloat = 4
+        static let spotlightEdgeInset: CGFloat = 8
+        static let tooltipGap: CGFloat = 18
+        static let tooltipVerticalMargin: CGFloat = 12
         static let dimAlpha: CGFloat = 0.58
         static let accentColor = UIColor(red: 0.33, green: 0.60, blue: 0.98, alpha: 1)
     }
@@ -224,7 +227,10 @@ final class FeatureSpotlightView: UIView {
         overlayView.layoutIfNeeded()
 
         let targetFrame = targetView.convert(targetView.bounds, to: self)
-        let spotlightFrame = targetFrame.insetBy(dx: -Style.spotlightPadding, dy: -Style.spotlightPadding)
+        let paddedTargetFrame = targetFrame.insetBy(dx: -Style.spotlightPadding, dy: -Style.spotlightPadding)
+        let spotlightBounds = bounds.insetBy(dx: Style.spotlightEdgeInset, dy: Style.spotlightEdgeInset)
+        let intersectedFrame = paddedTargetFrame.intersection(spotlightBounds)
+        let spotlightFrame = intersectedFrame.isNull ? paddedTargetFrame : intersectedFrame
         let spotlightPath = UIBezierPath(roundedRect: spotlightFrame, cornerRadius: Style.cornerRadius)
         let fullPath = UIBezierPath(rect: bounds)
         fullPath.append(spotlightPath)
@@ -255,8 +261,13 @@ final class FeatureSpotlightView: UIView {
             verticalFittingPriority: .fittingSizeLevel
         )
 
-        let spaceBelow = bounds.maxY - targetFrame.maxY - 80
-        let spaceAbove = targetFrame.minY - safeAreaInsets.top - 20
+        let safeTop = safeAreaInsets.top + Style.tooltipVerticalMargin
+        let safeBottom = bounds.height - safeAreaInsets.bottom - Style.tooltipVerticalMargin
+        let preferredBelowY = targetFrame.maxY + Style.tooltipGap
+        let preferredAboveY = targetFrame.minY - Style.tooltipGap - tooltipSize.height
+
+        let spaceBelow = safeBottom - preferredBelowY
+        let spaceAbove = preferredAboveY - safeTop
 
         let useBelow: Bool
         switch step.placement {
@@ -268,13 +279,10 @@ final class FeatureSpotlightView: UIView {
             useBelow = spaceBelow >= tooltipSize.height || spaceBelow >= spaceAbove
         }
 
-        if useBelow {
-            tooltipTopConstraint = tooltipView.topAnchor.constraint(equalTo: topAnchor, constant: min(targetFrame.maxY + 18, bounds.height - tooltipSize.height - 40))
-            tooltipTopConstraint?.isActive = true
-        } else {
-            tooltipBottomConstraint = tooltipView.bottomAnchor.constraint(equalTo: topAnchor, constant: max(targetFrame.minY - 18, tooltipSize.height + safeAreaInsets.top + 12))
-            tooltipBottomConstraint?.isActive = true
-        }
+        let chosenY = useBelow ? preferredBelowY : preferredAboveY
+        let clampedY = min(max(chosenY, safeTop), safeBottom - tooltipSize.height)
+        tooltipTopConstraint = tooltipView.topAnchor.constraint(equalTo: topAnchor, constant: clampedY)
+        tooltipTopConstraint?.isActive = true
 
         layoutIfNeeded()
 

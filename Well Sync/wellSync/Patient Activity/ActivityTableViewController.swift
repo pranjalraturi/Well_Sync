@@ -234,7 +234,6 @@ class ActivityTableViewController: UITableViewController {
             }
 
             journalVC.patient = patient
-            journalVC.tint = .accent
         }
 
         if segue.identifier == "timerSegue",
@@ -287,12 +286,24 @@ class ActivityTableViewController: UITableViewController {
                 title: "Review previous logs",
                 message: "Your completed history is shown here.",
                 placement: .above,
+                prepare: { [weak self] in
+                    self?.scrollToFirstLogForOnboarding()
+                },
                 targetProvider: { [weak self] in
                     guard let self, let indexPath = firstLogIndexPath else { return nil }
                     return (self.tableView.cellForRow(at: indexPath) as? TodayTableViewCell)?.cardView
                 }
             )
         ]
+    }
+
+    private func scrollToFirstLogForOnboarding() {
+        let indexPath = IndexPath(row: 0, section: 1)
+        guard tableView.numberOfSections > indexPath.section,
+              tableView.numberOfRows(inSection: indexPath.section) > indexPath.row else { return }
+
+        tableView.scrollToRow(at: indexPath, at: .middle, animated: false)
+        tableView.layoutIfNeeded()
     }
 
     // MARK: - ✅ Onboarding Starter

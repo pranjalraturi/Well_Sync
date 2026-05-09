@@ -83,7 +83,6 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
 
     let items  = ["Streak", "Activity Ring", "Mood Count", "Next Session", "Mood Log", "Logs", "Journaling", "Art"]
     let images = [UIImage(systemName: "book"), UIImage(systemName: "paintpalette")]
-
     @IBOutlet var moodCount: UILabel!
 
     var toDoItems:    [TodayActivityItem] = []
@@ -489,7 +488,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     }
 
     private func spotlightTarget(in cell: UICollectionViewCell) -> UIView {
-        cell.contentView.subviews.first ?? cell.contentView
+        cell.contentView
     }
 
     private func scrollDashboard(to indexPath: IndexPath) {
