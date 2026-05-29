@@ -76,7 +76,19 @@ class ActivityTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         loadData()
+        if let navigationBar = navigationController?.navigationBar {
+            let standardAppearance = UINavigationBarAppearance()
+            standardAppearance.configureWithDefaultBackground()
+            
+            let scrollEdgeAppearance = UINavigationBarAppearance()
+            scrollEdgeAppearance.configureWithTransparentBackground()
+            
+            navigationBar.standardAppearance = standardAppearance
+            navigationBar.scrollEdgeAppearance = scrollEdgeAppearance
+            navigationBar.compactAppearance = standardAppearance
+        }
     }
     
     private func loadData() {

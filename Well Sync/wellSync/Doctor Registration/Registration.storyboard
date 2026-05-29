@@ -491,7 +491,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" />
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="2RX-gT-aVW">
-                                <rect key="frame" x="24" y="212" width="345" height="432" />
+                                <rect key="frame" x="24" y="212" width="345" height="304" />
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="k3O-JI-Iub">
                                         <rect key="frame" x="0.0" y="0.0" width="345" height="48" />
@@ -561,46 +561,9 @@
                                             <segue destination="w4v-Zk-wCM" kind="show" identifier="register_to_basic" id="nXN-zz-Qga" />
                                         </connections>
                                     </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Z8t-df-w4z">
-                                        <rect key="frame" x="0.0" y="320" width="345" height="48" />
-                                        <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="88l-Wu-pu7">
-                                                <rect key="frame" x="0.0" y="23.666666666666629" width="152.66666666666666" height="1" />
-                                                <color key="backgroundColor" systemColor="systemGrayColor" />
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="1" id="yiv-XP-deK" />
-                                                </constraints>
-                                            </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Px-IL-li0">
-                                                <rect key="frame" x="160.66666666666666" y="13.999999999999998" width="23.666666666666657" height="20.333333333333329" />
-                                                <fontDescription key="fontDescription" type="system" pointSize="17" />
-                                                <nil key="textColor" />
-                                                <nil key="highlightedColor" />
-                                            </label>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ivp-j6-fhP">
-                                                <rect key="frame" x="192.33333333333337" y="23.666666666666629" width="152.66666666666663" height="1" />
-                                                <color key="backgroundColor" systemColor="systemGrayColor" />
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="1" id="CJC-4S-KYy" />
-                                                </constraints>
-                                            </view>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="48" id="Vpn-83-qdJ" />
-                                            <constraint firstItem="ivp-j6-fhP" firstAttribute="width" secondItem="88l-Wu-pu7" secondAttribute="width" id="d1m-ld-CBo" />
-                                        </constraints>
-                                    </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B2m-8A-PyR">
-                                        <rect key="frame" x="0.0" y="384" width="345" height="48" />
-                                        <state key="normal" title="Button" />
-                                        <buttonConfiguration key="configuration" style="filled" image="apple.logo" catalog="system" title="Sign in with Apple" imagePadding="6">
-                                            <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" />
-                                        </buttonConfiguration>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace" />
                                 <constraints>
-                                    <constraint firstItem="Z8t-df-w4z" firstAttribute="top" secondItem="7s6-DG-ntZ" secondAttribute="bottom" constant="16" id="Q3h-HW-9F1" />
                                     <constraint firstItem="Lub-GJ-C1Z" firstAttribute="height" secondItem="k3O-JI-Iub" secondAttribute="height" id="hQ4-v6-WH1" />
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -648,7 +611,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="apple.logo" catalog="system" width="105" height="128" />
+
         <image name="document.fill" catalog="system" width="115" height="128" />
         <image name="paperclip" catalog="system" width="121" height="128" />
         <image name="profile" width="736" height="1472" />
