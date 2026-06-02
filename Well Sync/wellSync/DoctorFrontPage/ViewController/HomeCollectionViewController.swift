@@ -683,18 +683,40 @@ extension HomeCollectionViewController{
                     body = "Your session with \(doctorName) is scheduled on \(scheduleText)."
                 }
 
-                let sent = await PushNotificationService.shared.sendPatientRemotePush(
+                let dashboardSaved: Bool
+                let pushDelivery: PushNotificationService.DeliveryResult
+
+                do {
+                    _ = try await AccessSupabase.shared.createPatientNotification(
+                        patientID: item.patient.patientID,
+                        doctorID: item.doctorId,
+                        title: "Session Reminder",
+                        body: body,
+                        kind: "manual_notify"
+                    )
+                    dashboardSaved = true
+                } catch {
+                    dashboardSaved = false
+                    print("Dashboard notification save failed: \(error.localizedDescription)")
+                }
+
+                pushDelivery = await PushNotificationService.shared.sendPatientRemotePush(
                     patientID: item.patient.patientID,
                     title: "Session Reminder",
                     body: body,
                     kind: "manual_notify"
                 )
 
+                let didSend = dashboardSaved || pushDelivery.success
+                let successMessage = dashboardSaved
+                    ? "A reminder will appear in \(item.patient.name)'s patient dashboard."
+                    : "A reminder was sent to \(item.patient.name)'s notification bar."
+
                 let sentAlert = UIAlertController(
-                    title: sent ? "Notification Sent" : "Send Failed",
-                    message: sent
-                    ? "A reminder has been sent for \(item.patient.name)."
-                    : "Could not send reminder right now. Please try again.",
+                    title: didSend ? "Notification Sent" : "Send Failed",
+                    message: didSend
+                    ? successMessage
+                    : (pushDelivery.message ?? "Could not send reminder right now. Please try again."),
                     preferredStyle: .alert
                 )
                 sentAlert.addAction(UIAlertAction(title: "OK", style: .default))

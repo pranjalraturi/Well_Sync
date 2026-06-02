@@ -500,6 +500,81 @@ extension PatientDetailCollectionViewController{
 
 
 extension PatientDetailCollectionViewController: ProfileCellDelegate {
+    func callButtonTapped() {
+        Task {
+            await callPatient()
+        }
+    }
+
+    private func callPatient() async {
+        guard let patientID = patient?.patientID else {
+            showAlert(
+                title: "Patient unavailable",
+                message: "Could not find this patient record. Please reopen the patient profile and try again."
+            )
+            return
+        }
+
+        do {
+            let phoneNumber = try await AccessSupabase.shared.fetchPatientContact(patientID: patientID)
+            guard let sanitizedPhoneNumber = sanitizedPhoneNumber(from: phoneNumber) else {
+                showAlert(
+                    title: "Phone number missing",
+                    message: "This patient does not have a phone number saved."
+                )
+                return
+            }
+
+            openPhoneApp(with: sanitizedPhoneNumber)
+        } catch {
+            showAlert(
+                title: "Could not fetch phone number",
+                message: "Please check your connection and try again."
+            )
+        }
+    }
+
+    private func sanitizedPhoneNumber(from value: String?) -> String? {
+        guard let value else { return nil }
+
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        let digits = trimmed.filter { $0.isNumber }
+        let prefix = trimmed.hasPrefix("+") ? "+" : ""
+        let sanitized = prefix + digits
+
+        return sanitized.isEmpty ? nil : sanitized
+    }
+
+    private func openPhoneApp(with phoneNumber: String) {
+        guard let url = URL(string: "tel://\(phoneNumber)") else {
+            showAlertOnMain(
+                title: "Invalid phone number",
+                message: "This phone number could not be used for a call."
+            )
+            return
+        }
+
+        guard UIApplication.shared.canOpenURL(url) else {
+            showAlertOnMain(
+                title: "Calls unavailable",
+                message: "This device cannot open the Phone app."
+            )
+            return
+        }
+
+        UIApplication.shared.open(url)
+    }
+
+    private func showAlert(title: String, message: String) {
+        showAlertOnMain(title: title, message: message)
+    }
+
+    private func showAlertOnMain(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
     func calendarButtonTapped(from view: UIView){
         showScheduleAlert(sourceView: view)
     }

@@ -93,6 +93,9 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     var currentStreak: Int = 0
     var totalTodayItems: Int = 0
     private var onboardingSequence: FeatureOnboardingSequence?
+    private var isShowingPatientNotification = false
+    private var shownPatientNotificationIDs: Set<UUID> = []
+    private var notificationPollTimer: Timer?
     var patient: Patient? {
         didSet {
             guard let p = patient else { return }
@@ -170,7 +173,14 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        checkUnreadPatientNotifications()
+        startNotificationPolling()
         startOnboardingIfPossible()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopNotificationPolling()
     }
 
     func load() {
@@ -233,6 +243,73 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
             }
         }
     }
+
+    private func checkUnreadPatientNotifications() {
+        guard let patientID = patient?.patientID else { return }
+        guard !isShowingPatientNotification else { return }
+
+        Task {
+            do {
+                let notifications = try await AccessSupabase.shared.fetchUnreadPatientNotifications(patientID: patientID)
+                guard let notification = notifications.first(where: {
+                    !shownPatientNotificationIDs.contains($0.notificationId)
+                }) else { return }
+
+                await MainActor.run {
+                    self.presentPatientNotification(notification)
+                }
+            } catch {
+                print("Unread patient notifications fetch failed: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    private func startNotificationPolling() {
+        stopNotificationPolling()
+        notificationPollTimer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { [weak self] _ in
+            self?.checkUnreadPatientNotifications()
+        }
+    }
+
+    private func stopNotificationPolling() {
+        notificationPollTimer?.invalidate()
+        notificationPollTimer = nil
+    }
+
+    private func presentPatientNotification(_ notification: PatientNotification) {
+        guard isViewLoaded, view.window != nil else { return }
+        guard presentedViewController == nil else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                self.presentPatientNotification(notification)
+            }
+            return
+        }
+
+        isShowingPatientNotification = true
+        shownPatientNotificationIDs.insert(notification.notificationId)
+
+        let alert = UIAlertController(
+            title: notification.title,
+            message: notification.body,
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            guard let self else { return }
+            self.isShowingPatientNotification = false
+            Task {
+                do {
+                    try await AccessSupabase.shared.markPatientNotificationRead(
+                        notificationID: notification.notificationId
+                    )
+                } catch {
+                    print("Mark patient notification read failed: \(error.localizedDescription)")
+                }
+            }
+        })
+
+        present(alert, animated: true)
+    }
+
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2

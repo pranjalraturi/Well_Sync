@@ -23,6 +23,23 @@ final class AccessSupabase {
         let is_active: Bool
     }
 
+    private struct PatientNotificationInsert: Encodable {
+        let patient_id: String
+        let doctor_id: String?
+        let title: String
+        let body: String
+        let kind: String
+    }
+
+    private struct PatientNotificationReadUpdate: Encodable {
+        let is_read: Bool
+        let read_at: String
+    }
+
+    private struct PatientContactResponse: Decodable {
+        let contact: String?
+    }
+
     private func sessionDateTimeText(from date: Date) -> String {
         let formatter = DateFormatter()
         formatter.locale = Locale.current
@@ -59,6 +76,59 @@ final class AccessSupabase {
         try await supabase
             .from("device_push_tokens")
             .upsert(payload, onConflict: "token")
+            .execute()
+    }
+
+    func createPatientNotification(
+        patientID: UUID,
+        doctorID: UUID?,
+        title: String,
+        body: String,
+        kind: String
+    ) async throws -> PatientNotification {
+        let payload = PatientNotificationInsert(
+            patient_id: patientID.uuidString,
+            doctor_id: doctorID?.uuidString,
+            title: title,
+            body: body,
+            kind: kind
+        )
+
+        let saved: PatientNotification = try await supabase
+            .from("patient_notifications")
+            .insert(payload)
+            .select("*")
+            .single()
+            .execute()
+            .value
+
+        return saved
+    }
+
+    func fetchUnreadPatientNotifications(patientID: UUID) async throws -> [PatientNotification] {
+        let data: [PatientNotification] = try await supabase
+            .from("patient_notifications")
+            .select("*")
+            .eq("patient_id", value: patientID.uuidString)
+            .eq("is_read", value: false)
+            .order("created_at", ascending: false)
+            .limit(5)
+            .execute()
+            .value
+
+        return data
+    }
+
+    func markPatientNotificationRead(notificationID: UUID) async throws {
+        let payload = PatientNotificationReadUpdate(
+            is_read: true,
+            read_at: ISO8601DateFormatter().string(from: Date())
+        )
+
+        try await supabase
+            .from("patient_notifications")
+            .update(payload)
+            .eq("notification_id", value: notificationID.uuidString)
             .execute()
     }
     
@@ -119,6 +189,18 @@ final class AccessSupabase {
             .execute()
             .value
         return patient
+    }
+
+    func fetchPatientContact(patientID: UUID) async throws -> String? {
+        let response: PatientContactResponse = try await supabase
+            .from("patients")
+            .select("contact")
+            .eq("patient_id", value: patientID.uuidString)
+            .single()
+            .execute()
+            .value
+
+        return response.contact
     }
     
     func fetchPatients(for doctorID: UUID) async throws -> [Patient] {
@@ -632,6 +714,18 @@ final class AccessSupabase {
         NotificationCenter.default.post(name: .wellSyncAppointmentsChanged, object: nil)
         if SessionManager.shared.currentRole == .doctor, appointment.status == .scheduled {
             let scheduleText = sessionDateTimeText(from: appointment.scheduledAt)
+            do {
+                _ = try await createPatientNotification(
+                    patientID: appointment.patientId,
+                    doctorID: appointment.doctorId,
+                    title: "Session Rescheduled",
+                    body: "Your session has been rescheduled to \(scheduleText).",
+                    kind: "session_rescheduled"
+                )
+            } catch {
+                print("Dashboard reschedule notification save failed: \(error.localizedDescription)")
+            }
+
             _ = await PushNotificationService.shared.sendPatientRemotePush(
                 patientID: appointment.patientId,
                 title: "Session Rescheduled",

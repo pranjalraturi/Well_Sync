@@ -162,6 +162,7 @@ final class NotificationScheduler: NSObject {
     private let center = UNUserNotificationCenter.current()
     private var observers: [NSObjectProtocol] = []
     private let patientSnapshotKeyPrefix = "wellsync_patient_appointment_snapshot_"
+    private let patientSessionReminderHandledKey = "wellsync_patient_session_morning_handled_appointment"
 
     private override init() {
         super.init()
@@ -184,6 +185,7 @@ final class NotificationScheduler: NSObject {
                 guard let patientID = SessionManager.shared.currentPatient?.patientID else { return }
                 await schedulePatientMoodReminders()
                 await schedulePatientIncompleteActivityReminder(for: patientID)
+                await schedulePatientSessionMorningReminder(for: patientID)
                 clearDoctorNotificationRequests()
             case .none:
                 clearAllWellSyncNotifications()
@@ -261,19 +263,16 @@ final class NotificationScheduler: NSObject {
                 guard appointmentTime > now else { continue }
 
                 let intendedFireDate = appointmentTime.addingTimeInterval(-5 * 60)
-                let fireDate = max(intendedFireDate, now.addingTimeInterval(5))
-                let secondsLeft = max(1, Int(appointmentTime.timeIntervalSince(fireDate)))
-                let minutesLeft = max(1, Int(ceil(Double(secondsLeft) / 60.0)))
-                let timeLeftText = minutesLeft == 1 ? "1 minute" : "\(minutesLeft) minutes"
+                guard intendedFireDate > now else { continue }
 
                 let content = UNMutableNotificationContent()
                 content.title = "Appointment Reminder"
-                content.body = "Session with \(appointment.patient.name) in \(timeLeftText)."
+                content.body = "Session with \(appointment.patient.name) in 5 minutes."
                 content.sound = .default
 
                 let triggerDate = Calendar.current.dateComponents(
                     [.year, .month, .day, .hour, .minute, .second],
-                    from: fireDate
+                    from: intendedFireDate
                 )
                 let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
                 let identifier = "doctor.appointment.\(appointment.appointmentId.uuidString)"
@@ -362,6 +361,70 @@ final class NotificationScheduler: NSObject {
             }
         } catch {
             print("Activity completion reminder scheduling failed: \(error.localizedDescription)")
+        }
+    }
+
+    private func schedulePatientSessionMorningReminder(for patientID: UUID) async {
+        clearPatientSessionNotificationRequests()
+
+        do {
+            let now = Date()
+            guard let appointment = try await AccessSupabase.shared.fetchAppointments(patientID: patientID)
+                .filter({ $0.status == .scheduled && $0.scheduledAt > now })
+                .sorted(by: { $0.scheduledAt < $1.scheduledAt })
+                .first else {
+                return
+            }
+            guard let appointmentID = appointment.appointmentId?.uuidString else { return }
+            let reminderHandledID = "\(appointmentID)-\(Int(appointment.scheduledAt.timeIntervalSince1970))"
+
+            let calendar = Calendar.current
+            let morningReminderDate = calendar.date(
+                bySettingHour: 8,
+                minute: 0,
+                second: 0,
+                of: appointment.scheduledAt
+            ) ?? appointment.scheduledAt
+
+            let reminderDate: Date
+            if morningReminderDate <= now {
+                guard UserDefaults.standard.string(forKey: patientSessionReminderHandledKey) != reminderHandledID else {
+                    return
+                }
+                reminderDate = now.addingTimeInterval(5)
+            } else {
+                reminderDate = morningReminderDate
+            }
+
+            let appointmentTime = DateFormatter()
+            appointmentTime.locale = Locale.current
+            appointmentTime.dateStyle = .none
+            appointmentTime.timeStyle = .short
+
+            let content = UNMutableNotificationContent()
+            content.title = "Session Today"
+            content.body = "You have a session scheduled today at \(appointmentTime.string(from: appointment.scheduledAt))."
+            content.sound = .default
+
+            let components = calendar.dateComponents(
+                [.year, .month, .day, .hour, .minute, .second],
+                from: reminderDate
+            )
+            let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+            let request = UNNotificationRequest(
+                identifier: "patient.session.morning",
+                content: content,
+                trigger: trigger
+            )
+
+            UserDefaults.standard.set(reminderHandledID, forKey: patientSessionReminderHandledKey)
+            center.add(request) { error in
+                if let error {
+                    print("Patient session morning reminder scheduling failed: \(error.localizedDescription)")
+                }
+            }
+        } catch {
+            print("Patient session morning reminder scheduling failed: \(error.localizedDescription)")
         }
     }
 
@@ -500,7 +563,8 @@ final class NotificationScheduler: NSObject {
 
     private func clearAllWellSyncNotifications() {
         center.removePendingNotificationRequests(withIdentifiers: [
-            "patient.activity.completion"
+            "patient.activity.completion",
+            "patient.session.morning"
         ])
         clearDoctorNotificationRequests()
         clearPatientMoodNotificationRequests()
@@ -529,9 +593,16 @@ final class NotificationScheduler: NSObject {
         ])
     }
 
+    private func clearPatientSessionNotificationRequests() {
+        center.removePendingNotificationRequests(withIdentifiers: [
+            "patient.session.morning"
+        ])
+    }
+
     private func clearPatientNotificationRequests() {
         clearPatientMoodNotificationRequests()
         clearPatientCompletionNotificationRequests()
+        clearPatientSessionNotificationRequests()
     }
 }
 
@@ -539,7 +610,7 @@ extension NotificationScheduler: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        completionHandler([.banner, .sound])
+        completionHandler([.banner, .list, .sound])
     }
 }
 
@@ -559,6 +630,11 @@ final class PushNotificationService {
         string: "https://qzcfmkjvenxbrndlgowp.supabase.co/functions/v1/send-patient-push"
     )!
     private let anonKey = sKey
+
+    struct DeliveryResult {
+        let success: Bool
+        let message: String?
+    }
 
     func registerAPNsDeviceToken(_ tokenData: Data) {
         let token = tokenData.map { String(format: "%02x", $0) }.joined()
@@ -596,12 +672,13 @@ final class PushNotificationService {
         title: String,
         body: String,
         kind: String
-    ) async -> Bool {
+    ) async -> DeliveryResult {
         do {
             var request = URLRequest(url: remotePushURL)
             request.httpMethod = "POST"
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.setValue("Bearer \(anonKey)", forHTTPHeaderField: "Authorization")
+            request.setValue(anonKey, forHTTPHeaderField: "apikey")
 
             let payload: [String: String] = [
                 "patientId": patientID.uuidString,
@@ -612,19 +689,73 @@ final class PushNotificationService {
             request.httpBody = try JSONSerialization.data(withJSONObject: payload)
 
             let (data, response) = try await URLSession.shared.data(for: request)
+            let bodyText = String(data: data, encoding: .utf8) ?? "(no body)"
             guard let http = response as? HTTPURLResponse else {
                 print("Remote push invalid response")
-                return false
+                return DeliveryResult(success: false, message: "Push service returned an invalid response.")
             }
             guard (200...299).contains(http.statusCode) else {
-                let bodyText = String(data: data, encoding: .utf8) ?? "(no body)"
                 print("Remote push failed \(http.statusCode): \(bodyText)")
-                return false
+                return DeliveryResult(
+                    success: false,
+                    message: userFacingPushFailureMessage(statusCode: http.statusCode, bodyText: bodyText)
+                )
             }
-            return true
+            let delivery = parsePushDeliveryResponse(bodyText: bodyText)
+            if !delivery.success {
+                print("Remote push not delivered: \(bodyText)")
+            }
+            return delivery
         } catch {
             print("Remote push error: \(error.localizedDescription)")
-            return false
+            return DeliveryResult(success: false, message: error.localizedDescription)
         }
+    }
+
+    private func parsePushDeliveryResponse(bodyText: String) -> DeliveryResult {
+        guard let data = bodyText.data(using: .utf8),
+              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            return DeliveryResult(success: true, message: nil)
+        }
+
+        let sent = json["sent"] as? Int
+        let total = json["total"] as? Int
+        let reason = json["reason"] as? String
+
+        if sent == 0 {
+            if reason == "No active patient tokens" {
+                return DeliveryResult(
+                    success: false,
+                    message: "No patient device token found. Ask the patient to open Well Sync and allow notifications."
+                )
+            }
+
+            if let total, total > 0 {
+                return DeliveryResult(
+                    success: false,
+                    message: "APNs rejected the saved patient device token. Ask the patient to reopen the app, then try again."
+                )
+            }
+        }
+
+        return DeliveryResult(success: true, message: nil)
+    }
+
+    private func userFacingPushFailureMessage(statusCode: Int, bodyText: String) -> String {
+        guard let data = bodyText.data(using: .utf8),
+              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+              let error = json["error"] as? String else {
+            return "Push service failed with status \(statusCode)."
+        }
+
+        if error.contains("Missing env") {
+            return "Push service is not fully configured in Supabase."
+        }
+
+        if statusCode == 401 || statusCode == 403 {
+            return "Push service rejected the request. Check the Supabase function auth settings."
+        }
+
+        return error
     }
 }

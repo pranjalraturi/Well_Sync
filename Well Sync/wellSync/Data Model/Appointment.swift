@@ -57,3 +57,27 @@ enum PatientNavigationIntent {
     case nextSession
     case reschedule
 }
+
+struct PatientNotification: Codable {
+    let notificationId: UUID
+    let patientId: UUID
+    let doctorId: UUID?
+    let title: String
+    let body: String
+    let kind: String
+    let isRead: Bool
+    let createdAt: Date
+    let readAt: Date?
+
+    enum CodingKeys: String, CodingKey {
+        case notificationId = "notification_id"
+        case patientId = "patient_id"
+        case doctorId = "doctor_id"
+        case title
+        case body
+        case kind
+        case isRead = "is_read"
+        case createdAt = "created_at"
+        case readAt = "read_at"
+    }
+}

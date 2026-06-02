@@ -142,6 +142,7 @@ import UIKit
 
 protocol ProfileCellDelegate: AnyObject {
     func calendarButtonTapped(from view: UIView)
+    func callButtonTapped()
 }
 
 class ProfileCollectionViewCell: UICollectionViewCell {
@@ -255,5 +256,9 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     
     @IBAction func calenderButtonPressed(_ sender: UIButton) {
         delegate?.calendarButtonTapped(from: sender as UIView)
+    }
+
+    @IBAction func callButtonPressed(_ sender: UIButton) {
+        delegate?.callButtonTapped()
     }
 }
