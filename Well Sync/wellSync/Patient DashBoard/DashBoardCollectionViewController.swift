@@ -89,6 +89,8 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     var ActivityLogs: [ActivityLog]       = []
     var mood:         [MoodLog]           = []
     var nextAppointment: Appointment?
+    var doctorNameForSession: String = "Doctor"
+    var isSessionMissedToday: Bool = false
     
     var currentStreak: Int = 0
     var totalTodayItems: Int = 0
@@ -190,15 +192,18 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
 
         Task {
             do {
-                // ✅ All 4 fetched in parallel
+                // ✅ All fetched in parallel
                 async let todayTask = buildTodayItems(for: patientID)
                 async let logsTask  = AccessSupabase.shared.fetchLogs(for: patientID)
                 async let moodTask  = AccessSupabase.shared.fetchMoodLogs(patientID: patientID)
-                let next = try await AccessSupabase.shared.fetchNextAppointment(patientID: patientID)
+                async let doctorTask = AccessSupabase.shared.fetchDoctor(by: patient?.docID ?? UUID())
+                async let appointmentsTask = AccessSupabase.shared.fetchAppointments(patientID: patientID)
 
                 let allItems = try await todayTask
                 let logs     = try await logsTask
                 let moods    = try await moodTask
+                let doctor   = try? await doctorTask
+                let appointments = (try? await appointmentsTask) ?? []
 
                 let allToday = allItems.map { item -> TodayActivityItem in
                     let todayLogs = item.logs.filter {
@@ -224,13 +229,34 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                     }
                 }
 
+                let doctorName = doctor?.name ?? "Doctor"
+                let todayAppointments = appointments.filter { cal.isDate($0.scheduledAt, inSameDayAs: today) }
+                let missedTodayApp = todayAppointments.first { app in
+                    app.status == .missed || (app.status == .scheduled && app.scheduledAt < today)
+                }
+
+                let nextApp: Appointment?
+                let isMissed: Bool
+                if let missed = missedTodayApp {
+                    nextApp = missed
+                    isMissed = true
+                } else {
+                    let upcoming = appointments.filter { app in
+                        app.status == .scheduled && app.scheduledAt >= cal.startOfDay(for: today)
+                    }
+                    nextApp = upcoming.sorted(by: { $0.scheduledAt < $1.scheduledAt }).first
+                    isMissed = false
+                }
+
                 await MainActor.run {
                     self.ActivityLogs   = logs
                     self.mood           = moods
                     self.currentStreak  = streak
                     self.totalTodayItems = allToday.count
                     self.toDoItems      = allToday.filter { !$0.isCompletedToday }
-                    self.nextAppointment = next
+                    self.nextAppointment = nextApp
+                    self.doctorNameForSession = doctorName
+                    self.isSessionMissedToday = isMissed
                     self.collectionView.reloadSections(IndexSet([0, 1]))
                     
                     DispatchQueue.main.async {
@@ -357,8 +383,11 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: "nextSession", for: indexPath
                 ) as! NextSessionCell
-                let sessionDate = nextAppointment?.scheduledAt
-                cell.configure(doctorName: "Dr. Meena Kumari", sessionDate: sessionDate)
+                cell.configure(
+                    doctorName: doctorNameForSession,
+                    sessionDate: nextAppointment?.scheduledAt,
+                    isMissedToday: isSessionMissedToday
+                )
                 style(cell)
                 return cell
             }

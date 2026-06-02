@@ -16,9 +16,6 @@ class NextSessionCell: UICollectionViewCell {
     @IBOutlet weak var doctorLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
 
-    // Countdown pill — created in code, no storyboard needed
-//    private let countdownPill = PillLabel()
-
     // MARK: – Lifecycle
 
     override func awakeFromNib() {
@@ -40,50 +37,53 @@ class NextSessionCell: UICollectionViewCell {
         dateTimeLabel.textColor  = .secondaryLabel
     }
     
-    func configure(doctorName: String, sessionDate: Date?) {
-        doctorLabel.text = doctorName
-        guard let sessionDate else {
-            dateTimeLabel.text = "Not Scheduled"
-            statusLabel.isHidden = true
+    func configure(doctorName: String, sessionDate: Date?, isMissedToday: Bool) {
+        statusLabel.textColor = UIColor(red: 113/255, green: 201/255, blue: 206/255, alpha: 1)
+        statusLabel.backgroundColor = UIColor(red: 113/255, green: 201/255, blue: 206/255, alpha: 0.2)
+
+        if sessionDate == nil {
+            doctorLabel.text = ""
+            dateTimeLabel.text = ""
+            statusLabel.text = "No session"
+            statusLabel.isHidden = false
             return
         }
 
-        // Date · Time
-        let df = DateFormatter()
-        df.dateFormat = "EEEE, MMM d"
-        let datePart = df.string(from: sessionDate)
-        df.dateFormat = "h:mm a"
-        let timePart = df.string(from: sessionDate)
-        dateTimeLabel.text = "\(datePart)  ·  \(timePart)"
+        doctorLabel.text = doctorName
 
-        // Countdown pill
-        let days = Calendar.current.dateComponents(
-            [.day],
-            from: Calendar.current.startOfDay(for: Date()),
-            to: Calendar.current.startOfDay(for: sessionDate)
-        ).day ?? 0
+        if let sessionDate = sessionDate {
+            let df = DateFormatter()
+            df.locale = Locale(identifier: "en_US")
+            df.dateFormat = "MMMM d, yyyy 'at' h:mm a"
+            dateTimeLabel.text = df.string(from: sessionDate)
+            statusLabel.isHidden = false
 
-        if days == 0{
-            statusLabel.text         = "Today"
-//            statusLabel.textColor    = .systemGreen
-//            statusLabel.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.1)
-        }else if days == 1{
-            statusLabel.text = "Tomorrow"
-//            statusLabel.textColor    = .systemYellow
-//            statusLabel.backgroundColor = UIColor.systemYellow.withAlphaComponent(0.1)
-        }else if days<0{
-            statusLabel.text         = "Missed"
-//            statusLabel.textColor    = .systemRed
-//            statusLabel.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
-        }else {
-            statusLabel.text = "In \(days) days"
+            if isMissedToday {
+                statusLabel.text = "Missed"
+            } else {
+                let today = Date()
+                let calendar = Calendar.current
+                
+                let days = calendar.dateComponents(
+                    [.day],
+                    from: calendar.startOfDay(for: today),
+                    to: calendar.startOfDay(for: sessionDate)
+                ).day ?? 0
+
+                if days == 0 {
+                    statusLabel.text = "Today"
+                } else if days == 1 {
+                    statusLabel.text = "1 day left"
+                } else if days > 1 {
+                    statusLabel.text = "\(days) days left"
+                } else {
+                    statusLabel.text = "Missed"
+                }
+            }
+        } else {
+            dateTimeLabel.text = ""
+            statusLabel.text = "No session"
+            statusLabel.isHidden = false
         }
-        statusLabel.textColor = UIColor(red: 113/255, green: 201/255, blue: 206/255, alpha: 1)
-        statusLabel.backgroundColor = UIColor(red: 113/255, green: 201/255, blue: 206/255, alpha: 0.2)
     }
-
-//    private func resetPillToOrange() {
-//        countdownPill.textColor       = UIColor(red: 0.94, green: 0.47, blue: 0, alpha: 1)
-//        countdownPill.backgroundColor = UIColor(red: 1.0, green: 0.95, blue: 0.88, alpha: 1)
-//    }
 }
