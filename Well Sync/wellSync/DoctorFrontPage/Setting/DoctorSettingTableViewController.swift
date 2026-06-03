@@ -47,8 +47,8 @@ class DoctorSettingTableViewController: BaseInsetGroupedTableViewController {
             return
         }
 
-        // Section 3 "Account Settings" — Row 1: Log Out
-        if indexPath.section == 3 && indexPath.row == 1 {
+        // Section 3 "Account Settings" — Row 0: Log Out
+        if indexPath.section == 3 && indexPath.row == 0 {
             logout()
         }
     }

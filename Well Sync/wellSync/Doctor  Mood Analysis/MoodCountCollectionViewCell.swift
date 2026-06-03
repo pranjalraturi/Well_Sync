@@ -39,13 +39,12 @@ class MoodCountCollectionViewCell: UICollectionViewCell, ChartViewDelegate {
 
 
     private func moodColor(for mood: Double) -> UIColor {
-        switch mood {
-        case ..<1.5: return .systemRed
-        case 1.5..<2.5: return .systemOrange
-        case 2.5..<3.5: return .systemYellow
-        case 3.5..<4.5: return UIColor(red: 0.6, green: 0.9, blue: 0.4, alpha: 1) // light green
-        default:         return .systemGreen
+        let idx = Int(round(mood)) - 1
+        let colors = MoodColors.shared.colors
+        guard idx >= 0 && idx < colors.count else {
+            return colors[2]
         }
+        return colors[idx]
     }
 
     func setupMoodChart() {

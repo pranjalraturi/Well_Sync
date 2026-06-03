@@ -90,7 +90,6 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
     var mood:         [MoodLog]           = []
     var nextAppointment: Appointment?
     var doctorNameForSession: String = "Doctor"
-    var isSessionMissedToday: Bool = false
     
     var currentStreak: Int = 0
     var totalTodayItems: Int = 0
@@ -270,7 +269,6 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                     )
                 }
 
-                // ✅ Compute streak here once, not inside cellForItemAt
                 let allLoggedDates: Set<Date> = Set(logs.map { cal.startOfDay(for: $0.date) })
                 var streak = 0
                 if let mostRecentDate = allLoggedDates.sorted().last {
@@ -284,21 +282,14 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
 
                 let doctorName = doctor?.name ?? "Doctor"
                 let todayAppointments = appointments.filter { cal.isDate($0.scheduledAt, inSameDayAs: today) }
-                let missedTodayApp = todayAppointments.first { app in
-                    app.status == .missed || (app.status == .scheduled && app.scheduledAt < today)
-                }
-
                 let nextApp: Appointment?
-                let isMissed: Bool
-                if let missed = missedTodayApp {
-                    nextApp = missed
-                    isMissed = true
+                if let todayApp = todayAppointments.sorted(by: { $0.scheduledAt < $1.scheduledAt }).first {
+                    nextApp = todayApp
                 } else {
                     let upcoming = appointments.filter { app in
-                        app.status == .scheduled && app.scheduledAt >= cal.startOfDay(for: today)
+                        app.status == .scheduled && app.scheduledAt > today
                     }
                     nextApp = upcoming.sorted(by: { $0.scheduledAt < $1.scheduledAt }).first
-                    isMissed = false
                 }
 
                 await MainActor.run {
@@ -309,7 +300,6 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                     self.toDoItems      = allToday.filter { !$0.isCompletedToday }
                     self.nextAppointment = nextApp
                     self.doctorNameForSession = doctorName
-                    self.isSessionMissedToday = isMissed
                     self.collectionView.reloadSections(IndexSet([0, 1]))
                     
                     DispatchQueue.main.async {
@@ -438,8 +428,7 @@ class DashboardCollectionViewController: UICollectionViewController, UICollectio
                 ) as! NextSessionCell
                 cell.configure(
                     doctorName: doctorNameForSession,
-                    sessionDate: nextAppointment?.scheduledAt,
-                    isMissedToday: isSessionMissedToday
+                    nextAppointment: nextAppointment
                 )
                 style(cell)
                 return cell

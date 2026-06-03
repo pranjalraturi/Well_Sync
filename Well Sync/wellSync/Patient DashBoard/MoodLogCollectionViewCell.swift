@@ -39,14 +39,10 @@ class MoodLogCollectionViewCell: UICollectionViewCell {
     private var segmentViews: [UIView] = []
     private var didSetupTimeline = false
 
-    // Teal shades for each mood level (1–5): lighter = sadder, deeper = happier
-    private let moodTealShades: [UIColor] = [
-        UIColor(red: 175/255, green: 226/255, blue: 230/255, alpha: 1),  // 1 – Very Sad  — palest
-        UIColor(red: 150/255, green: 215/255, blue: 220/255, alpha: 1),  // 2 – Sad
-        UIColor(red: 113/255, green: 201/255, blue: 206/255, alpha: 1),  // 3 – Neutral   — primary #71C9CE
-        UIColor(red: 80/255,  green: 175/255, blue: 182/255, alpha: 1),  // 4 – Happy
-        UIColor(red: 55/255,  green: 148/255, blue: 158/255, alpha: 1),  // 5 – Very Happy — deepest
-    ]
+    // Dynamic mood colors from asset images (red, orange, yellow, lightGreen, green)
+    private var moodColorsList: [UIColor] {
+        return MoodColors.shared.colors
+    }
 
     private let teal = UIColor(red: 113/255, green: 201/255, blue: 206/255, alpha: 1)
 
@@ -236,10 +232,11 @@ class MoodLogCollectionViewCell: UICollectionViewCell {
     // MARK: – Helpers
 
     private func tealShadeFor(level: Int) -> UIColor {
-        guard level >= 1 && level <= moodTealShades.count else {
-            return moodTealShades[2]
+        let colors = MoodColors.shared.colors
+        guard level >= 1 && level <= colors.count else {
+            return colors[2]
         }
-        return moodTealShades[level - 1]
+        return colors[level - 1]
     }
 
     var canLogNow: Bool {

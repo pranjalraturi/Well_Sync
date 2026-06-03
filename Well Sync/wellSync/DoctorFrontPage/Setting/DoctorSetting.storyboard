@@ -55,52 +55,7 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
                                         </userDefinedRuntimeAttributes>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="jUX-c8-OWJ">
-                                        <rect key="frame" x="20" y="106.33333206176758" width="353" height="53"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jUX-c8-OWJ" id="MfA-e4-7gX">
-                                            <rect key="frame" x="0.0" y="0.0" width="353" height="53"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Theme" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="571-yM-BW6">
-                                                    <rect key="frame" x="16" y="16" width="53" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GQx-HE-hPc">
-                                                    <rect key="frame" x="274" y="12" width="63" height="29"/>
-                                                </switch>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstItem="GQx-HE-hPc" firstAttribute="top" secondItem="MfA-e4-7gX" secondAttribute="top" constant="12" id="UsB-iY-Jim"/>
-                                                <constraint firstAttribute="bottom" secondItem="GQx-HE-hPc" secondAttribute="bottom" constant="12" id="VsJ-7V-Wzy"/>
-                                                <constraint firstItem="571-yM-BW6" firstAttribute="leading" secondItem="MfA-e4-7gX" secondAttribute="leadingMargin" id="Yu4-9V-uvs"/>
-                                                <constraint firstItem="571-yM-BW6" firstAttribute="centerY" secondItem="GQx-HE-hPc" secondAttribute="centerY" id="bNN-O6-bQF"/>
-                                                <constraint firstAttribute="trailing" secondItem="GQx-HE-hPc" secondAttribute="trailing" constant="18" id="g5K-oV-iTN"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="20"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="layer.shadowColor">
-                                                <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
-                                                <real key="value" value="0.25"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
-                                                <integer key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
+
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Reminders" id="JbM-Oo-feo">
@@ -307,43 +262,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Account Settings" id="tv1-QD-JQZ">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="kvk-5h-iar" style="IBUITableViewCellStyleDefault" id="0KY-Xx-TWC">
-                                        <rect key="frame" x="20" y="584.33333015441895" width="353" height="51"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0KY-Xx-TWC" id="FWM-IZ-L6L">
-                                            <rect key="frame" x="0.0" y="0.0" width="322.66666666666669" height="51"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Delete Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kvk-5h-iar">
-                                                    <rect key="frame" x="16" y="0.0" width="298.66666666666669" height="51"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" systemColor="systemRedColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="20"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="layer.shadowColor">
-                                                <color key="value" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
-                                                <real key="value" value="0.25"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
-                                                <size key="value" width="0.0" height="0.0"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
-                                                <integer key="value" value="2"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </tableViewCell>
+
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="GQ3-EY-t4L" style="IBUITableViewCellStyleDefault" id="aKq-sW-sgw">
                                         <rect key="frame" x="20" y="635.33333015441895" width="353" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
