@@ -442,13 +442,7 @@
                             <outlet property="delegate" destination="3zH-U0-aU6" id="ziY-6D-vv8"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Profile" id="fbv-Ml-snc">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="2IB-ea-ae8">
-                            <connections>
-                                <segue destination="6qw-Pc-HSw" kind="presentation" identifier="edit" id="BXM-Vb-Tqm"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Profile" id="fbv-Ml-snc"/>
                     <connections>
                         <outlet property="doctorAgeLabel" destination="1UF-ts-01V" id="oaL-ua-8ar"/>
                         <outlet property="doctorCityLabel" destination="TZs-NY-3ZN" id="umo-Lw-W9a"/>

@@ -106,9 +106,7 @@
                             <outlet property="delegate" destination="rE9-96-oaW" id="YOh-ff-SJN" />
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Journal" id="MJa-Xo-RXI">
-                        <barButtonItem key="rightBarButtonItem" title="filter" image="arrow.up.arrow.down" catalog="system" id="Yp1-2Q-adu" />
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Journal" id="MJa-Xo-RXI"/>
                     <connections>
                         <segue destination="WUO-jm-s8E" kind="show" identifier="showImageDetail" id="3P2-AP-uKo" />
                     </connections>

@@ -45,20 +45,21 @@ class PatientProfileTableViewController: BaseInsetGroupedTableViewController, UI
     }
     
     @IBAction func addPhotoTapped(_ sender: UIButton) {
-        let camera = UIAction(title: "Camera",
-                              image: UIImage(systemName: "camera")) { _ in
+        let alert = UIAlertController(title: "Select Photo", message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
             self.openImagePicker(sourceType: .camera)
-        }
-        
-        let photoLibrary = UIAction(title: "Photo Library",
-                                    image: UIImage(systemName: "photo")) { _ in
+        }))
+        alert.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { _ in
             self.openImagePicker(sourceType: .photoLibrary)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        if let popover = alert.popoverPresentationController {
+            popover.sourceView = sender
+            popover.sourceRect = sender.bounds
         }
         
-        let menu = UIMenu(title: "", children: [camera, photoLibrary])
-        
-        sender.menu = menu
-        sender.showsMenuAsPrimaryAction = true
+        present(alert, animated: true)
     }
     
     func openImagePicker(sourceType: UIImagePickerController.SourceType) {
@@ -72,10 +73,29 @@ class PatientProfileTableViewController: BaseInsetGroupedTableViewController, UI
     @objc func imagePickerController(_ picker: UIImagePickerController,
                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
+        var selectedImage: UIImage?
         if let editedImage = info[.editedImage] as? UIImage {
-            patientImageView.image = editedImage
+            selectedImage = editedImage
         } else if let originalImage = info[.originalImage] as? UIImage {
-            patientImageView.image = originalImage
+            selectedImage = originalImage
+        }
+        
+        if let image = selectedImage {
+            patientImageView.image = image
+            
+            Task {
+                do {
+                    let imagePath = try await AccessSupabase.shared.uploadProfileImage(image, folder: "patients")
+                    if var currentPatient = self.patient {
+                        currentPatient.imageURL = imagePath
+                        try await AccessSupabase.shared.updatePatient(currentPatient)
+                        self.patient = currentPatient
+                        print("Profile picture updated successfully")
+                    }
+                } catch {
+                    print("Failed to update profile picture: \(error)")
+                }
+            }
         }
         
         dismiss(animated: true)

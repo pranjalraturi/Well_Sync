@@ -147,6 +147,15 @@ class DetailSessionCollectionViewController: UICollectionViewController {
     
         return cell
     }
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 2 {
+            let vc = FullScreenImagePagerViewController(images: self.images, startIndex: indexPath.item)
+            vc.modalPresentationStyle = .overFullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            present(vc, animated: true)
+        }
+    }
+    
     func generateLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout {
  sectionIndex,
@@ -250,3 +259,123 @@ class DetailSessionCollectionViewController: UICollectionViewController {
     }
 }
 
+class FullScreenImagePagerViewController: UIViewController, UIScrollViewDelegate {
+    let images: [UIImage]
+    var startingIndex: Int
+    let scrollView = UIScrollView()
+    
+    private var isSetup = false
+    
+    init(images: [UIImage], startIndex: Int) {
+        self.images = images
+        self.startingIndex = startIndex
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) { fatalError() }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .black
+        
+        scrollView.frame = view.bounds
+        scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.contentInsetAdjustmentBehavior = .never
+        view.addSubview(scrollView)
+        
+        let closeButton = UIButton(type: .system)
+        closeButton.setImage(UIImage(systemName: "xmark.circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 24)), for: .normal)
+        closeButton.tintColor = .white
+        closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
+        view.addSubview(closeButton)
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            closeButton.widthAnchor.constraint(equalToConstant: 44),
+            closeButton.heightAnchor.constraint(equalToConstant: 44)
+        ])
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let pageWidth = scrollView.bounds.width
+        let pageHeight = scrollView.bounds.height
+        
+        // Don't setup if bounds are 0
+        guard pageWidth > 0 && pageHeight > 0 else { return }
+        
+        if !isSetup {
+            isSetup = true
+            scrollView.contentSize = CGSize(width: pageWidth * CGFloat(images.count), height: pageHeight)
+            
+            for (i, image) in images.enumerated() {
+                let inner = UIScrollView(frame: CGRect(x: pageWidth * CGFloat(i), y: 0, width: pageWidth, height: pageHeight))
+                inner.minimumZoomScale = 1.0
+                inner.maximumZoomScale = 5.0
+                inner.delegate = self
+                inner.showsHorizontalScrollIndicator = false
+                inner.showsVerticalScrollIndicator = false
+                inner.tag = i
+                inner.contentInsetAdjustmentBehavior = .never
+                
+                let iv = UIImageView(image: image)
+                iv.contentMode = .scaleAspectFit
+                iv.frame = inner.bounds
+                iv.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                iv.tag = 100 + i
+                inner.addSubview(iv)
+                
+                let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+                doubleTap.numberOfTapsRequired = 2
+                inner.addGestureRecognizer(doubleTap)
+                
+                scrollView.addSubview(inner)
+            }
+            
+            scrollView.contentOffset = CGPoint(x: pageWidth * CGFloat(startingIndex), y: 0)
+        } else {
+            // Handle rotation or final bounds assignment
+            scrollView.contentSize = CGSize(width: pageWidth * CGFloat(images.count), height: pageHeight)
+            for inner in scrollView.subviews {
+                if let innerScroll = inner as? UIScrollView {
+                    let pageIndex = innerScroll.tag
+                    innerScroll.frame = CGRect(x: pageWidth * CGFloat(pageIndex), y: 0, width: pageWidth, height: pageHeight)
+                    if let iv = innerScroll.viewWithTag(100 + pageIndex) as? UIImageView {
+                        iv.frame = innerScroll.bounds
+                    }
+                }
+            }
+        }
+    }
+    
+    @objc func closeTapped() { dismiss(animated: true) }
+    
+    @objc private func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
+        guard let inner = gesture.view as? UIScrollView, let iv = inner.viewWithTag(100 + inner.tag) else { return }
+        if inner.zoomScale > 1.0 {
+            inner.setZoomScale(1.0, animated: true)
+        } else {
+            let point = gesture.location(in: iv)
+            let rect = CGRect(x: point.x - 50, y: point.y - 50, width: 100, height: 100)
+            inner.zoom(to: rect, animated: true)
+        }
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        guard scrollView != self.scrollView else { return nil }
+        return scrollView.viewWithTag(100 + scrollView.tag)
+    }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        guard scrollView != self.scrollView, let iv = scrollView.viewWithTag(100 + scrollView.tag) else { return }
+        let offsetX = max((scrollView.bounds.width - scrollView.contentSize.width) / 2, 0)
+        let offsetY = max((scrollView.bounds.height - scrollView.contentSize.height) / 2, 0)
+        iv.center = CGPoint(
+            x: scrollView.contentSize.width / 2 + offsetX,
+            y: scrollView.contentSize.height / 2 + offsetY
+        )
+    }
+}

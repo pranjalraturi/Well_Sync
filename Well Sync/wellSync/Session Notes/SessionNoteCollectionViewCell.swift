@@ -18,7 +18,27 @@ class SessionNoteCollectionViewCell: UICollectionViewCell {
 //        layer.masksToBounds = false
         sessionNumberLabel.text = "Session \(index)"
         sessionDateLabel.text = session?.date.formatted(date: .numeric, time: .omitted) ?? ""
-        sessionSummaryLabel.text = session?.notes ?? "No Notes"
+        
+        if let session = session {
+            if let notes = session.notes, !notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                sessionSummaryLabel.text = notes
+            } else {
+                let imageCount = session.images?.count ?? 0
+                let voiceCount = session.voice?.count ?? 0
+                
+                if imageCount > 0 && voiceCount > 0 {
+                    sessionSummaryLabel.text = "\(imageCount) image(s), \(voiceCount) recording(s)"
+                } else if imageCount > 0 {
+                    sessionSummaryLabel.text = "\(imageCount) image(s)"
+                } else if voiceCount > 0 {
+                    sessionSummaryLabel.text = "\(voiceCount) recording(s)"
+                } else {
+                    sessionSummaryLabel.text = "No notes"
+                }
+            }
+        } else {
+            sessionSummaryLabel.text = "No notes"
+        }
     }
 
     override func awakeFromNib() {

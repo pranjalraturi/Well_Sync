@@ -320,9 +320,7 @@
                             <outlet property="delegate" destination="8va-QH-LFK" id="X78-7h-rvt" />
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Profile" id="0FS-62-bcn">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="BtZ-GB-OIv" />
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Profile" id="0FS-62-bcn"/>
                     <connections>
                         <outlet property="age" destination="v2A-6Q-Iy3" id="X9l-jI-afk" />
                         <outlet property="city" destination="lXJ-Jm-EZs" id="l7C-TP-bHg" />
